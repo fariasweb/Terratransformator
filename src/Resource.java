@@ -1,6 +1,7 @@
-public class Resource {
-	private String name;
-	private ResourceType type;
+public class Resource extends Entity{
+	
+	String name;
+	ResourceType type;
 	
 	private static void checkName(String namep) throws Exception{ //Funcion que comprueba la entrada 
 		for(int i = 0; i < namep.length(); ++i){
@@ -15,18 +16,29 @@ public class Resource {
 		}	
 	}
 
-	private static void checkType(ResourceType res) throws Exception{ //Enseñar
-		if(res != ResourceType.HUMAN && res != ResourceType.TECHNOLOGICAL) throw new Exception(res + "is not valid");
+	private static void checkType(ResourceType res) throws IllegalArgumentException{ //Enseñar
+		if(!(typep.equals("H") || typep.equals("T")))  throw new IllegalArgumentException("type is not valid");
 	}
 	//Contructs
 	//---------------------------------------------
 		
-	public Resource(String namep, ResourceType typep) throws Exception{
-			checkName(namep);
-			checkType(typep);
-            name = namep;
-            type = typep;
+	public Resource(String namep, String typep) throws Exception{
+        checkName(namep);
+        name = namep;
+        checkType(typep);
+        type = ResourceType.valueOf(typep);
 	}
+
+		/*public static boolean contains(String test) {
+
+		    for (Choice c : Choice.values()) {
+		        if (c.name().equals(test)) {
+		            return true;
+		        }
+		    }
+
+		    return false;
+		}*/
 
     public Resource(){
         name = null;
@@ -35,19 +47,19 @@ public class Resource {
 	//Getter
 	//-----------------------------------------------
 		
-	/*
+	/**
 	 * @return the name
 	 */
 	public String getName() {
-            return name;
+        return name;
 	}
 
 
 	/**
-	 * @return the type
+	 * @return the type as a String
 	 */
-	public ResourceType getType() {
-            return type;
+	public String getType() {
+        return type.name();
 	}
 
 	//Setter
@@ -56,18 +68,22 @@ public class Resource {
 	/**
 	 * @param name the name to set
 	 */
-	public void setName(String namep) throws Exception{
-			checkName(namep);
-            name = namep;
+	public void setName(String namep) throws Exception {
+		checkName(namep);
+        name = namep;
 	}
 
 
 	/**
 	 * @param type the type to set
 	 */
-	public void setType(ResourceType typep) throws Exception{
-			checkType(typep);
-            type = typep;
+	public void setType(String typep) throws Exception {
+		checkType(typep);
+        type = ResourceType.valueOf(typep);
+	}
+
+	public String getKey(){
+		return name;
 	}
 
 }

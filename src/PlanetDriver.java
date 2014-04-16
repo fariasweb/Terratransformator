@@ -3,16 +3,21 @@ import java.util.Scanner;
 public class PlanetDriver extends AbstractDriver{ 
 
 	public static void main(String args[]){
+		
 		//Generico del driver
 		Planet p = new Planet();
+		
 		//Generico del menu
 		Scanner in = new Scanner(System.in);
 		int opc = 0;
 		String argv[];		
+		
 		//Menu
 		_menu();
+		
 		do {
 			argv = Console.read_line(in);
+			
 			if (argv == null) opc = 0;
 			else if (argv.length > 0){
 				//Console.print(argv.length + "");
@@ -21,7 +26,7 @@ public class PlanetDriver extends AbstractDriver{
 				case 0:
 					break;
 				case 1:
-					p = create_planet(argv[1],Integer.parseInt(argv[2]), Integer.parseInt(argv[3]));
+					p = create_planet(argv[1], Integer.parseInt(argv[2]), Integer.parseInt(argv[3]));
 					break;
 				case 2:
 					p = new Planet();
@@ -36,7 +41,7 @@ public class PlanetDriver extends AbstractDriver{
 					set_needed_resources(p);
 					break;
 				case 6:
-				//set_packet(p,packet)
+					//set_packet(p,packet)
 					break;
 				case 7:
 					Console.print(p.getName());

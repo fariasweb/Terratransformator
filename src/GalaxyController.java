@@ -34,11 +34,10 @@ public class GalaxyController extends AbstractController{
 	 * @return boolean
 	 * @throws Exception 
 	 */
-	public boolean create(String name, int x, int y) throws Exception {
+	public void create(String name, int x, int y) throws Exception {
 		//if (this.galaxyClt.existByName(name)) throw new Exception(1, "Fran");
 		Galaxy g = new Galaxy(name, x, y);
-		
-		return this.galaxyClt.add(g);	
+		galaxyClt.add(g);	
 	}
 	
 	/**

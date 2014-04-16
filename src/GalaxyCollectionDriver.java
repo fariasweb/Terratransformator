@@ -1,130 +1,199 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * 
  */
 
-
 //import AbstractDriver;
 
 /**
  * @author farias
- *
+ * 
  */
-public class GalaxyCollectionDriver extends AbstractDriver{
+public class GalaxyCollectionDriver extends AbstractDriver {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
-		title = "Galaxy Collection Driver";
-		
-		menu.add("Create(String name, int x, int y) : Planet"); //1
-		menu.add("Create() : Planet");
-		menu.add("SetName(String name)"); //3
-		menu.add("SetSize(int x, int y)");
-		menu.add("SetSize(int x, int y)");
-		menu.add("SetPlanet(Planet p, int x, int y)");
-		menu.add("GetName() : String"); //7
-		menu.add("GetSize() : PairInt");
-		menu.add("GetPlanets(): List<Planet>");
-		
-		print_menu();
-		
+
+		// Generico del driver
+		GalaxyCollection gc = new GalaxyCollection();
+
+		// Generico del menu
+		Scanner in = new Scanner(System.in);
 		int opc = 0;
-		//Galaxy g = new Galaxy();
-		
+		String[] argv;
+
+		// Menu
+		_menu();
+
+		// Opciones
 		do {
-			
-			opc = Console.read_int();
-			
-			switch(opc) {
-				case 1:
-					g = create_galaxy_full();
-					break;
+
+			// Lectura de datos
+			argv = Console.read_line(in);
+
+			if (argv == null) { // Terminaos el fichero
+				opc = 0;
+
+			} else if (argv.length > 0) {
+				// Recoger la opcion del usuario
+				opc = Integer.parseInt(argv[0]);
+
+				switch (opc) {
+				case 1: //TODO: Quitar
+
+					/*gc = new GalaxyCollection();
 					
+					//Leemos los parametros de tres en tres
+					int num = (argv.length - 1) / 3;
+					for (int i = 0; i < num; i++) {
+						int pos = i * 3;
+						//Creamos la galaxia
+						Galaxy g = GalaxyDriver.create_galaxy_full(
+								argv[1 + pos], Integer.parseInt(argv[2 + pos]),
+								Integer.parseInt(argv[3 + pos]));
+						
+						//A–adimos al conjunto de galaxia
+						add_galaxy_to_collection(gc, g);
+
+					}*/
+
+					break;
+
 				case 2:
-					g = new Galaxy();
+					gc = new GalaxyCollection();
 					break;
-					
-				case 3:	
-					set_galaxy_name(g);
-					Galaxy g = GalaxyDriver.create_galaxy_full();
+
+				case 3:
+					if (argv.length < 4)
+						_msg_error_param_insuf();
+					else {
+						//Creamos la galaxia
+						Galaxy g = GalaxyDriver.create_galaxy_full(argv[1],
+								Integer.parseInt(argv[2]),
+								Integer.parseInt(argv[3]));
+						//A–adimos al conjunto de galaxia
+						add_galaxy_to_collection(gc, g);
+
+					}
 					break;
-					
-				case 4:	
-					
+
+				case 4: //TODO: Como le paso esa galaxia??À
+
 					break;
-					
-				case 5:	
-	
+
+				case 5:
+					clear_galaxycollection(gc);
 					break;
-					
-				case 6:	//TODO
-					
+
+				case 6:
+					String[] head = { "Name", "X", "Y" };
+					Console.table(head, list_galaxycollection(gc));
 					break;
-					
+
 				case 7:
-					Console.print(g.getName());
+
+					break;
+
+				case 8:
+
+					if (gc.existByName(argv[1])) {
+						Console.print(argv[1]+" exist");
+					} else {
+						Console.print(argv[1]+" dont exist");
+					}
 					
 					break;
-					
-				case 8:	
-					
+
+				case 9:
+					Console.print("Size: " + gc.size());
 					break;
-					
-				case 9:	
-	
-					break;
-					
+
 				default:
-					Console.print("Opcio no valida");
-					
+					_msg_opc_invalid();
 					break;
+				}
 			}
-			
-			
+
 		} while (opc != 0);
 	}
-	
-	
-	public static Galaxy create_galaxy_full() {
-		
+
+	// Menu
+	// ---------------------------------------------
+
+	/**
+	 * 
+	 */
+	private static void _menu() {
+
+		title = "Galaxy Collection Driver";
+
+		//menu.add("GalaxyCollection(String nameGalaxy1, int xGalaxy1, int yGalaxy1, String nameGalaxy2, ...) : GalaxyCollection"); // 1
+		menu.add("GalaxyCollection() : GalaxyCollection");
+		menu.add("add(String nameGalaxy, int xGalaxy, int yGalaxy) : void"); // 3
+		menu.add("remove(String nameGalaxy, int xGalaxy, int yGalaxy) : void");
+		menu.add("clear() : void");
+		menu.add("getAll() : List<Galaxy>"); // 6
+		menu.add("exist(String nameGalaxy, int xGalaxy, int yGalaxy) : boolean");
+		menu.add("existByName(String nameGalaxy) : boolean");
+		menu.add("size() : int");
+
+		print_menu();
+	}
+
+	// Actions
+	// ---------------------------------------------
+
+	public static void add_galaxy_to_collection(GalaxyCollection gc, Galaxy g) {
 		try {
-		
-			String name;
-			int x, y;
-			
-			//Conseguir parametros
-			name = Console.read_string();
-			x = Console.read_int();
-			y = Console.read_int();
-			
-			//Crear
-			return new Galaxy(name, x, y);
+
+			if (g != null && gc != null) {
+				gc.add(g);
+			}
 
 		} catch (Exception e) {
-			Console.print("Error "+e.getMessage());
+			_msg_error(e.getMessage());
 		}
-		
-		return null;
+
 	}
-	
-	public static void set_galaxy_name(Galaxy g) {
+
+	public static void clear_galaxycollection(GalaxyCollection gc) {
 		try {
-			
-			String name;
-			
-			//Conseguir paraemtros
-			name = Console.read_string();
-			
-			g.setName(name);
-			
+
+			if (gc != null) {
+				gc.clear();
+			}
+
 		} catch (Exception e) {
-			Console.print("Error "+e.getMessage());
+			_msg_error(e.getMessage());
 		}
+
+	}
+
+	public static List<String[]> list_galaxycollection(GalaxyCollection gc) {
+
+		List<Galaxy> l = gc.getAll();
+		List<String[]> content = new ArrayList<String[]>();
+
+		for (Galaxy g : l) {
+
+			PairInt p = g.getSize();
+			String[] c = new String[3];
+
+			c[0] = g.getName();
+			c[1] = Integer.toString(p.getX());
+			c[2] = Integer.toString(p.getY());
+
+			content.add(c);
+		}
+
+		return content;
+
 	}
 
 }
