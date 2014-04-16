@@ -1,148 +1,94 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
+/**
+ * 
+ */
+
+
+//import AbstractDriver;
+
+/**
+ * 
+ *
+ */
 public class ResourceCollectionDriver extends AbstractDriver{
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-        //Generico del driver
-        ResourceCollection p  = new ResourceCollection(); 
-        Resource rec = new Resource();
-        List<Resource> list = new ArrayList<Resource>(); // List<Resource> ??    
-        //Generico del menu
-        Scanner in = new Scanner(System.in);
-        int opc = 0;
-        String argv[];      
-        //Menu
-        _menu();        
-		do {	
-            argv = Console.read_line(in);
-            opc = Integer.parseInt(argv[0]);
-            if (argv == null) opc = 0;
-            else if (argv.length > 0){
-			    switch(opc) { 
-                    case 1:
-                        create_ResourceCollection_full(list);
-                        p = new ResourceCollection(list);
-                        break;
-                    case 2:
-                        p = new ResourceCollection();
-                        break;       
-                    case 3:
-                        //p = new Resource(argv[0], argv[1]);
-                        add_resource(p,rec);
-                        break;
-                    case 4:
-                        addResourceByName(p,"Muestra1");
-                        break;           
-                    case 5:
-                        //p = new Resource(argv[1], argv[2]);
-                        remove(p,rec);
-                        break; 
-                    case 6:
-                        removeResourceByName(p,argv[1]);
-                        break;                              
-                    case 7:
-                        p.clear();
-                        break;
-                    case 8:
-                        List<Resource> recursos = p.getAll();
-                        for(Resource i : recursos){
-                            Console.print(i.getName() + "\n");
-                        }
-                        break;   
-                    case 9:
-                        Resource aux = p.getResourceByName("Muestra1");
-                        Console.print(aux.getName() + " " + "\n");
-                        break;
-                    case 10:
-                        p.exists(rec);
-                        break;
-                    case 11:
-                        p.existByName("Muestra1");
-                        break;
-                    case 12:
-                        Console.print("" + p.size());
-                }
-            }
-        }
-        while (opc != 0);
-	}
-    private static void _menu(){
-        title = "ResourceCollection Driver";
-        
-        menu.add("ResourceCollection()(List<Resource> cjt) : ResourceCollection");
+		
+		title = "ResourceCollection Driver";
+		
+		menu.add("ResourceCollection()(List<Resource> cjt) : ResourceCollection");
         menu.add("ResourceCollection() : ResourceCollection");
-        menu.add("add(Resource r) : boolean");
-        menu.add("addResourceByName(String namep) : boolean");
-        menu.add("remove(Resource r) : boolean");
-        menu.add("removeResourceByName(String name) : boolean");
-        menu.add("clear() : void");
-        menu.add("getAll() : List<Resource> ");
-        menu.add("getResourceByName(String namep) : Resource");
-        menu.add("exists(Resource r) : boolean");
+		menu.add("add(Resource r) : void");
+		menu.add("remove(Resource r) : void");
+		menu.add("clear() : void");
+		menu.add("getAll() : List<Resource> ");
         menu.add("existByName(String name) : boolean");
         menu.add("size() : int");
+				
+		print_menu();
+		
+		int opc = 0;
+        String[] argv;
+        Scanner in = new Scanner(System.in);
+        List<Resource> list = new ArrayList<Resource>();
+        ResourceCollection cjt = new ResourceCollection();
                 
-        print_menu();
-    }
+        do {
+            //Cuidado con esta lectura, si le pongo saltos de
+            //línea da errores
+           //Lectura de datos
+            argv = Console.read_line(in);
+            
+            if (argv == null) { //Terminaos el fichero
+                opc = 0;
+                
+            } else if (argv.length > 0)
+                //Recoger la opcion del usuario
+                opc = Integer.parseInt(argv[0]);
 
-    private static ResourceCollection create_ResourceCollection_full(List<Resource> list){
-        try{
-            return new ResourceCollection(list);
-        }
-        catch(Exception e){
-            _msg_error(e.getMessage());
-       }
-       return null;
-    }
-
-    private static boolean add_resource(ResourceCollection p,Resource r){
-        try{
-            return p.add(r);
-        }
-        catch(Exception e){
-            _msg_error(e.getMessage());
-       }
-       return false;
-    }
-
-    private static boolean addResourceByName(ResourceCollection p , String namep){
-        try{
-            return p.addResourceByName(namep);
-        }
-        catch(Exception e){
-            _msg_error(e.getMessage());
-       }
-       return false;
-    }
-
-    private static boolean remove(ResourceCollection p , Resource r){
-        try{
-            return p.remove(r);
-        }
-        catch(Exception e){
-            _msg_error(e.getMessage());
-       }
-       return false;
-    }
-
-    private static boolean removeResourceByName(ResourceCollection p , String namep){
-        try{
-            return p.removeResourceByName(namep);
-        }
-        catch(Exception e){
-            _msg_error(e.getMessage());
-       }
-       return false;
-    }
-    private static void clear(ResourceCollection p){
-        try{
-            p.clear();
-        }
-        catch(Exception e){
-            _msg_error(e.getMessage());
-        }
-    }
+            switch(opc){
+                case 0:
+                    break;
+                case 1:
+                    //if i+1 >= argv.size() throw exception
+                    for (int i = 1; i < argv.length; i+=2)
+                        list.add(new Resource(argv[i], argv[i+1]));
+                    cjt = new ResourceCollection(list);
+                    break;
+				case 2:
+                    cjt = new ResourceCollection();
+                    break;
+                case 3:
+                    cjt.add(new Resource(argv[1], argv[2]));
+                    break;
+                case 4:
+                    cjt.remove(new Resource(argv[1], argv[2]));
+                    break;
+                case 5:
+                    cjt.clear();
+                    break;
+                case 6:
+                    list = cjt.getAll();
+                    for (int i = 0; i < list.size(); i++)
+                        Console.print("Recurso "+i+": "+list.get(i).getName()+", "+list.get(i).getType());
+                    break;
+                case 7:
+                    if(cjt.existsByName(argv[1])) Console.print("Present");
+                    else Console.print("Not present");
+                    break;
+                case 8:
+                    Console.print(""+cjt.size());
+                    break;
+                default:
+                    Console.print("Opción no valida");
+                    break;
+			}
+		} while (opc != 0);
+	}
 }
