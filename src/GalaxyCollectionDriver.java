@@ -133,7 +133,7 @@ public class GalaxyCollectionDriver extends AbstractDriver {
 
 		title = "Galaxy Collection Driver";
 
-		menu.add("GalaxyCollection(String nameGalaxy1, int xGalaxy1, int yGalaxy1, String nameGalaxy2, ...) : GalaxyCollection"); // 1
+		//menu.add("GalaxyCollection(String nameGalaxy1, int xGalaxy1, int yGalaxy1, String nameGalaxy2, ...) : GalaxyCollection"); // 1
 		menu.add("GalaxyCollection() : GalaxyCollection");
 		menu.add("add(String nameGalaxy, int xGalaxy, int yGalaxy) : void"); // 3
 		menu.add("remove(String nameGalaxy, int xGalaxy, int yGalaxy) : void");

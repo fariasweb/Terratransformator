@@ -2,7 +2,8 @@
 import java.util.*;
 
 public class GalaxyCollection {
-	List<Galaxy> cjtGalaxy;
+
+	private List<Galaxy> cjtGalaxy;
 	
 	//Contructs
 	//---------------------------------------------
@@ -37,6 +38,8 @@ public class GalaxyCollection {
 	public List<Galaxy> getAll(){
 		return cjtGalaxy;
 	}
+	
+	//TODO: Selecionar solamente 1
 	
 	// Exist
 	//-----------------------------------------------
