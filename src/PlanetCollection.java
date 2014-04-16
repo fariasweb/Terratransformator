@@ -1,4 +1,3 @@
-
 import java.util.*;
 
 public class PlanetCollection {
@@ -17,15 +16,38 @@ public class PlanetCollection {
 	
 	//Setter
 	//---------------------------------------------
-	
+	/**
+	 * 
+	 * @param g
+	 * @return
+	 */
 	public boolean add(Planet g){
 		return cjtPlanet.add(g);
 	}
-		
+	
+	/**
+	 * 
+	 * @param g
+	 * @return
+	 */
 	public boolean remove(Planet g){
 		return cjtPlanet.remove(g);
 	}
-	    
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public boolean removePlanetByName(String name){
+		for(int i = 0; i < size(); ++i){
+			if(name == cjtPlanet.get(i).getName()){
+    			return cjtPlanet.remove(cjtPlanet.get(i));
+    		}
+    	}
+    	return false;
+    }
+	  
 	public void clear(){
 		cjtPlanet.clear();
 	}
@@ -33,23 +55,50 @@ public class PlanetCollection {
 	
 	//Getter
 	//-----------------------------------------------
-		
+	/**
+	 * 
+	 * @return the cjtPlanet
+	 */
 	public List<Planet> getAll(){
 		return cjtPlanet;
 	}
 	
+	/**
+	 * 
+	 * @param planet
+	 * @return
+	 */
+	public Planet getPlanetByName(String name){
+		for(int i = 0; i < size(); ++i){
+			if(name == cjtPlanet.get(i).getName()){
+				return cjtPlanet.get(i);
+			}
+		}
+		return null;
+	}
 	// Exist
 	//-----------------------------------------------
-
+	/**
+	 * 
+	 * @param g
+	 * @return
+	 */
 	public boolean exist(Planet g){
 		return cjtPlanet.contains(g);
 	}
 	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public boolean existByName(String name) {
-		//TODO
+		for(int i = 0; i < size(); ++i){
+			if(name == cjtPlanet.get(i).getName()) return true;
+		}	
 		return false;
 	}
-	
+
 	// Utils
 	//-----------------------------------------------
 	

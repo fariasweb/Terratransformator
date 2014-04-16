@@ -14,56 +14,63 @@ import java.util.List;
  */
 public class ResourceDriver extends AbstractDriver{
 
+	private static void _menu(){
+		title = "Resource Driver";
+		
+		menu.add("Resource(String namep, ResourceType typep) : Resource");
+		menu.add("Resource() : Resource");
+		menu.add("setName(String namep)");
+		menu.add("setType(ResourceType typep)");
+		menu.add("getName() : String");
+		menu.add("getType() : ResourceType");
+				
+		print_menu();
+	}
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
-		title = "Resource Driver";
-		
-		menu.add("Resource(String namep, ResourceType typep) : Resource");
-		menu.add("getName() : String");
-		menu.add("getType() : String");
-		menu.add("setName(String namep) : void");
-		menu.add("setType(ResourceType typep) : String");
-				
-		print_menu();
-		
+		//Generico del driver
+		Resource p = new Resource();
+		//Generico del menu
+		Scanner in = new Scanner(System.in);
 		int opc = 0;
-		String par1, par2;
-                Resource r = new Resource();
-                
+		String argv[];		
+		//Menu
+		_menu();       
 		do {
 			
-                    opc = Console.read_int();
-			switch(opc) {
-                            case 1:
-                                par1 = Console.read_string();
-                                par2 = Console.read_string();
-                                Resource(par1, par2);
-                                break;
-				
-                            case 2:
-                                Console.print(r.getName());
-                                break;
+            argv = Console.read_line(in);
+            if(argv == null ) opc = 0;
+            else if(argv.length > 0){
+            	opc = Integer.parseInt(argv[0]);
+				switch(opc) {
+                    case 1:
+                        p = Resource(argv[1], argv[2]);
+                        break;
+	
+                    case 2:
+                        p = Console.print(r.getName());
+                        break;
                             
-                            case 3:
-                                Console.print(getType());
-                                break;
+                    case 3:
+                        Console.print(getType());
+                        break;
                             
-                            case 4:
-                                par1 = Console.read_string();
-                                r.setName(par1);
-                                break;
+                    case 4:
+                        par1 = Console.read_string();
+                        r.setName(par1);
+                        break;
                                 
-                            case 5:
-                                par1 = Console.read_string();
-                                r.setType(par1);
-                                break;
+                    case 5:
+                        par1 = Console.read_string();
+                        r.setType(par1);
+                        break;
                                 
-                            default:
-                                Console.print("Opción no valida");
-                                break;
+                    default:
+                        Console.print("Opción no valida");
+                        break;
 			}
 			
 			
