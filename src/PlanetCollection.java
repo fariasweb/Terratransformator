@@ -25,6 +25,15 @@ public class PlanetCollection {
 		return cjtPlanet.add(g);
 	}
 	
+	public boolean addPlanetByName(String name){
+		for(int i = 0; i < size(); ++i){
+			if(name == cjtPlanet.get(i).getName()){
+    			return cjtPlanet.add(cjtPlanet.get(i));
+    		}
+    	}
+    	return false;
+	}
+
 	/**
 	 * 
 	 * @param g

@@ -46,7 +46,7 @@ public class PlanetDriver extends AbstractDriver{
 					break;
 				case 9:
 					for(int i = 0; i < p.getNeededResources().size(); ++i){
-						Console.print(p.getNeededResources().get(i).name);
+						Console.print(p.getNeededResources().get(i).getName());
 					}
 					break;
 				case 10:
@@ -85,8 +85,7 @@ public class PlanetDriver extends AbstractDriver{
 	
 	private static void set_name(Planet p,String param){
 		try{
-			String newName = param;
-			p.setName(newName);
+			p.setName(param);
 		}
 		catch(Exception e){
 			_msg_error(e.getMessage());

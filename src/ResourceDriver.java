@@ -1,18 +1,51 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
-/**
- * 
- */
-
-
-//import AbstractDriver;
-
-/**
- * 
- *
- */
 public class ResourceDriver extends AbstractDriver{
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		//Generico del driver
+		Resource p = new Resource();
+		//Generico del menu
+		Scanner in = new Scanner(System.in);
+		int opc = 0;
+		String argv[];		
+		//Menu
+		_menu();       
+		do {
+            argv = Console.read_line(in);
+            if(argv == null ) opc = 0;
+            else if(argv.length > 0){
+            	opc = Integer.parseInt(argv[0]);
+				switch(opc) {
+                    case 1:
+                       // p = create_resource(argv[1], argv[2]);
+                        break;
+                    case 2:
+                        p = new Resource();
+                        break;
+                            
+                    case 3:
+                        set_name(p,argv[1]);
+                        break;
+                            
+                    case 4:
+                      	//p.setType(argv[1]);
+                        break;
+                                
+                    case 5:
+                        Console.print(p.getName());
+                        break;
+                                
+                    default:
+                        Console.print(p.getType());
+                        break;
+				}
+			}
+		} 
+		while (opc != 0);
+	}
 
 	private static void _menu(){
 		title = "Resource Driver";
@@ -27,54 +60,22 @@ public class ResourceDriver extends AbstractDriver{
 		print_menu();
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		//Generico del driver
-		Resource p = new Resource();
-		//Generico del menu
-		Scanner in = new Scanner(System.in);
-		int opc = 0;
-		String argv[];		
-		//Menu
-		_menu();       
-		do {
-			
-            argv = Console.read_line(in);
-            if(argv == null ) opc = 0;
-            else if(argv.length > 0){
-            	opc = Integer.parseInt(argv[0]);
-				switch(opc) {
-                    case 1:
-                        p = Resource(argv[1], argv[2]);
-                        break;
-	
-                    case 2:
-                        p = Console.print(r.getName());
-                        break;
-                            
-                    case 3:
-                        Console.print(getType());
-                        break;
-                            
-                    case 4:
-                        par1 = Console.read_string();
-                        r.setName(par1);
-                        break;
-                                
-                    case 5:
-                        par1 = Console.read_string();
-                        r.setType(par1);
-                        break;
-                                
-                    default:
-                        Console.print("Opción no valida");
-                        break;
-			}
-			
-			
-		} while (opc != 0);
+	private static Resource create_resource(String namep, ResourceType typep) {
+		try{
+			return new Resource(namep,typep); //El parametro 0 es el nombre del planeta
+		}
+		catch (Exception e){
+			_msg_error(e.getMessage());
+		}
+		return null;
 	}
 
+	private static void set_name(Resource p, String namep){
+		try{
+			p.setName(namep);
+		}
+		catch(Exception e){
+			_msg_error(e.getMessage());
+		}
+	}
 }

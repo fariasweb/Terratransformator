@@ -22,7 +22,16 @@ public class ResourceCollection {
             //No haría falta comprobar si hacemos un map
             return cjtResource.remove(r);
 	}
-		
+	
+	public boolean addResourceByName(String name){
+		for(int i = 0; i < size(); ++i){
+			if(name == cjtResource.get(i).getName()){
+    			return cjtResource.add(cjtResource.get(i));
+    		}
+    	}
+    	return false;
+    }
+
 	public boolean remove(Resource r){
 		return cjtResource.remove(r);
 	}
