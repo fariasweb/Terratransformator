@@ -19,14 +19,17 @@ public class PlanetCollectionDriver extends AbstractDriver{ /* Solo sirve para c
 	public static void main(String args[]){
 		
 		//Generico del driver
-				PlanetCollection p = new PlanetCollection();
-				Planet muestra1 = null;
-				//Generico del menu
-				Scanner in = new Scanner(System.in);
-				int opc = 0;
-				String argv[];		
-				//Menu
-				_menu();
+		PlanetCollection p = new PlanetCollection();
+		Planet muestra1 = null;
+		
+		//Generico del menu
+		Scanner in = new Scanner(System.in);
+		int opc = 0;
+		String argv[];		
+		
+		//Menu
+		_menu();
+		
 		do {
 			argv = Console.read_line(in);
 			opc = Integer.parseInt(argv[0]);

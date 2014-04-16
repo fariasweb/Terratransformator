@@ -5,10 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 
 
 public class Console {
+	
+	private static String table_format = "%1$12s";
 	
 	//Lineas
 	//---------------------------------------------
@@ -89,8 +90,45 @@ public class Console {
 	public static void log(String x) {
 	    Date dNow = new Date( );
 	    SimpleDateFormat ft = new SimpleDateFormat ("hh:mm:ss");
-		System.out.print(ft.format(dNow)+": "+x);
+		System.out.println(ft.format(dNow)+"> "+x);
 	}
+	
+	public static void table(String[] head, List<String[]> content) {
+		
+		// HEAD
+		for(int i = 0; i < head.length; i++) System.out.print("===============");
+		Console.ln();
+		 
+        for(int i = 0; i < head.length; i++) {
+            //Console.echo(head[i]);
+        	System.out.format(table_format, head[i]);
+        }	
+        
+        Console.ln();
+        for(int i = 0; i < head.length; i++) System.out.print("===============");
+		Console.ln();
+        
+        //BODY
+        if (content.size() > 0) {
+	        for(int i = 0; i < content.size(); i++) {
+	            String[] s = content.get(i);
+	            
+	            for(int j = 0; j < s.length; j++) {
+	                System.out.format(table_format, s[j]);
+	            }	
+	            Console.ln();
+	            //Console.print_line_light();
+	        }
+        } else {
+        	System.out.format(table_format, "Any row");
+        	Console.ln();
+        	//Console.print_line_light();
+        }
+        
+        for(int i = 0; i < head.length; i++) System.out.print("===============");
+		Console.ln();
+	}
+	
 	
 	// ENTRADAS	
 	//---------------------------------------------
@@ -143,4 +181,5 @@ public class Console {
 	    return argv;
 		
 	}
+
 }

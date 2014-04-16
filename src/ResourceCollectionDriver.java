@@ -22,14 +22,14 @@ public class ResourceCollectionDriver extends AbstractDriver{
 		title = "ResourceCollection Driver";
 		
 		menu.add("ResourceCollection()(List<Resource> cjt) : ResourceCollection");
-                menu.add("ResourceCollection() : ResourceCollection");
+        menu.add("ResourceCollection() : ResourceCollection");
 		menu.add("add(Resource r) : boolean");
 		menu.add("remove(Resource r) : boolean");
 		menu.add("clear() : void");
 		menu.add("getAll() : List<Resource> ");
-                menu.add("exists(Resource r) : boolean);
-                menu.add("existByName(String name) : boolean);
-                menu.add("size() : int);
+        menu.add("exists(Resource r) : boolean);
+        menu.add("existByName(String name) : boolean);
+        menu.add("size() : int);
 				
 		print_menu();
 		
@@ -40,7 +40,7 @@ public class ResourceCollectionDriver extends AbstractDriver{
                 
 		do {
 			
-                    opc = Console.read_int();
+            opc = Console.read_int();
 			switch(opc) {
                             
                             case 1:

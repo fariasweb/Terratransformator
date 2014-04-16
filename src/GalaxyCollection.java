@@ -18,12 +18,12 @@ public class GalaxyCollection {
 	//Setter
 	//---------------------------------------------
 	
-	public boolean add(Galaxy g){
-		return cjtGalaxy.add(g);
+	public void add(Galaxy g){
+		cjtGalaxy.add(g);
 	}
 		
-	public boolean remove(Galaxy g){
-		return cjtGalaxy.remove(g);
+	public void remove(Galaxy g){
+		cjtGalaxy.remove(g);
 	}
 	    
 	public void clear(){
