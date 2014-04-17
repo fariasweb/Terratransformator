@@ -16,16 +16,16 @@ public class Resource extends Entity{
 		}	
 	}
 
-	private static void checkType(ResourceType res) throws IllegalArgumentException{ //Enseñar
+	/*private static void checkType(ResourceType res) throws IllegalArgumentException{ //Enseñar
 		if(!(typep.equals("H") || typep.equals("T")))  throw new IllegalArgumentException("type is not valid");
-	}
+	}*/
 	//Contructs
 	//---------------------------------------------
 		
 	public Resource(String namep, String typep) throws Exception{
         checkName(namep);
         name = namep;
-        checkType(typep);
+        //checkType(typep);
         type = ResourceType.valueOf(typep);
 	}
 
@@ -78,7 +78,7 @@ public class Resource extends Entity{
 	 * @param type the type to set
 	 */
 	public void setType(String typep) throws Exception {
-		checkType(typep);
+		//checkType(typep);
         type = ResourceType.valueOf(typep);
 	}
 

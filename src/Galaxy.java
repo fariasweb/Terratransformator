@@ -1,14 +1,13 @@
 import java.util.*;
 import java.util.regex.*;
 
-public class Galaxy implements Entity {
+public class Galaxy {
 
 	private String name;
 	private int x;
 	private int y;
 	
 	private List<Planet> planets;
-	//private Packet packet_assigned;
 
 	//Contructs
 	//---------------------------------------------

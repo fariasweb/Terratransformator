@@ -10,14 +10,21 @@ public class Packet {
 
 	String name;
 	Planet planet;
-	Map<String, int> map;
+	Map<String, RelationPacketResource> map;
 	//TODO Relacion con recurso
 	
 	//Contructs
 	//---------------------------------------------
-			
+	
+	public Packet() {
+		name = "";
+		planet = null;
+	}
+	
 	public Packet(String namep) throws Exception {
 		setName(namep);
+		//TODO: Inicial Mapa
+		map = new Map<String, RelationPacketResource>();
 	}
 	
 	//Getters
@@ -26,15 +33,8 @@ public class Packet {
 	/**
 	 * @return the map
 	 */
-	public getMap<String, int> getMap() {
+	public Map<String, RelationPacketResource> getMap() {
 		return map;
-	}
-
-	/**
-	 * @param map the map to set
-	 */
-	public void setMap(Map<String, String> map) {
-		this.map = map;
 	}
 
 	/**
@@ -60,8 +60,7 @@ public class Packet {
 	 * @throws Exception 
 	 */
 	public void setName(String namep) throws Exception {
-		//TODO
-		//if (idp <= 0) throw new Exception("The id must be bigger than 0");
+		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
 		name = namep;
 	}
 
@@ -75,5 +74,39 @@ public class Packet {
 		}
 	}
 	
-	//TODO A–adir y gestionar recursos del paquete
+	//Resource
+	//---------------------------------------------
+	/**
+	 * 
+	 * @param rp
+	 * @param qp
+	 * @throws Exception 
+	 */
+	public void addResource(Resource rp, int qp) throws Exception {
+		
+		//Compruebas si existe ya en el packete
+		if(map.containsKey(rp.getName())) throw new Exception ("This packet contains a "+rp.getName()+" resource");
+		
+		//Si no existe, creamos y a–adimos
+		RelationPacketResource rpr = new RelationPacketResource(this, rp, qp);
+		map.put(rp.getName(), rpr);
+	}
+	
+	/**
+	 * 
+	 * @param rp
+	 * @throws Exception
+	 */
+	public void removeResource(Resource rp) throws Exception {
+		if (map.remove(rp.getName()) == null) throw new Exception("This packet doesnt contain any  "+rp.getName()+" resource");
+	}
+	
+	/**
+	 * 
+	 */
+	public void removeAllResource() {
+		map.clear();
+	}
+	
+	
 }

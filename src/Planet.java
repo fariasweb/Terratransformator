@@ -11,19 +11,6 @@ public class Planet {
 	private Packet packet;
 
 	
-	private static void checkName(String namep) throws Exception{ //Funcion que comprueba la entrada 
-		for(int i = 0; i < namep.length(); ++i){
-			//Se realiza validacion de datos
-			if(!((namep.charAt(i) >= 'a') && (namep.charAt(i) <= 'z'))){
-				if(!((namep.charAt(i) >= 'A') && (namep.charAt(i) <= 'Z'))){
-					if((namep.charAt(i) >= '0') && (namep.charAt(i) <= '9')){
-						throw new Exception(namep + " is not valid");
-					}
-				}
-			}
-		}	
-	}
-	
 	private static void checkPosition(int x_posp, int y_posp) throws Exception {
 		if(x_posp < 0 ) throw new Exception(x_posp + " position not valid");
 		if(y_posp < 0 ) throw new Exception(y_posp + " position not valid");
@@ -53,7 +40,7 @@ public class Planet {
 	 * @param name the name to set
 	 */
 	public void setName(String namep) throws Exception {
-		checkName(namep);
+		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
 		name = namep;
 	}
 
@@ -78,7 +65,10 @@ public class Planet {
 	 * @param packet the packet to set
 	 */
 	public void setPacket(Packet packetp) {
-		packet = packetp;
+		if (packet != packetp) {
+			packet = packetp;
+			packetp.setPlanet(this);
+		}
 	}
 	
 	//Getter
