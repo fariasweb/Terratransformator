@@ -9,6 +9,9 @@ public abstract class AbstractDriver {
 	
 	protected static String _msg_error_pre = "Error: ";
 	
+	protected static int opc = 0;
+	protected static String[] argv;
+	
 	public static void print_menu(){
 		
 		//Print title

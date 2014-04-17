@@ -22,8 +22,6 @@ public class GalaxyDriver extends AbstractDriver {
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
-		int opc = 0;
-		String[] argv;
 
 		// Menu
 		_menu();

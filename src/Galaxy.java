@@ -1,7 +1,7 @@
 import java.util.*;
 import java.util.regex.*;
 
-public class Galaxy {
+public class Galaxy implements Entity {
 
 	private String name;
 	private int x;
