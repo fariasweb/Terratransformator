@@ -1,26 +1,15 @@
-
-
 /*import planet;
 import planetCollection;
 */
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * planetController
- * 
- * @author farias
- *
- */
 public class PlanetController extends AbstractController{
-
-	PlanetCollection planetClt;
+// NO SE PONE TRY CATCH EN EL CONTROLADOR
+	PlanetCollection planetCtl;
 	
-	/**
-	 * 
-	 */
 	public PlanetController() {
-		planetClt = new PlanetCollection();
+		planetCtl = new PlanetCollection();
 	}
 	
 	/**
@@ -34,12 +23,9 @@ public class PlanetController extends AbstractController{
 	 * @param y
 	 * @return boolean
 	 */
-	public boolean create(String name, int x, int y) {
-		//if (this.planetClt.existByName(name)) throw new Exception(1, "Fran");
-		
-		Planet g = new Planet(name, x, y);
-		
-		return this.planetClt.add(g);	
+	public boolean createPlanet(String name, int x, int y) throws Exception {
+			Planet g = new Planet(name, x, y);
+			return planetCtl.add(g);	
 	}
 	
 	/**
@@ -48,16 +34,50 @@ public class PlanetController extends AbstractController{
 	 * @return List<String>
 	 */
 	public List<String> getAll() {
-		
 		List<String> list = new ArrayList<String>();
-		
-		//Comprobamos que exista algo en el array
-		if(this.planetClt.size() > 0){
-			for(Planet i : this.planetClt.getAll()){
-				list.add(i.getName());
-			}
+		for(Planet i : planetCtl.getAll()){
+			list.add(i.getName());
 		}
 		return list;
+	}
+	
+	/**
+	 * 
+	 * @param p
+	 */
+	public void remove(Planet p){
+		planetCtl.remove(p);
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 */
+	public void removePlanetByName(String name){
+		planetCtl.removePlanetByName(name);	
+	}
+	
+	/**
+	 * 
+	 * @param g
+	 * @return boolean
+	 */
+	public boolean add(Planet g){
+		return planetCtl.add(g);
+	}
+
+	public boolean addPlanetByName(String name){
+		return planetCtl.addPlanetByName(name);
+	}
+	/**
+	 * 
+	 */
+	public void guardarPlaneta(){
+		
+	}
+	
+	public void cargarPlaneta(){
+		
 	}
 	
 }

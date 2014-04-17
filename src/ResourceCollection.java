@@ -2,7 +2,7 @@
 import java.util.*;
 
 public class ResourceCollection {
-	List<Resource> cjtResource;
+	private List<Resource> cjtResource;
 	
 	//Contructs
 	//---------------------------------------------
@@ -20,14 +20,31 @@ public class ResourceCollection {
 	
 	public boolean add(Resource r){
             //No haría falta comprobar si hacemos un map
-            if(!cjtResource.exists(r)) return cjtResource.add(r);
-            return false;
+            return cjtResource.remove(r);
 	}
-		
+	
+	public boolean addResourceByName(String name){
+		for(int i = 0; i < size(); ++i){
+			if(name == cjtResource.get(i).getName()){
+    			return cjtResource.add(cjtResource.get(i));
+    		}
+    	}
+    	return false;
+    }
+
 	public boolean remove(Resource r){
 		return cjtResource.remove(r);
 	}
-	    
+	
+	public boolean removeResourceByName(String name){
+		for(int i = 0; i < size(); ++i){
+			if(name == cjtResource.get(i).getName()){
+    			return cjtResource.remove(cjtResource.get(i));
+    		}
+    	}
+    	return false;
+    }
+
 	public void clear(){
 		cjtResource.clear();
 	}
@@ -40,6 +57,15 @@ public class ResourceCollection {
 		return cjtResource;
 	}
 	
+	public Resource getResourceByName(String namep){
+		for(int i = 0; i < size(); ++i){
+			if(namep == cjtResource.get(i).getName()){
+				return cjtResource.get(i);
+			}
+		}
+		return null;
+	}
+
 	// Exist
 	//-----------------------------------------------
 
@@ -48,7 +74,11 @@ public class ResourceCollection {
 	}
 	
 	public boolean existByName(String name) {
-		//TODO
+		for(int i = 0; i < size(); ++i){
+			if(name == cjtResource.get(i).getName()){
+				return true;
+			}
+		}
 		return false;
 	}
 	

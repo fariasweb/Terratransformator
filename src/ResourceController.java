@@ -28,12 +28,9 @@ public class ResourceController extends AbstractController{
 	 * @param type ResourceType
 	 * @return boolean
 	 */
-	public boolean createResource(String name, ResourceType type) {
+	public void createResource(String name, String type) {
 		//TODO Validaciones (o en recurso?)
-				
-		Resource r = new Resource(name, type);
-		
-		return resourceCjt.add(r);	
+		resourceCjt.add(new Resource(name, type));	
 	}
 	
 	/**
@@ -74,34 +71,30 @@ public class ResourceController extends AbstractController{
          * @param name
          * @return list<String>
          */
-        public List<String> getPlanetsOfResource(String name){
+       /* public List<String> getPlanetsOfResource(String name){
             
             List<String> list = new ArrayList<String>();
-            
-            Reseource r = resourceCjt.getByName(name);
             
             for(Planet i : planetCtl.getAll())
                 if(i.getNameResourceHas() == name)
                     list.add(i.getName());
             
             return list;
-        }
+        }*/
         
          /**
          * Devuelve un listado de los paquetes en que se encuentra el recurso.
          * @param name
          * @return list<String>
          */
-         public List<String> getPacketsOfResource(String name){
+        /* public List<String> getPacketsOfResource(String name){
             
             List<String> list = new ArrayList<String>();
-            
-            Reseource r = resourceCjt.getByName(name);
             
             for(Packet i : packetCtl.getAll())
                 if(i.getNameResourceHas() == name)
                     list.add(i.getName());
             
             return list;
-        }
+        }*/
 }
