@@ -37,25 +37,25 @@ public class PlanetDriver extends AbstractDriver{
 				case 4:
 					set_position(p,Integer.parseInt(argv[1]) , Integer.parseInt(argv[2]));
 					break;
-				case 5:
+				/*case 5:
 					set_needed_resources(p);
-					break;
-				case 6:
+					break;*/
+				case 5:
 					//set_packet(p,packet)
 					break;
-				case 7:
+				case 6:
 					Console.print(p.getName());
 					break;
-				case 8:
+				case 7:
 					Console.print(p.getPosition().getX() + " " + p.getPosition().getY());
 					break;
-				case 9:
+				/*case 9:
 					for(int i = 0; i < p.getNeededResources().size(); ++i){
 						Console.print(p.getNeededResources().get(i).getName());
 					}
-					break;
-				case 10:
-					Console.print(p.getPacket().getId() + "");
+					break;*/
+				case 8:
+					Console.print(p.getPacket().getName() + "");
 				}
 			}
 		}
@@ -69,16 +69,16 @@ public class PlanetDriver extends AbstractDriver{
 		menu.add("Planet() : Planet");
 		menu.add("SetName(String namePlanet)"); //3
 		menu.add("SetPosition(int x_pos, int y_pos)");
-		menu.add("SetNeededResources(List<Resource> neededResources)");
+		//menu.add("SetNeededResources(List<Resource> neededResources)");
 		menu.add("SetPacket(Packet p)");
 		menu.add("GetName() : String"); //7
 		menu.add("GetPosition() : PairInt");
-		menu.add("GetNeededResources() : PairInt");
+		//menu.add("GetNeededResources() : PairInt");
 		menu.add("GetPacket(): Packet");
 		print_menu();
 	}
 	
-	private static Planet create_planet(String namep, int x, int y) {
+	public static Planet create_planet(String namep, int x, int y) {
 		try{
 			return new Planet(namep,x,y); //El parametro 0 es el nombre del planeta
 		}
@@ -88,7 +88,7 @@ public class PlanetDriver extends AbstractDriver{
 		return null;
 	}
 	
-	private static void set_name(Planet p,String param){
+	public static void set_name(Planet p,String param){
 		try{
 			p.setName(param);
 		}
@@ -96,7 +96,7 @@ public class PlanetDriver extends AbstractDriver{
 			_msg_error(e.getMessage());
 		}
 	}
-	private static void set_position(Planet p,int x, int y){
+	public static void set_position(Planet p,int x, int y){
 		try{
 			p.setPosition(x, y);
 		}
@@ -104,7 +104,7 @@ public class PlanetDriver extends AbstractDriver{
 			_msg_error(e.getMessage());
 		}
 	}
-	private static void set_needed_resources(Planet p){
+	public static void set_needed_resources(Planet p){
 		try{
 			//int number = Console.read_int();
 			//Read list of resources -> Change Data Structure to Maps.
@@ -113,7 +113,7 @@ public class PlanetDriver extends AbstractDriver{
 			_msg_error(e.getMessage());
 		}
 	}
-	private static void set_packet(Planet p, Packet packet){
+	public static void set_packet(Planet p, Packet packet){
 		try{
 			p.setPacket(packet);
 		}

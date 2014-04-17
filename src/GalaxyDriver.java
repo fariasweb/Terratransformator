@@ -41,7 +41,7 @@ public class GalaxyDriver extends AbstractDriver {
 
 				// Accion
 				switch (opc) {
-				case 0:
+				case 0: //Exit
 					break;
 				case 1:
 					if (argv.length < 4)

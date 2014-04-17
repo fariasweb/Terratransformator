@@ -7,7 +7,7 @@ public class Planet {
 	private Integer y_pos;	//This one neither
 	
 	//TODO Relacion con recurso
-	private List<Resource> neededResources;
+	//private List<Resource> neededResources;
 	private Packet packet;
 
 	
@@ -20,7 +20,7 @@ public class Planet {
 	public Planet(String namep,int x_posp, int y_posp) throws Exception{
 		setPosition(x_posp,y_posp); // Se chequea aqui
 		setName(namep);				// Se chequea aqui
-		neededResources = new ArrayList<Resource> ();
+		//neededResources = new ArrayList<Resource> ();
 		packet = null;
 	}
 	
@@ -29,7 +29,7 @@ public class Planet {
 		name = null;
 		x_pos = y_pos = null;
 		
-		neededResources = new ArrayList<Resource>();
+		//neededResources = new ArrayList<Resource>();
 		packet = null;
 	}
 	
@@ -57,9 +57,9 @@ public class Planet {
 	/**
 	 * @param neededResources the neededResources to set
 	 */
-	public void setNeededResources(List<Resource> neededResourcesp) {
+	/*public void setNeededResources(List<Resource> neededResourcesp) {
 		neededResources = neededResourcesp;
-	}
+	}*/
 
 	/**
 	 * @param packet the packet to set
@@ -68,6 +68,19 @@ public class Planet {
 		if (packet != packetp) {
 			packet = packetp;
 			packetp.setPlanet(this);
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void removePacket() {
+		if (packet != null) {
+			Packet p = packet;
+			
+			packet = null;
+			p.removePlanet();
+			
 		}
 	}
 	
@@ -91,9 +104,9 @@ public class Planet {
 	/**
 	 * @return the neededResources
 	 */
-	public List<Resource> getNeededResources() {
+	/*public List<Resource> getNeededResources() {
 		return neededResources;
-	}
+	}*/
 
 	/**
 	 * @return the packet

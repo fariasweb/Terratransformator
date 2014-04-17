@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -35,58 +38,92 @@ public class PacketDriver extends AbstractDriver {
 
 				// Accion
 				switch (opc) {
-				case 0:
+				case 0: // Exit
 					break;
+
 				case 1:
 					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
-						g = create_galaxy_full(argv[1],
-								Integer.parseInt(argv[2]),
-								Integer.parseInt(argv[3]));
+						p = create_packet_full(argv[1]);
 					}
 					break;
 
 				case 2:
-					g = new Galaxy();
+					p = new Packet();
 					break;
 
 				case 3:
 					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
-						set_galaxy_name(g, argv[1]);
+						set_packet_name(p, argv[1]);
 					}
-
 					break;
 
 				case 4:
-					if (argv.length < 3)
-						_msg_error_param_insuf();
-					else {
-						set_galaxy_size(g, Integer.parseInt(argv[1]),
-								Integer.parseInt(argv[2]));
-					}
+
+					Planet planet = PlanetDriver.create_planet(argv[1],
+							Integer.parseInt(argv[2]),
+							Integer.parseInt(argv[3]));
+					set_planet_to_a_packet(p, planet);
+
 					break;
 
-				case 5: // TODO
-
+				case 5:
+					Resource r = ResourceDriver.create_resource(argv[1],
+							argv[2]);
+					set_resource_to_a_packet(p, r, Integer.parseInt(argv[3]));
 					break;
 
 				case 6:
-					if (g != null)
-						Console.print(g.getName());
+					if (p != null)
+						Console.print(p.getName());
 					break;
 
 				case 7:
-					if (g != null) {
-						PairInt p = g.getSize();
-						Console.print(p.getX() + " " + p.getY());
+					Planet planet_now = p.getPlanet();
+					if (planet_now == null) {
+						Console.print("This packet doesn't have planet");
+					} else {
+						Console.print("Planet: " + planet_now.getName());
 					}
+
 					break;
 
-				case 8: // TODO
+				case 8:
+					Map<String, RelationPacketResource> lr = p.getResource();
+					if (lr.isEmpty()) {
+						Console.print("This packet doesn't have resource");
+					} else {
+						String[] head = { "Resource", "Type", "Quantity" };
+						List<String[]> content = new ArrayList<String[]>();
 
+						for (String key : lr.keySet()) {
+							String[] c = new String[3];
+
+							c[0] = key;
+							c[2] = Integer.toString(lr.get(key).getQuantity());
+							c[1] = lr.get(key).getResource().getType();
+
+							content.add(c);
+						}
+
+						Console.table(head, content);
+					}
+
+					break;
+
+				case 9:
+					remove_resource_from_packet(p, argv[1]);
+					break;
+
+				case 10:
+					p.removeAllResource();
+					break;
+
+				case 11:
+					p.removePlanet();
 					break;
 
 				default:
@@ -106,16 +143,19 @@ public class PacketDriver extends AbstractDriver {
 	 */
 	private static void _menu() {
 
-		title = "Galaxy Driver";
+		title = "Packet Driver";
 
-		menu.add("Galaxy(String name, int x, int y) : Galaxy"); // 1
-		menu.add("Galaxy() : Galaxy");
+		menu.add("Packet(String name) : Packet"); // 1
+		menu.add("Packet() : Packet");
 		menu.add("SetName(String name)"); // 3
-		menu.add("SetSize(int x, int y)");
-		menu.add("SetPlanet(Planet p, int x, int y)");
+		menu.add("SetPlanet(String PlanetName, int x, int y)");
+		menu.add("AddResource(String ResourceName, ResourceType type, int quantity)");
 		menu.add("GetName() : String"); // 6
-		menu.add("GetSize() : PairInt");
-		menu.add("GetPlanets(): List<Planet>");
+		menu.add("GetPlanet() : Planet");
+		menu.add("GetResource(): Map<String, RelationPacketResource>");
+		menu.add("removeResource(Strig ResourceName) : void"); // 9
+		menu.add("removeAllResource() : void");
+		menu.add("removePlanet() : void"); // 11
 
 		print_menu();
 	}
@@ -123,17 +163,9 @@ public class PacketDriver extends AbstractDriver {
 	// Actions
 	// ---------------------------------------------
 
-	/**
-	 * 
-	 * @param name
-	 * @param x
-	 * @param y
-	 * @return Galaxy
-	 */
-	public static Galaxy create_galaxy_full(String name, int x, int y) {
+	public static Packet create_packet_full(String name) {
 		try {
-			return new Galaxy(name, x, y);
-			
+			return new Packet(name);
 		} catch (Exception e) {
 			_msg_error(e.getMessage());
 		}
@@ -143,12 +175,12 @@ public class PacketDriver extends AbstractDriver {
 
 	/**
 	 * 
-	 * @param g
+	 * @param p
 	 * @param name
 	 */
-	public static void set_galaxy_name(Galaxy g, String name) {
+	public static void set_packet_name(Packet p, String name) {
 		try {
-			g.setName(name);
+			p.setName(name);
 
 		} catch (Exception e) {
 			_msg_error(e.getMessage());
@@ -157,17 +189,45 @@ public class PacketDriver extends AbstractDriver {
 
 	/**
 	 * 
-	 * @param g
-	 * @param x
-	 * @param y
+	 * @param p
+	 * @param p
 	 */
-	public static void set_galaxy_size(Galaxy g, int x, int y) {
+	public static void set_planet_to_a_packet(Packet p, Planet planetp) {
 		try {
-			g.setSize(x, y);
-
+			p.setPlanet(planetp);
 		} catch (Exception e) {
 			_msg_error(e.getMessage());
 		}
 	}
 
+	/**
+	 * 
+	 * @param p
+	 * @param r
+	 * @param qp
+	 */
+	public static void set_resource_to_a_packet(Packet p, Resource r, int qp) {
+		try {
+			p.addResource(r, qp);
+		} catch (Exception e) {
+			_msg_error(e.getMessage());
+		}
+	}
+
+	/**
+	 * 
+	 * @param p
+	 * @param rName
+	 */
+	public static void remove_resource_from_packet(Packet p, String rName) {
+		try {
+			Map<String, RelationPacketResource> lr = p.getResource();
+			if (lr.remove(rName) == null)
+				throw new Exception("The packet doesn't have the resource "
+						+ rName);
+
+		} catch (Exception e) {
+			_msg_error(e.getMessage());
+		}
+	}
 }

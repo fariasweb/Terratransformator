@@ -1,9 +1,10 @@
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * 
  * @author farias
- *
+ * TODO: El mapa debe ser ordenado
  */
 
 public class Packet {
@@ -19,23 +20,16 @@ public class Packet {
 	public Packet() {
 		name = "";
 		planet = null;
+		map = new HashMap<String, RelationPacketResource>();
 	}
 	
 	public Packet(String namep) throws Exception {
 		setName(namep);
-		//TODO: Inicial Mapa
-		map = new Map<String, RelationPacketResource>();
+		map = new HashMap<String, RelationPacketResource>();
 	}
 	
 	//Getters
 	//---------------------------------------------
-	
-	/**
-	 * @return the map
-	 */
-	public Map<String, RelationPacketResource> getMap() {
-		return map;
-	}
 
 	/**
 	 * 
@@ -50,6 +44,13 @@ public class Packet {
 	 */
 	public Planet getPlanet() {
 		return planet;
+	}
+	
+	/**
+	 * @return the map
+	 */
+	public Map<String, RelationPacketResource> getResource() {
+		return map;
 	}
 	
 	//Setter
@@ -68,7 +69,7 @@ public class Packet {
 	 * @param planet the planet to set
 	 */
 	public void setPlanet(Planet planetp) {
-		if (planet != planetp) {
+		if (planet != planetp && planetp != null) {
 			planet = planetp;
 			planetp.setPacket(this);
 		}
@@ -84,6 +85,8 @@ public class Packet {
 	 */
 	public void addResource(Resource rp, int qp) throws Exception {
 		
+		if (rp == null) return;
+		
 		//Compruebas si existe ya en el packete
 		if(map.containsKey(rp.getName())) throw new Exception ("This packet contains a "+rp.getName()+" resource");
 		
@@ -91,6 +94,10 @@ public class Packet {
 		RelationPacketResource rpr = new RelationPacketResource(this, rp, qp);
 		map.put(rp.getName(), rpr);
 	}
+	
+	
+	//Deleter
+	//---------------------------------------------
 	
 	/**
 	 * 
@@ -107,6 +114,20 @@ public class Packet {
 	public void removeAllResource() {
 		map.clear();
 	}
+	
+	/**
+	 * 
+	 */
+	public void removePlanet() {
+		if (planet != null) {
+			Planet p = planet;
+			
+			planet = null;
+			p.removePacket();
+			
+		}
+	}
+	
 	
 	
 }
