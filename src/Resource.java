@@ -1,7 +1,7 @@
 public class Resource extends Entity{
 	
-	String name;
-	ResourceType type;
+	private String name;
+	private ResourceType type;
 	
 	private static void checkName(String namep) throws Exception{ //Funcion que comprueba la entrada 
 		for(int i = 0; i < namep.length(); ++i){
@@ -17,28 +17,17 @@ public class Resource extends Entity{
 	}
 
 	private static void checkType(ResourceType res) throws IllegalArgumentException{ //Enseñar
-		if(!(typep.equals("H") || typep.equals("T")))  throw new IllegalArgumentException("type is not valid");
+		if(!(res.equals("H") || res.equals("T")))  throw new IllegalArgumentException("type is not valid");
 	}
 	//Contructs
 	//---------------------------------------------
 		
-	public Resource(String namep, String typep) throws Exception{
+	public Resource(String namep, ResourceType typep) throws Exception{
         checkName(namep);
         name = namep;
         checkType(typep);
-        type = ResourceType.valueOf(typep);
+        type = typep;
 	}
-
-		/*public static boolean contains(String test) {
-
-		    for (Choice c : Choice.values()) {
-		        if (c.name().equals(test)) {
-		            return true;
-		        }
-		    }
-
-		    return false;
-		}*/
 
     public Resource(){
         name = null;
@@ -54,6 +43,9 @@ public class Resource extends Entity{
         return name;
 	}
 
+	public String getKey(){
+		return name;
+	}
 
 	/**
 	 * @return the type as a String
@@ -77,13 +69,9 @@ public class Resource extends Entity{
 	/**
 	 * @param type the type to set
 	 */
-	public void setType(String typep) throws Exception {
+	public void setType(ResourceType typep) throws Exception {
 		checkType(typep);
-        type = ResourceType.valueOf(typep);
-	}
+        type = typep;
 
-	public String getKey(){
-		return name;
 	}
-
 }

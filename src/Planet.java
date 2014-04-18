@@ -5,9 +5,8 @@ public class Planet {
 	private String name;
 	private Integer x_pos;	//Don't need this attribute
 	private Integer y_pos;	//This one neither
-	
-	//TODO Relacion con recurso
 	private List<Resource> neededResources;
+	//TODO Relacion con recurso
 	private Packet packet;
 
 	
@@ -28,12 +27,12 @@ public class Planet {
 		if(x_posp < 0 ) throw new Exception(x_posp + " position not valid");
 		if(y_posp < 0 ) throw new Exception(y_posp + " position not valid");
 	}
+
 	//Contructs
 	//---------------------------------------------
 	public Planet(String namep,int x_posp, int y_posp) throws Exception{
 		setPosition(x_posp,y_posp); // Se chequea aqui
-		setName(namep);				// Se chequea aqui
-		neededResources = new ArrayList<Resource> ();
+		setName(namep);			
 		packet = null;
 	}
 	
@@ -41,7 +40,6 @@ public class Planet {
 	public Planet(){
 		name = null;
 		x_pos = y_pos = null;
-		
 		neededResources = new ArrayList<Resource>();
 		packet = null;
 	}
@@ -70,17 +68,33 @@ public class Planet {
 	/**
 	 * @param neededResources the neededResources to set
 	 */
-	public void setNeededResources(List<Resource> neededResourcesp) {
-		neededResources = neededResourcesp;
+	public void addNeededResources(String namep) {
+		//Resource r = cjtResource.getResourceByName(namep);
+		//neededResources.add(r);
 	}
 
+	public void removeNeededResource(String namep){
+		//Resource r = ResourceCollection.getAll().getResourceByName(namep);
+		//neededResources.remove(r);
+	}
 	/**
 	 * @param packet the packet to set
 	 */
 	public void setPacket(Packet packetp) {
-		packet = packetp;
+		if(packetp != packet){
+			packet = packetp;
+			packetp.setPlanet(this);
+		}
 	}
 	
+	public void removePacket(){
+		if (packet != null) {
+ 			Packet p = packet;
+ 			packet = null;
+ 			p.removePlanet();
+			
+ 		} 
+	}
 	//Getter
 	//-----------------------------------------------
 	/**
@@ -112,4 +126,6 @@ public class Planet {
 		return packet;
 	}
 	
+
+
 }

@@ -5,11 +5,7 @@ public class PlanetCollection {
 	
 	//Contructs
 	//---------------------------------------------
-		
-	public PlanetCollection(List<Planet> g){
-		cjtPlanet = g;
-	}
-		
+			
 	public PlanetCollection(){
 		cjtPlanet = new ArrayList<Planet>();
 	}
@@ -23,15 +19,6 @@ public class PlanetCollection {
 	 */
 	public boolean add(Planet g){
 		return cjtPlanet.add(g);
-	}
-	
-	public boolean addPlanetByName(String name){
-		for(int i = 0; i < size(); ++i){
-			if(name == cjtPlanet.get(i).getName()){
-    			return cjtPlanet.add(cjtPlanet.get(i));
-    		}
-    	}
-    	return false;
 	}
 
 	/**

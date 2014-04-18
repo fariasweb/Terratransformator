@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
-public class ResourceDriver extends AbstractDriver{
+public class ResourceControllerDriver extends AbstractDriver{
+	ResourceCollection resourceCtl;
 	/**
 	 * @param args
 	 */
@@ -48,21 +49,23 @@ public class ResourceDriver extends AbstractDriver{
 	}
 
 	private static void _menu(){
-		title = "Resource Driver";
+		title = "Resource Controller Driver";
 
 		menu.add("Resource(String namep, ResourceType typep) : Resource");
 		menu.add("Resource() : Resource");
+		menu.add("removeResourceByName");
+		menu.add("add(Resource r)");
 		menu.add("setName(String namep)");
 		menu.add("setType(ResourceType typep)");
 		menu.add("getName() : String");
-		menu.add("getType() : ResourceType");
-
+		menu.add("getType() : ResourceType");;
+				
 		print_menu();
 	}
 
 	private static Resource create_resource(String namep, ResourceType typep) {
 		try{
-			return new Resource(namep,typep); 
+			return new Resource(namep,typep); //El parametro 0 es el nombre del planeta
 		}
 		catch (Exception e){
 			_msg_error(e.getMessage());
@@ -77,5 +80,37 @@ public class ResourceDriver extends AbstractDriver{
 		catch(Exception e){
 			_msg_error(e.getMessage());
 		}
+	}
+
+	public void remove(Resource r){
+		resourceCtl.remove(r);
+	}
+
+	/**
+	 * 
+	 * @param name
+	 */
+	public void removeResourceByName(String name){
+		resourceCtl.removeResourceByName(name);	
+	}
+
+	public void add(Resource r){
+		resourceCtl.add(r);
+	}
+
+	/**
+	 * 
+	 * @param g
+	 * @return boolean
+	 */
+	public boolean addResourceByName(String name){
+		return resourceCtl.addResourceByName(name);
+	}
+
+    public void guardarPlaneta(){
+
+	}
+	public void cargarPlaneta(){
+
 	}
 }

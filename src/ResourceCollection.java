@@ -52,7 +52,7 @@ public class ResourceCollection {
 	
 	//Getter
 	//-----------------------------------------------
-		
+
 	public List<Resource> getAll(){
 		return cjtResource;
 	}

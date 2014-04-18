@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlanetController extends AbstractController{
-// NO SE PONE TRY CATCH EN EL CONTROLADOR
-	PlanetCollection planetCtl;
+
+	private PlanetCollection planetCtl;
 	
 	public PlanetController() {
 		planetCtl = new PlanetCollection();
 	}
-	
 	/**
 	 * Crea una galaxia en el sistema
 	 * Pre: El nombre del planeta no debe existir en el sistema
@@ -28,6 +27,43 @@ public class PlanetController extends AbstractController{
 			return planetCtl.add(g);	
 	}
 	
+	//Setter
+	//---------------------------------------------
+
+	public void removePacket(String namep){
+		Planet g = planetCtl.getPlanetByName(namep);
+		g.removePacket();
+	}
+	
+	public void setPacket(String namep, String p) throws Exception{
+		Planet g = planetCtl.getPlanetByName(namep);
+		g.setPacket(p);
+	}
+
+
+	public void setName(String oldName, String newName) throws Exception{
+		Planet g = planetCtl.getPlanetByName(oldName);
+		g.setName(newName);
+	}
+
+	public void setPosition(String namep, int x, int y) throws Exception {
+		Planet g = planetCtl.getPlanetByName(namep);
+		g.setPosition(x,y);
+	}
+
+
+	/**
+	 * 
+	 * @param name
+	 */
+	public boolean removePlanetByName(String namep) throws Exception {
+		return planetCtl.removePlanetByName(namep);	
+	}
+	
+
+
+	//Getter
+	//---------------------------------------------
 	/**
 	 * Devuelve un listado con el nombre de las planeta ordenado por creaci—n
 	 * TODO: Como lo hago para devolmes mas campos????
@@ -41,43 +77,26 @@ public class PlanetController extends AbstractController{
 		return list;
 	}
 	
-	/**
-	 * 
-	 * @param p
-	 */
-	public void remove(Planet p){
-		planetCtl.remove(p);
+	public PairInt getPosition(String namep){
+		return planetCtl.getPlanetByName(namep).getPosition();
+		
 	}
-	
-	/**
-	 * 
-	 * @param name
-	 */
-	public void removePlanetByName(String name){
-		planetCtl.removePlanetByName(name);	
+	public Packet getPacket(String namep){
+		return planetCtl.getPlanetByName(namep).getPacket();
+		
 	}
-	
-	/**
-	 * 
-	 * @param g
-	 * @return boolean
-	 */
-	public boolean add(Planet g){
-		return planetCtl.add(g);
-	}
-
-	public boolean addPlanetByName(String name){
-		return planetCtl.addPlanetByName(name);
-	}
+ 	
+ 	public PlanetCollection getPlanetCtl(){
+ 		return planetCtl;
+ 	}
 	/**
 	 * 
 	 */
-	public void guardarPlaneta(){
+	public void savePlanet(){
 		
 	}
 	
-	public void cargarPlaneta(){
+	public void loadPlanet(){
 		
 	}
-	
 }
