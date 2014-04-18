@@ -22,8 +22,6 @@ public class GalaxyDriver extends AbstractDriver {
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
-		int opc = 0;
-		String[] argv;
 
 		// Menu
 		_menu();
@@ -43,7 +41,7 @@ public class GalaxyDriver extends AbstractDriver {
 
 				// Accion
 				switch (opc) {
-				case 0:
+				case 0: //Exit
 					break;
 				case 1:
 					if (argv.length < 4)

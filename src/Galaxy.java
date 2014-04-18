@@ -8,7 +8,6 @@ public class Galaxy {
 	private int y;
 	
 	private List<Planet> planets;
-	//private Packet packet_assigned;
 
 	//Contructs
 	//---------------------------------------------

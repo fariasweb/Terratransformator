@@ -10,19 +10,6 @@ public class Planet {
 	private Packet packet;
 
 	
-	private static void checkName(String namep) throws Exception{ //Funcion que comprueba la entrada 
-		for(int i = 0; i < namep.length(); ++i){
-			//Se realiza validacion de datos
-			if(!((namep.charAt(i) >= 'a') && (namep.charAt(i) <= 'z'))){
-				if(!((namep.charAt(i) >= 'A') && (namep.charAt(i) <= 'Z'))){
-					if((namep.charAt(i) >= '0') && (namep.charAt(i) <= '9')){
-						throw new Exception(namep + " is not valid");
-					}
-				}
-			}
-		}	
-	}
-	
 	private static void checkPosition(int x_posp, int y_posp) throws Exception {
 		if(x_posp < 0 ) throw new Exception(x_posp + " position not valid");
 		if(y_posp < 0 ) throw new Exception(y_posp + " position not valid");
@@ -32,7 +19,8 @@ public class Planet {
 	//---------------------------------------------
 	public Planet(String namep,int x_posp, int y_posp) throws Exception{
 		setPosition(x_posp,y_posp); // Se chequea aqui
-		setName(namep);			
+		setName(namep);				// Se chequea aqui
+		//neededResources = new ArrayList<Resource> ();
 		packet = null;
 	}
 	
@@ -40,7 +28,9 @@ public class Planet {
 	public Planet(){
 		name = null;
 		x_pos = y_pos = null;
-		neededResources = new ArrayList<Resource>();
+		neededResources = new ArrayList<Resource>();		
+		//neededResources = new ArrayList<Resource>();
+
 		packet = null;
 	}
 	
@@ -51,7 +41,7 @@ public class Planet {
 	 * @param name the name to set
 	 */
 	public void setName(String namep) throws Exception {
-		checkName(namep);
+		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
 		name = namep;
 	}
 
@@ -73,6 +63,10 @@ public class Planet {
 		//neededResources.add(r);
 	}
 
+	/*public void setNeededResources(List<Resource> neededResourcesp) {
+		neededResources = neededResourcesp;
+	}*/
+
 	public void removeNeededResource(String namep){
 		//Resource r = ResourceCollection.getAll().getResourceByName(namep);
 		//neededResources.remove(r);
@@ -81,6 +75,7 @@ public class Planet {
 	 * @param packet the packet to set
 	 */
 	public void setPacket(Packet packetp) {
+
 		if(packetp != packet){
 			packet = packetp;
 			packetp.setPlanet(this);
@@ -115,9 +110,9 @@ public class Planet {
 	/**
 	 * @return the neededResources
 	 */
-	public List<Resource> getNeededResources() {
+	/*public List<Resource> getNeededResources() {
 		return neededResources;
-	}
+	}*/
 
 	/**
 	 * @return the packet

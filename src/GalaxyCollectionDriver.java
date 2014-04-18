@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -45,9 +44,9 @@ public class GalaxyCollectionDriver extends AbstractDriver {
 				opc = Integer.parseInt(argv[0]);
 
 				switch (opc) {
-				case 1: //TODO: Quitar
+				/*case 1: //TODO: Quitar
 
-					/*gc = new GalaxyCollection();
+					gc = new GalaxyCollection();
 					
 					//Leemos los parametros de tres en tres
 					int num = (argv.length - 1) / 3;
@@ -61,15 +60,15 @@ public class GalaxyCollectionDriver extends AbstractDriver {
 						//A–adimos al conjunto de galaxia
 						add_galaxy_to_collection(gc, g);
 
-					}*/
+					}
 
 					break;
-
-				case 2:
+				 */
+				case 1:
 					gc = new GalaxyCollection();
 					break;
 
-				case 3:
+				case 2:
 					if (argv.length < 4)
 						_msg_error_param_insuf();
 					else {
@@ -83,24 +82,24 @@ public class GalaxyCollectionDriver extends AbstractDriver {
 					}
 					break;
 
-				case 4: //TODO: Como le paso esa galaxia??À
+				case 3: //TODO: Como le paso esa galaxia??À
 
 					break;
 
-				case 5:
+				case 4:
 					clear_galaxycollection(gc);
 					break;
 
-				case 6:
+				case 5:
 					String[] head = { "Name", "X", "Y" };
 					Console.table(head, list_galaxycollection(gc));
 					break;
 
-				case 7:
+				case 6:
 
 					break;
 
-				case 8:
+				case 7:
 
 					if (gc.existByName(argv[1])) {
 						Console.print(argv[1]+" exist");
@@ -110,7 +109,7 @@ public class GalaxyCollectionDriver extends AbstractDriver {
 					
 					break;
 
-				case 9:
+				case 8:
 					Console.print("Size: " + gc.size());
 					break;
 

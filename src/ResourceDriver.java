@@ -20,7 +20,7 @@ public class ResourceDriver extends AbstractDriver{
             	opc = Integer.parseInt(argv[0]);
 				switch(opc) {
                     case 1:
-                       // p = create_resource(argv[1], argv[2]);
+                        p = create_resource(argv[1], argv[2]);
                         break;
                     case 2:
                         p = new Resource();
@@ -60,7 +60,7 @@ public class ResourceDriver extends AbstractDriver{
 		print_menu();
 	}
 
-	private static Resource create_resource(String namep, ResourceType typep) {
+	public static Resource create_resource(String namep, String typep) {
 		try{
 			return new Resource(namep,typep); 
 		}
@@ -70,7 +70,7 @@ public class ResourceDriver extends AbstractDriver{
 		return null;
 	}
 
-	private static void set_name(Resource p, String namep){
+	public static void set_name(Resource p, String namep){
 		try{
 			p.setName(namep);
 		}

@@ -1,3 +1,8 @@
-public abstract class Entity{
-	public abstract String getKey();
+
+/**
+ * @author farias
+ *
+ */
+public interface Entity {
+	public String getName();
 }

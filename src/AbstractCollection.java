@@ -1,5 +1,5 @@
 
 
-public class AbstractCollection {
+public abstract class AbstractCollection {
 
 }

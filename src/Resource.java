@@ -1,32 +1,20 @@
-public class Resource extends Entity{
-	
-	private String name;
-	private ResourceType type;
-	
-	private static void checkName(String namep) throws Exception{ //Funcion que comprueba la entrada 
-		for(int i = 0; i < namep.length(); ++i){
-			//Se realiza validacion de datos
-			if(!((namep.charAt(i) >= 'a') && (namep.charAt(i) <= 'z'))){
-				if(!((namep.charAt(i) >= 'A') && (namep.charAt(i) <= 'Z'))){
-					if((namep.charAt(i) >= '0') && (namep.charAt(i) <= '9')){
-						throw new Exception(namep + " is not valid");
-					}
-				}
-			}
-		}	
-	}
 
-	private static void checkType(ResourceType res) throws IllegalArgumentException{ //Enseñar
-		if(!(res.equals("H") || res.equals("T")))  throw new IllegalArgumentException("type is not valid");
-	}
+public class Resource //extends Entity{
+{
+	String name;
+	ResourceType type;
+
+	/*private static void checkType(ResourceType res) throws IllegalArgumentException{ //Enseñar
+		if(!(typep.equals("H") || typep.equals("T")))  throw new IllegalArgumentException("type is not valid");
+	}*/
 	//Contructs
 	//---------------------------------------------
 		
-	public Resource(String namep, ResourceType typep) throws Exception{
-        checkName(namep);
+	public Resource(String namep, String typep) throws Exception{
+        Util.checkName(namep);
         name = namep;
-        checkType(typep);
-        type = typep;
+        //checkType(typep);
+        type = ResourceType.valueOf(typep);
 	}
 
     public Resource(){
@@ -61,7 +49,7 @@ public class Resource extends Entity{
 	 * @param name the name to set
 	 */
 	public void setName(String namep) throws Exception {
-		checkName(namep);
+		Util.checkName(namep);
         name = namep;
 	}
 
@@ -69,9 +57,8 @@ public class Resource extends Entity{
 	/**
 	 * @param type the type to set
 	 */
-	public void setType(ResourceType typep) throws Exception {
-		checkType(typep);
-        type = typep;
-
+	public void setType(String typep) throws Exception {
+		//checkType(typep);
+        type = ResourceType.valueOf(typep);
 	}
 }
