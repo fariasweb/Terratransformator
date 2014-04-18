@@ -108,6 +108,15 @@ public class Packet {
 	
 	/**
 	 * 
+	 * @param namep
+	 * @throws Exception 
+	 */
+	public void removeResourceByName(String namep) throws Exception {
+		map.remove(namep);
+	}
+		
+	/**
+	 * 
 	 */
 	public void removeAllResource() {
 		map.clear();

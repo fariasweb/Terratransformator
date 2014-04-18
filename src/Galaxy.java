@@ -7,7 +7,7 @@ public class Galaxy {
 	private int x;
 	private int y;
 	
-	private List<Planet> planets;
+	private TST<Planet> planets;
 
 	//Contructs
 	//---------------------------------------------
@@ -16,7 +16,7 @@ public class Galaxy {
 		setName(namep);	
 		setSize(xp, yp);
 		
-		planets = new ArrayList<Planet> ();
+		planets = new TST<Planet> ();
 	
 	}
 	
@@ -26,7 +26,7 @@ public class Galaxy {
 		y = 0;
 		name = "";
 		
-		planets = new ArrayList<Planet> ();
+		planets = new TST<Planet> ();
 		//this.packet_assigned = null;
 	}
 	
@@ -54,7 +54,8 @@ public class Galaxy {
 	
 	public void setPlanet(Planet p, int x, int y) {
 		//TODO: Asignar posicion al planeta
-		planets.add(p);
+		planets.put(p.getName(), p);
+		p.setPlanet(this);
 	}
 	
 	//Getter
@@ -68,8 +69,15 @@ public class Galaxy {
 		return new PairInt(x, y);
 	}
 	
-	List<Planet> getPlanets(){
+	TST<Planet> getPlanets(){
 		return planets;
+	}
+	
+	//Deleter
+	//-----------------------------------------------
+	
+	public void removePlanet() {
+		
 	}
 	
 }
