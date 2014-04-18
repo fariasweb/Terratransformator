@@ -1,6 +1,3 @@
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 
  * @author farias
@@ -106,7 +103,7 @@ public class Packet {
 	 * @throws Exception
 	 */
 	public void removeResource(Resource rp) throws Exception {
-		//if (map.remove(rp.getName()) == null) throw new Exception("This packet doesnt contain any  "+rp.getName()+" resource");
+		map.remove(rp.getName());
 	}
 	
 	/**

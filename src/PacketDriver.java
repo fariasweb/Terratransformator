@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -91,21 +90,21 @@ public class PacketDriver extends AbstractDriver {
 					break;
 
 				case 8:
-					Map<String, RelationPacketResource> lr = p.getResource();
-					if (lr.isEmpty()) {
+					TST<RelationPacketResource> lr = p.getResource();
+					if (lr.size() == 0) {
 						Console.print("This packet doesn't have resource");
 					} else {
 						String[] head = { "Resource", "Type", "Quantity" };
 						List<String[]> content = new ArrayList<String[]>();
 
-						for (String key : lr.keySet()) {
+						//for (String key : lr.keySet()) {
+						for(RelationPacketResource rpr : lr.values()) {
 							String[] c = new String[3];
 
-							c[0] = key;
-							c[1] = lr.get(key).getResource().getType();
-							c[2] = Integer.toString(lr.get(key).getQuantity());
+							c[0] = rpr.getResource().getName();
+							c[1] = rpr.getResource().getType();
+							c[2] = Integer.toString(rpr.getQuantity());
 							
-
 							content.add(c);
 						}
 
@@ -221,10 +220,8 @@ public class PacketDriver extends AbstractDriver {
 	 */
 	public static void remove_resource_from_packet(Packet p, String rName) {
 		try {
-			Map<String, RelationPacketResource> lr = p.getResource();
-			if (lr.remove(rName) == null)
-				throw new Exception("The packet doesn't have the resource "
-						+ rName);
+			TST<RelationPacketResource> lr = p.getResource();
+			lr.remove(rName);
 
 		} catch (Exception e) {
 			_msg_error(e.getMessage());
