@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class ResourceDriver extends AbstractDriver{
+class ResourceDriver extends AbstractDriver{
 	/**
 	 * @param args
 	 */
@@ -62,7 +62,7 @@ public class ResourceDriver extends AbstractDriver{
 
 	public static Resource create_resource(String namep, String typep) {
 		try{
-			return new Resource(namep,typep); 
+			return new Resource(namep, typep); 
 		}
 		catch (Exception e){
 			_msg_error(e.getMessage());

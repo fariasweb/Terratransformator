@@ -48,7 +48,7 @@ public class TST<Value> {
     * Insert string s into the symbol table.
     **************************************************************/
     public void put(String s, Value val) {
-        if (!contains(s)) N++;
+        //if (!contains(s)) N++;
         root = put(root, s, val, 0);
     }
 
@@ -61,7 +61,10 @@ public class TST<Value> {
         if      (c < x.c)             x.left  = put(x.left,  s, val, d);
         else if (c > x.c)             x.right = put(x.right, s, val, d);
         else if (d < s.length() - 1)  x.mid   = put(x.mid,   s, val, d+1);
-        else                          x.val   = val;
+        else {
+        	if (x.val == null) N++;
+        	x.val   = val;
+        }
         return x;
     }
 
@@ -130,5 +133,30 @@ public class TST<Value> {
             if (i < pat.length() - 1) collect(x.mid, prefix + x.c, i+1, pat, q);
         }
         if (c == '.' || c > x.c) collect(x.right, prefix, i, pat, q);
+    }
+    
+    /**************************************************************
+     * Remove
+     **************************************************************/
+    
+    public void clear() {
+    	root = null;
+    }
+    
+    public void remove(String key) {
+    	 if (key == null) throw new NullPointerException();
+         if (key.length() == 0) throw new IllegalArgumentException("key must have length >= 1");
+         Node x = remove(root, key, 0);
+     }
+
+    private Node remove(Node x, String key, int d) {
+    	if (key == null) throw new NullPointerException();
+        if (key.length() == 0) throw new IllegalArgumentException("key must have length >= 1");
+        if (x == null) return null;
+        char c = key.charAt(d);
+        if      (c < x.c)              return get(x.left,  key, d);
+        else if (c > x.c)              return get(x.right, key, d);
+        else if (d < key.length() - 1) return get(x.mid,   key, d+1);
+        else                           return x;
     }
 }

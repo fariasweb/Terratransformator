@@ -63,10 +63,9 @@ public class PacketDriver extends AbstractDriver {
 
 				case 4:
 
-					Planet planet = PlanetDriver.create_planet(argv[1],
-							Integer.parseInt(argv[2]),
-							Integer.parseInt(argv[3]));
-					set_planet_to_a_packet(p, planet);
+					set_planet_to_a_packet(p, PlanetDriver.create_planet(argv[1],
+												Integer.parseInt(argv[2]),
+												Integer.parseInt(argv[3])));
 
 					break;
 
@@ -103,8 +102,9 @@ public class PacketDriver extends AbstractDriver {
 							String[] c = new String[3];
 
 							c[0] = key;
-							c[2] = Integer.toString(lr.get(key).getQuantity());
 							c[1] = lr.get(key).getResource().getType();
+							c[2] = Integer.toString(lr.get(key).getQuantity());
+							
 
 							content.add(c);
 						}
@@ -147,9 +147,9 @@ public class PacketDriver extends AbstractDriver {
 
 		menu.add("Packet(String name) : Packet"); // 1
 		menu.add("Packet() : Packet");
-		menu.add("SetName(String name)"); // 3
-		menu.add("SetPlanet(String PlanetName, int x, int y)");
-		menu.add("AddResource(String ResourceName, ResourceType type, int quantity)");
+		menu.add("SetName(String name) : void"); // 3
+		menu.add("SetPlanet(String PlanetName, int x, int y) : void");
+		menu.add("AddResource(String ResourceName, ResourceType type, int quantity) : void");
 		menu.add("GetName() : String"); // 6
 		menu.add("GetPlanet() : Planet");
 		menu.add("GetResource(): Map<String, RelationPacketResource>");

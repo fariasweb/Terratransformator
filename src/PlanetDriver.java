@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class PlanetDriver extends AbstractDriver{ 
+class PlanetDriver extends AbstractDriver{ 
 
 	public static void main(String args[]){
 		

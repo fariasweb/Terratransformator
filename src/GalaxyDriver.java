@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @author farias
  * 
  */
-public class GalaxyDriver extends AbstractDriver {
+class GalaxyDriver extends AbstractDriver {
 
 	/**
 	 * @param args
