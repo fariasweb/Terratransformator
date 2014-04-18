@@ -6,6 +6,9 @@ public class ResourceCollection {
 	
 	//Contructs
 	//---------------------------------------------
+	/**
+	*@return new ResourceCollection 
+	*/
 	public ResourceCollection(){
 		cjtResource = new TST<Resource>();
 	}
@@ -13,11 +16,17 @@ public class ResourceCollection {
 	//Setter
 	//---------------------------------------------
 	
+	/**
+	*@param Resource r
+	*/
 	public void add(Resource r){
             //No haría falta comprobar si hacemos un map
             cjtResource.put(r.getName(),r);
 	}
 	
+	/**
+	*@param String namep
+	*/
 	public void removeResourceByName(String namep) throws Exception{
     	cjtResource.remove(namep);
     }
@@ -29,11 +38,18 @@ public class ResourceCollection {
 	
 	//Getter
 	//-----------------------------------------------
-
+	
+	/**
+	*@return Resource 
+	*/
 	public TST<Resource> getAll(){
 		return cjtResource;
 	}
-	
+
+    /**
+	*@param String namep
+	*@return Resource 
+	*/
 	public Resource getResourceByName(String namep){
 		return cjtResource.get(namep);
 	}
@@ -41,10 +57,18 @@ public class ResourceCollection {
 	// Exist
 	//-----------------------------------------------
 
+	/**
+	*@param Resource r
+	*@return boolean 
+	*/
 	public boolean exists(Resource r){
 		return cjtResource.contains(r.getName());
 	}
-	
+
+	/**
+	*@param String namep
+	*@return boolean 
+	*/
 	public boolean existByName(String namep) {
 		return cjtResource.contains(namep);
 	}

@@ -5,7 +5,7 @@ public class PlanetCollection {
 	
 	//Contructs
 	//---------------------------------------------
-			
+	
 	public PlanetCollection(){
 		cjtPlanet = new TST<Planet>();
 	}
@@ -15,7 +15,7 @@ public class PlanetCollection {
 	
 	/**
 	 * 
-	 * @param name
+	 * @param namep
 	 * @return
 	 */
 	public void removePlanetByName(String namep) throws Exception{
@@ -31,7 +31,7 @@ public class PlanetCollection {
 	//-----------------------------------------------
 	/**
 	 * 
-	 * @return the cjtPlanet
+	 * @return TST<Planet>
 	 */
 	public TST<Planet> getAll(){
 		return cjtPlanet;
@@ -39,7 +39,7 @@ public class PlanetCollection {
 	
 	/**
 	 * 
-	 * @param planet
+	 * @param namep
 	 * @return
 	 */
 	public Planet getPlanetByName(String namep){
@@ -48,7 +48,6 @@ public class PlanetCollection {
 	// Exist
 	//-----------------------------------------------
 	/**
-	 * 
 	 * @param g
 	 * @return
 	 */
