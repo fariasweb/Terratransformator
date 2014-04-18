@@ -1,30 +1,4 @@
-/*************************************************************************
- *  Compilation:  javac TST.java
- *  Execution:    java TST < words.txt
- *  Dependencies: StdIn.java
- *
- *  Symbol table with string keys, implemented using a ternary search
- *  trie (TST).
- *
- *
- *  % java TST < shellsST.txt
- *  by 4
- *  sea 6
- *  sells 1
- *  she 0
- *  shells 3
- *  shore 7
- *  the 5
-
- *
- *  % java TST
- *  theory the now is the time for all good men
-
- *  Remarks
- *  --------
- *    - can't use a key that is the empty string ""
- *
- *************************************************************************/
+import java.util.*;
 
 public class TST<Value> {
     private int N;       // size
@@ -114,17 +88,17 @@ public class TST<Value> {
 
     // all keys in symbol table
     public Iterable<String> keys() {
-        Queue<String> queue = new Queue<String>();
+        Queue<String> queue = new LinkedList<String>();
         collect(root, "", queue);
         return queue;
     }
 
     // all keys starting with given prefix
     public Iterable<String> prefixMatch(String prefix) {
-        Queue<String> queue = new Queue<String>();
+        Queue<String> queue = new LinkedList<String>();
         Node x = get(root, prefix, 0);
         if (x == null) return queue;
-        if (x.val != null) queue.enqueue(prefix);
+        if (x.val != null) queue.add(prefix);
         collect(x.mid, prefix, queue);
         return queue;
     }
@@ -133,7 +107,7 @@ public class TST<Value> {
     private void collect(Node x, String prefix, Queue<String> queue) {
         if (x == null) return;
         collect(x.left,  prefix,       queue);
-        if (x.val != null) queue.enqueue(prefix + x.c);
+        if (x.val != null) queue.add(prefix + x.c);
         collect(x.mid,   prefix + x.c, queue);
         collect(x.right, prefix,       queue);
     }
@@ -141,7 +115,7 @@ public class TST<Value> {
 
     // return all keys matching given wildcard pattern
     public Iterable<String> wildcardMatch(String pat) {
-        Queue<String> queue = new Queue<String>();
+        Queue<String> queue = new LinkedList<String>();
         collect(root, "", 0, pat, queue);
         return queue;
     }
@@ -151,27 +125,9 @@ public class TST<Value> {
         char c = pat.charAt(i);
         if (c == '.' || c < x.c) collect(x.left, prefix, i, pat, q);
         if (c == '.' || c == x.c) {
-            if (i == pat.length() - 1 && x.val != null) q.enqueue(prefix + x.c);
+            if (i == pat.length() - 1 && x.val != null) q.add(prefix + x.c);
             if (i < pat.length() - 1) collect(x.mid, prefix + x.c, i+1, pat, q);
         }
         if (c == '.' || c > x.c) collect(x.right, prefix, i, pat, q);
-    }
-
-
-
-    // test client
-    public static void main(String[] args) {
-        // build symbol table from standard input
-        TST<Integer> st = new TST<Integer>();
-        for (int i = 0; !StdIn.isEmpty(); i++) {
-            String key = StdIn.readString();
-            st.put(key, i);
-        }
-
-
-        // print results
-        for (String key : st.keys()) {
-            StdOut.println(key + " " + st.get(key));
-        }
     }
 }

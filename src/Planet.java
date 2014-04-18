@@ -5,7 +5,6 @@ public class Planet {
 	private String name;
 	private Integer x_pos;	//Don't need this attribute
 	private Integer y_pos;	//This one neither
-	private List<Resource> neededResources;
 	//TODO Relacion con recurso
 	private Packet packet;
 
@@ -20,7 +19,6 @@ public class Planet {
 	public Planet(String namep,int x_posp, int y_posp) throws Exception{
 		setPosition(x_posp,y_posp); // Se chequea aqui
 		setName(namep);				// Se chequea aqui
-		//neededResources = new ArrayList<Resource> ();
 		packet = null;
 	}
 	
@@ -55,22 +53,6 @@ public class Planet {
 		y_pos = y_posp;
 	}
 
-	/**
-	 * @param neededResources the neededResources to set
-	 */
-	public void addNeededResources(String namep) {
-		//Resource r = cjtResource.getResourceByName(namep);
-		//neededResources.add(r);
-	}
-
-	/*public void setNeededResources(List<Resource> neededResourcesp) {
-		neededResources = neededResourcesp;
-	}*/
-
-	public void removeNeededResource(String namep){
-		//Resource r = ResourceCollection.getAll().getResourceByName(namep);
-		//neededResources.remove(r);
-	}
 	/**
 	 * @param packet the packet to set
 	 */

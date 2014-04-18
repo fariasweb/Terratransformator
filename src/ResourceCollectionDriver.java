@@ -9,7 +9,7 @@ public class ResourceCollectionDriver extends AbstractDriver{
         //Generico del driver
         ResourceCollection p  = new ResourceCollection(); 
         Resource rec = new Resource();
-        List<Resource> list = new ArrayList<Resource>(); // List<Resource> ??    
+        TST<Resource> list = new ArrayList<Resource>(); // List<Resource> ??    
         //Generico del menu
         Scanner in = new Scanner(System.in);
         int opc = 0;
