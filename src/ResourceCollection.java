@@ -2,47 +2,24 @@
 import java.util.*;
 
 public class ResourceCollection {
-	private List<Resource> cjtResource;
+	private TST<Resource> cjtResource;
 	
 	//Contructs
 	//---------------------------------------------
-		
-	public ResourceCollection(List<Resource> cjt){
-		cjtResource = cjt;
-	}
-		
 	public ResourceCollection(){
-		cjtResource = new ArrayList<Resource>();
+		cjtResource = new TST<Resource>();
 	}
 	
 	//Setter
 	//---------------------------------------------
 	
-	public boolean add(Resource r){
+	public void add(Resource r){
             //No haría falta comprobar si hacemos un map
-            return cjtResource.remove(r);
-	}
-	
-	public boolean addResourceByName(String name){
-		for(int i = 0; i < size(); ++i){
-			if(name == cjtResource.get(i).getName()){
-    			return cjtResource.add(cjtResource.get(i));
-    		}
-    	}
-    	return false;
-    }
-
-	public boolean remove(Resource r){
-		return cjtResource.remove(r);
+            cjtResource.put(r.getName(),r);
 	}
 	
 	public boolean removeResourceByName(String name){
-		for(int i = 0; i < size(); ++i){
-			if(name == cjtResource.get(i).getName()){
-    			return cjtResource.remove(cjtResource.get(i));
-    		}
-    	}
-    	return false;
+    	return cjtResource.remove(name);
     }
 
 	public void clear(){
@@ -53,33 +30,23 @@ public class ResourceCollection {
 	//Getter
 	//-----------------------------------------------
 
-	public List<Resource> getAll(){
+	public TST<Resource> getAll(){
 		return cjtResource;
 	}
 	
 	public Resource getResourceByName(String namep){
-		for(int i = 0; i < size(); ++i){
-			if(namep == cjtResource.get(i).getName()){
-				return cjtResource.get(i);
-			}
-		}
-		return null;
+		return cjtResource.get(namep);
 	}
 
 	// Exist
 	//-----------------------------------------------
 
 	public boolean exists(Resource r){
-		return cjtResource.contains(r);
+		return cjtResource.contains(r.getName());
 	}
 	
-	public boolean existByName(String name) {
-		for(int i = 0; i < size(); ++i){
-			if(name == cjtResource.get(i).getName()){
-				return true;
-			}
-		}
-		return false;
+	public boolean existByName(String namep) {
+		return cjtResource.contains(namep);
 	}
 	
 	// Utils

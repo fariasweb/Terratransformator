@@ -11,7 +11,7 @@ public class Resource //extends Entity{
 	//---------------------------------------------
 		
 	public Resource(String namep, String typep) throws Exception{
-        Util.checkName(namep);
+        if(!Util.checkName(namep)) throw new Exception();
         name = namep;
         //checkType(typep);
         //type = ResourceType.valueOf(typep);
