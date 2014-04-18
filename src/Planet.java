@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class Planet {
 
 	private String name;
@@ -26,7 +24,7 @@ public class Planet {
 	public Planet(){
 		name = null;
 		x_pos = y_pos = null;
-		neededResources = new ArrayList<Resource>();		
+		//neededResources = new ArrayList<Resource>();		
 		//neededResources = new ArrayList<Resource>();
 
 		packet = null;
