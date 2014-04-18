@@ -5,7 +5,7 @@ public class Resource //extends Entity{
 	ResourceType type;
 
 	private static void checkType(ResourceType res) throws IllegalArgumentException{ //Enseñar
-		if(!(res.equals("H") || res.equals("T")))  throw new IllegalArgumentException("type is not valid");
+		if(!(res.equals("HUMAN") || res.equals("TECHNOLOGICAL")))  throw new IllegalArgumentException("type is not valid");
 	}
 	//Contructs
 	//---------------------------------------------
