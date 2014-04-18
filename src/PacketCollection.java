@@ -2,28 +2,24 @@
 import java.util.*;
 
 public class PacketCollection {
-	List<Packet> cjtPacket;
+	private TST<Packet> cjtPacket;
 	
 	//Contructs
 	//---------------------------------------------
-		
-	public PacketCollection(List<Packet> g){
-		cjtPacket = g;
-	}
-		
+			
 	public PacketCollection(){
-		cjtPacket = new ArrayList<Packet>();
+		cjtPacket = new TST<Packet>();
 	}
 	
 	//Setter
 	//---------------------------------------------
 	
-	public boolean add(Packet g){
-		return cjtPacket.add(g);
+	public void add(Packet g){
+		 cjtPacket.put(g.getName(),g);
 	}
 		
-	public boolean remove(Packet g){
-		return cjtPacket.remove(g);
+	public void removePacketByName(String namep) throws Exception {
+		cjtPacket.remove(namep);
 	}
 	    
 	public void clear(){
@@ -34,17 +30,24 @@ public class PacketCollection {
 	//Getter
 	//-----------------------------------------------
 		
-	public List<Packet> getAll(){
+	public TST<Packet> getAll(){
 		return cjtPacket;
 	}
 	
+	public Packet getPacketByName(String namep){
+		return cjtPacket.get(namep);
+	}
+
 	// Exist
 	//-----------------------------------------------
 
 	public boolean exist(Packet g){
-		return cjtPacket.contains(g);
+		return cjtPacket.contains(g.getName());
 	}
 	
+	public boolean existPacketByName(String namep){
+		return cjtPacket.contains(namep);
+	}
 	// Utils
 	//-----------------------------------------------
 	

@@ -25,8 +25,7 @@ public class Planet {
 	//Constructora por defecto
 	public Planet(){
 		name = null;
-		x_pos = y_pos = null;
-		neededResources = new ArrayList<Resource>();		
+		x_pos = y_pos = null;		
 		//neededResources = new ArrayList<Resource>();
 
 		packet = null;

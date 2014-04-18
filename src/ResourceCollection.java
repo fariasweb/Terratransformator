@@ -18,8 +18,8 @@ public class ResourceCollection {
             cjtResource.put(r.getName(),r);
 	}
 	
-	public boolean removeResourceByName(String name){
-    	return cjtResource.remove(name);
+	public void removeResourceByName(String namep) throws Exception{
+    	cjtResource.remove(namep);
     }
 
 	public void clear(){

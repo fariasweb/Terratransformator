@@ -1,47 +1,25 @@
 import java.util.*;
 
 public class PlanetCollection {
-	List<Planet> cjtPlanet;
+	TST<Planet> cjtPlanet;
 	
 	//Contructs
 	//---------------------------------------------
 			
 	public PlanetCollection(){
-		cjtPlanet = new ArrayList<Planet>();
+		cjtPlanet = new TST<Planet>();
 	}
 	
 	//Setter
 	//---------------------------------------------
-	/**
-	 * 
-	 * @param g
-	 * @return
-	 */
-	public boolean add(Planet g){
-		return cjtPlanet.add(g);
-	}
-
-	/**
-	 * 
-	 * @param g
-	 * @return
-	 */
-	public boolean remove(Planet g){
-		return cjtPlanet.remove(g);
-	}
 	
 	/**
 	 * 
 	 * @param name
 	 * @return
 	 */
-	public boolean removePlanetByName(String name){
-		for(int i = 0; i < size(); ++i){
-			if(name == cjtPlanet.get(i).getName()){
-    			return cjtPlanet.remove(cjtPlanet.get(i));
-    		}
-    	}
-    	return false;
+	public void removePlanetByName(String namep) throws Exception{
+		cjtPlanet.remove(namep);
     }
 	  
 	public void clear(){
@@ -55,7 +33,7 @@ public class PlanetCollection {
 	 * 
 	 * @return the cjtPlanet
 	 */
-	public List<Planet> getAll(){
+	public TST<Planet> getAll(){
 		return cjtPlanet;
 	}
 	
@@ -64,13 +42,8 @@ public class PlanetCollection {
 	 * @param planet
 	 * @return
 	 */
-	public Planet getPlanetByName(String name){
-		for(int i = 0; i < size(); ++i){
-			if(name == cjtPlanet.get(i).getName()){
-				return cjtPlanet.get(i);
-			}
-		}
-		return null;
+	public Planet getPlanetByName(String namep){
+		return cjtPlanet.get(namep);
 	}
 	// Exist
 	//-----------------------------------------------
@@ -80,7 +53,7 @@ public class PlanetCollection {
 	 * @return
 	 */
 	public boolean exist(Planet g){
-		return cjtPlanet.contains(g);
+		return cjtPlanet.contains(g.getName());
 	}
 	
 	/**
@@ -88,11 +61,8 @@ public class PlanetCollection {
 	 * @param name
 	 * @return
 	 */
-	public boolean existByName(String name) {
-		for(int i = 0; i < size(); ++i){
-			if(name == cjtPlanet.get(i).getName()) return true;
-		}	
-		return false;
+	public boolean existByName(String namep) {
+		return cjtPlanet.contains(namep);
 	}
 
 	// Utils
