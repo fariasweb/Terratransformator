@@ -1,9 +1,8 @@
 public class Planet {
 
 	private String name;
-	private Integer x_pos;	//Don't need this attribute
-	private Integer y_pos;	//This one neither
-	//TODO Relacion con recurso
+	private Integer x_pos;
+	private Integer y_pos;	
 	private Packet packet;
 
 	
@@ -26,7 +25,6 @@ public class Planet {
 		x_pos = y_pos = null;
 		//neededResources = new ArrayList<Resource>();		
 		//neededResources = new ArrayList<Resource>();
-
 		packet = null;
 	}
 	
@@ -34,7 +32,7 @@ public class Planet {
 	//---------------------------------------------
 	
 	/**
-	 * @param name the name to set
+	 * @param namep the name to set
 	 */
 	public void setName(String namep) throws Exception {
 		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
@@ -67,7 +65,6 @@ public class Planet {
  			Packet p = packet;
  			packet = null;
  			p.removePlanet();
-			
  		} 
 	}
 	//Getter
@@ -79,7 +76,7 @@ public class Planet {
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * @return PairInt pos
 	 */
@@ -88,19 +85,9 @@ public class Planet {
 	}
 
 	/**
-	 * @return the neededResources
-	 */
-	/*public List<Resource> getNeededResources() {
-		return neededResources;
-	}*/
-
-	/**
 	 * @return the packet
 	 */
 	public Packet getPacket() {
 		return packet;
 	}
-	
-
-
 }

@@ -3,30 +3,26 @@ import java.util.*;
 
 public class GalaxyCollection {
 
-	private List<Galaxy> cjtGalaxy;
+	private TST<Galaxy> cjtGalaxy;
 	
 	//Contructs
 	//---------------------------------------------
 		
-	public GalaxyCollection(List<Galaxy> g){
-		cjtGalaxy = g;
-	}
-		
 	public GalaxyCollection(){
-		cjtGalaxy = new ArrayList<Galaxy>();
+		cjtGalaxy = new TST<Galaxy>();
 	}
 	
 	//Setter
 	//---------------------------------------------
 	
 	public void add(Galaxy g){
-		cjtGalaxy.add(g);
+		cjtGalaxy.put(g.getName(),g);
 	}
 		
-	public void remove(Galaxy g){
-		cjtGalaxy.remove(g);
+	public void removeGalaxyByName(String namep) throws Exception {
+		cjtGalaxy.remove(namep);
 	}
-	    
+	  
 	public void clear(){
 		cjtGalaxy.clear();
 	}
@@ -35,22 +31,23 @@ public class GalaxyCollection {
 	//Getter
 	//-----------------------------------------------
 		
-	public List<Galaxy> getAll(){
+	public TST<Galaxy> getAll(){
 		return cjtGalaxy;
 	}
 	
-	//TODO: Selecionar solamente 1
+	public Galaxy getGalaxyByName(String namep){
+		return cjtGalaxy.get(namep);
+	}
 	
 	// Exist
 	//-----------------------------------------------
 
 	public boolean exist(Galaxy g){
-		return cjtGalaxy.contains(g);
+		return cjtGalaxy.contains(g.getName());
 	}
 	
-	public boolean existByName(String name) {
-		//TODO
-		return false;
+	public boolean existByName(String namep) {
+		return cjtGalaxy.contains(namep);
 	}
 	
 	// Utils
