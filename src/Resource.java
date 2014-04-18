@@ -14,7 +14,8 @@ public class Resource //extends Entity{
         if(!Util.checkName(namep)) throw new Exception();
         name = namep;
         //checkType(typep);
-        type = ResourceType.valueOf(typep);
+        //type = ResourceType.valueOf(typep);
+        type = ResourceType.HUMAN;
 	}
 
     public Resource(){

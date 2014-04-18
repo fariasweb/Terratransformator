@@ -11,7 +11,8 @@ public class Packet {
 
 	String name;
 	Planet planet;
-	Map<String, RelationPacketResource> map;
+	TST<RelationPacketResource> map; 
+	//TST<String, RelationPacketResource> map;
 	//TODO Relacion con recurso
 	
 	//Contructs
@@ -20,12 +21,12 @@ public class Packet {
 	public Packet() {
 		name = "";
 		planet = null;
-		map = new HashMap<String, RelationPacketResource>();
+		map = new TST<RelationPacketResource>();
 	}
 	
 	public Packet(String namep) throws Exception {
 		setName(namep);
-		map = new HashMap<String, RelationPacketResource>();
+		map = new TST<RelationPacketResource>();
 	}
 	
 	//Getters
@@ -49,7 +50,7 @@ public class Packet {
 	/**
 	 * @return the map
 	 */
-	public Map<String, RelationPacketResource> getResource() {
+	public TST<RelationPacketResource> getResource() {
 		return map;
 	}
 	
@@ -88,7 +89,7 @@ public class Packet {
 		if (rp == null) return;
 		
 		//Compruebas si existe ya en el packete
-		if(map.containsKey(rp.getName())) throw new Exception ("This packet contains a "+rp.getName()+" resource");
+		if(map.contains(rp.getName())) throw new Exception ("This packet contains a "+rp.getName()+" resource");
 		
 		//Si no existe, creamos y a–adimos
 		RelationPacketResource rpr = new RelationPacketResource(this, rp, qp);
@@ -105,7 +106,7 @@ public class Packet {
 	 * @throws Exception
 	 */
 	public void removeResource(Resource rp) throws Exception {
-		if (map.remove(rp.getName()) == null) throw new Exception("This packet doesnt contain any  "+rp.getName()+" resource");
+		//if (map.remove(rp.getName()) == null) throw new Exception("This packet doesnt contain any  "+rp.getName()+" resource");
 	}
 	
 	/**

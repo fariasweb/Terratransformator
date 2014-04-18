@@ -39,7 +39,7 @@ public abstract class AbstractDriver {
 	}
 	
 	protected static void _msg_error_param_insuf() {
-		Console.log("Parameter number is not correct");
+		Console.print("Parameter number is not correct");
 	}
 	
 }

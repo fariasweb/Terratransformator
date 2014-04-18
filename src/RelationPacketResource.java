@@ -18,7 +18,7 @@ public class RelationPacketResource {
 	public RelationPacketResource(Packet pp, Resource ss, int qp) throws Exception {
 		
 		setPacket(pp);
-		setS(ss);
+		setResource(ss);
 		setQuantity(qp);
 	}
 	
@@ -57,7 +57,7 @@ public class RelationPacketResource {
 	/**
 	 * @param s the s to set
 	 */
-	public void setS(Resource ss) {
+	public void setResource(Resource ss) {
 		s = ss;
 	}
 	/**
