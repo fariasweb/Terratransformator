@@ -143,20 +143,33 @@ public class TST<Value> {
     	root = null;
     }
     
-    public void remove(String key) {
+    public void remove(String key) throws Exception {
     	 if (key == null) throw new NullPointerException();
          if (key.length() == 0) throw new IllegalArgumentException("key must have length >= 1");
-         Node x = remove(root, key, 0);
+         
+         //Remove
+         if(!remove(root, key, 0)) throw new Exception("The key "+key+" doesn't exist");
      }
 
-    private Node remove(Node x, String key, int d) {
-    	if (key == null) throw new NullPointerException();
-        if (key.length() == 0) throw new IllegalArgumentException("key must have length >= 1");
-        if (x == null) return null;
+    private boolean remove(Node x, String key, int d) {
+        if (x == null) return false;
+        
         char c = key.charAt(d);
-        if      (c < x.c)              return get(x.left,  key, d);
-        else if (c > x.c)              return get(x.right, key, d);
-        else if (d < key.length() - 1) return get(x.mid,   key, d+1);
-        else                           return x;
+        boolean del = false;
+        
+        if      (c < x.c)              del = remove(x.left,  key, d);
+        else if (c > x.c)              del = remove(x.right, key, d);
+        else if (d < key.length() - 1) del = remove(x.mid,   key, d+1);
+        else {
+        	x.val = null;
+        	del = true;
+        }
+        
+        //Si se ha eliminado algo mas abajo 
+        if (del && x.left == null && x.mid == null && x.right == null) {
+        	x = null;
+        }
+        
+        return del;
     }
 }
