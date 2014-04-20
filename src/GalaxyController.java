@@ -14,13 +14,13 @@ import java.util.List;
  */
 public class GalaxyController extends AbstractController{
 
-	GalaxyCollection galaxyClt;
+	TST<Galaxy> galaxyClt;
 	
 	/**
 	 * 
 	 */
 	public GalaxyController() {
-		galaxyClt = new GalaxyCollection();
+		galaxyClt = new TST<Galaxy>();
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class GalaxyController extends AbstractController{
 	public void create(String name, int x, int y) throws Exception {
 		//if (this.galaxyClt.existByName(name)) throw new Exception(1, "Fran");
 		Galaxy g = new Galaxy(name, x, y);
-		galaxyClt.add(g);	
+		galaxyClt.put(name, g);	
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class GalaxyController extends AbstractController{
 		
 		//Comprobamos que exista algo en el array
 		if(this.galaxyClt.size() > 0){
-			for(Galaxy i : this.galaxyClt.getAll()){
+			for(Galaxy i : this.galaxyClt.values()){
 				list.add(i.getName());
 			}
 		}
