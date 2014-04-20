@@ -65,7 +65,7 @@ public class Planet {
 	public void setGalaxy(Galaxy g) throws Exception {
 		if (galaxy != g) {
 			galaxy = g;
-			g.setPlanet(this, x_pos, y_pos);
+			//g.addPlanet(this);
 		}
 	}
 	

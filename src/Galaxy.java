@@ -1,6 +1,11 @@
 import java.util.*;
 import java.util.regex.*;
 
+/**
+ * 
+ * @author farias
+ *
+ */
 public class Galaxy {
 
 	private String name;
@@ -11,6 +16,14 @@ public class Galaxy {
 
 	// Contructs
 	// ---------------------------------------------
+	
+	/**
+	 * 
+	 * @param namep
+	 * @param xp
+	 * @param yp
+	 * @throws Exception
+	 */
 	public Galaxy(String namep, int xp, int yp) throws Exception {
 
 		setName(namep);
@@ -20,6 +33,9 @@ public class Galaxy {
 
 	}
 
+	/**
+	 * 
+	 */
 	public Galaxy() {
 
 		x = 0;
@@ -33,55 +49,91 @@ public class Galaxy {
 	// Setter
 	// ---------------------------------------------
 
+	/**
+	 * 
+	 * @param namep
+	 * @throws Exception
+	 */
 	public void setName(String namep) throws Exception {
-
-		Pattern pat = Pattern.compile("^[A-Za-z]+[0-9]*");
-		Matcher mat = pat.matcher(namep);
-
-		if (!mat.matches())
-			throw new Exception("Name error");
-
+		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
 		name = namep;
 
 	}
 
+	/**
+	 * 
+	 * @param xp
+	 * @param yp
+	 * @throws Exception
+	 */
 	public void setSize(int xp, int yp) throws Exception {
 
 		if (xp <= 0 || yp <= 0)
-			throw new Exception("Size error");
+			throw new Exception("Size is not valid. Must be bigger than 0");
 
 		x = xp;
 		y = yp;
 	}
 
-	public void setPlanet(Planet p, int x, int y) throws Exception {
-
+	/**
+	 * 
+	 * @param p
+	 * @throws Exception
+	 */
+	public void addPlanet(Planet p) throws Exception {
+		
+		if (p == null) throw new Exception("Planet is not defined");
+		
+		//Que no exista
 		if (planets.contains(p.getName()))
 			throw new Exception("This planet is in this galaxy");
 
 		// Control de la posicion
-		if (existPlanetInPos(x, y))
+		PairInt pi = p.getPosition();
+		int px = pi.getX();
+		int py = pi.getY();
+		
+		//Es una posicion valida para el tama–o de la galaxia?
+		if ((px < 0 || px > x) ||
+			(py < 0 || py > y )) {
+				throw new Exception("The planet position is not correct for this galaxy");
+			}
+		
+		//Existe algun planeta en esa posicion?
+		if (existPlanetInPos(px, py))
 			throw new Exception("Planet exists in this position");
 
 		planets.put(p.getName(), p);
-		p.setPosition(x, y);
 		p.setGalaxy(this);
 	}
 
 	// Getter
 	// -----------------------------------------------
-
+	
+	/**
+	 * 
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public PairInt getSize() {
 		return new PairInt(x, y);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	TST<Planet> getPlanets() {
 		return planets;
 	}
+	
 
 	/**
 	 * 
@@ -90,7 +142,7 @@ public class Galaxy {
 	 * @return
 	 */
 	public Planet getPlanetInPost(int x, int y) {
-		Iterator iterator = planets.values().iterator();
+		Iterator<Planet> iterator = planets.values().iterator();
 
 		while (iterator.hasNext()) {
 
@@ -106,25 +158,6 @@ public class Galaxy {
 		return null;
 	}
 
-	// Deleter
-	// -----------------------------------------------
-
-	/**
-	 * 
-	 * @param name
-	 * @throws Exception
-	 */
-	public void removePlanet(String name) throws Exception {
-		planets.remove(name);
-	}
-
-	/**
-	 * 
-	 */
-	public void removeAllPlanet() {
-		planets.clear();
-	}
-
 	// Exists
 	// -----------------------------------------------
 
@@ -137,19 +170,7 @@ public class Galaxy {
 
 	public boolean existPlanetInPos(int x, int y) {
 
-		Iterator iterator = planets.values().iterator();
-		boolean _exist = false;
-
-		while (!_exist && iterator.hasNext()) {
-
-			Planet p = (Planet) iterator.next();
-			PairInt pos = p.getPosition();
-
-			_exist = (pos.getX() == x && pos.getY() == y);
-
-		}
-
-		return _exist;
+		return (getPlanetInPost(x,y) != null);
 
 	}
 

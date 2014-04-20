@@ -58,7 +58,7 @@ public class AvlTree<T extends Entity> {
     if(p==null){ this.root=q; q.height = height(q); }
     else {
      // If compare node is smaller, continue with the left node
-     if(q.item.getKey().compareToIgnoreCase(p.item.getKey()) < 0) {
+     if(q.item.getName().compareToIgnoreCase(p.item.getName()) < 0) {
       if(p.left==null) {
        p.left = q;
        q.parent = p;
@@ -70,7 +70,7 @@ public class AvlTree<T extends Entity> {
        insertAVL(p.left,q);
       }
       
-     } else if(q.item.getKey().compareToIgnoreCase(p.item.getKey()) > 0) {
+     } else if(q.item.getName().compareToIgnoreCase(p.item.getName()) > 0) {
       if(p.right==null) {
        p.right = q;
        q.parent = p;
@@ -134,9 +134,9 @@ public class AvlTree<T extends Entity> {
   private void removeAVL(AvlNode<T> p,String q) {
     if(p==null) return;
     else {
-      if(p.item.getKey().compareToIgnoreCase(q) > 0){
+      if(p.item.getName().compareToIgnoreCase(q) > 0){
       removeAVL(p.left,q);
-      } else if(p.item.getKey().compareToIgnoreCase(q) < 0) {
+      } else if(p.item.getName().compareToIgnoreCase(q) < 0) {
         removeAVL(p.right,q);
       } else
         // we found the node in the tree.. now lets go on!
@@ -194,9 +194,9 @@ public class AvlTree<T extends Entity> {
 
   private boolean findByKeyAVL(AvlNode<T> p, String q) {
       if(p != null) {
-        if(p.item.getKey().compareToIgnoreCase(q) > 0){
+        if(p.item.getName().compareToIgnoreCase(q) > 0){
           return findByKeyAVL(p.left,q);
-        } else if(p.item.getKey().compareToIgnoreCase(q) < 0) {
+        } else if(p.item.getName().compareToIgnoreCase(q) < 0) {
           return findByKeyAVL(p.right,q);
         } else return true;
       }
