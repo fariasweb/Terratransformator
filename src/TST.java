@@ -19,11 +19,12 @@ public class TST<Value> {
 	/**************************************************************
 	 * Is string key in the symbol table?
 	 **************************************************************/
-	public boolean contains(String key) {
+	public boolean contains(String key) throws Exception {
 		return get(key.toLowerCase()) != null;
 	}
 
-	public Value get(String key) {
+	//if not present returns null
+	public Value get(String key) throws Exception {
 		if (key == null)
 			throw new NullPointerException();
 		if (key.length() == 0)
@@ -36,10 +37,6 @@ public class TST<Value> {
 
 	// return subtrie corresponding to given key
 	private Node get(Node x, String key, int d) {
-		if (key == null)
-			throw new NullPointerException();
-		if (key.length() == 0)
-			throw new IllegalArgumentException("key must have length >= 1");
 		if (x == null)
 			return null;
 		char c = key.charAt(d);
