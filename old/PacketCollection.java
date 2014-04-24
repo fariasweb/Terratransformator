@@ -1,6 +1,3 @@
-
-import java.util.*;
-
 public class PacketCollection {
 	private TST<Packet> cjtPacket;
 	
@@ -17,7 +14,7 @@ public class PacketCollection {
 	 * @param g
 	 */
 	public void add(Packet g){
-		 cjtPacket.put(g.getName(),g);
+		 cjtPacket.put(g.getName(), g);
 	}
 	
 	/**
