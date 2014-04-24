@@ -30,6 +30,7 @@ public class GalaxyCollection {
 		cjtGalaxy.remove(namep);
 	}
 	  
+
 	public void clear(){
 		cjtGalaxy.clear();
 	}

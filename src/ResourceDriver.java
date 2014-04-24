@@ -20,7 +20,10 @@ class ResourceDriver extends AbstractDriver{
             	opc = Integer.parseInt(argv[0]);
 				switch(opc) {
                     case 1:
-                        p = create_resource(argv[1], argv[2]);
+                    	ResourceType res = new ResourceType();
+                    	if(argv[2] == "HUMAN") ResourceType.res = HUMAN;
+                    	else ResourceType.res = TECHNOLOGICAL;
+                        p = create_resource(argv[1], res);
                         break;
                     case 2:
                         p = new Resource();
@@ -54,15 +57,18 @@ class ResourceDriver extends AbstractDriver{
 		menu.add("Resource() : Resource");
 		menu.add("setName(String namep)");
 		menu.add("setType(ResourceType typep)");
+		menu.add("GetName() : String");
+		menu.add("GetKey() : String");
 		menu.add("getName() : String");
-		menu.add("getType() : ResourceType");
+		menu.add("getType() : String");
 
 		print_menu();
 	}
 
-	public static Resource create_resource(String namep, String typep) {
+	public static Resource create_resource(String namep, ResourceType typep) {
 		try{
-			return new Resource(namep, typep); 
+
+			return new Resource(namep,typep); 
 		}
 		catch (Exception e){
 			_msg_error(e.getMessage());
