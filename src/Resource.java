@@ -4,13 +4,13 @@ public class Resource //extends Entity{
 	String name;
 	ResourceType type;
 
-	private static void checkType(ResourceType res) throws IllegalArgumentException{ //Enseñar
+	private static void checkType(String res) throws IllegalArgumentException{ //Enseñar
 		if(!(res.equals("HUMAN") || res.equals("TECHNOLOGICAL")))  throw new IllegalArgumentException("type is not valid");
 	}
 	//Contructs
 	//---------------------------------------------
 		
-	public Resource(String namep, ResourceType typep) throws Exception{
+	public Resource(String namep, String typep) throws Exception{
         setName(namep);
         setType(typep);
 	}
@@ -55,8 +55,8 @@ public class Resource //extends Entity{
 	/**
 	 * @param type the type to set
 	 */
-	public void setType(ResourceType typep) throws Exception {
+	public void setType(String typep) throws Exception {
 		checkType(typep);
-        type = typep;
+        //type = typep;
 	}
 }

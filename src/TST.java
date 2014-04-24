@@ -19,16 +19,19 @@ public class TST<Value> {
 	/**************************************************************
 	 * Is string key in the symbol table?
 	 **************************************************************/
-	public boolean contains(String key) throws Exception {
+	public boolean contains(String key) {
+		if (key == null || key.length() == 0) return false;
 		return get(key.toLowerCase()) != null;
 	}
 
 	//if not present returns null
-	public Value get(String key) throws Exception {
-		if (key == null)
-			throw new NullPointerException();
-		if (key.length() == 0)
-			throw new IllegalArgumentException("key must have length >= 1");
+	public Value get(String key) {
+		if (key == null) return null;
+			//throw new NullPointerException();
+			
+		if (key.length() == 0) return null;
+			//throw new IllegalArgumentException("key must have length >= 1");
+		
 		Node x = get(root, key.toLowerCase(), 0);
 		if (x == null)
 			return null;
@@ -181,6 +184,14 @@ public class TST<Value> {
 		if (c == '.' || c > x.c)
 			collect(x.right, prefix, i, pat, q);
 	}
+	
+	//TODO
+	// all key with cache
+	public Iterable<Value> values(int init, int max) {
+		Queue<Value> queue = new LinkedList<Value>();
+		collectValues(root, "", queue);
+		return queue;
+	}
 
 	/**************************************************************
 	 * Remove
@@ -192,9 +203,9 @@ public class TST<Value> {
 
 	public void remove(String key) throws Exception {
 		if (key == null)
-			throw new NullPointerException();
+			return;
 		if (key.length() == 0)
-			throw new IllegalArgumentException("key must have length >= 1");
+			return;
 
 		// Remove
 		if (!remove(root, key.toLowerCase(), 0))

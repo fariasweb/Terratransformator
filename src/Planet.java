@@ -4,6 +4,7 @@ public class Planet {
 	private Integer x_pos;
 	private Integer y_pos;	
 	private Packet packet;
+	private Galaxy galaxy;
 
 	
 	private static void checkPosition(int x_posp, int y_posp) throws Exception {
@@ -17,15 +18,16 @@ public class Planet {
 		setPosition(x_posp,y_posp); // Se chequea aqui
 		setName(namep);				// Se chequea aqui
 		packet = null;
+		galaxy = null;
 	}
 	
 	//Constructora por defecto
 	public Planet(){
 		name = null;
 		x_pos = y_pos = null;
-		//neededResources = new ArrayList<Resource>();		
-		//neededResources = new ArrayList<Resource>();
+		
 		packet = null;
+		galaxy = null;
 	}
 	
 	//Setter
@@ -60,13 +62,13 @@ public class Planet {
 		}
 	}
 	
-	public void removePacket(){
-		if (packet != null) {
- 			Packet p = packet;
- 			packet = null;
- 			p.removePlanet();
- 		} 
+	public void setGalaxy(Galaxy g) throws Exception {
+		if (galaxy != g) {
+			galaxy = g;
+			//g.addPlanet(this);
+		}
 	}
+	
 	//Getter
 	//-----------------------------------------------
 	/**
@@ -90,4 +92,28 @@ public class Planet {
 	public Packet getPacket() {
 		return packet;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Galaxy getGalaxy() {
+		return galaxy;
+	}
+	
+	//Deleter
+	//-----------------------------------------------
+	
+	/**
+	 * 
+	 */
+	public void removePacket(){
+		if (packet != null) {
+ 			Packet p = packet;
+ 			packet = null;
+ 			p.removePlanet();
+ 		} 
+	}
+	
+	
 }
