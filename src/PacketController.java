@@ -1,52 +1,36 @@
-/**
- * GalaxyController
- * 
- * @author farias
- *
- */
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class PacketController extends AbstractController{
 
-	private TST<Packet> cjtPacket;
-	private Packet packet;
-	
-	public Packet() {
-		name = "";
-		planet = null;
-		map = new TST<RelationPacketResource>();
-	}
-	
-	public Packet(String namep) throws Exception {
-		setName(namep);
-		map = new TST<RelationPacketResource>();
+	private TST<Packet> packetCtl;
+
+
+	public void createPacket(String namep){
+		Packet p = new Packet(namep);
+
 	}
 	
 	//Getters
 	//---------------------------------------------
 
-	/**
-	 * 
-	 * @return int
-	 */
-	public String getName() {
-		return name;
+	public Packet getPacketByName(String namep){
+		return packetCtl.get(namep);
 	}
-	
+
 	/**
 	 * @return the planet
 	 */
-	public Planet getPlanet() {
-		return planet;
+	public Planet getPlanet(String namep) {
+		Packet p = packetCtl.get(namep);
+		return p.getPlanet();
 	}
 	
 	/**
 	 * @return the map
 	 */
-	public TST<RelationPacketResource> getResource() {
-		return map;
+	public TST<RelationPacketResource> getResource(String namep) {
+		return packetCtl.get(namep).getResource();
 	}
 	
 	//Setter
@@ -56,18 +40,22 @@ public class PacketController extends AbstractController{
 	 * @param name the name to set
 	 * @throws Exception 
 	 */
-	public void setName(String namep) throws Exception {
+	public void setName(String oldName, String namep){
+		if(!Util.checkName(oldName)) throw new Exception(oldName + " is not valid");
 		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
-		name = namep;
+		Packet p = packetCtl.get(oldName);
+		p.setName(namep);
 	}
 
 	/**
 	 * @param planet the planet to set
 	 */
-	public void setPlanet(Planet planetp) {
-		if (planet != planetp && planetp != null) {
-			planet = planetp;
-			planetp.setPacket(this);
+	public void setPlanet(String namePacket, String namePlanet) {
+		Packet paq = packetCtl.get(namePacket);
+		Planet planet = getPlanetByName(namePlanet); //Error, relacion entre paquete planeta
+		if (paq.getPlanet() != planet && paq.getPlanet() != null) {
+			paq.setPlanet(planet);
+			planet.setPacket(paq);
 		}
 	}
 	
@@ -79,16 +67,20 @@ public class PacketController extends AbstractController{
 	 * @param qp
 	 * @throws Exception 
 	 */
-	public void addResource(Resource rp, int qp) throws Exception {
-		
-		if (rp == null) return;
+	public void addResource(String namep,String namerp, int qp){
+		/*Packet paq = packetCtl.get(namePacket);
+		//Resource res = getResource
+		TST<RelationPacketResource> rpr = paq.getResource();
+		RelationPacketResource rel = new RelationPacketResource();
+		rel.setPacket(paq);
+		rel.setResource();
+		if (res == null) return;
 		
 		//Compruebas si existe ya en el packete
-		if(map.contains(rp.getName())) throw new Exception ("This packet contains a "+rp.getName()+" resource");
+		if(rpr.contains(namerp)) throw new Exception ("This packet contains a "+namerp+" resource");
 		
 		//Si no existe, creamos y a–adimos
-		RelationPacketResource rpr = new RelationPacketResource(this, rp, qp);
-		map.put(rp.getName(), rpr);
+		rpr.put(rpr.get(namerp),qp);*/
 	}
 	
 	
@@ -100,26 +92,28 @@ public class PacketController extends AbstractController{
 	 * @param rp
 	 * @throws Exception
 	 */
-	public void removeResource(Resource rp) throws Exception {
-		map.remove(rp.getName());
+	public void removeResource(String namep,String namerp) {
+		Packet paq = packetCtl.get(namep);
+		paq.removeResourceByName(namerp);
 	}
 	
 	/**
 	 * 
 	 */
-	public void removeAllResource() {
-		map.clear();
+	public void removeAllResource(String namep) {
+		Packet paq = packetCtl.get(namep);
+		paq.removeAllResource();
 	}
 	
 	/**
 	 * 
 	 */
-	public void removePlanet() {
+	public void removePlanet(String namep) {
+		Packet paq = packetCtl.get(namep);
+		Planet planet = paq.getPlanet();
 		if (planet != null) {
-			Planet p = planet;
-			
-			planet = null;
-			p.removePacket();
+			paq.removePlanet();
+			planet.removePacket();
 			
 		}
 	}
@@ -127,11 +121,11 @@ public class PacketController extends AbstractController{
 	 * 
 	 */
 	public PacketController() {
-		cjtPacket = new TST<Packet>();
+		packetCtl = new TST<Packet>();
 	}
 	
 	public void add(Packet g){
-		 cjtPacket.put(g.getName(),g);
+		 packetCtl.put(g.getName(),g);
 	}
 	
 	/**
@@ -139,11 +133,11 @@ public class PacketController extends AbstractController{
 	 * @throws Exception
 	 */
 	public void removePacketByName(String namep) throws Exception {
-		cjtPacket.remove(namep);
+		packetCtl.remove(namep);
 	}
 	    
 	public void clear(){
-		cjtPacket.clear();
+		packetCtl.clear();
 	}
 
 	
@@ -154,17 +148,9 @@ public class PacketController extends AbstractController{
 	 * @return TST<Packet>
 	 */
 	public TST<Packet> getAll(){
-		return cjtPacket;
+		return packetCtl;
 	}
 	
-	/**
-	 * @param namep
-	 * @return Packet
-	 */
-	public Packet getPacketByName(String namep){
-		return cjtPacket.get(namep);
-	}
-
 	// Exist
 	//-----------------------------------------------
 	
@@ -173,12 +159,12 @@ public class PacketController extends AbstractController{
 	 * @return boolean
 	 */
 	public boolean existPacketByName(String namep){
-		return cjtPacket.contains(namep);
+		return packetCtl.contains(namep);
 	}
 	// Utils
 	//-----------------------------------------------
 	
 	public int size(){
-		return cjtPacket.size();
+		return packetCtl.size();
 	}
 }

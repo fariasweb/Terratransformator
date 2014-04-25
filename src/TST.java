@@ -230,11 +230,6 @@ public class TST<Value> {
 			del = true;
 		}
 
-		// Si se ha eliminado algo mas abajo
-		if (del && x.left == null && x.mid == null && x.right == null) {
-			x = null;
-		}
-
 		return del;
 	}
 }
