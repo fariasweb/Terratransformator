@@ -230,17 +230,6 @@ public class TST<Value> {
 			del = true;
 		}
 
-		// Si se ha eliminado algo mas abajo
-
-		if(del) Console.echo("DEL||");
-		if(x.left == null) Console.echo("x.left||");
-		if(x.mid == null) Console.echo("x.mid||");
-		if(x.right == null) Console.echo("x.right||");
-		Console.print("");
-		if (del && x.left == null && x.mid == null && x.right == null) {
-			x = null;
-		}
-
 		return del;
 	}
 }
