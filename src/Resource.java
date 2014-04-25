@@ -1,12 +1,15 @@
+import java.util.*;
 
-public class Resource //extends Entity{
-{
+public class Resource{
+
 	String name;
 	ResourceType type;
 
 	private static void checkType(String res) throws IllegalArgumentException{ //Enseñar
 		if(!(res.equals("HUMAN") || res.equals("TECHNOLOGICAL")))  throw new IllegalArgumentException("type is not valid");
 	}
+
+
 	//Contructs
 	//---------------------------------------------
 		
@@ -19,7 +22,9 @@ public class Resource //extends Entity{
         name = null;
         type = null;
     }
-	//Getter
+
+
+	//Getters
 	//-----------------------------------------------
 		
 	/**
@@ -29,9 +34,9 @@ public class Resource //extends Entity{
         return name;
 	}
 
-	public String getKey(){
+	/*public String getKey(){
 		return name;
-	}
+	}*/
 
 	/**
 	 * @return the type as a String
@@ -40,14 +45,16 @@ public class Resource //extends Entity{
         return type.name();
 	}
 
+
 	//Setter
 	//---------------------------------------------
 	
 	/**
-	 * @param name the name to set
+	 * @param namep
+	 * @throws Exception
 	 */
 	public void setName(String namep) throws Exception {
-		if(!Util.checkName(namep)) throw new Exception();
+		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
         name = namep;
 	}
 
@@ -57,6 +64,17 @@ public class Resource //extends Entity{
 	 */
 	public void setType(String typep) throws Exception {
 		checkType(typep);
-        //type = typep;
+        type = ResourceType.valueOf(typep);
+	}
+
+	//To Basic Types
+	//---------------------------------------------
+
+	public ArrayList<String> toStringArray(){
+
+		ArrayList<String> list = new ArrayList<String>();
+		list.add(getName());
+		list.add(getType());
+		return list;
 	}
 }
