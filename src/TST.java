@@ -55,13 +55,14 @@ public class TST<Value> {
 
 	/**************************************************************
 	 * Insert string s into the symbol table.
+	 * @throws Exception 
 	 **************************************************************/
-	public void put(String s, Value val) {
+	public void put(String s, Value val) throws Exception {
 		// if (!contains(s)) N++;
 		root = put(root, s.toLowerCase(), val, 0);
 	}
 
-	private Node put(Node x, String s, Value val, int d) {
+	private Node put(Node x, String s, Value val, int d) throws Exception {
 		char c = s.charAt(d);
 		if (x == null) {
 			x = new Node();
@@ -74,9 +75,13 @@ public class TST<Value> {
 		else if (d < s.length() - 1)
 			x.mid = put(x.mid, s, val, d + 1);
 		else {
-			if (x.val == null)
+			if (x.val == null) {
+				
 				N++;
-			x.val = val;
+				x.val = val;
+			} else {
+				throw new Exception("The key " + s + " exist");
+			}
 		}
 		return x;
 	}
@@ -185,13 +190,6 @@ public class TST<Value> {
 			collect(x.right, prefix, i, pat, q);
 	}
 	
-	//TODO
-	// all key with cache
-	public Iterable<Value> values(int init, int max) {
-		Queue<Value> queue = new LinkedList<Value>();
-		collectValues(root, "", queue);
-		return queue;
-	}
 
 	/**************************************************************
 	 * Remove
@@ -203,9 +201,9 @@ public class TST<Value> {
 
 	public void remove(String key) throws Exception {
 		if (key == null)
-			return;
+			throw new Exception("The key is null");
 		if (key.length() == 0)
-			return;
+			throw new Exception("The key is empty");
 
 		// Remove
 		if (!remove(root, key.toLowerCase(), 0))
@@ -228,6 +226,7 @@ public class TST<Value> {
 		else {
 			x.val = null;
 			del = true;
+			N--;
 		}
 
 		return del;

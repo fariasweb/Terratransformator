@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -9,13 +10,19 @@ import java.util.List;
  */
 public class GalaxyController extends AbstractController{
 
-	TST<Galaxy> galaxyClt;
+	TST<Galaxy> Clt;
+	//GalaxyControllerGD GGD;
+	
+	private final String _path_file = "";
+	//PlanetController PlanetC;
+	//Pasar por parametros en la funciones q lo necesite
 	
 	/**
 	 * 
 	 */
 	public GalaxyController() {
-		galaxyClt = new TST<Galaxy>();
+		Clt = new TST<Galaxy>();
+		//GGD = new GalaxyControllerGD;
 	}
 	
 	// Create
@@ -34,10 +41,8 @@ public class GalaxyController extends AbstractController{
 	 */
 	public void addGalaxy(String name, int x, int y) throws Exception {
 		
-		if (galaxyClt.contains(name)) throw new Exception("This galaxy name exist");
-		
 		Galaxy g = new Galaxy(name, x, y);
-		galaxyClt.put(name, g);	
+		Clt.put(name, g);
 	}
 
 	// Read
@@ -46,42 +51,53 @@ public class GalaxyController extends AbstractController{
 	/**
 	 * Devuelve un listado con el nombre de las galaxias ordenado por creaci—n
 	 * TODO: Como lo hago para devolmes mas campos????
-	 * @return List<String>
+	 * @return String
 	 */
-	//TODO: Solo un string o pueden ser varios?
-	public List<String> getAll() {
+
+	public String getAll() {
 		
-		List<String> list = new ArrayList<String>();
+		String result = "";
 		
 		//Comprobamos que exista algo en el array
-		if(galaxyClt.size() > 0){
-			for(Galaxy i : galaxyClt.values()){
-				PairInt pos = i.getSize();
-				list.add(i.getName()+" "+pos.getX()+" "+pos.getY());
+		if(Clt.size() > 0){
+			for(Galaxy i : Clt.values()){
+				result += i.toString()+"\n";
 			}
 		}
-		return list;
+		return result;
 	}
 	
 	/**
 	 * Pre: El nombre no debe ser nulo y con longitud > 0
 	 * 		La galaxia debe existir
-	 * Post:
 	 * 
 	 * @param name String
 	 * @return
 	 * @throws Exception
 	 */
-	public String getByName(String name) throws Exception {
-		
-		if (name == null || name.length() == 0) throw new Exception("Parameter name is not correct");
-		Galaxy g = galaxyClt.get(name);
-		
+	public String getByNameToString(String name) throws Exception {
+				
+		Galaxy g = Clt.get(name);
 		if (g == null) throw new Exception("This galaxy doesn't exist");
 		
-		PairInt pos = g.getSize();
-		return g.getName()+" "+pos.getX()+" "+pos.getY();
+		return g.toString();
 	}
+	
+	/**
+	 * Pre: El nombre no debe ser nulo y con longitud > 0
+	 * 		La galaxia debe existir
+	 * 
+	 * @param name String
+	 * @return
+	 * @throws Exception
+	 */
+	 public Galaxy getByName(String name) throws Exception {
+				
+		Galaxy g = Clt.get(name);
+		if (g == null) throw new Exception("This galaxy doesn't exist");
+		
+		return g;
+	 }
 	
 	/**
 	 * Pre: El nombre no debe ser nulo y con longitud > 0
@@ -90,11 +106,8 @@ public class GalaxyController extends AbstractController{
 	 * @param name
 	 * @return Boolean
 	 */
-	private boolean existGalaxy(String name) {
-		
-		if (name == null || name.length() == 0) return false;
-		
-		return galaxyClt.contains(name);
+	public boolean existGalaxy(String name) {		
+		return Clt.contains(name);
 	}
 	
 	// Update
@@ -112,19 +125,18 @@ public class GalaxyController extends AbstractController{
 	 * @param y
 	 * @throws Exception
 	 */
-	public void updateGalaxy(String name, String new_name) throws Exception {
-		if (name == null || name.length() == 0) throw new Exception("Parameter name is not correct");
+	public void updateGalaxyName(String name, String new_name) throws Exception {
 		
 		//Cogemos la galxia
-		Galaxy g = galaxyClt.get(name);
+		Galaxy g = Clt.get(name);
 		if (g == null) throw new Exception("This galaxy doesn't exist");
 
 		//Actualizamos informacion
 		//Si la galaxia tiene un ombre diferente se debe extraer del arbol y volver a meter
 		if (g.getName() != new_name) {
-			galaxyClt.remove(g.getName());
+			Clt.remove(g.getName());
 			g.setName(new_name);
-			galaxyClt.put(new_name, g);	
+			Clt.put(new_name, g);	
 		}
 		
 	}
@@ -135,18 +147,36 @@ public class GalaxyController extends AbstractController{
 	/**
 	 * Pre: El nombre no debe ser nulo y con longitud > 0
 	 * 		La galaxia debe existir
+	 * Post: Eliminada la galaxia con nombre "name"
 	 * @param name
 	 * @throws Exception
 	 */
 	public void removeGalaxy(String name) throws Exception {
-		galaxyClt.remove(name);
+		Galaxy g = Clt.get(name);
+		if (g == null) throw new Exception("This galaxy doesn't exist");
+		
+		//Eliminamos todos los planets
+		g.removeAllPlanets();
+		
+		//Eliminos del conjunto
+		Clt.remove(name);
 	}
 	
 	/**
-	 * 
+	 * Post: No existe ninguna galaxia
+	 * @throws Exception 
 	 */
-	public void removeAllGalaxy() {
-		galaxyClt.clear();
+	public void removeAllGalaxy() throws Exception {
+		
+		Iterator<Galaxy> iterator = Clt.values().iterator();
+
+		while (iterator.hasNext()) {
+			Galaxy g = (Galaxy) iterator.next();
+			Clt.remove(g.getName());
+			g.removeAllPlanets();
+		}
+		
+		
 	}
 	
 	
@@ -159,55 +189,94 @@ public class GalaxyController extends AbstractController{
 	// TODO: Buscarlo en el otro controlador de planetas el planeta
 	// EL otro controlador debe devolverme la referencia del planeta, no un string
 	
+	/**
+	 * TODO: Pasar por paremtros la referencia al controlador de planetas
+	 * @param GalaxyName
+	 * @param PlanetName
+	 */
 	public void addPlanet (String GalaxyName, String PlanetName) {
+		
+		//1. Comprobar la existencia de galaxia
+		
+		//2. COmprobar la existencia de planeta en controlador de planetas
+		//Pre: El planeta no debe tener otra galaxia asignaada o estar en esta ya
+		
+		//3. Asignar planeta a galaxia y viceversa
 		
 	}
 	
 	// Read
 	// ---------------------------------------------
 	
-	public List<String> getPlanetsFromGalaxy(String name) throws Exception {
-		if (name == null || name.length() == 0) throw new Exception("Parameter name is not correct");
-		
+	/**
+	 * Pre: La galaxia debe existir
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getPlanetsFromGalaxy(String name) throws Exception {		
 		//Cogemos la galxia
-		Galaxy g = galaxyClt.get(name);
+		Galaxy g = Clt.get(name);
 		if (g == null) throw new Exception("This galaxy doesn't exist");
 
-		List<String> list = new ArrayList<String>();
+		String result = "";
 		//Comprobamos que exista algo en el array
 		if(g.getPlanets().size() > 0){
 			for(Planet i : g.getPlanets().values()){
-				PairInt pos = i.getPosition();
-				list.add(i.getName()+" "+pos.getX()+" "+pos.getY());
+				result += i.toString()+"\n";
 			}
 		}
 		
-		return list;
+		return result;
 	}
 	
 	// Delete
 	// ---------------------------------------------
 	
+	/**
+	 * Pre: La galaxia y el planeta deben existir
+	 * @param GalaxyName
+	 * @param Planetname
+	 * @throws Exception
+	 */
 	public void removePlanetFromGalaxy(String GalaxyName, String Planetname) throws Exception {
-		if (GalaxyName == null || GalaxyName.length() == 0) throw new Exception("Parameter GalaxyName is not correct");
-		if (Planetname == null || Planetname.length() == 0) throw new Exception("Parameter Planetname is not correct");
-
 		//Cogemos la galxia
-		Galaxy g = galaxyClt.get(GalaxyName);
-		if (g == null) throw new Exception("This galaxy doesn't exist");
+		Galaxy g = Clt.get(GalaxyName);
+		if (g == null) throw new Exception("This galaxy "+GalaxyName+"doesn't exist");
 		
-		g.getPlanets().remove(Planetname);
+		g.removePlanet(Planetname);
 
 	}
 	
+	/**
+	 * Pre: La galaxia debe existir
+	 * Post: Eliminado todos los planetas de la galaxia indicada
+	 * @param GalaxyName
+	 * @throws Exception
+	 */
 	public void removePlanetsFromGalaxy(String GalaxyName) throws Exception {
-		if (GalaxyName == null || GalaxyName.length() == 0) throw new Exception("Parameter GalaxyName is not correct");
-
 		//Cogemos la galxia
-		Galaxy g = galaxyClt.get(GalaxyName);
+		Galaxy g = Clt.get(GalaxyName);
 		if (g == null) throw new Exception("This galaxy doesn't exist");
 		
-		g.getPlanets().clear();
+		g.removeAllPlanets();
+	}
+	
+	// Save&Load
+	// ---------------------------------------------
+	
+	protected void parseString(String l) {
+		
+		/*String[] s = l.split(" ");
+		
+		if (s.length != 3) throw new Exception();
+		
+		String name = s[0];
+		int x = Integer.parseInt(s[1]);
+		int y = Integer.parseInt(s[2]);
+		
+		addGalaxy(name, x, y);
+		*/
 	}
 	
 }

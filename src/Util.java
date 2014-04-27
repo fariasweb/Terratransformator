@@ -10,6 +10,9 @@ public class Util {
 
 	public static boolean checkName(String namep) {
 	
+		//Que no sea nulo
+		if (namep == null) return false;
+		
 		//Que no este vacio
 		if (namep.length() == 0) return false;
 		
@@ -20,7 +23,7 @@ public class Util {
 			}
 		}
 		
-		//MIramos el resto de la cadena
+		//Miramos el resto de la cadena
 		boolean is_correct = true;
 		int i = 1;
 		

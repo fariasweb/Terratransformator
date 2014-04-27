@@ -6,7 +6,7 @@ import java.util.regex.*;
  * @author farias
  *
  */
-public class Galaxy {
+public class Galaxy implements Entity {
 
 	private String name;
 	private int x;
@@ -26,10 +26,10 @@ public class Galaxy {
 	 */
 	public Galaxy(String namep, int xp, int yp) throws Exception {
 
+		planets = new TST<Planet>();
+		
 		setName(namep);
 		setSize(xp, yp);
-
-		planets = new TST<Planet>();
 
 	}
 
@@ -61,7 +61,8 @@ public class Galaxy {
 	}
 
 	/**
-	 * 
+	 * Pre: xp > 0 y yp > 0
+	 * 		La galaxia no debe de tener ningun planeta
 	 * @param xp
 	 * @param yp
 	 * @throws Exception
@@ -71,12 +72,17 @@ public class Galaxy {
 		if (xp <= 0 || yp <= 0)
 			throw new Exception("Size is not valid. Must be bigger than 0");
 
+		if (planets.size() > 0)
+			throw new Exception("The galaxy can not change the size if it have planets");
+		
 		x = xp;
 		y = yp;
 	}
 
 	/**
-	 * 
+	 * Pre: El planeta no debe estar en esta galaxia previamente
+	 * 		La posicion del planeta debe de estar dentro de la galaxia
+	 * 		No debe exisitir otro planeta en esa posicion
 	 * @param p
 	 * @throws Exception
 	 */
@@ -85,9 +91,9 @@ public class Galaxy {
 		if (p == null) throw new Exception("Planet is not defined");
 		
 		//Que no exista
-		if (planets.contains(p.getName()))
+		/*if (planets.contains(p.getName()))
 			throw new Exception("This planet is in this galaxy");
-
+		*/
 		// Control de la posicion
 		PairInt pi = p.getPosition();
 		int px = pi.getX();
@@ -173,5 +179,49 @@ public class Galaxy {
 		return (getPlanetInPost(x,y) != null);
 
 	}
+	
+	// Deleters
+	// -----------------------------------------------
 
+	/**
+	 * 
+	 * @param namep
+	 * @throws Exception
+	 */
+	public void removePlanet(String namep) throws Exception {
+		
+		Planet p = planets.get(namep);
+		if (p != null) {
+			planets.remove(namep);
+			p.removeGalaxy();
+		}
+	}
+	
+	/**
+	 * @throws Exception 
+	 * 
+	 */
+	public void removeAllPlanets() throws Exception {
+		
+		Iterator<Planet> iterator = planets.values().iterator();
+
+		while (iterator.hasNext()) {
+			Planet p = (Planet) iterator.next();
+			planets.remove(p.getName());
+			p.removeGalaxy();
+		}
+		
+		
+	}
+
+	// toString
+	// -----------------------------------------------
+
+	/**
+	 * 
+	 */
+	public String toString() {
+		return name+" "+x+" "+y;	
+	}
+	
 }

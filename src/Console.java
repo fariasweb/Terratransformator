@@ -129,6 +129,27 @@ public class Console {
 		Console.ln();
 	}
 	
+	public static void simplyTable(String head, List<String> content) {
+		print_line();
+		System.out.format(table_format, head);
+		
+		Console.ln();
+		print_line();
+		
+		 if (content.size() > 0) {
+		        for(int i = 0; i < content.size(); i++) {
+		        	System.out.format(table_format, content.get(i));	
+		            Console.ln();
+		        }
+	        } else {
+	        	System.out.format(table_format, "Any row");
+	        	Console.ln();
+	        }
+		 
+		 print_line();
+		
+	}
+	
 	
 	// ENTRADAS	
 	//---------------------------------------------

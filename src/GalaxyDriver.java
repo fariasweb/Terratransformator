@@ -21,6 +21,7 @@ class GalaxyDriver extends AbstractDriver {
 
 		// Generico del driver
 		Galaxy g = new Galaxy();
+		Planet p = null;
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -81,28 +82,30 @@ class GalaxyDriver extends AbstractDriver {
 					if (argv.length < 4)
 						_msg_error_param_insuf();
 					else {
-						Planet p = PlanetDriver.create_planet(argv[1],
+						p = PlanetDriver.create_planet(argv[1],
 								Integer.parseInt(argv[2]),
 								Integer.parseInt(argv[3]));
-						
-						add_planet_to_galaxy(g, p);
 					}
 
 					break;
-
+				
 				case 6:
+					add_planet_to_galaxy(g, p);
+					break;
+
+				case 7:
 					if (g != null)
 						Console.print(g.getName());
 					break;
 
-				case 7:
+				case 8:
 					if (g != null) {
 						PairInt pi = g.getSize();
 						Console.print(pi.getX() + " " + pi.getY());
 					}
 					break;
 
-				case 8: // Get Planets
+				case 9: // Get Planets
 					TST<Planet> lr = g.getPlanets();
 					if (lr.size() == 0) {
 						Console.print("This galaxy doesn't have planets");
@@ -126,13 +129,13 @@ class GalaxyDriver extends AbstractDriver {
 					}
 					break;
 					
-				case 9:
+				case 10:
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
-						Planet p = g.getPlanetInPost(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]));
-						if (p != null) {
-							Console.print("Planet in position "+argv[1]+" "+argv[2]+": " + p.getName());
+						Planet p2 = g.getPlanetInPost(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]));
+						if (p2 != null) {
+							Console.print("Planet in position "+argv[1]+" "+argv[2]+": " + p2.getName());
 						} else {
 							Console.print("Any planet in the position "+ argv[1] + " " + argv[2]);
 						}
@@ -140,7 +143,7 @@ class GalaxyDriver extends AbstractDriver {
 					
 					break;
 
-				case 10:
+				case 11:
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
@@ -152,6 +155,19 @@ class GalaxyDriver extends AbstractDriver {
 						}
 						
 					}
+					break;
+					
+				case 12:
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						remove_planet_to_galaxy(g, argv[1]);
+					}
+					
+					break;
+					
+				case 13:
+					remove_all_planets_to_galaxy(g);
 					break;
 					
 				default:
@@ -178,16 +194,20 @@ class GalaxyDriver extends AbstractDriver {
 
 		menu.add("SetName(String name)"); // 3
 		menu.add("SetSize(int x, int y)");
-		menu.add("addPlanet(String p, int x, int y)");
+		menu.add("PlanetDriver.createPlanet(String name, int x, int y) : Planet p");
+		menu.add("addPlanet(Planet p)");
 
-		menu.add("GetName() : String"); // 6
+		menu.add("GetName() : String"); // 7
 		menu.add("GetSize() : PairInt");
-		menu.add("GetPlanets(): List<Planet>");
+		menu.add("GetPlanets(): TST<Planet>");
 
 		menu.add("GetPlanetInPost(int x, int y) : Planet"); //9
 
 		menu.add("ExistPlanetInPos(int x, int y) : Boolean"); // 10
 
+		menu.add("removePlanet(String PlanetName)");
+		menu.add("removeAllPlanets() : Boolean");
+		
 		print_menu();
 	}
 
@@ -248,7 +268,28 @@ class GalaxyDriver extends AbstractDriver {
 	 */
 	public static void add_planet_to_galaxy(Galaxy g, Planet p) {
 		try {
+			
 			g.addPlanet(p);
+
+		} catch (Exception e) {
+			_msg_error(e.getMessage());
+		}
+	}
+	
+	public static void remove_planet_to_galaxy(Galaxy g, String PlanetName) {
+		try {
+			
+			g.removePlanet(PlanetName);
+
+		} catch (Exception e) {
+			_msg_error(e.getMessage());
+		}
+	}
+	
+	public static void remove_all_planets_to_galaxy(Galaxy g) {
+		try {
+			
+			g.removeAllPlanets();
 
 		} catch (Exception e) {
 			_msg_error(e.getMessage());
