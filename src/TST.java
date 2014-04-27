@@ -1,10 +1,15 @@
-import java.util.LinkedList;
 import java.util.Queue;
+import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class TST<Value> {
 	private int N; // size
 	private Node root; // root of TST
 
+	//Lo necesito para lo de Cache
+	///////////////////////////////////////////////////////
+	private int current;
+	//////////////////////////////////////////////////////
 	private class Node {
 		private char c; // character
 		private Node left, mid, right; // left, middle, and right subtries
@@ -190,6 +195,145 @@ public class TST<Value> {
 			collect(x.right, prefix, i, pat, q);
 	}
 	
+	///////////////////////////////////////////////////////////////////////////
+
+	// all keys in subtrie rooted at x with given prefix; limited
+	/*private void collectValuesCache(Node x, String prefix, ArrayList<Value> queue, int max) {		
+
+		if (current > max || x == null) return;
+		
+		collectValuesCache(x.left, prefix, queue, max);
+		if (x.val != null){
+			queue.add(x.val);
+			current++;
+			System.out.printf("Current: %d\n", current);
+		}
+		
+		collectValuesCache(x.mid, prefix + x.c, queue, max);
+		collectValuesCache(x.right, prefix, queue, max);
+	}
+
+	public ArrayList<Value> valuesCache(String key, int max) throws Exception{
+		
+		if(max < 1) throw new Exception("Mandatory: max > 0");
+		current = 1;
+		Node x = get(root, key.toLowerCase(), 0);
+		if(x == null) throw new Exception("Key not present");
+		
+		ArrayList<Value> queue = new ArrayList<Value>();
+
+		//A partir de primera palabra, miro para abajo
+		collectValuesCache(x.mid, ""+x.c, queue, max);
+			System.out.printf("Current inter: %d\n", current);
+
+		//A partir de primera palabra, miro para la derecha
+		collectValuesCache(x.right, "", queue, max);
+			System.out.printf("Current inter2: %d\n", current);
+
+		//Saco última letra, y si no era un char...
+		key = key.substring(0, key.length()-1);
+			Console.print("KEY: "+key);
+		if(!key.equals("") && current <= max){
+			x = get(root, key.toLowerCase(), 0);
+			if(x != null){ //&& x.mid != null ??
+
+				Console.print("chivato");
+				if(x.mid != null) Console.print("CHIVATO");  
+				if(x.mid.val != null){ Console.print("---->"+x.mid.val.toString()); queue.add(x.mid.val); ++current; }
+				collectValuesCache(x.mid.mid, "", queue, max);
+				collectValuesCache(x.mid.right, "", queue, max);
+			}
+		}
+
+
+		while(!key.equals("") && current <= max){
+
+			x = get(root, key.toLowerCase(), 0);
+
+			if(x != null){
+				if(x.val != null){ queue.add(x.val); ++current; }
+				if(current > max) break;
+				collectValuesCache(x.right, "", queue, max);
+			}
+
+			key = key.substring(0, key.length()-1);
+				Console.print("KEY: "+key);
+
+		}
+
+		return queue;
+	}*/
+
+	private void collectValuesCache(Node x, String prefix, String key, ArrayList<Value> queue, int max) {
+
+		if (x == null || current > max)
+			return;
+		
+		//Chivato
+		//Console.print("Key: " + key + "  Prefix: " + prefix + x.c);
+
+		collectValuesCache(x.left, prefix, key, queue, max);
+
+		if (x.val != null && current <= max && key.compareTo(prefix+x.c) < 0){
+			queue.add(x.val);
+			
+			//Chivato
+			//Console.print("--->"+x.val.toString());
+			++current;
+			//Chivato
+			//Console.print("--->Current: " + Integer.valueOf(current).toString());
+		}
+		
+		collectValuesCache(x.mid, prefix + x.c, key, queue, max);
+		collectValuesCache(x.right, prefix, key, queue, max);
+
+	}
+
+	public ArrayList<Value> valuesCache(String key, int max) throws Exception{
+
+		if(max < 1) throw new Exception("Mandatory: max > 0");
+		Node x = get(root, key.toLowerCase(), 0);
+		if(x == null) throw new Exception("Key not present");
+		
+		current = 1;
+		ArrayList<Value> queue = new ArrayList<Value>();
+		collectValuesCache(root, "", key, queue, max);
+		return queue;
+	}
+
+
+
+	public Value first() throws Exception{
+		if(N == 0) throw new Exception ("Empty TST!");
+		return first(root);
+	}
+
+	private Value first(Node x) throws Exception{
+		
+		//Testear!
+		while(x.left != null) x = x.left;
+		if(x.val != null) return x.val;
+		else if(x.mid != null) return first(x.mid);
+		//else if(x.val != null) return x.val;
+		else throw new Exception("Debugging exception");
+	}
+
+	public String firstKey() throws Exception{
+		if(N == 0) throw new Exception ("Empty TST!");
+		return firstKey(root);
+	}
+
+	public String firstKey(Node x) throws Exception{
+
+		//Testear!
+		while(x.left != null) x = x.left;
+		if(x.val != null) return ""+x.c;
+		else if(x.mid != null) return x.c+firstKey(x.mid);
+		//else if(x.val != null) return ""+x.c;
+		else throw new Exception("Debugging exception");
+	}
+
+	///////////////////////////////////////////////////////////////////////
 
 	/**************************************************************
 	 * Remove
@@ -224,6 +368,7 @@ public class TST<Value> {
 		else if (d < key.length() - 1)
 			del = remove(x.mid, key, d + 1);
 		else {
+			del = (x.val != null);
 			x.val = null;
 			del = true;
 			N--;

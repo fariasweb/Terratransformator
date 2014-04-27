@@ -1,14 +1,8 @@
-/**
- * 
- * @author farias
- * TODO: El mapa debe ser ordenado
- */
-
 public class Packet {
 
-	String name;
-	Planet planet;
-	TST<RelationPacketResource> map; 
+	private String name;
+	private Planet planet;
+	private TST<RelationPacketResource> map; 
 	//TST<String, RelationPacketResource> map;
 	//TODO Relacion con recurso
 	
@@ -37,6 +31,7 @@ public class Packet {
 		return name;
 	}
 	
+
 	/**
 	 * @return the planet
 	 */
@@ -134,7 +129,4 @@ public class Packet {
 			
 		}
 	}
-	
-	
-	
 }

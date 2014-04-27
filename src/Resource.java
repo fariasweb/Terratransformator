@@ -70,11 +70,9 @@ public class Resource{
 	//To Basic Types
 	//---------------------------------------------
 
-	public ArrayList<String> toStringArray(){
+	public String toString(){
 
-		ArrayList<String> list = new ArrayList<String>();
-		list.add(getName());
-		list.add(getType());
-		return list;
+		String s = getName() + " " + getType();
+		return s;
 	}
 }

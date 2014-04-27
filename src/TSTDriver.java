@@ -68,9 +68,42 @@ public class TSTDriver extends AbstractDriver{
 					break;
 
 				case 5: // TODO
-
+					int max = Integer.parseInt(argv[2]);
+					try{
+						Iterable<Integer> lista = Tree.valuesCache(argv[1], max);
+						for (Integer i : lista){
+							System.out.printf("%d", i);
+							Console.print("");
+						}
+					}
+					catch (Exception e) {
+						Console.print("Exception: ");
+						e.printStackTrace();
+					}
 					break;
 
+				case 6:
+
+					try{
+						Console.print(Tree.firstKey());
+					}
+					catch (Exception e) {
+						Console.print("Exception: ");
+						e.printStackTrace();
+					}
+					break;
+
+				case 7:
+
+					try{
+						Console.print(Tree.first().toString());
+					}
+					catch (Exception e) {
+						Console.print("Exception: ");
+						e.printStackTrace();
+					}
+					break;
+					
 				default:
 					_msg_opc_invalid();
 					break;
@@ -94,6 +127,9 @@ public class TSTDriver extends AbstractDriver{
 		menu.add("Remove");
 		menu.add("Get"); // 3
 		menu.add("GetAll"); 
+		menu.add("ValuesCache"); 
+		menu.add("firstKey"); 
+		menu.add("first"); 
 
 		print_menu();
 

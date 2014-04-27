@@ -117,7 +117,7 @@ class GalaxyDriver extends AbstractDriver {
 							String[] c = new String[3];
 
 							c[0] = pp.getName();
-							
+
 							PairInt pi = pp.getPosition();
 							c[1] = Integer.toString(pi.getX());
 							c[2] = Integer.toString(pi.getY());
@@ -137,26 +137,28 @@ class GalaxyDriver extends AbstractDriver {
 						if (p2 != null) {
 							Console.print("Planet in position "+argv[1]+" "+argv[2]+": " + p2.getName());
 						} else {
-							Console.print("Any planet in the position "+ argv[1] + " " + argv[2]);
+							Console.print("Any planet in the position "
+									+ argv[1] + " " + argv[2]);
 						}
 					}
-					
+
 					break;
 
 				case 11:
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
-						
-						if (g.existPlanetInPos(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]))) {
+
+						if (g.existPlanetInPos(Integer.parseInt(argv[1]),
+								Integer.parseInt(argv[2]))) {
 							Console.print("Exist planet in this position");
 						} else {
 							Console.print("Doesn't exist planet in this position");
 						}
-						
+
 					}
 					break;
-					
+	
 				case 12:
 					if (argv.length < 2)
 						_msg_error_param_insuf();
@@ -201,7 +203,7 @@ class GalaxyDriver extends AbstractDriver {
 		menu.add("GetSize() : PairInt");
 		menu.add("GetPlanets(): TST<Planet>");
 
-		menu.add("GetPlanetInPost(int x, int y) : Planet"); //9
+		menu.add("GetPlanetInPost(int x, int y) : Planet"); // 9
 
 		menu.add("ExistPlanetInPos(int x, int y) : Boolean"); // 10
 
