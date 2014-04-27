@@ -70,7 +70,6 @@ public class ResourceTST{
 		
 		ArrayList<Resource> ar = resourceClt.valuesCache(name, qtt);
 		return ar;
-
 	}
 
 	public Resource first(){
