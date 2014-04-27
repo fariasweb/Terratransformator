@@ -6,7 +6,7 @@ public class PacketController extends AbstractController{
 	private TST<Packet> packetCtl;
 
 
-	public void createPacket(String namep){
+	public void createPacket(String namep) throws Exception{
 		Packet p = new Packet(namep);
 
 	}

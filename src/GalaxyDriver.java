@@ -84,7 +84,7 @@ class GalaxyDriver extends AbstractDriver {
 						Planet p = PlanetDriver.create_planet(argv[1],
 								Integer.parseInt(argv[2]),
 								Integer.parseInt(argv[3]));
-						
+
 						add_planet_to_galaxy(g, p);
 					}
 
@@ -114,7 +114,7 @@ class GalaxyDriver extends AbstractDriver {
 							String[] c = new String[3];
 
 							c[0] = pp.getName();
-							
+
 							PairInt pi = pp.getPosition();
 							c[1] = Integer.toString(pi.getX());
 							c[2] = Integer.toString(pi.getY());
@@ -125,35 +125,39 @@ class GalaxyDriver extends AbstractDriver {
 						Console.table(head, content);
 					}
 					break;
-					
+
 				case 9:
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
-						Planet p = g.getPlanetInPost(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]));
+						Planet p = g.getPlanetInPost(Integer.parseInt(argv[1]),
+								Integer.parseInt(argv[2]));
 						if (p != null) {
-							Console.print("Planet in position "+argv[1]+" "+argv[2]+": " + p.getName());
+							Console.print("Planet in position " + argv[1] + " "
+									+ argv[2] + ": " + p.getName());
 						} else {
-							Console.print("Any planet in the position "+ argv[1] + " " + argv[2]);
+							Console.print("Any planet in the position "
+									+ argv[1] + " " + argv[2]);
 						}
 					}
-					
+
 					break;
 
 				case 10:
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
-						
-						if (g.existPlanetInPos(Integer.parseInt(argv[1]), Integer.parseInt(argv[2]))) {
+
+						if (g.existPlanetInPos(Integer.parseInt(argv[1]),
+								Integer.parseInt(argv[2]))) {
 							Console.print("Exist planet in this position");
 						} else {
 							Console.print("Doesn't exist planet in this position");
 						}
-						
+
 					}
 					break;
-					
+
 				default:
 					_msg_opc_invalid();
 					break;
@@ -184,7 +188,7 @@ class GalaxyDriver extends AbstractDriver {
 		menu.add("GetSize() : PairInt");
 		menu.add("GetPlanets(): List<Planet>");
 
-		menu.add("GetPlanetInPost(int x, int y) : Planet"); //9
+		menu.add("GetPlanetInPost(int x, int y) : Planet"); // 9
 
 		menu.add("ExistPlanetInPos(int x, int y) : Boolean"); // 10
 
