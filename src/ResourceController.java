@@ -7,7 +7,7 @@ import java.util.Iterator;
 public class ResourceController extends AbstractController{
 
 	private TST<Resource> Clt;
-
+	private PacketController pClt;
 
 	/**************************************************************
 	 * Contructs
@@ -20,8 +20,13 @@ public class ResourceController extends AbstractController{
 	 */
 	public ResourceController() {
 		Clt = new TST<Resource>();
+		pClt = new PacketController();
 	}
 
+	public void passPackCont(PacketController pc)throws Exception{
+		if(pc == null) throw new Exception("PacketController needed");
+		pClt = pc;
+	}
 	
 	/**************************************************************
 	 * Setters
@@ -40,6 +45,16 @@ public class ResourceController extends AbstractController{
 		Resource r = new Resource(name, type);
 		Clt.put(name, r);	
 	}
+
+	public void rename(String oldName, String name) throws Exception{
+		Resource r= Clt.get(oldName);
+		if(r == null) throw new Exception("No packet called " + oldName);
+		Resource raux = r;
+		Clt.remove(r.getName());
+		raux.setName(name);
+		Clt.put(raux.getName(), raux);
+	}
+
 
 	/**************************************************************
 	 * Getters
@@ -72,6 +87,26 @@ public class ResourceController extends AbstractController{
 
 	}
 
+	public String getManyAsString(String name, int qtt) throws Exception {
+
+        if(Clt.size() == 0) throw new Exception("No resources!");
+		
+		ArrayList<Resource> ar = Clt.valuesCache(name, qtt);
+		String s = "";
+		for (Resource r : ar) {
+			s+=r.toString();
+		}
+		return s;
+	}
+
+	/**
+	 * @param namep
+	 * @return boolean
+	 */
+	public boolean exists(String r){
+		return Clt.contains(r);
+	}
+
 	public int size(){
 		return Clt.size();
 	}
@@ -81,6 +116,7 @@ public class ResourceController extends AbstractController{
 	 * Delete
 	 **************************************************************/
 	public void remove(String name) throws Exception{
+		if(pClt.containsResource(name)) throw new Exception ("Resource in use! Please delete all instances and retry.");
 		Clt.remove(name);
 	}
 

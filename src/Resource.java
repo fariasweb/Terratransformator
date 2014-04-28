@@ -27,25 +27,6 @@ public class Resource{
 
 
 	/**************************************************************
-	 * Getters
-	 **************************************************************/	
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-        return name;
-	}
-
-	/**
-	 * @return the type as a String
-	 */
-	public String getType() {
-        if(type == null) return "";
-        return type.name();
-	}
-
-
-	/**************************************************************
 	 * Setter
 	 **************************************************************/
 	/**
@@ -65,6 +46,29 @@ public class Resource{
 		checkType(typep);
         type = ResourceType.valueOf(typep);
 	}
+
+
+	/**************************************************************
+	 * Getters
+	 **************************************************************/	
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+        return name;
+	}
+
+	/**
+	 * @return the type as a String
+	 */
+	public String getType() {
+        if(type == null) return "";
+        return type.name();
+	}
+
+	/**************************************************************
+	 * Delete
+	 **************************************************************/
 
 	/**************************************************************
 	 * To Basic Types

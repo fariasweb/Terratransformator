@@ -8,18 +8,17 @@
  */
 public class RelationPacketResource {
 
-	Packet p;
-	Resource s;
+	Packet p;//hace falta? parece ineficiente!
+	Resource r;
 	int quantity;
 	
 	
 	//Contructs
 	//---------------------------------------------
-	public RelationPacketResource(Packet pp, Resource ss, int qp) throws Exception {
-		
+	public RelationPacketResource(Packet pp, Resource rr, int qtt) throws Exception {
 		setPacket(pp);
-		setResource(ss);
-		setQuantity(qp);
+		setResource(rr);
+		setQuantity(qtt);
 	}
 	
 	
@@ -36,7 +35,7 @@ public class RelationPacketResource {
 	 * @return the s
 	 */
 	public Resource getResource() {
-		return s;
+		return r;
 	}
 	/**
 	 * @return the quantity
@@ -57,19 +56,24 @@ public class RelationPacketResource {
 	/**
 	 * @param s the s to set
 	 */
-	public void setResource(Resource ss) {
-		s = ss;
+	public void setResource(Resource rr) {
+		r = rr;
 	}
 	/**
 	 * @param quantity the quantity to set
 	 * @throws Exception 
 	 */
-	public void setQuantity(int qp) throws Exception {
-		if (qp <= 0) throw new Exception("Quantity must be bigger than 0");
+	public void setQuantity(int qtt) throws Exception {
+		if (qtt <= 0) throw new Exception("Quantity must be bigger than 0");
 		
-		quantity = qp;
+		quantity = qtt;
 	}
 	
-	
+	/**************************************************************
+	 * To Basic Types
+	 **************************************************************/
+	public String toString(){
+		return p.getName() + " " + r.getName() + " " + Integer.valueOf(quantity).toString();
+	}
 	
 }

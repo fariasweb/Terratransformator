@@ -8,6 +8,8 @@ public class PlanetController extends AbstractController{
 
 	private TST<Planet> planetCtl;
 	
+	private final String path_file = "";
+
 	public PlanetController() {
 		planetCtl = new TST<Planet>();
 	}
@@ -24,6 +26,7 @@ public class PlanetController extends AbstractController{
 	 */
 	public void createPlanet(String name, int x, int y) throws Exception {
 			Planet g = new Planet(name, x, y);
+			if(planetCtl.get(g.getName()) != null) throw new Exception("This planet already exists!");
 			planetCtl.put(g.getName(),g);	
 	}
 	
@@ -32,76 +35,60 @@ public class PlanetController extends AbstractController{
 
 	public void removePacket(String namep){
 		Planet g = planetCtl.get(namep);
-		g.removePacket();
+		if(g.getPacket() != null) g.removePacket();
 	}
 	
-	public void setPacket(String namep, String p) throws Exception{
-		Planet g = planetCtl.get(namep);
-		Packet paq = getPacketByName(p);
-		g.setPacket(paq);
+	public void setPacket(String namep, String namePacket) throws Exception{
+		Planet p = planetCtl.get(namep);
+		if (p == null) throw new Exception("This planet doesn't exist");
+		if(p.getPacket() != null) throw new Exception("There is a packet already assigned!");
+		Packet paq = p.getPacket();
+		p.setPacket(paq);
 	}
 
 
 	public void setName(String oldName, String newName) throws Exception{
-		Planet g = planetCtl.get(oldName);
-		g.setName(newName);
+		Planet p = planetCtl.get(oldName);
+		if (p == null) throw new Exception("This planet doesn't exist");
+		if (p.getName() != newName) {
+			if (!Util.checkName(newName)) throw new Exception(newName + " is not valid");
+			planetCtl.remove(p.getName());
+			p.setName(newName);
+			planetCtl.put(newName, p);	
+		}
 	}
 
 	public void setPosition(String namep, int x, int y) throws Exception {
-		Planet g = planetCtl.get(namep);
-		g.setPosition(x,y);
+		//TODO: Comprobar solapamiento
+		Planet p = planetCtl.get(namep);
+		if (p == null) throw new Exception("This planet doesn't exist");
+		if (!(p.getPosition().getX() == x && p.getPosition().getY() == y)){
+			p.setPosition(x,y);
+			planetCtl.remove(p.getName());
+			planetCtl.put(namep,p);
+		}
 	}
 
-
-	/**
-	 * 
-	 * @param name
-	 */
-	public void removePlanetByName(String namep) throws Exception {
-		planetCtl.remove(namep);	
-	}
 	
-
-
 	//Getter
 	//---------------------------------------------
-	
-	/**
-	 * Devuelve un listado con el nombre de las planeta ordenado por creaci—n
-	 * TODO: Como lo hago para devolmes mas campos????
-	 * @return List<String>
-	 */
-	public List<String> getAll() {
-		List<String> list = new ArrayList<String>();
-		for(Planet i : planetCtl.values()){
-			list.add(i.getName());
-		}
-		return list;
-	}
-	
-	public PairInt getPosition(String namep){
-		return planetCtl.get(namep).getPosition();
+
+	public PairInt getPosition(String namep) throws Exception{
+		Planet p = planetCtl.get(namep);
+		if (p == null) throw new Exception("This planet doesn't exist");
+		return p.getPosition();
 		
 	}
-	public Packet getPacket(String namep){
-		return planetCtl.get(namep).getPacket();
+	public Packet getPacket(String namep) throws Exception {
+		Planet p = planetCtl.get(namep);
+		if (p == null) throw new Exception("This planet doesn't exist");
+		return p.getPacket();
 		
 	}
  	
- 	public TST<Planet> getPlanetCtl(){
- 		return planetCtl;
- 	}
-	/**
-	 * 
-	 */
-	public void savePlanet(){}
-	
-	public void loadPlanet(){}
-
-	//FUNCIONES COLECCION DE PLANETAS
+	/////////////////////////////////FUNCIONES TST<PLANET>
 
 	/**
-	 * 
 	 * @param namep
 	 * @return
 	 */
@@ -110,12 +97,32 @@ public class PlanetController extends AbstractController{
 		planetCtl.clear();
 	}
 
+	//Setter
 	
+	/** 
+	 * @param namep
+	 * @return
+	 */
+	public void removePlanetByName(String namep) throws Exception {
+		Planet g = planetCtl.get(namep);
+		if (g == null) throw new Exception("This planet doesn't exist");
+		planetCtl.remove(namep);
+	}
+
+
+
 	//Getter
 	//-----------------------------------------------
 	
+	public List<String> getAll() {
+		List<String> list = new ArrayList<String>();
+		for(Planet i : planetCtl.values()){
+			list.add(i.getName());
+		}
+		return list;
+	}
+
 	/**
-	 * 
 	 * @return TST<Planet>
 	 */
 	public TST<Planet> getAllPlanet(){
@@ -123,11 +130,11 @@ public class PlanetController extends AbstractController{
 	}
 	
 	/**
-	 * 
 	 * @param namep
 	 * @return
 	 */
-	public Planet getPlanetByName(String namep){
+	public Planet getPlanetByName(String namep) throws Exception{
+		if (!existByName(namep)) throw new Exception("This planet doesn't exist!"); 
 		return planetCtl.get(namep);
 	}
 	// Exist
@@ -141,7 +148,6 @@ public class PlanetController extends AbstractController{
 	}
 	
 	/**
-	 * 
 	 * @param name
 	 * @return
 	 */
@@ -151,9 +157,20 @@ public class PlanetController extends AbstractController{
 
 	// Utils
 	//-----------------------------------------------
-	
 	public int size(){
 		return planetCtl.size();
 	}
 
+	public void save() throws Exception {
+
+		/*String cache = PlanetCtl.first().toString();
+		ArrayList<Planet> list = planetCtl.getMany(planetCtl.firstKey(), 5);
+		for(Planet r : list) cache += r.toString();
+		while(list.size() > 0){
+			list = planetCtl.getMany(list.get(list.size()-1).getName(),5);
+			cache = "";
+			for(Planet r : list)
+				cache += r.toString();
+		}*/
+	} 
 }

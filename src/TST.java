@@ -89,7 +89,7 @@ public class TST<Value> {
 				N++;
 				x.val = val;
 			} else {
-				throw new Exception("The key " + s + " exist");
+				throw new Exception("The key " + s + " exists");
 			}
 		}
 		return x;
