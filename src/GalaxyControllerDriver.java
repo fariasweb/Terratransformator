@@ -21,6 +21,7 @@ class GalaxyControllerDriver extends AbstractDriver {
 
 		// Generico del driver
 		GalaxyController gc = new GalaxyController();
+		PlanetController pc = new PlanetController();
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -107,15 +108,17 @@ class GalaxyControllerDriver extends AbstractDriver {
 
 					break;
 
-				case 9: // TODO: pendientes de controlador de Planetas
-
+				case 9: // Create Planet Controller
+					pc = new PlanetController();
 					break;
 
 				case 10:
-					if (argv.length < 2)
+					if (argv.length < 4)
 						_msg_error_param_insuf();
 					else {
-						getPlanetsFromGalaxy(gc, argv[1]);
+						createPlanetInPlanetController(pc, argv[1],
+								Integer.parseInt(argv[2]),
+								Integer.parseInt(argv[3]));
 					}
 					break;
 
@@ -123,11 +126,27 @@ class GalaxyControllerDriver extends AbstractDriver {
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
-						removePlanetFromGalaxy(gc, argv[1], argv[2]);
+						addPlanetToGalaxy(gc, pc, argv[1], argv[2]);
 					}
 					break;
 
 				case 12:
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						getPlanetsFromGalaxy(gc, argv[1]);
+					}
+					break;
+
+				case 13:
+					if (argv.length < 3)
+						_msg_error_param_insuf();
+					else {
+						removePlanetFromGalaxy(gc, argv[1], argv[2]);
+					}
+					break;
+
+				case 14:
 					if (argv.length < 1)
 						_msg_error_param_insuf();
 					else {
@@ -146,6 +165,31 @@ class GalaxyControllerDriver extends AbstractDriver {
 
 	// Actions
 	// ---------------------------------------------
+
+	public static void addPlanetToGalaxy(GalaxyController gc,
+			PlanetController pc, String GalaxyName, String PlanetName) {
+		try {
+
+			gc.addPlanet(GalaxyName, PlanetName, pc);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+		
+	}
+
+	private static void createPlanetInPlanetController(PlanetController pc,
+			String name, int x, int y) {
+		try {
+
+			pc.createPlanet(name, x, y);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
 
 	public static void removeAllGalaxy(GalaxyController gc) {
 		try {
@@ -267,11 +311,13 @@ class GalaxyControllerDriver extends AbstractDriver {
 
 		// Operaciones sobre las galaxias
 
-		menu.add("addPlanet(String GalaxyName, String PlanetName) : void"); // 9
+		menu.add("PlanetController(): PlanetController pc"); // 9
+		menu.add("PlanetController.addPlanet(String name, int x, int y");
+		menu.add("addPlanet(String GalaxyName, String PlanetName, PlanetController pc) : void"); // 9
 
-		menu.add("getPlanetsFromGalaxy(String name) : String"); // 10
+		menu.add("getPlanetsFromGalaxy(String name) : String"); // 12
 
-		menu.add("removePlanetFromGalaxy(String GalaxyName, String Planetname) : void"); // 11
+		menu.add("removePlanetFromGalaxy(String GalaxyName, String Planetname) : void"); // 13
 		menu.add("removePlanetsFromGalaxy(String GalaxyName) : void");
 
 		print_menu();

@@ -11,7 +11,7 @@ import java.util.List;
 public class GalaxyController extends AbstractController{
 
 	TST<Galaxy> Clt;
-	//GalaxyControllerGD GGD;
+	DataController Dc;
 	
 	private final String _path_file = "";
 	//PlanetController PlanetC;
@@ -22,6 +22,7 @@ public class GalaxyController extends AbstractController{
 	 */
 	public GalaxyController() {
 		Clt = new TST<Galaxy>();
+		Dc = new DataController();
 		//GGD = new GalaxyControllerGD;
 	}
 	
@@ -193,15 +194,22 @@ public class GalaxyController extends AbstractController{
 	 * TODO: Pasar por paremtros la referencia al controlador de planetas
 	 * @param GalaxyName
 	 * @param PlanetName
+	 * @throws Exception 
 	 */
-	public void addPlanet (String GalaxyName, String PlanetName) {
+	public void addPlanet (String GalaxyName, String PlanetName, PlanetController pc) throws Exception {
 		
 		//1. Comprobar la existencia de galaxia
+		Galaxy g = Clt.get(GalaxyName);
+		if (g == null) throw new Exception("The galaxy "+GalaxyName+" does not exist");
 		
 		//2. COmprobar la existencia de planeta en controlador de planetas
 		//Pre: El planeta no debe tener otra galaxia asignaada o estar en esta ya
-		
+		Planet p = pc.getPlanetByName(PlanetName);
+		if (p == null) throw new Exception("The planet "+PlanetName+" does not exist");
+		if (p.getGalaxy() != null) throw new Exception("The planet "+PlanetName+" is in a galaxy");
+	
 		//3. Asignar planeta a galaxia y viceversa
+		g.addPlanet(p);
 		
 	}
 	
