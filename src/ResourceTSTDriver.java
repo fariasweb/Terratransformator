@@ -7,7 +7,7 @@ public class ResourceTSTDriver extends AbstractDriver{
 	public static void main(String[] args){
 
 		TST<Resource> Clt = new TST<Resource>();
-		Resource r;
+		Resource r = new Resource();
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -34,11 +34,18 @@ public class ResourceTSTDriver extends AbstractDriver{
 					break;
 
 				case 1:
-					// r = ResourceDriver.new Resource(argv[1], argv[2]);
+					//llamar al otro driver? como?
+					try{
+						r = new Resource(argv[1], argv[2]);
+					}
+					catch (Exception e) {
+						Console.print("Exception: ");
+						e.printStackTrace();
+					}
 					break;
 
 				case 2:
-					Console.print(Clt.size());
+					Console.print(Integer.valueOf(Clt.size()).toString());
 					break;
 
 				case 3:
@@ -47,9 +54,15 @@ public class ResourceTSTDriver extends AbstractDriver{
 					break;
 
 				case 4:
-					r = Clt.get(argv[1]);
-					if(r == null) Console.print("Resource not present");
-					else Console.print(r.ResourceDriver.toString());
+					try{
+						r = Clt.get(argv[1]);
+						if(r == null) Console.print("Resource not present");
+						else Console.print(r.toString());//llamar al otro driver? como?
+					}
+					catch (Exception e) {
+						Console.print("Exception: ");
+						e.printStackTrace();
+					}
 					break;
 
 				case 5:
@@ -75,20 +88,24 @@ public class ResourceTSTDriver extends AbstractDriver{
 					break;
 
 				case 8:
-					Console.print(Clt.prefixMatch(argv[1]));
+					Iterable<String> it2 = Clt.prefixMatch(argv[1]);
+					for(String str : it2)
+						Console.echo(str+" ");
+
+					Console.print("");
 					break;
 
 				case 9:
-					Iterable<Resource> it2 = Clt.values();
-					for(Resource i : it2)
+					Iterable<Resource> it3 = Clt.values();
+					for(Resource i : it3)
 						Console.echo(i.toString()+" ");
 
 					Console.print("");
 					break;
 
 				case 10:
-					Iterable<String> it3 = Clt.wildcardMatch(argv[1]);
-					for(String str : it3)
+					Iterable<String> it4 = Clt.wildcardMatch(argv[1]);
+					for(String str : it4)
 						Console.echo(str+" ");
 
 					Console.print("");
@@ -96,8 +113,8 @@ public class ResourceTSTDriver extends AbstractDriver{
 
 				case 11:
 					try{
-						Iterable<Resource> it4 = Clt.valuesCache(argv[1], Integer.parseInt(argv[2]));
-						for(Resource i : it4)
+						Iterable<Resource> it5 = Clt.valuesCache(argv[1], Integer.parseInt(argv[2]));
+						for(Resource i : it5)
 							Console.echo(i.toString()+" ");
 
 						Console.print("");
@@ -110,7 +127,7 @@ public class ResourceTSTDriver extends AbstractDriver{
 
 				case 12:
 					try{
-						Consolo.print(Clt.first().toString());
+						Console.print(Clt.first().toString());
 					}
 					catch (Exception e) {
 						Console.print("Exception: ");
@@ -120,7 +137,7 @@ public class ResourceTSTDriver extends AbstractDriver{
 
 				case 13:
 					try{
-						Consolo.print(Clt.firstKey());
+						Console.print(Clt.firstKey());
 					}
 					catch (Exception e) {
 						Console.print("Exception: ");

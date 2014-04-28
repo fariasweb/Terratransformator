@@ -1,32 +1,34 @@
-import java.util.*;
 
 public class Resource{
 
 	String name;
 	ResourceType type;
 
+	/**************************************************************
+	 * Private Methods
+	 **************************************************************/
 	private static void checkType(String res) throws IllegalArgumentException{ //Enseñar
 		if(!(res.equals("HUMAN") || res.equals("TECHNOLOGICAL")))  throw new IllegalArgumentException("type is not valid");
 	}
 
 
-	//Contructs
-	//---------------------------------------------
-		
+	/**************************************************************
+	 * Contructs
+	 **************************************************************/	
 	public Resource(String namep, String typep) throws Exception{
         setName(namep);
         setType(typep);
 	}
 
     public Resource(){
-        name = null;
+        name = "";
         type = null;
     }
 
 
-	//Getters
-	//-----------------------------------------------
-		
+	/**************************************************************
+	 * Getters
+	 **************************************************************/	
 	/**
 	 * @return the name
 	 */
@@ -34,21 +36,18 @@ public class Resource{
         return name;
 	}
 
-	/*public String getKey(){
-		return name;
-	}*/
-
 	/**
 	 * @return the type as a String
 	 */
 	public String getType() {
+        if(type == null) return "";
         return type.name();
 	}
 
 
-	//Setter
-	//---------------------------------------------
-	
+	/**************************************************************
+	 * Setter
+	 **************************************************************/
 	/**
 	 * @param namep
 	 * @throws Exception
@@ -67,12 +66,10 @@ public class Resource{
         type = ResourceType.valueOf(typep);
 	}
 
-	//To Basic Types
-	//---------------------------------------------
-
+	/**************************************************************
+	 * To Basic Types
+	 **************************************************************/
 	public String toString(){
-
-		String s = getName() + " " + getType();
-		return s;
+		return getName() + " " + getType();
 	}
 }

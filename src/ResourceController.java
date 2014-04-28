@@ -6,22 +6,83 @@ import java.util.Iterator;
 
 public class ResourceController extends AbstractController{
 
-	private ResourceTST TST;
+	private TST<Resource> Clt;
 
-	//Contructs
-	//---------------------------------------------
+
+	/**************************************************************
+	 * Contructs
+	 **************************************************************/
 
 	/**
-	 * Crea un resourceClt
+	 * Crea un Clt
 	 * Pre: cierto
-	 * Post: Existe un nuevo resourceClt
+	 * Post: Existe un nuevo Clt
 	 */
 	public ResourceController() {
-		TST = new ResourceTST();
+		Clt = new TST<Resource>();
+	}
+
+	
+	/**************************************************************
+	 * Setters
+	 **************************************************************/
+	/**
+	 * Crea un recurso en el sistema y lo agrega a la ED
+	 * Pre: el formato del nombre es correcto; el tipo está en la enum
+	 * Post: Se crea un recurso con el nombre y tipo indicado; se 
+	 * agrega a la ED
+	 * 
+	 * @param name
+	 * @param type ResourceType
+	 * @return 
+	 */
+	public void add(String name, String type) throws Exception{
+		Resource r = new Resource(name, type);
+		Clt.put(name, r);	
+	}
+
+	/**************************************************************
+	 * Getters
+	 **************************************************************/
+	/**
+	 * Devuelve un String con los campos del recurso.
+	 * El primer elemento es el nombre, el segundo el tipo, separados por " "
+	 * Pre: existe un recurso con este nombre
+	 * Post: Devuelve un String con los campos del recurso
+	 * @return String
+	 * @param name String
+	 * @throws Exception
+	 */
+ 	public String get(String name) throws Exception {
+		
+        if(Clt.size() == 0) throw new Exception("No resources!");
+		
+		Resource r = Clt.get(name);
+		if (r == null) throw new Exception("This resource doesn't exist");
+		return r.toString();
+
+	}
+
+	public ArrayList<Resource> getMany(String name, int qtt) throws Exception {
+
+        if(Clt.size() == 0) throw new Exception("No resources!");
+		
+		ArrayList<Resource> ar = Clt.valuesCache(name, qtt);
+		return ar;
+
+	}
+
+	public int size(){
+		return Clt.size();
 	}
 
 
-	
+	/**************************************************************
+	 * Delete
+	 **************************************************************/
+	public void remove(String name) throws Exception{
+		Clt.remove(name);
+	}
 
      /**
 	 * Devuelve un listado de todos los recursos ordenados por nombre. Cada elemento es
@@ -45,26 +106,21 @@ public class ResourceController extends AbstractController{
     }*/
 
 
-	
-
-
-	
-
-
-	//Save/load
-	//---------------------------------------------
+	/**************************************************************
+	 * Save & Load
+	 **************************************************************/
 
 	public void save() throws Exception{
 
-		String cache = TST.first().toString();
-		ArrayList<Resource> list = TST.getMany(TST.firstKey(), 5);
+		String cache = Clt.first().toString();
+		ArrayList<Resource> list = Clt.valuesCache(Clt.firstKey(), 5);
 		for(Resource r : list)
 			cache += r.toString();
 		//ResourceGD.save(cache);
 
 		while(list.size() > 0){
 
-			list = TST.getMany(list.get(list.size()-1).getName(),5);
+			list = Clt.valuesCache(list.get(list.size()-1).getName(),5);
 			cache = "";
 			for(Resource r : list)
 				cache += r.toString();
@@ -74,18 +130,28 @@ public class ResourceController extends AbstractController{
 
 	public void load(){
 
+		String s = new String(); // = ResourceControllerGD.load(N);
+		String name = null;
+		String type = null;
+		for (int i = 0; i < s.length(); ++i) {
+			if(s.charAt(i) == ' '){
+				if(type == null) type = "";
+				else{ 
+					try{
+						add(name, type);
+						name = type = null; 
+					}
+					catch (Exception e) {
+						Console.print("Exception: ");
+						e.printStackTrace();
+					}
+				}
+			}
+			else{
+				if(type == null) name+=s.charAt(i);
+				else type+=s.charAt(i);
+			}
+		}
 	}
 
 }
-
-
-
-			// Iterator<List<String>> iter = listOlist.iterator();
-			// while(iter.hasNext()){
-			//     Iterator<String> siter = iter.next().iterator();
-			//     while(siter.hasNext()){
-			//          String s = siter.next();
-			//          System.out.println(s);
-			//      }
-			// }
-			// 
