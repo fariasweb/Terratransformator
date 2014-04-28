@@ -26,17 +26,21 @@ public class TST<Value> {
 	 **************************************************************/
 	public boolean contains(String key) {
 		if (key == null || key.length() == 0) return false;
-		return get(key.toLowerCase()) != null;
+		try{
+			return get(key.toLowerCase()) != null;
+		}
+		catch (Exception e) {
+			Console.print("Exception: ");
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 	//if not present returns null
-	public Value get(String key) {
-		if (key == null) return null;
-			//throw new NullPointerException();
-			
-		if (key.length() == 0) return null;
-			//throw new IllegalArgumentException("key must have length >= 1");
-		
+	public Value get(String key) throws Exception{
+
+		if(!Util.checkName(key)) throw new Exception(key + " is not valid");
+
 		Node x = get(root, key.toLowerCase(), 0);
 		if (x == null)
 			return null;
@@ -85,7 +89,7 @@ public class TST<Value> {
 				N++;
 				x.val = val;
 			} else {
-				throw new Exception("The key " + s + " exist");
+				throw new Exception("The key " + s + " exists");
 			}
 		}
 		return x;
@@ -294,7 +298,8 @@ public class TST<Value> {
 		if(max < 1) throw new Exception("Mandatory: max > 0");
 		Node x = get(root, key.toLowerCase(), 0);
 		if(x == null) throw new Exception("Key not present");
-		
+		if(!Util.checkName(key)) throw new Exception(key + " is not valid");
+
 		current = 1;
 		ArrayList<Value> queue = new ArrayList<Value>();
 		collectValuesCache(root, "", key, queue, max);
@@ -344,10 +349,8 @@ public class TST<Value> {
 	}
 
 	public void remove(String key) throws Exception {
-		if (key == null)
-			throw new Exception("The key is null");
-		if (key.length() == 0)
-			throw new Exception("The key is empty");
+
+		if(!Util.checkName(key)) throw new Exception(key + " is not valid");
 
 		// Remove
 		if (!remove(root, key.toLowerCase(), 0))

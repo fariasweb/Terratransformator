@@ -1,13 +1,12 @@
 import java.util.Scanner;
 
 public class ResourceControllerDriver extends AbstractDriver{
-	ResourceCollection resourceCtl;
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		//Generico del driver
-		Resource p = new Resource();
+		ResourceController control = new ResourceController();
 		//Generico del menu
 		Scanner in = new Scanner(System.in);
 		int opc = 0;
@@ -20,27 +19,71 @@ public class ResourceControllerDriver extends AbstractDriver{
             else if(argv.length > 0){
             	opc = Integer.parseInt(argv[0]);
 				switch(opc) {
+
+					case 0:
+						break;
+
                     case 1:
-                       // p = create_resource(argv[1], argv[2]);
+						control = new ResourceController();
                         break;
+
                     case 2:
-                        p = new Resource();
+                    	try{
+							control.add(argv[1], argv[2]);
+						}
+						catch (Exception e) {
+							Console.print("Exception: ");
+							e.printStackTrace();
+						}
                         break;
                             
                     case 3:
-                        set_name(p,argv[1]);
+                        try{
+							Console.print(control.get(argv[1]));
+						}
+						catch (Exception e) {
+							Console.print("Exception: ");
+							e.printStackTrace();
+						}
                         break;
-                            
+
                     case 4:
-                      	//p.setType(argv[1]);
+                   		try{
+							Iterable<Resource> it = control.getMany(argv[1], Integer.parseInt(argv[2]));
+							for(Resource i : it)
+								Console.echo(i.toString()+" ");
+							Console.print("");
+						}
+						catch (Exception e) {
+							Console.print("Exception: ");
+							e.printStackTrace();
+						}
                         break;
                                 
                     case 5:
-                        Console.print(p.getName());
+                        Console.print(Integer.valueOf(control.size()).toString());
                         break;
-                                
+                              
+                    case 6:
+                        try{
+							control.remove(argv[1]);
+						}
+						catch (Exception e) {
+							Console.print("Exception: ");
+							e.printStackTrace();
+						}
+                        break;  
+                     
+                    case 7:
+                     	//TODO
+                     	break;
+
+                    case 8:
+                    	//TODO
+                    	break;
+
                     default:
-                        Console.print(p.getType());
+						_msg_opc_invalid();
                         break;
 				}
 			}
@@ -51,66 +94,16 @@ public class ResourceControllerDriver extends AbstractDriver{
 	private static void _menu(){
 		title = "Resource Controller Driver";
 
-		menu.add("Resource(String namep, ResourceType typep) : Resource");
-		menu.add("Resource() : Resource");
-		menu.add("removeResourceByName");
-		menu.add("add(Resource r)");
-		menu.add("setName(String namep)");
-		menu.add("setType(ResourceType typep)");
-		menu.add("getName() : String");
-		menu.add("getType() : ResourceType");;
+		menu.add("ResourceController() : ResourceController");
+		menu.add("add(String name, String type) : void");
+		menu.add("get(String name) : String");
+		menu.add("getMany(String name, int qtt) : ArrayList<Resource>");
+		menu.add("size() : int");
+		menu.add("remove(String name) : void");
+		menu.add("save() : void");
+		menu.add("load() : void");
 				
 		print_menu();
 	}
 
-	private static Resource create_resource(String namep, ResourceType typep) {
-		try{
-			return new Resource(namep,typep); //El parametro 0 es el nombre del planeta
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-		return null;
-	}
-
-	private static void set_name(Resource p, String namep){
-		try{
-			p.setName(namep);
-		}
-		catch(Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
-
-	public void remove(Resource r){
-		resourceCtl.remove(r);
-	}
-
-	/**
-	 * 
-	 * @param name
-	 */
-	public void removeResourceByName(String name){
-		resourceCtl.removeResourceByName(name);	
-	}
-
-	public void add(Resource r){
-		resourceCtl.add(r);
-	}
-
-	/**
-	 * 
-	 * @param g
-	 * @return boolean
-	 */
-	public boolean addResourceByName(String name){
-		return resourceCtl.addResourceByName(name);
-	}
-
-    public void guardarPlaneta(){
-
-	}
-	public void cargarPlaneta(){
-
-	}
 }
