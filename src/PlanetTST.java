@@ -96,11 +96,12 @@ public class PlanetTST extends TST{
 
 	public void save(){
 		int i = 0;
-		String last;
-		ArrayList<Planet> planets; 
+		String last = planets.firstKey();
+		List<Planet> planets; 
 		while (i < cjtPlanet.size()){
-			planets = valuesCache(planets.firstKey(),100);
-			while(j < 100){
+			while(){
+				planets = valuesCache(last,100);
+				last = planets[99];
 				//cjtPlanet.send(Array<List> hskfs)
 				++j;
 			}
