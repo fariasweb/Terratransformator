@@ -2,10 +2,10 @@
 
 public abstract class AbstractController {
 
-	protected final int _CACHE_NUM = 100;
+	protected final int _CACHE_NUM = 5;
 	TST<Entity> Clt;
 	
-	protected void save(String path, String file, int cacheSize) throws Exception{
+	protected void save(String path, String file) throws Exception{
 		
 	}
 	

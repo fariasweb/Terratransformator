@@ -78,6 +78,15 @@ public class ResourceController extends AbstractController{
 
 	}
 
+	public Iterable<Resource> getAll() throws Exception {
+
+        if(Clt.size() == 0) throw new Exception("No resources!");
+		
+		Iterable<Resource> ar = Clt.values();
+		return ar;
+
+	}
+
 	public ArrayList<Resource> getMany(String name, int qtt) throws Exception {
 
         if(Clt.size() == 0) throw new Exception("No resources!");
@@ -146,21 +155,31 @@ public class ResourceController extends AbstractController{
 	 * Save & Load
 	 **************************************************************/
 
-	public void save(String path, String file, int cacheSize) throws Exception{
+	public void save(String path, String file) throws Exception{
 
-		String cache = Clt.first().toString();
-		ArrayList<Resource> list = Clt.valuesCache(Clt.firstKey(), cacheSize);
+		String cache = Clt.first().toString()+";";
+		ArrayList<Resource> list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM-1);
+
+		/*Console.print("------------->");
+		for(Resource i : list)
+			Console.echo(i.toString()+" ");
+		Console.print("");
+		Console.print("------------->");*/
+		
 		for(Resource r : list)
 			cache += (r.toString()+";");
+
+
 		dCont.write(path, file, cache, true);
 
 		while(list.size() > 0){
 
-			list = Clt.valuesCache(list.get(list.size()-1).getName(),cacheSize);
+			list = Clt.valuesCache(list.get(list.size()-1).getName(), _CACHE_NUM);
 			cache = "";
 			for(Resource r : list)
 				cache += (r.toString()+";");
-			dCont.write(path, file, cache, true);
+
+			if(cache != "") dCont.write(path, file, cache, true);
 
 		}
 	}
