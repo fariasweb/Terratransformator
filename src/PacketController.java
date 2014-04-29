@@ -4,6 +4,7 @@ import java.util.List;
 public class PacketController extends AbstractController{
 
 	private TST<Packet> Clt;
+	private DataController dCont;
 
 
 	/**************************************************************
@@ -11,9 +12,15 @@ public class PacketController extends AbstractController{
 	 **************************************************************/
 	public PacketController() {
 		Clt = new TST<Packet>();
+		dCont = new DataController();
 	}
 
-	
+	public void assignDataController(DataController dc)throws Exception{
+		if(dc == null) throw new Exception("DataController needed");
+		dCont = dc;
+	}
+
+
 	/**************************************************************
 	 * Setters
 	 **************************************************************/
@@ -187,13 +194,13 @@ public class PacketController extends AbstractController{
 	 * Save & Load
 	 **************************************************************/
 
-	public void save() throws Exception{
+	public void save(String path, String file, int cacheSize) throws Exception{
 
 		String cache = Clt.first().toString();
 		ArrayList<Packet> list = Clt.valuesCache(Clt.firstKey(), 5);
 		for(Packet p : list)
-			cache += p.toString();
-		//ResourceGD.save(cache);
+			cache += (p.toString()+";");
+		dCont.write(path, file, cache, true);
 
 		while(list.size() > 0){
 
@@ -201,34 +208,66 @@ public class PacketController extends AbstractController{
 			cache = "";
 			for(Packet p : list)
 				cache += p.toString();
-			//ResourceGD.save(cache);
+			dCont.write(path, file, cache, true);
+
 		}
 	}
 
-	public void load(){
+	public void load(String path, PlanetController pltCont, ResourceController resCont) throws Exception{
 
-		/*String s = new String(); // = ResourceControllerGD.load(N);
-		String name = null;
-		String type = null;
+		String s = dCont.read(path);
+
+		String name = new String();
+		String planet = new String();
+		String packRel = new String();
+		String resRel = new String();
+		String qttRel = new String();
+		String aux = new String();
+
+		Packet pk = new Packet();
+		Planet pl;
+
 		for (int i = 0; i < s.length(); ++i) {
-			if(s.charAt(i) == ' '){
-				if(type == null) type = "";
-				else{ 
+			if(s.charAt(i) == ';'){
+				name = planet = null; 
+				aux = "";
+			}
+			else if (s.charAt(i) == ' '){
+				if (name == null){
+					name = aux;
+					aux = "";
+				}
+				else if (planet == null){
+					planet = aux;
+					aux = "";
 					try{
-						add(name, type);
-						name = type = null; 
+						pk = new Packet(name);
+						pl = pltCont.getPlanetByName(planet);
+						pk.setPlanet(pl);
+						add(pk);
 					}
 					catch (Exception e) {
 						Console.print("Exception: ");
 						e.printStackTrace();
 					}
 				}
+				else if (packRel == null){
+					packRel = aux;
+					aux = "";
+				}
+				else if (resRel == null){
+					resRel = aux;
+					aux = "";
+				}
+				else if (qttRel == null){
+					qttRel = aux;
+					aux = "";
+					pk.addResource(resCont.get(resRel), Integer.parseInt(qttRel));
+					packRel = resRel = qttRel = null;
+				}
 			}
-			else{
-				if(type == null) name+=s.charAt(i);
-				else type+=s.charAt(i);
-			}
-		}*/
+			else aux+=s.charAt(i);
+		}
 	}
 
 }

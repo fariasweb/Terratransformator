@@ -7,7 +7,7 @@ import java.util.Iterator;
 public class ResourceController extends AbstractController{
 
 	private TST<Resource> Clt;
-	private PacketController pClt;
+	private DataController dCont;
 
 	/**************************************************************
 	 * Contructs
@@ -20,14 +20,14 @@ public class ResourceController extends AbstractController{
 	 */
 	public ResourceController() {
 		Clt = new TST<Resource>();
-		pClt = new PacketController();
+		dCont = new DataController();
 	}
 
-	public void passPackCont(PacketController pc)throws Exception{
-		if(pc == null) throw new Exception("PacketController needed");
-		pClt = pc;
+	public void assignDataController(DataController dc)throws Exception{
+		if(dc == null) throw new Exception("DataController needed");
+		dCont = dc;
 	}
-	
+
 	/**************************************************************
 	 * Setters
 	 **************************************************************/
@@ -68,13 +68,13 @@ public class ResourceController extends AbstractController{
 	 * @param name String
 	 * @throws Exception
 	 */
- 	public String get(String name) throws Exception {
+ 	public Resource get(String name) throws Exception {
 		
         if(Clt.size() == 0) throw new Exception("No resources!");
 		
 		Resource r = Clt.get(name);
 		if (r == null) throw new Exception("This resource doesn't exist");
-		return r.toString();
+		return r;
 
 	}
 
@@ -115,8 +115,8 @@ public class ResourceController extends AbstractController{
 	/**************************************************************
 	 * Delete
 	 **************************************************************/
-	public void remove(String name) throws Exception{
-		if(pClt.containsResource(name)) throw new Exception ("Resource in use! Please delete all instances and retry.");
+	public void remove(String name, PacketController pCont) throws Exception{
+		if(pCont.containsResource(name)) throw new Exception ("Resource in use! Please delete all instances and retry.");
 		Clt.remove(name);
 	}
 
@@ -146,47 +146,47 @@ public class ResourceController extends AbstractController{
 	 * Save & Load
 	 **************************************************************/
 
-	public void save() throws Exception{
+	public void save(String path, String file, int cacheSize) throws Exception{
 
 		String cache = Clt.first().toString();
-		ArrayList<Resource> list = Clt.valuesCache(Clt.firstKey(), 5);
+		ArrayList<Resource> list = Clt.valuesCache(Clt.firstKey(), cacheSize);
 		for(Resource r : list)
-			cache += r.toString();
-		//ResourceGD.save(cache);
+			cache += (r.toString()+";");
+		dCont.write(path, file, cache, true);
 
 		while(list.size() > 0){
 
-			list = Clt.valuesCache(list.get(list.size()-1).getName(),5);
+			list = Clt.valuesCache(list.get(list.size()-1).getName(),cacheSize);
 			cache = "";
 			for(Resource r : list)
-				cache += r.toString();
-			//ResourceGD.save(cache);
+				cache += (r.toString()+";");
+			dCont.write(path, file, cache, true);
+
 		}
 	}
 
-	public void load(){
+	public void load(String path) throws Exception{
 
-		String s = new String(); // = ResourceControllerGD.load(N);
-		String name = null;
-		String type = null;
+		String s = dCont.read(path);
+		String name = new String();
+		String type = new String();
+		String aux = new String();
+
 		for (int i = 0; i < s.length(); ++i) {
-			if(s.charAt(i) == ' '){
-				if(type == null) type = "";
-				else{ 
-					try{
-						add(name, type);
-						name = type = null; 
-					}
-					catch (Exception e) {
-						Console.print("Exception: ");
-						e.printStackTrace();
-					}
+			if(s.charAt(i) == ';'){
+				type = aux;
+				aux = "";
+				try{
+					add(name, type);
+					name = type = null; 
+				}
+				catch (Exception e) {
+					Console.print("Exception: ");
+					e.printStackTrace();
 				}
 			}
-			else{
-				if(type == null) name+=s.charAt(i);
-				else type+=s.charAt(i);
-			}
+			else if (s.charAt(i) == ' '){ name = aux; aux = ""; }
+			else aux+=s.charAt(i);
 		}
 	}
 

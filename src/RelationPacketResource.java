@@ -1,14 +1,12 @@
 /**
- * 
- */
-
-/**
  * @author farias
  *
  */
 public class RelationPacketResource {
 
 	Packet p;//hace falta? parece ineficiente!
+			//Y va a petar al cargar: tengo que cargar antes el paquete
+			//que estoy cargando ?!
 	Resource r;
 	int quantity;
 	

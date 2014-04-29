@@ -16,9 +16,9 @@ public class Packet {
 		rel = new TST<RelationPacketResource>();
 	}
 	
-	public Packet(String namep) throws Exception {
+	public Packet(String name) throws Exception {
 		new Packet();
-		setName(namep);
+		setName(name);
 	}
 	
 

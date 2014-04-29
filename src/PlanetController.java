@@ -33,7 +33,7 @@ public class PlanetController extends AbstractController{
 	//Setter
 	//---------------------------------------------
 
-	public void removePacket(String namep){
+	public void removePacket(String namep) throws Exception{
 		Planet g = planetCtl.get(namep);
 		if(g.getPacket() != null) g.removePacket();
 	}
