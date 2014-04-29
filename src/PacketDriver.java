@@ -69,8 +69,8 @@ public class PacketDriver extends AbstractDriver {
 					break;
 
 				case 5:
-					Resource r = ResourceDriver.create_resource(argv[1],
-							argv[2]);
+					Resource r = new Resource();
+					ResourceDriver.create_resource(r,argv[1],argv[2]);
 					set_resource_to_a_packet(p, r, Integer.parseInt(argv[3]));
 					break;
 
@@ -90,7 +90,7 @@ public class PacketDriver extends AbstractDriver {
 					break;
 
 				case 8:
-					TST<RelationPacketResource> lr = p.getResource();
+					TST<RelationPacketResource> lr = p.getResources();
 					if (lr.size() == 0) {
 						Console.print("This packet doesn't have resource");
 					} else {
@@ -118,7 +118,7 @@ public class PacketDriver extends AbstractDriver {
 					break;
 
 				case 10:
-					p.removeAllResource();
+					p.removeAllResources();
 					break;
 
 				case 11:
@@ -151,7 +151,7 @@ public class PacketDriver extends AbstractDriver {
 		menu.add("AddResource(String ResourceName, ResourceType type, int quantity) : void");
 		menu.add("GetName() : String"); // 6
 		menu.add("GetPlanet() : Planet");
-		menu.add("GetResource(): Map<String, RelationPacketResource>");
+		menu.add("GetResource(): TST<RelationPacketResource>");
 		menu.add("removeResource(Strig ResourceName) : void"); // 9
 		menu.add("removeAllResource() : void");
 		menu.add("removePlanet() : void"); // 11
@@ -220,7 +220,7 @@ public class PacketDriver extends AbstractDriver {
 	 */
 	public static void remove_resource_from_packet(Packet p, String rName) {
 		try {
-			TST<RelationPacketResource> lr = p.getResource();
+			TST<RelationPacketResource> lr = p.getResources();
 			lr.remove(rName);
 
 		} catch (Exception e) {

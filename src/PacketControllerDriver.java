@@ -23,7 +23,7 @@ public class PacketControllerDriver extends AbstractDriver{
             	opc = Integer.parseInt(argv[0]);
 				switch(opc) {
                     case 1:
-                        createPacket(p,argv[1])
+                        createPacketController(p,argv[1]);
                         break;
                     case 2:
                     	p = getPacketByName(argv[1]);
@@ -43,7 +43,7 @@ public class PacketControllerDriver extends AbstractDriver{
                       	setPlanet(argv[1], argv[2]) ;
                         break;
                     case 6:
-                      	addResource(argv[1],argv[2], Integer.parseInt(argv[3]);
+                      	addResource(argv[1],argv[2], Integer.parseInt(argv[3]));
                         break;
                     case 8:
                       	removeResource(argv[1],argv[2]);
@@ -83,22 +83,26 @@ public class PacketControllerDriver extends AbstractDriver{
 	private static void _menu(){
 		title = "Planet Controller Driver";
 
-		menu.add("createPacketController(String namep)");
-		menu.add("getPacketByName(String namep):Packet");
-		menu.add("getPlanet(String namep):Planet ");
-		menu.add("getResource(String namep):TST<RelationPacketResource>");
-		menu.add("setName(String oldName, String namep)");
-		menu.add("setPlanet(String namePacket, String namePlanet) ");	//Nombre de paquete que se quiere asignar
-		menu.add("void addResource(String namep,String namerp, int qp)");
+		menu.add("PacketController(String namep)");
+		menu.add("add(String name)");
+		menu.add("add(Packet p)  ");
+		menu.add("addResource(String p, String r, String t, int qtt)");
+		menu.add("setPlanet(String namePacket, String namePlanet)");
+		menu.add("renamePacket(String oldName, String name)");	//Nombre de paquete que se quiere asignar
+		menu.add("getPacket(String name) : Packet");
 		menu.add("removeResource(String namep,String namerp)");
-		menu.add("removeAllResource(String namep)");
-		menu.add("removePlanet(String namep)");
-		menu.add("PacketController()");
-		menu.add("add(Packet g)");
-		menu.add("clear()");
-		menu.add("getAll():TST<Packet");
-		menu.add("existPacketByName(String namep) : boolean");
-		menu.add("size() : int");	
+		menu.add("getPlanet(String name) : Planet");
+		menu.add("getResources(String namep) : TST<RelationPacketResource>");
+		menu.add("containsResource(String name) : boolean");
+		menu.add("exists(String p) : boolean");
+		menu.add("size() : int");
+		menu.add("removePacket(String p)");
+		menu.add("removeAllPackets()");
+		menu.add("removeResource(String p,String r)");	
+		menu.add("removePlanet(String p)");
+		menu.add("save()");
+		menu.add("load()");
+
 		print_menu();
 	}
 	

@@ -27,8 +27,7 @@ class ResourceDriver extends AbstractDriver{
 						break;
 
                     case 1:
-                    	try{ r = new Resource(argv[1], argv[2]); }
-						catch (Exception e){ _msg_error(e.getMessage()); }
+                    	create_resource(r,argv[1], argv[2]);
 						break;
 
                     case 2:
@@ -80,5 +79,12 @@ class ResourceDriver extends AbstractDriver{
 
 		print_menu();
 	}
-
+	public static void create_resource(Resource r , String namep1, String namep2){
+		try{ 
+			r = new Resource(argv[1], argv[2]); 
+		}
+		catch (Exception e){ 
+			_msg_error(e.getMessage()); 
+		}
+	}
 }

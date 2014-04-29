@@ -163,7 +163,7 @@ public class PlanetController extends AbstractController{
 
 	public void save() throws Exception {
 
-		/*String cache = PlanetCtl.first().toString();
+		String cache = PlanetCtl.first().toString();
 		ArrayList<Planet> list = planetCtl.getMany(planetCtl.firstKey(), 5);
 		for(Planet r : list) cache += r.toString();
 		while(list.size() > 0){
@@ -171,6 +171,6 @@ public class PlanetController extends AbstractController{
 			cache = "";
 			for(Planet r : list)
 				cache += r.toString();
-		}*/
+		}
 	} 
 }
