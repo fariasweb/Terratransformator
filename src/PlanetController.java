@@ -7,7 +7,8 @@ import java.util.List;
 public class PlanetController extends AbstractController{
 
 	private TST<Planet> planetCtl;
-	
+	private DataController dCont;
+
 	private final String path_file = "";
 
 	public PlanetController() {
@@ -161,16 +162,79 @@ public class PlanetController extends AbstractController{
 		return planetCtl.size();
 	}
 
-	public void save() throws Exception {
+	public void save(String path, String file, int cacheSize) throws Exception {
 
-		String cache = PlanetCtl.first().toString();
-		ArrayList<Planet> list = planetCtl.getMany(planetCtl.firstKey(), 5);
-		for(Planet r : list) cache += r.toString();
+		String cache = planetCtl.first().toString();
+		ArrayList<Planet> list = planetCtl.valuesCache(planetCtl.firstKey(), 5);
+		for(Planet p : list)
+			cache += (p.toString()+";");
+		dCont.write(path, file, cache, true);
+
 		while(list.size() > 0){
-			list = planetCtl.getMany(list.get(list.size()-1).getName(),5);
+
+			list = planetCtl.valuesCache(list.get(list.size()-1).getName(),5);
 			cache = "";
-			for(Planet r : list)
-				cache += r.toString();
+			for(Planet p : list)
+				cache += p.toString();
+			dCont.write(path, file, cache, true);
+
 		}
 	} 
+
+	public void load(String path, PlanetController pltCont, ResourceController resCont) throws Exception{
+	/*
+		String s = dCont.read(path);
+
+		String name = new String();
+		String planet = new String();
+		String packRel = new String();
+		String resRel = new String();
+		String qttRel = new String();
+		String aux = new String();
+
+		Packet pk = new Packet();
+		Planet pl;
+
+		for (int i = 0; i < s.length(); ++i) {
+			if(s.charAt(i) == ';'){
+				name = planet = null; 
+				aux = "";
+			}
+			else if (s.charAt(i) == ' '){
+				if (name == null){
+					name = aux;
+					aux = "";
+				}
+				else if (planet == null){
+					planet = aux;
+					aux = "";
+					try{
+						pk = new Packet(name);
+						pl = pltCont.getPlanetByName(planet);
+						pk.setPlanet(pl);
+						add(pk);
+					}
+					catch (Exception e) {
+						Console.print("Exception: ");
+						e.printStackTrace();
+					}
+				}
+				else if (packRel == null){
+					packRel = aux;
+					aux = "";
+				}
+				else if (resRel == null){
+					resRel = aux;
+					aux = "";
+				}
+				else if (qttRel == null){
+					qttRel = aux;
+					aux = "";
+					pk.addResource(resCont.get(resRel), Integer.parseInt(qttRel));
+					packRel = resRel = qttRel = null;
+				}
+			}
+			else aux+=s.charAt(i);
+		}*/
+	}
 }

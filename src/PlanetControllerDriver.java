@@ -76,7 +76,7 @@ public class PlanetControllerDriver extends AbstractDriver{
                       	Console.print("" + size(p));
                         break;
                     case 17:
-                      	save(p);
+                      	save(p,argv[1], argv[2], Integer.parseInt(argv[3]));
                         break;
                     case 18:
                       	load(p);
@@ -270,9 +270,9 @@ public class PlanetControllerDriver extends AbstractDriver{
 		return 0;
  	}
  
-	private static  void save(PlanetController p ){
+	private static  void save(PlanetController p,String path, String file, int cacheSize ){
 		try{
-			p.save(); 
+			p.save(path,file,cacheSize); 
 		}
 		catch (Exception e){
 			_msg_error(e.getMessage());

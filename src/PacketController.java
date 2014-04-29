@@ -20,6 +20,10 @@ public class PacketController extends AbstractController{
 		dCont = dc;
 	}
 
+	public void createPacket(String name) throws Exception {
+		Packet p = new Packet(name);
+		Clt.put(name, p);
+	}
 
 	/**************************************************************
 	 * Setters
@@ -214,7 +218,7 @@ public class PacketController extends AbstractController{
 	}
 
 	public void load(String path, PlanetController pltCont, ResourceController resCont) throws Exception{
-
+		
 		String s = dCont.read(path);
 
 		String name = new String();
