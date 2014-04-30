@@ -42,7 +42,7 @@ public class PacketControllerDriver extends AbstractDriver{
                      	addResource(p,argv[1], argv[2], argv[3], Integer.parseInt(argv[4]));
                         break;        
                     case 5:
-                    	setPlanet(p,argv[1], argv[2]) ;
+                    	setPlanet(p,argv[1], argv[2], plaCont);
                         break;
                     case 6:
                     	renamePacket(p,argv[1],argv[2]);
@@ -79,11 +79,21 @@ public class PacketControllerDriver extends AbstractDriver{
                       	removePlanet(p,argv[1]);
                       	break;
                     case 17:
-                      	save(p,argv[1],argv[2],Integer.parseInt(argv[3]));
+                      	save(p,argv[1],argv[2]);
                       	break;
                     case 18:
                     	load(p,argv[1],plaCont,resCont);
                         break;
+                    case 19:
+						try{resCont.add(argv[1],argv[2]);}
+						catch (Exception e){_msg_error(e.getMessage());}
+						break;
+					case 20:
+						try{plaCont.createPlanet(argv[1],Integer.parseInt(argv[2]), Integer.parseInt(argv[3]));}
+						catch (Exception e){_msg_error(e.getMessage());}
+						break;
+
+
 				}
 			}
 		} 
@@ -111,6 +121,8 @@ public class PacketControllerDriver extends AbstractDriver{
 		menu.add("removePlanetByName(String namep)");
 		menu.add("save(String path, String file, int cacheSize)");
 		menu.add("load()");
+		menu.add("[AUX]ResourceControllerDriver.add(String namep, ResourceType typep) : void");
+		menu.add("[AUX]PlanetControllerDriver.createPlanet(String namep, int x_posp, int y_posp) : void");
 
 		print_menu();
 	}
@@ -185,12 +197,15 @@ public class PacketControllerDriver extends AbstractDriver{
 		}
 	}
 
-	private static void setPlanet(PacketController p, String namePacket, String namePlanet){
+	private static void setPlanet(PacketController p, String namePacket, String namePlanet, PlanetController plaCont){
 		try{
-			p.setPlanet(namePacket,namePlanet); 
+			Console.print("1: Chivato");
+			p.setPlanet(namePacket,namePlanet, plaCont);
+			Console.print("2: Chivato");
 		}
 		catch (Exception e){
 			_msg_error(e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -289,9 +304,9 @@ public class PacketControllerDriver extends AbstractDriver{
 	}
 
  
-	private static void save(PacketController p, String path, String file, int cacheSize){
+	private static void save(PacketController p, String path, String file){
 		try{
-			p.save(path, file, cacheSize); 
+			p.save(path, file); 
 		}
 		catch (Exception e){
 			_msg_error(e.getMessage());

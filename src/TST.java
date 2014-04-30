@@ -346,6 +346,7 @@ public class TST<Value> {
 
 	public void clear() {
 		root = null;
+		N = 0;
 	}
 
 	public void remove(String key) throws Exception {

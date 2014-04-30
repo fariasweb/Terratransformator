@@ -2,15 +2,16 @@ import java.util.ArrayList;
 
 public abstract class AbstractController {
 
-	protected final int _CACHE_NUM = 100;
+	protected final int _CACHE_NUM = 5;
 	TST<Entity> Clt;
-	
 	private DataController dCont;
-	
-	protected void save(String path, String file, int cacheSize) throws Exception{
+
+	protected void save(String path) throws Exception{
 		
 		//Guardamos si existen datos
 		if (Clt.size() > 0) {
+			
+			dCont.open(path);
 			
 			ArrayList<Entity> list;
 			String cache;
@@ -30,8 +31,10 @@ public abstract class AbstractController {
 				}
 				
 				//Gaurdamos en disco
-				if (cache.length() > 0) dCont.write(path, file, cache, true);
+				if (cache.length() > 0) dCont.write(cache);
 			}
+			
+			dCont.close();
 			
 		}
 	}

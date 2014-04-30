@@ -7,6 +7,7 @@ public class ResourceControllerDriver extends AbstractDriver{
 	public static void main(String[] args) {
 		//Generico del driver
 		ResourceController control = new ResourceController();
+		PacketController pcontrol = new PacketController();
 		//Generico del menu
 		Scanner in = new Scanner(System.in);
 		int opc = 0;
@@ -28,20 +29,22 @@ public class ResourceControllerDriver extends AbstractDriver{
                         break;
 
                     case 2:
+                    	if (argv.length < 3){ _msg_error_param_insuf(); break; }
                     	try{
 							control.add(argv[1], argv[2]);
 						}
-						catch (Exception e) {
+						catch (Exception e) { //_msg_error(e.getMessage());
 							Console.print("Exception: ");
 							e.printStackTrace();
 						}
                         break;
                             
                     case 3:
+                    	if (argv.length < 2){ _msg_error_param_insuf(); break; }
                         try{
-							Console.print(control.get(argv[1]));
+							Console.print(control.get(argv[1]).toString());
 						}
-						catch (Exception e) {
+						catch (Exception e) { //_msg_error(e.getMessage());
 							Console.print("Exception: ");
 							e.printStackTrace();
 						}
@@ -49,37 +52,66 @@ public class ResourceControllerDriver extends AbstractDriver{
 
                     case 4:
                    		try{
+							Iterable<Resource> it = control.getAll();
+							for(Resource i : it)
+								Console.echo(i.toString()+" ");
+							Console.print("");
+						}
+						catch (Exception e) { //_msg_error(e.getMessage());
+							Console.print("Exception: ");
+							e.printStackTrace();
+						}
+                        break;
+
+                    case 5:
+                    	if (argv.length < 3){ _msg_error_param_insuf(); break; }
+                   		try{
 							Iterable<Resource> it = control.getMany(argv[1], Integer.parseInt(argv[2]));
 							for(Resource i : it)
 								Console.echo(i.toString()+" ");
 							Console.print("");
 						}
-						catch (Exception e) {
+						catch (Exception e) { //_msg_error(e.getMessage());
 							Console.print("Exception: ");
 							e.printStackTrace();
 						}
                         break;
                                 
-                    case 5:
+                    case 6:
                         Console.print(Integer.valueOf(control.size()).toString());
                         break;
                               
-                    case 6:
+                    case 7:
+                    	if (argv.length < 2){ _msg_error_param_insuf(); break; }
                         try{
-							control.remove(argv[1]);
+							control.remove(argv[1], pcontrol);
 						}
-						catch (Exception e) {
+						catch (Exception e) { //_msg_error(e.getMessage());
 							Console.print("Exception: ");
 							e.printStackTrace();
 						}
                         break;  
                      
-                    case 7:
-                     	//TODO
+                    case 8:
+                    	if (argv.length < 3){ _msg_error_param_insuf(); break; }
+                    	try{
+							control.save(argv[1], argv[2]);
+						}
+						catch (Exception e) { //_msg_error(e.getMessage());
+							Console.print("Exception: ");
+							e.printStackTrace();
+						}
                      	break;
 
-                    case 8:
-                    	//TODO
+                    case 9:
+                    	if (argv.length < 2){ _msg_error_param_insuf(); break; }
+                    	try{
+							control.load(argv[1]);
+						}
+						catch (Exception e) { //_msg_error(e.getMessage());
+							Console.print("Exception: ");
+							e.printStackTrace();
+						}
                     	break;
 
                     default:
@@ -97,11 +129,12 @@ public class ResourceControllerDriver extends AbstractDriver{
 		menu.add("ResourceController() : ResourceController");
 		menu.add("add(String name, String type) : void");
 		menu.add("get(String name) : String");
+		menu.add("getAll() : ArrayList<Resource>");
 		menu.add("getMany(String name, int qtt) : ArrayList<Resource>");
 		menu.add("size() : int");
 		menu.add("remove(String name) : void");
-		menu.add("save() : void");
-		menu.add("load() : void");
+		menu.add("save(String path, String file) : void");
+		menu.add("load(String path) : void");
 				
 		print_menu();
 	}

@@ -63,14 +63,12 @@ public class PacketController extends AbstractController{
 	/**
 	 * @param planet the planet to set
 	 */
-	public void setPlanet(String namePacket, String namePlanet) throws Exception {
+	public void setPlanet(String namePacket, String namePlanet, PlanetController pCont) throws Exception {
 		Packet p = Clt.get(namePacket);
-		if(p.getPlanet() == null) throw new Exception ("No such packet");
-		Planet planet = getPlanet(namePlanet);
-		if (p.getPlanet() != planet && p.getPlanet() != null) {
-			p.setPlanet(planet);
-			planet.setPacket(p);
-		}
+		if(p == null) throw new Exception ("Debugging");
+		Planet planet = pCont.getPlanetByName(namePlanet);
+		p.setPlanet(planet);
+		planet.setPacket(p);
 	}
 
 	/**
@@ -198,21 +196,24 @@ public class PacketController extends AbstractController{
 	 * Save & Load
 	 **************************************************************/
 
-	public void save(String path, String file, int cacheSize) throws Exception{
+	public void save(String path, String file) throws Exception{
 
-		String cache = Clt.first().toString();
-		ArrayList<Packet> list = Clt.valuesCache(Clt.firstKey(), 5);
+		String cache = Clt.first().toString()+";";
+		ArrayList<Packet> list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM-1);
+		
 		for(Packet p : list)
 			cache += (p.toString()+";");
+
 		dCont.write(path, file, cache, true);
 
 		while(list.size() > 0){
 
-			list = Clt.valuesCache(list.get(list.size()-1).getName(),5);
+			list = Clt.valuesCache(list.get(list.size()-1).getName(),_CACHE_NUM);
 			cache = "";
 			for(Packet p : list)
-				cache += p.toString();
-			dCont.write(path, file, cache, true);
+				cache += (p.toString()+";");
+
+			if(cache != "") dCont.write(path, file, cache, true);
 
 		}
 	}
