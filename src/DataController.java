@@ -8,72 +8,108 @@ import java.io.*;
 
 public class DataController {
 
+	File f;
+	FileReader fr;
+	BufferedReader bf;
+	FileWriter fw;
+	PrintWriter out;
+
 	/**
 	 * 
 	 */
 	public void DataController() {
-
+		f = null;
+		fr = null;
+		bf = null;
+		fw = null;
+		out = null;
 	}
 
 	/**
+	 * Pre: Tener permisos para aceder al directorio y al archivo Poder
+	 * escribir/leer del fichero Ser un fichero Post: El fichero en caso de no
+	 * existir se crea
 	 * 
 	 * @param path
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public String read(String path) throws Exception {
+	public void open(String path) throws Exception {
 
-		File f = new File(path);
+		f = new File(path);
 
+		if (!f.exists())
+			f.createNewFile();
 		if (!f.exists())
 			throw new Exception(path + " does not exist");
 		if (!f.isFile())
 			throw new Exception(path + " is not a file");
 		if (!f.canRead())
 			throw new Exception("The file " + path + " can not write");
+		if (!f.canWrite())
+			throw new Exception("The file " + path + " cant' write");
 
-		FileReader fr = new FileReader(path);
-		BufferedReader bf = new BufferedReader(fr);
-		String cad, data = "";
+		fr = new FileReader(path);
+		bf = new BufferedReader(fr);
 
-		while ((cad = bf.readLine()) != null) {
-			data += cad;
-		}
-
-		return data;
+		fw = new FileWriter(f);
+		out = new PrintWriter(fw);
 	}
 
 	/**
-	 * 
+	 * Pre: El archivo debe estar abierto
+	 * Post: Devuelve parte de la informaci—n, en caso de ser null
+	 * 		 es que el archivo a finalizado
+	 * @param path
+	 * @throws Exception
+	 */
+	public String read() throws Exception {
+
+		if (f == null)
+			throw new Exception("Any file indicated");
+
+		return bf.readLine();
+	}
+
+	/**
+	 * Pre: El fichero debe estar abierto
+	 * Post: A–ade al final de archivo la informacion
 	 * @param path
 	 * @param file
 	 * @param data
 	 * @param append
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public void write(String path, String file, String data, boolean append) throws Exception {
+	public void write(String data) throws Exception {
 
-			if (data == null || data.length() == 0)
-				throw new Exception("No information to write");
+		if (f == null)
+			throw new Exception("Any file indicated");
 
-			File f = new File(path);
-			f.mkdir();
+		if (data == null || data.length() == 0)
+			throw new Exception("No information to write");
 
-			File fichero = new File(f, file);
-			if (!fichero.exists()) {
-				fichero.createNewFile();
-			}
+		// Write
+		out.println(data);
 
-			if (!fichero.canWrite())
-				throw new Exception("The file " + file + " cant' write");
+		out.flush();
 
-			FileWriter fw = new FileWriter(fichero, append);
-			PrintWriter out = new PrintWriter(fw);
+	}
 
-			// Write
-			out.println(data);
+	/**
+	 * 
+	 * @throws Exception
+	 */
+	public void close() throws Exception {
 
-			out.flush();
-			out.close();
+		f = null;
+
+		fr.close();
+		fr = null;
+		bf.close();
+		bf = null;
+		fw.close();
+		fw = null;
+		out.close();
+		out = null;
 
 	}
 

@@ -3,7 +3,6 @@ public class Planet {
 	private String name;
 	private Integer x_pos;
 	private Integer y_pos;
-	private Packet packet;
 	private Galaxy galaxy;
 
 	private static void checkPosition(int x_posp, int y_posp) throws Exception {
@@ -18,7 +17,6 @@ public class Planet {
 	public Planet(String namep, int x_posp, int y_posp) throws Exception {
 		setPosition(x_posp, y_posp); // Se chequea aqui
 		setName(namep); // Se chequea aqui
-		packet = null;
 		galaxy = null;
 	}
 
@@ -27,7 +25,6 @@ public class Planet {
 		name = null;
 		x_pos = y_pos = null;
 
-		packet = null;
 		galaxy = null;
 	}
 
@@ -56,18 +53,6 @@ public class Planet {
 		y_pos = y_posp;
 	}
 
-	/**
-	 * @param packet
-	 *            the packet to set
-	 */
-	public void setPacket(Packet packetp) {
-
-		if (packetp != packet) {
-			packet = packetp;
-			packetp.setPlanet(this);
-		}
-	}
-
 	public void setGalaxy(Galaxy g) throws Exception {
 		if (galaxy != g) {
 			galaxy = g;
@@ -93,13 +78,6 @@ public class Planet {
 	}
 
 	/**
-	 * @return the packet
-	 */
-	public Packet getPacket() {
-		return packet;
-	}
-
-	/**
 	 * 
 	 * @return
 	 */
@@ -109,17 +87,6 @@ public class Planet {
 
 	// Deleter
 	// -----------------------------------------------
-
-	/**
-	 * 
-	 */
-	public void removePacket() {
-		if (packet != null) {
-			Packet p = packet;
-			packet = null;
-			p.removePlanet();
-		}
-	}
 	
 	public void removeGalaxy() throws Exception {
 		if (galaxy != null) {
