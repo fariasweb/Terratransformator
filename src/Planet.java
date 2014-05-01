@@ -78,6 +78,7 @@ public class Planet {
 		y_pos = y_posp;
 	}
 
+
 	/*public void setPacket(Packet packetp) {
 
 		if (packetp != packet) {
@@ -91,6 +92,7 @@ public class Planet {
 	 * @param g
 	 * @throws Exception
 	 */
+
 	public void setGalaxy(Galaxy g) throws Exception {
 		if (galaxy != g) {
 			galaxy = g;
@@ -139,6 +141,7 @@ public class Planet {
 			p.removePlanet();
 		}
 	}*/
+
 	
 	/**
 	 * post: Elimina la galaxia asignada al planeta 

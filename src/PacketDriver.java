@@ -15,6 +15,14 @@ public class PacketDriver extends AbstractDriver {
 
 		// Generico del driver
 		Packet p = new Packet();
+		
+		QAP myL;
+	
+		//...
+			myL = new QAPTaboo();
+		//...
+			
+		myL.generate(1);
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);

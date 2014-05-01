@@ -13,6 +13,7 @@ public class PlanetController extends AbstractController{
 
 	public PlanetController() {
 		planetCtl = new TST<Planet>();
+		dCont = new DataController();
 	}
 	/**
 	 * Crea una galaxia en el sistema
@@ -202,16 +203,16 @@ public class PlanetController extends AbstractController{
 		return planetCtl.size();
 	}
 	
-	/**
-	 * 
-	 */
-	public void save(String path, String file, int cacheSize) throws Exception {
+
+
+	/*public void save(String path, String file, int cacheSize) throws Exception {
+
 
 		String cache = planetCtl.first().toString();
 		ArrayList<Planet> list = planetCtl.valuesCache(planetCtl.firstKey(), 5);
 		for(Planet p : list)
 			cache += (p.toString()+";");
-		dCont.write(path, file, cache, true);
+		dCont.write(path, file, cache, false);
 
 		while(list.size() > 0){
 
@@ -222,14 +223,9 @@ public class PlanetController extends AbstractController{
 			dCont.write(path, file, cache, true);
 
 		}
+
 	} 
-	/**
-	 * 
-	 * @param path
-	 * @param pltCont
-	 * @param resCont
-	 * @throws Exception
-	 */
+
 	public void load(String path, PlanetController pltCont, ResourceController resCont) throws Exception{
 	/*
 		String s = dCont.read(path);
@@ -286,4 +282,4 @@ public class PlanetController extends AbstractController{
 			else aux+=s.charAt(i);
 		}*/
 	}
-}
+

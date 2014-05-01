@@ -67,7 +67,7 @@ public class ResourceTSTDriver extends AbstractDriver{
 
 				case 5:
 					try{
-						Clt.put(argv[1], r);
+						Clt.put(r.getName(), r);
 					}
 					catch (Exception e) {
 						Console.print("Exception: ");
@@ -184,7 +184,7 @@ public class ResourceTSTDriver extends AbstractDriver{
 		menu.add("size(): int");
 		menu.add("contains(String key) : boolean");
 		menu.add("get(String key) : Resource");
-		menu.add("put(String g.getName(), g)");
+		menu.add("put(String r.getName(), r)");
 		menu.add("longestPrefixOf(String s) : String");
 		menu.add("keys() : Iterable<String>");
 		menu.add("prefixMatch(String prefix) : Iterable<String>");

@@ -5,17 +5,12 @@ import java.util.List;
 /**
  * GalaxyController
  * 
- * @author farias
  *
  */
 public class GalaxyController extends AbstractController{
 
 	TST<Galaxy> Clt;
 	DataController Dc;
-	
-	private final String _path_file = "";
-	//PlanetController PlanetC;
-	//Pasar por parametros en la funciones q lo necesite
 	
 	/**
 	 * 
@@ -50,8 +45,7 @@ public class GalaxyController extends AbstractController{
 	// ---------------------------------------------
 	
 	/**
-	 * Devuelve un listado con el nombre de las galaxias ordenado por creaci—n
-	 * TODO: Como lo hago para devolmes mas campos????
+	 * Devuelve un listado con el nombre de las galaxias ordenado por orden alfabetico
 	 * @return String
 	 */
 
@@ -117,8 +111,8 @@ public class GalaxyController extends AbstractController{
 	/**
 	 * Pre: El nombre no debe ser nulo y con longitud > 0
 	 * 		La galaxia debe existir
-	 * 		Si la galaxia modifica su tama–o no deben haber planetas en esas cordenados
-	 * Post: Modifica los datos de la galaxia con new_name, x e y
+	 * 		El nombre de a nueva galaxia no debe de existir
+	 * Post: Modifica los datos de la galaxia con new_nam
 	 * 
 	 * @param name
 	 * @param new_name
@@ -133,10 +127,14 @@ public class GalaxyController extends AbstractController{
 		if (g == null) throw new Exception("This galaxy doesn't exist");
 
 		//Actualizamos informacion
-		//Si la galaxia tiene un ombre diferente se debe extraer del arbol y volver a meter
+		//Si la galaxia tiene un nombre diferente se debe 
+		//extraer del arbol y volver a meter
 		if (g.getName() != new_name) {
-			Clt.remove(g.getName());
+			
+			String oldName = g.getName();
 			g.setName(new_name);
+			
+			Clt.remove(oldName);
 			Clt.put(new_name, g);	
 		}
 		
@@ -187,11 +185,11 @@ public class GalaxyController extends AbstractController{
 	
 	// Create
 	// ---------------------------------------------
-	// TODO: Buscarlo en el otro controlador de planetas el planeta
 	// EL otro controlador debe devolverme la referencia del planeta, no un string
 	
 	/**
-	 * TODO: Pasar por paremtros la referencia al controlador de planetas
+	 * Pre: La galaxia y el planeta deben existir
+	 * 		El planeta no debe tener otra galaxia asignaada o estar en esta ya
 	 * @param GalaxyName
 	 * @param PlanetName
 	 * @throws Exception 
@@ -202,7 +200,7 @@ public class GalaxyController extends AbstractController{
 		Galaxy g = Clt.get(GalaxyName);
 		if (g == null) throw new Exception("The galaxy "+GalaxyName+" does not exist");
 		
-		//2. COmprobar la existencia de planeta en controlador de planetas
+		//2. Comprobar la existencia de planeta en controlador de planetas
 		//Pre: El planeta no debe tener otra galaxia asignaada o estar en esta ya
 		Planet p = pc.getPlanetByName(PlanetName);
 		if (p == null) throw new Exception("The planet "+PlanetName+" does not exist");
@@ -285,6 +283,10 @@ public class GalaxyController extends AbstractController{
 		
 		addGalaxy(name, x, y);
 		*/
+	}
+	
+	public void saveRelation() {
+		
 	}
 	
 }
