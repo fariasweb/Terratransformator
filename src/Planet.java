@@ -3,9 +3,14 @@ public class Planet {
 	private String name;
 	private Integer x_pos;
 	private Integer y_pos;
-	private Packet packet;
 	private Galaxy galaxy;
 
+	/**
+	 * post:Comprueba que las posiciones son v‡lidas
+	 * @param x_posp
+	 * @param y_posp
+	 * @throws Exception
+	 */
 	private static void checkPosition(int x_posp, int y_posp) throws Exception {
 		if (x_posp < 0)
 			throw new Exception(x_posp + " position not valid");
@@ -15,19 +20,30 @@ public class Planet {
 
 	// Contructs
 	// ---------------------------------------------
+	
+	/**
+	 * 
+	 * Crea un planeta en el sistema
+	 * Pre: El nombre del planeta no debe existir en el sistema
+	 * Post: Se crea un planeta con el nombre y posicion indicados
+	 * 
+	 * @param namep
+	 * @param x_posp
+	 * @param y_posp
+	 * @throws Exception
+	 */
 	public Planet(String namep, int x_posp, int y_posp) throws Exception {
 		setPosition(x_posp, y_posp); // Se chequea aqui
 		setName(namep); // Se chequea aqui
-		packet = null;
 		galaxy = null;
 	}
 
-	// Constructora por defecto
+	/**
+	 * 
+	 */
 	public Planet() {
 		name = null;
 		x_pos = y_pos = null;
-
-		packet = null;
 		galaxy = null;
 	}
 
@@ -35,8 +51,11 @@ public class Planet {
 	// ---------------------------------------------
 
 	/**
+	 * Modifica el nombre de un planeta
+	 * pre:El nombre a asignar no ha de existir en el sistema
+	 * post:Se cambia el nombre del planeta 
 	 * @param namep
-	 *            the name to set
+	 * @throws Exception
 	 */
 	public void setName(String namep) throws Exception {
 		if (!Util.checkName(namep))
@@ -45,10 +64,13 @@ public class Planet {
 	}
 
 	/**
-	 * @param Integer
-	 *            x_pos
-	 * @param Integer
-	 *            y_pos
+	 * Modifica la posicion de un planeta
+	 * pre:La coordenadas han de ser positivas
+	 * post:Se cambia la posicion del planeta
+	 * 
+	 * @param x_posp
+	 * @param y_posp
+	 * @throws Exception
 	 */
 	public void setPosition(Integer x_posp, Integer y_posp) throws Exception {
 		checkPosition(x_posp, y_posp);
@@ -56,18 +78,19 @@ public class Planet {
 		y_pos = y_posp;
 	}
 
-	/**
-	 * @param packet
-	 *            the packet to set
-	 */
-	public void setPacket(Packet packetp) {
+	/*public void setPacket(Packet packetp) {
 
 		if (packetp != packet) {
 			packet = packetp;
 			packetp.setPlanet(this);
 		}
-	}
-
+	}*/
+	
+	/**
+	 *post:Cambia la galaxia asignada a un planeta 
+	 * @param g
+	 * @throws Exception
+	 */
 	public void setGalaxy(Galaxy g) throws Exception {
 		if (galaxy != g) {
 			galaxy = g;
@@ -78,30 +101,29 @@ public class Planet {
 	// Getter
 	// -----------------------------------------------
 	/**
-	 * 
-	 * @return the name
+	 * Devuelve el nombre del planeta
+	 * @return String
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @return PairInt pos
+	 * post: Devuelve la posicion del planeta 
+	 * @return PairInt
 	 */
 	public PairInt getPosition() {
 		return new PairInt(x_pos, y_pos);
 	}
 
-	/**
-	 * @return the packet
-	 */
-	public Packet getPacket() {
+	
+	/*public Packet getPacket() {
 		return packet;
-	}
+	}*/
 
 	/**
-	 * 
-	 * @return
+	 * post: Devuelve la galaxia asignada al planeta
+	 * @return Galaxy
 	 */
 	public Galaxy getGalaxy() {
 		return galaxy;
@@ -110,17 +132,18 @@ public class Planet {
 	// Deleter
 	// -----------------------------------------------
 
-	/**
-	 * 
-	 */
-	public void removePacket() {
+	/*public void removePacket() {
 		if (packet != null) {
 			Packet p = packet;
 			packet = null;
 			p.removePlanet();
 		}
-	}
+	}*/
 	
+	/**
+	 * post: Elimina la galaxia asignada al planeta 
+	 * @throws Exception
+	 */
 	public void removeGalaxy() throws Exception {
 		if (galaxy != null) {
 			Galaxy g = galaxy;
@@ -133,10 +156,16 @@ public class Planet {
 	// -----------------------------------------------
 
 	/**
-		 * 
-		 */
+	 * post: Devuelve un string con los atributos de planeta
+	 * @return String 
+	 */
 	public String toString() {
 		return name + " " + x_pos + " " + y_pos;
 	}
 
+	public double getDistance(Planet p2){
+		PairInt p = p2.getPosition();
+	    return Math.sqrt(((x_pos - p.getX())*((x_pos - p.getX())) + (( y_pos - p2.y_pos)*( y_pos - p2.y_pos))));
+	
+	}
 }

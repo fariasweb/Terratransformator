@@ -33,21 +33,35 @@ public class PlanetController extends AbstractController{
 	
 	//Setter
 	//---------------------------------------------
-
-	public void removePacket(String namep) throws Exception{
+	/**
+	 * @param namep
+	 * @throws Exception
+	 */
+	/*public void removePacket(String namep) throws Exception{
 		Planet g = planetCtl.get(namep);
 		if(g.getPacket() != null) g.removePacket();
-	}
+	}*/
 	
-	public void setPacket(String namep, String namePacket) throws Exception{
+	/**
+	 * 
+	 * @param namep
+	 * @param namePacket
+	 * @throws Exception
+	 */
+	/*public void setPacket(String namep, String namePacket) throws Exception{
 		Planet p = planetCtl.get(namep);
 		if (p == null) throw new Exception("This planet doesn't exist");
 		if(p.getPacket() != null) throw new Exception("There is a packet already assigned!");
 		Packet paq = p.getPacket();
 		p.setPacket(paq);
 	}
-
-
+    */
+	/**
+	 * 
+	 * @param oldName
+	 * @param newName
+	 * @throws Exception
+	 */
 	public void setName(String oldName, String newName) throws Exception{
 		Planet p = planetCtl.get(oldName);
 		if (p == null) throw new Exception("This planet doesn't exist");
@@ -59,6 +73,13 @@ public class PlanetController extends AbstractController{
 		}
 	}
 
+	/**
+	 * 
+	 * @param namep
+	 * @param x
+	 * @param y
+	 * @throws Exception
+	 */
 	public void setPosition(String namep, int x, int y) throws Exception {
 		//TODO: Comprobar solapamiento
 		Planet p = planetCtl.get(namep);
@@ -73,19 +94,31 @@ public class PlanetController extends AbstractController{
 	
 	//Getter
 	//---------------------------------------------
-
+	/**
+	 * 
+	 * @param namep
+	 * @return
+	 * @throws Exception
+	 */
 	public PairInt getPosition(String namep) throws Exception{
 		Planet p = planetCtl.get(namep);
 		if (p == null) throw new Exception("This planet doesn't exist");
 		return p.getPosition();
 		
 	}
-	public Packet getPacket(String namep) throws Exception {
+	
+	/**
+	 * 
+	 * @param namep
+	 * @return
+	 * @throws Exception
+	 */
+	/*public Packet getPacket(String namep) throws Exception {
 		Planet p = planetCtl.get(namep);
 		if (p == null) throw new Exception("This planet doesn't exist");
 		return p.getPacket();
 		
-	}
+	}*/
  	
 	/////////////////////////////////FUNCIONES TST<PLANET>
 
@@ -114,7 +147,10 @@ public class PlanetController extends AbstractController{
 
 	//Getter
 	//-----------------------------------------------
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public List<String> getAll() {
 		List<String> list = new ArrayList<String>();
 		for(Planet i : planetCtl.values()){
@@ -158,10 +194,17 @@ public class PlanetController extends AbstractController{
 
 	// Utils
 	//-----------------------------------------------
+	/**
+	 * 
+	 * @return
+	 */
 	public int size(){
 		return planetCtl.size();
 	}
-
+	
+	/**
+	 * 
+	 */
 	public void save(String path, String file, int cacheSize) throws Exception {
 
 		String cache = planetCtl.first().toString();
@@ -180,7 +223,13 @@ public class PlanetController extends AbstractController{
 
 		}
 	} 
-
+	/**
+	 * 
+	 * @param path
+	 * @param pltCont
+	 * @param resCont
+	 * @throws Exception
+	 */
 	public void load(String path, PlanetController pltCont, ResourceController resCont) throws Exception{
 	/*
 		String s = dCont.read(path);
