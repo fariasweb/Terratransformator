@@ -11,8 +11,7 @@ public class GalaxyController extends AbstractController {
 	protected TST<Galaxy> Clt;
 
 	/**
-	 * Constructor
-	 * Post: Inicializa el contructor padre y el TST
+	 * Constructor Post: Inicializa el contructor padre y el TST
 	 */
 	public GalaxyController() {
 		super();
@@ -174,12 +173,12 @@ public class GalaxyController extends AbstractController {
 
 		Iterator<Galaxy> iterator = Clt.values().iterator();
 
-		//Recoremos todas las galaxias
+		// Recoremos todas las galaxias
 		while (iterator.hasNext()) {
 			Galaxy g = (Galaxy) iterator.next();
-			//Eliminamos de la colecion
+			// Eliminamos de la colecion
 			Clt.remove(g.getName());
-			//Eliminamos todos los planetnas de esa galaxia
+			// Eliminamos todos los planetnas de esa galaxia
 			g.removeAllPlanets();
 		}
 
@@ -268,7 +267,7 @@ public class GalaxyController extends AbstractController {
 		if (g == null)
 			throw new Exception("This galaxy " + GalaxyName + "doesn't exist");
 
-		//Eliminamos el planeta de la galaxia
+		// Eliminamos el planeta de la galaxia
 		g.removePlanet(Planetname);
 
 	}
@@ -285,8 +284,8 @@ public class GalaxyController extends AbstractController {
 		Galaxy g = Clt.get(GalaxyName);
 		if (g == null)
 			throw new Exception("This galaxy doesn't exist");
-		
-		//Eliminamos todas las galaxias
+
+		// Eliminamos todas las galaxias
 		g.removeAllPlanets();
 	}
 
@@ -294,67 +293,70 @@ public class GalaxyController extends AbstractController {
 	// ---------------------------------------------
 
 	/**
-	 * Debe indicarse en cada controlador
-	 * Post: Pasa el String a memoria como objetos
+	 * Debe indicarse en cada controlador Post: Pasa el String a memoria como
+	 * objetos
+	 * 
 	 * @param l
 	 * @throws Exception
 	 */
 	protected void parseString(String l) throws Exception {
 
-		//Corta el string por el separador interno
+		// Corta el string por el separador interno
 		String[] s = l.split(" ");
 
-		//Comprueba que sea correcto y tengo el numero de elemntos minimo
+		// Comprueba que sea correcto y tengo el numero de elemntos minimo
 		if (s.length != 3)
 			throw new Exception("The record is not correct");
 
-		//Separaci—n especifica de galaxia
+		// Separaci—n especifica de galaxia
 		String name = s[0];
 		int x = Integer.parseInt(s[1]);
 		int y = Integer.parseInt(s[2]);
 
-		//A–ade a la colecci—n
+		// A–ade a la colecci—n
 		addGalaxy(name, x, y);
 
 	}
-	
+
 	/**
-	 * Debe indicarse en cada controlador
-	 * Post: Pasa el String a memoria como objetos
+	 * Debe indicarse en cada controlador Post: Pasa el String a memoria como
+	 * objetos
+	 * 
 	 * @param l
 	 * @throws Exception
 	 */
 	protected String encodeString() throws Exception {
-	
+
 		String encodeS = "";
 		ArrayList<Galaxy> list;
-		
-		//Diferenciamos si es la primera vez
+
+		// Diferenciamos si es la primera vez
 		if (_last_key == "") {
-			//En caso de ser la primera vez como no tenemos indicado
-			//el _last_key usamos el primer elemento
+			// En caso de ser la primera vez como no tenemos indicado
+			// el _last_key usamos el primer elemento
 			encodeS = Clt.first().toString() + _SEPARATOR;
 			list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM - 1);
 		} else {
-			//Como tenemos un _last_key partimos desde este
+			// Como tenemos un _last_key partimos desde este
 			list = Clt.valuesCache(_last_key, _CACHE_NUM);
 		}
-		
+
 		// Pasamos objetos a cache
 		for (Galaxy p : list) {
 			encodeS += p.toString() + _SEPARATOR;
 			_last_key = p.getName();
 		}
-		
+
 		return encodeS;
 	}
-	
+
 	/**
 	 * Post: Devuelve el tama–o de la coleci—n
+	 * 
 	 * @return int
 	 */
-	protected int size() { 
-		return Clt.size(); 
+	protected int size() {
+		return Clt.size();
 	}
 
 }
