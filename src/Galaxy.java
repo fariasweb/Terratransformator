@@ -1,14 +1,12 @@
 import java.util.*;
-import java.util.regex.*;
 
 /**
- * 
- * @author farias
+ * Galaxy
  *
  */
-public class Galaxy implements Entity {
+public class Galaxy extends Entity {
 
-	private String name;
+	//Atributos especificos
 	private int x;
 	private int y;
 
@@ -18,6 +16,7 @@ public class Galaxy implements Entity {
 	// ---------------------------------------------
 	
 	/**
+	 * Constructor
 	 * 
 	 * @param namep
 	 * @param xp
@@ -30,11 +29,10 @@ public class Galaxy implements Entity {
 		
 		setName(namep);
 		setSize(xp, yp);
-
 	}
 
 	/**
-	 * 
+	 * Constructor basico
 	 */
 	public Galaxy() {
 
@@ -48,17 +46,6 @@ public class Galaxy implements Entity {
 
 	// Setter
 	// ---------------------------------------------
-
-	/**
-	 * 
-	 * @param namep
-	 * @throws Exception
-	 */
-	public void setName(String namep) throws Exception {
-		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
-		name = namep;
-
-	}
 
 	/**
 	 * Pre: xp > 0 y yp > 0
@@ -75,6 +62,7 @@ public class Galaxy implements Entity {
 		if (planets.size() > 0)
 			throw new Exception("The galaxy can not change the size if it have planets");
 		
+		//Asignamos el tama–o de la galaxia
 		x = xp;
 		y = yp;
 	}
@@ -90,10 +78,6 @@ public class Galaxy implements Entity {
 		
 		if (p == null) throw new Exception("Planet is not defined");
 		
-		//Que no exista
-		/*if (planets.contains(p.getName()))
-			throw new Exception("This planet is in this galaxy");
-		*/
 		// Control de la posicion
 		PairInt pi = p.getPosition();
 		int px = pi.getX();
@@ -109,24 +93,17 @@ public class Galaxy implements Entity {
 		if (existPlanetInPos(px, py))
 			throw new Exception("Planet exists in this position");
 
+		//A–adimos el planeta
 		planets.put(p.getName(), p);
 		p.setGalaxy(this);
 	}
 
 	// Getter
 	// -----------------------------------------------
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getName() {
-		return name;
-	}
 
 	/**
 	 * 
-	 * @return
+	 * @return PairInt
 	 */
 	public PairInt getSize() {
 		return new PairInt(x, y);
@@ -134,7 +111,7 @@ public class Galaxy implements Entity {
 
 	/**
 	 * 
-	 * @return
+	 * @return TST<Planet> 
 	 */
 	TST<Planet> getPlanets() {
 		return planets;
@@ -142,7 +119,7 @@ public class Galaxy implements Entity {
 	
 
 	/**
-	 * 
+	 * Devuelve el planeta que se encuentra en esa posicion
 	 * @param x
 	 * @param y
 	 * @return
@@ -168,10 +145,10 @@ public class Galaxy implements Entity {
 	// -----------------------------------------------
 
 	/**
-	 * 
+	 * Indica si existe un planeta en esa posicion
 	 * @param x
 	 * @param y
-	 * @return
+	 * @return boolean
 	 */
 
 	public boolean existPlanetInPos(int x, int y) {
@@ -184,7 +161,7 @@ public class Galaxy implements Entity {
 	// -----------------------------------------------
 
 	/**
-	 * 
+	 * Post: Elimina el planeta segun su nombre
 	 * @param namep
 	 * @throws Exception
 	 */
@@ -198,16 +175,19 @@ public class Galaxy implements Entity {
 	}
 	
 	/**
+	 * Elimina toos los planetas y vacia el TST
 	 * @throws Exception 
-	 * 
 	 */
 	public void removeAllPlanets() throws Exception {
 		
 		Iterator<Planet> iterator = planets.values().iterator();
 
 		while (iterator.hasNext()) {
+			//Cogemos el siguiente planeta
 			Planet p = (Planet) iterator.next();
+			//Eliminaos del TST
 			planets.remove(p.getName());
+			//Eliminaos la galaxia
 			p.removeGalaxy();
 		}
 		
@@ -218,7 +198,7 @@ public class Galaxy implements Entity {
 	// -----------------------------------------------
 
 	/**
-	 * 
+	 * @return String
 	 */
 	public String toString() {
 		return name+" "+x+" "+y;	

@@ -1,0 +1,14 @@
+1
+2 G1 5 5
+2 G2 1 2
+2 G3 4 5
+2 G4 5 6
+2 G6 4 2
+2 G5 1 1
+2 G7 1 5
+3
+15 ./save/GalaxyControler.txt false
+8
+2 G11 3 3
+16 ./save/GalaxyControler.txt
+3

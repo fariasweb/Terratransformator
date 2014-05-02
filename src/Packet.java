@@ -40,7 +40,6 @@ public class Packet {
 	public void setPlanet(Planet planetp) {
 		if (planet != planetp && planetp != null) {
 			planet = planetp;
-			planetp.setPacket(this); //Está en planeta?
 		}
 	}
 
@@ -89,16 +88,6 @@ public class Packet {
 	/**************************************************************
 	 * Delete
 	 **************************************************************/
-	
-	/**
-	 * 
-	 */
-	public void removePlanet() {
-		if (planet != null) {
-			planet.removePacket();
-			planet = null;
-		}
-	}
 
 	/**
 	 * 

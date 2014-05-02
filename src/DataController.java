@@ -1,8 +1,7 @@
 import java.io.*;
 
 /**
- * 
- * @author farias
+ * DataController
  * 
  */
 
@@ -15,9 +14,9 @@ public class DataController {
 	PrintWriter out;
 
 	/**
-	 * 
+	 * Constructora
 	 */
-	public void DataController() {
+	public DataController() {
 		f = null;
 		fr = null;
 		bf = null;
@@ -33,10 +32,12 @@ public class DataController {
 	 * @param path
 	 * @throws Exception
 	 */
-	public void open(String path) throws Exception {
+	public void open(String path, boolean append) throws Exception {
 
+		//Creamos el objeto file
 		f = new File(path);
 
+		//Comprovaciones varias
 		if (!f.exists())
 			f.createNewFile();
 		if (!f.exists())
@@ -48,10 +49,12 @@ public class DataController {
 		if (!f.canWrite())
 			throw new Exception("The file " + path + " cant' write");
 
+		//Inicializamos para lectura
 		fr = new FileReader(path);
 		bf = new BufferedReader(fr);
-
-		fw = new FileWriter(f);
+		
+		//Inicializamos para escritura
+		fw = new FileWriter(f, append);
 		out = new PrintWriter(fw);
 	}
 
@@ -66,7 +69,8 @@ public class DataController {
 
 		if (f == null)
 			throw new Exception("Any file indicated");
-
+		
+		//Devolvemos una linea o null si no existen mas
 		return bf.readLine();
 	}
 
@@ -95,13 +99,14 @@ public class DataController {
 	}
 
 	/**
-	 * 
+	 * Eliminamos todas las referencias a los objetos creados
 	 * @throws Exception
 	 */
 	public void close() throws Exception {
-
+		//Eliminamos el objeto file
 		f = null;
 
+		//Eliminaos referencias de escriptura/lectura
 		fr.close();
 		fr = null;
 		bf.close();

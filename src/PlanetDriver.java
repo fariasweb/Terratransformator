@@ -48,8 +48,8 @@ class PlanetDriver extends AbstractDriver{
 				case 8:
 					Console.print(p.getPosition().getX() + " " + p.getPosition().getY());
 					break;
-				case 9:
-					Console.print(p.getPacket().getName() + "");
+				//case 9:
+				//	Console.print(p.getPacket().getName() + "");
 				}
 			}
 		}
@@ -67,7 +67,7 @@ class PlanetDriver extends AbstractDriver{
 		menu.add("removePacket(Packet packetp)");
 		menu.add("GetName() : String"); //7
 		menu.add("GetPosition() : PairInt");
-		menu.add("GetPacket(): Packet");
+		//menu.add("GetPacket(): Packet");
 		print_menu();
 	}
 	
@@ -120,7 +120,7 @@ class PlanetDriver extends AbstractDriver{
 	 */
 	public static void set_packet(Planet p, Packet packet){
 		try{
-			p.setPacket(packet);
+			//p.setPacket(packet);
 		}
 		catch(Exception e){
 			_msg_error(e.getMessage());
@@ -132,7 +132,7 @@ class PlanetDriver extends AbstractDriver{
 	*/
 	public static void remove_packet(Planet p, Packet packet){
 		try{
-			p.setPacket(packet);
+			//p.setPacket(packet);
 		}
 		catch(Exception e){
 			_msg_error(e.getMessage());

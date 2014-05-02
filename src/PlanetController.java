@@ -37,16 +37,16 @@ public class PlanetController extends AbstractController{
 
 	public void removePacket(String namep) throws Exception{
 		Planet g = planetCtl.get(namep);
-		if(g.getPacket() != null) g.removePacket();
+		//if(g.getPacket() != null) g.removePacket();
 	}
 	
-	public void setPacket(String namep, String namePacket) throws Exception{
+	/*public void setPacket(String namep, String namePacket) throws Exception{
 		Planet p = planetCtl.get(namep);
 		if (p == null) throw new Exception("This planet doesn't exist");
-		if(p.getPacket() != null) throw new Exception("There is a packet already assigned!");
+		//if(p.getPacket() != null) throw new Exception("There is a packet already assigned!");
 		Packet paq = p.getPacket();
 		p.setPacket(paq);
-	}
+	}*/
 
 
 	public void setName(String oldName, String newName) throws Exception{
@@ -81,12 +81,13 @@ public class PlanetController extends AbstractController{
 		return p.getPosition();
 		
 	}
-	public Packet getPacket(String namep) throws Exception {
+	
+	/*public Packet getPacket(String namep) throws Exception {
 		Planet p = planetCtl.get(namep);
 		if (p == null) throw new Exception("This planet doesn't exist");
 		return p.getPacket();
 		
-	}
+	}*/
  	
 	/////////////////////////////////FUNCIONES TST<PLANET>
 
