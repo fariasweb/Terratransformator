@@ -2,7 +2,7 @@ public class Packet {
 
 	private String name;
 	private TST<RelationPacketResource> rel; 
-	
+	private int qttResources;
 	// Constructors
 		// ---------------------------------------------
 	/**
@@ -11,6 +11,7 @@ public class Packet {
 	public Packet() {
 		name = "";
 		rel = new TST<RelationPacketResource>();
+		qttResources = 0;
 	}
 	/**
 	 * Crea un paquete en el sistema
@@ -23,6 +24,7 @@ public class Packet {
 	public Packet(String name) throws Exception {
 		new Packet();
 		setName(name);
+		qttResources = 0;
 	}
 	
 
@@ -62,6 +64,7 @@ public class Packet {
 		
 		RelationPacketResource rpr = new RelationPacketResource(this, r, qtt);
 		rel.put(r.getName(), rpr);
+		qttResources += qtt;
 	}
 
 
@@ -87,6 +90,9 @@ public class Packet {
 		return rel;
 	}
 	
+	public int getQuantity(){
+		return qttResources;
+	}
 	
 	// Delete
 		// ---------------------------------------------
@@ -110,6 +116,8 @@ public class Packet {
 	 * @throws Exception 
 	 */
 	public void removeResource(String name) throws Exception {
+		RelationPacketResource res = rel.get(name);
+		qttResources -= res.getQuantity();
 		rel.remove(name);
 	}
 		
@@ -118,6 +126,7 @@ public class Packet {
 	 */
 	public void removeAllResources() {
 		rel.clear();
+		qttResources = 0;
 	}
 	
 	// Basic Types

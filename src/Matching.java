@@ -11,8 +11,8 @@ public class Matching {
 	private void init (int _n1, int _n2, List<PairInt> rel){
 		 n1 = _n1;
 	     n2 = _n2;
-	     maxN1 = rel.size()-2;
-	     maxN2 = rel.size()-2;
+	     maxN1 = rel.size();
+	     maxN2 = rel.size();
 	     maxM = 5000;
 
 	     last = new int[maxN1];

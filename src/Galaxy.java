@@ -223,5 +223,33 @@ public class Galaxy implements Entity {
 	public String toString() {
 		return name+" "+x+" "+y;	
 	}
+	public double[][] getDistanceMatrix(){
+		Iterable<Planet> l = new ArrayList<Planet>();
+		l =	planets.values();
+		int n = planets.size();
+		double[][] d = new double[n][n];
+		
+		Planet[] vect = new Planet[n];
+		int i = 0; 
+		for(Planet p : l){						
+			vect[i] = p;
+			++i;
+		}
+		for(i = 0; i < n; ++i){
+			for(int j = i+1; j < n-1;++j){
+				d[i][j] = getDistance(vect[i],vect[j]);
+				d[j][i] = d[i][j];
+			}
+		}
+		return d;
+	}
+
+
+	public double getDistance(Planet p1, Planet p2){
+		PairInt pair1 = p1.getPosition();
+		PairInt pair2 = p2.getPosition();
+	    return Math.sqrt(((pair1.getX() - pair2.getX())*((pair1.getX() - pair2.getX()) + (( pair1.getY() - pair2.getY())*( pair1.getY() - pair2.getY())))));
 	
+	}
+
 }
