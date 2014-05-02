@@ -47,7 +47,6 @@ public class Packet {
 	/*public void setPlanet(Planet planetp) {
 		if (planet != planetp && planetp != null) {
 			planet = planetp;
-			planetp.setPacket(this); //Está en planeta?
 		}
 	}*/
 
@@ -94,6 +93,7 @@ public class Packet {
 		return qttResources;
 	}
 	
+	
 	// Delete
 		// ---------------------------------------------
 	
@@ -103,6 +103,11 @@ public class Packet {
 			planet = null;
 		}
 	}*/
+
+	/**************************************************************
+	 * Delete
+	 **************************************************************/
+
 
 	/*public void removeResource(Resource rp) throws Exception {
 		rel.remove(rp.getName());

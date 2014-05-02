@@ -130,7 +130,7 @@ public class PacketDriver extends AbstractDriver {
 					break;
 
 				case 11:
-					p.removePlanet();
+					//p.removePlanet();
 					break;
 
 				default:

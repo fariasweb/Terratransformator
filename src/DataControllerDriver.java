@@ -43,29 +43,36 @@ public class DataControllerDriver extends AbstractDriver {
 				case 1:
 					dc = new DataController();
 					break;
-				case 2: //Save
-					if (argv.length < 4)
+				case 2:
+					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
 						
+						try {		
+							dc.open(argv[1], argv[2].equals("true"));
+						} catch (Exception e) {
+							_msg_error(e.getMessage());
+						}
+					}
+					break;
+				case 3: //Save
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
 						try {
-							boolean append = false;
-							
-							if (argv[4].equals("true")) append = true;
-							
-							dc.write(argv[1], argv[2], argv[3], append);
+							dc.write(argv[1]);
 						} catch (Exception e) {
 							_msg_error(e.getMessage());
 						}
 					}
 					break;
 					
-				case 3:
-					if (argv.length < 2)
+				case 4:
+					if (argv.length < 1)
 						_msg_error_param_insuf();
 					else {
 						try {
-							Console.print(dc.read(argv[1]));
+							Console.print(dc.read());
 						} catch (Exception e) {
 							_msg_error(e.getMessage());
 						}
@@ -93,8 +100,10 @@ public class DataControllerDriver extends AbstractDriver {
 
 		menu.add("DataController() : DataController"); // 1
 
-		menu.add("save(String path, String file, String data, boolean is_new) : void");
-		menu.add("load(String path) : String");
+		menu.add("open(String path, boolean append) : void");
+		menu.add("save(String data) : void");
+		menu.add("load() : String");
+		menu.add("close() : void");
 
 		print_menu();
 	}

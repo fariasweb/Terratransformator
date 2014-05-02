@@ -13,8 +13,8 @@ public class QAPController {
 		
 		switch(alg_select) {
 		
-			case "":
-				ala = new QAP();
+			case "QAP":
+				//alg = new QAP();
 			break;
 			
 			//...

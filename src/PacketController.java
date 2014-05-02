@@ -68,7 +68,6 @@ public class PacketController extends AbstractController{
 		if(p == null) throw new Exception ("Debugging");
 		Planet planet = pCont.getPlanetByName(namePlanet);
 		p.setPlanet(planet);
-		planet.setPacket(p);
 	}
 
 	/**
@@ -189,7 +188,7 @@ public class PacketController extends AbstractController{
 	 */
 	public void removePlanet(String p) throws Exception{
 		Packet paq = Clt.get(p);
-		paq.removePlanet();
+		//paq.removePlanet();
 	}
 
 	/**************************************************************
@@ -198,7 +197,7 @@ public class PacketController extends AbstractController{
 
 	public void save(String path, String file) throws Exception{
 
-		String cache = Clt.first().toString()+";";
+		/*String cache = Clt.first().toString()+";";
 		ArrayList<Packet> list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM-1);
 		
 		for(Packet p : list)
@@ -215,12 +214,12 @@ public class PacketController extends AbstractController{
 
 			if(cache != "") dCont.write(path, file, cache, true);
 
-		}
+		}*/
 	}
 
 	public void load(String path, PlanetController pltCont, ResourceController resCont) throws Exception{
 		
-		String s = dCont.read(path);
+		/*String s = dCont.read(path);
 
 		String name = new String();
 		String planet = new String();
@@ -272,7 +271,7 @@ public class PacketController extends AbstractController{
 				}
 			}
 			else aux+=s.charAt(i);
-		}
+		}*/
 	}
 
 }
