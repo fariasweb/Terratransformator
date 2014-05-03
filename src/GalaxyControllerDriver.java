@@ -1,15 +1,7 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
- * 
- */
-
-//import AbstractDriver;
-
-/**
- * @author farias
+ * GalaxyControllerDriver
  * 
  */
 class GalaxyControllerDriver extends AbstractDriver {
@@ -20,8 +12,9 @@ class GalaxyControllerDriver extends AbstractDriver {
 	public static void main(String[] args) {
 
 		// Generico del driver
-		GalaxyController gc = new GalaxyController();
 		PlanetController pc = new PlanetController();
+		GalaxyController gc = new GalaxyController(pc);
+		
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -47,7 +40,7 @@ class GalaxyControllerDriver extends AbstractDriver {
 				case 0: // Exit
 					break;
 				case 1:
-					gc = new GalaxyController();
+					gc = new GalaxyController(pc);
 					break;
 
 				case 2:
@@ -107,9 +100,9 @@ class GalaxyControllerDriver extends AbstractDriver {
 					removeAllGalaxy(gc);
 
 					break;
-
-				case 9: // Create Planet Controller
-					pc = new PlanetController();
+					
+				case 9:
+					Console.print("Size: "+gc.size());
 					break;
 
 				case 10:
@@ -153,6 +146,22 @@ class GalaxyControllerDriver extends AbstractDriver {
 						removeAllPlanetsFromGalaxy(gc, argv[1]);
 					}
 					break;
+					
+				case 15: //save
+					if (argv.length < 1)
+						_msg_error_param_insuf();
+					else {
+						saveGalaxyController(gc, argv[1], argv[2].equals("true"));
+					}
+					break;
+					
+				case 16: //load
+					if (argv.length < 1)
+						_msg_error_param_insuf();
+					else {
+						loadGalaxyController(gc, argv[1]);
+					}
+					break;
 
 				default:
 					_msg_opc_invalid();
@@ -165,6 +174,26 @@ class GalaxyControllerDriver extends AbstractDriver {
 
 	// Actions
 	// ---------------------------------------------
+
+	public static void loadGalaxyController(GalaxyController gc, String path) {
+		try {
+			gc.load(path);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	public static void saveGalaxyController(GalaxyController gc, String path, boolean append) {
+		try {
+			gc.save(path, append);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
 
 	public static void addPlanetToGalaxy(GalaxyController gc,
 			PlanetController pc, String GalaxyName, String PlanetName) {
@@ -183,7 +212,7 @@ class GalaxyControllerDriver extends AbstractDriver {
 			String name, int x, int y) {
 		try {
 
-			pc.createPlanet(name, x, y);
+			pc.addPlanet(name, x, y);
 
 		} catch (Exception e) {
 
@@ -289,12 +318,14 @@ class GalaxyControllerDriver extends AbstractDriver {
 	// ---------------------------------------------
 
 	/**
-	 * 
+	 * Menu
 	 */
 	private static void _menu() {
 
 		title = "Galaxy Controller Driver";
 
+		//Operaciones con conjunto galaxias
+		
 		menu.add("GalaxyController() : GalaxyController"); // 1
 
 		menu.add("addGalaxy(String name, int x, int y) : void"); // 2
@@ -308,18 +339,22 @@ class GalaxyControllerDriver extends AbstractDriver {
 
 		menu.add("removeGalaxy(String name) : void"); // 7
 		menu.add("removeAllGalaxy(): void");
+		
+		menu.add("size() : int"); //9
 
 		// Operaciones sobre las galaxias
 
-		menu.add("PlanetController(): PlanetController pc"); // 9
-		menu.add("PlanetController.addPlanet(String name, int x, int y");
+		menu.add("PlanetController.addPlanet(String name, int x, int y) : Planet");
 		menu.add("addPlanet(String GalaxyName, String PlanetName, PlanetController pc) : void"); // 9
 
-		menu.add("getPlanetsFromGalaxy(String name) : String"); // 12
+		menu.add("getPlanetsFromGalaxy(String name) : String"); // 13
 
 		menu.add("removePlanetFromGalaxy(String GalaxyName, String Planetname) : void"); // 13
 		menu.add("removePlanetsFromGalaxy(String GalaxyName) : void");
 
+		menu.add("save(String path, boolean append) : void"); //16
+		menu.add("load(String path) : void");
+		
 		print_menu();
 	}
 

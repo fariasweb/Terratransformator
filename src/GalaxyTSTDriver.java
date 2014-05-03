@@ -68,15 +68,7 @@ public class GalaxyTSTDriver extends AbstractDriver {
 					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
-						Galaxy gt = Clt.get(argv[1]);
-						if (gt == null) {
-							Console.print("The galaxy "+argv[1]+" doens't exist");
-						} else {
-							List<String> content = new ArrayList<String>();
-							content.add(gt.toString());
-							
-							Console.simplyTable("Name X Y", content);
-						}
+						getGalaxyTST(Clt, argv[1]);
 					
 					}
 					break;
@@ -115,14 +107,6 @@ public class GalaxyTSTDriver extends AbstractDriver {
 					break;
 					
 				case 10:
-					if (argv.length < 2)
-						_msg_error_param_insuf();
-					else {
-						wildcardMatch_TST(Clt, argv[1]);
-					}
-					break;
-					
-				case 11:
 					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
@@ -168,7 +152,6 @@ public class GalaxyTSTDriver extends AbstractDriver {
 		menu.add("values() : Iterable<Galaxy>");
 
 		menu.add("longestPrefixOf(String s) : String"); // 10
-		menu.add("wildcardMatch(String pat) : Iterable<String>");
 
 		print_menu();
 	}
@@ -219,15 +202,22 @@ public class GalaxyTSTDriver extends AbstractDriver {
 		
 	}
 	
-	public static void wildcardMatch_TST(TST<Galaxy> clt, String s) {
-		Iterable<String> cltKeys = clt.wildcardMatch(s);
-		List<String> content = new ArrayList<String>();
-		
-		for (String g : cltKeys) {
-		    content.add(g);
+	
+	private static void getGalaxyTST(TST<Galaxy> clt, String name) {
+		try {
+			Galaxy gt = clt.get(name);
+			if (gt == null) {
+				Console.print("The galaxy "+name+" doens't exist");
+			} else {
+				List<String> content = new ArrayList<String>();
+				content.add(gt.toString());
+				
+				Console.simplyTable("Name X Y", content);
+			}
+		} catch (Exception e) {
+			_msg_error(e.getMessage());
 		}
 		
-		Console.simplyTable("Wildcard Match", content);
 	}
 
 }

@@ -157,7 +157,7 @@ public class ResourceController extends AbstractController{
 
 	public void save(String path, String file) throws Exception{
 
-		String cache = Clt.first().toString()+";";
+		/*String cache = Clt.first().toString()+";";
 		ArrayList<Resource> list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM-1);
 
 		/*Console.print("------------->");
@@ -166,7 +166,7 @@ public class ResourceController extends AbstractController{
 		Console.print("");
 		Console.print("------------->");*/
 		
-		for(Resource r : list)
+		/*for(Resource r : list)
 			cache += (r.toString()+";");
 
 
@@ -181,12 +181,12 @@ public class ResourceController extends AbstractController{
 
 			if(cache != "") dCont.write(path, file, cache, true);
 
-		}
+		}*/
 	}
 
 	public void load(String path) throws Exception{
 
-		String s = dCont.read(path);
+		/*String s = dCont.read(path);
 		String name = new String();
 		String type = new String();
 		String aux = new String();
@@ -206,7 +206,7 @@ public class ResourceController extends AbstractController{
 			}
 			else if (s.charAt(i) == ' '){ name = aux; aux = ""; }
 			else aux+=s.charAt(i);
-		}
+		}*/
 	}
 
 }

@@ -2,41 +2,61 @@ import java.util.Queue;
 import java.util.LinkedList;
 import java.util.ArrayList;
 
+/**
+ * TST<Value>
+ * @param <Value>
+ */
 public class TST<Value> {
+	
+	//Atributos generales
 	private int N; // size
 	private Node root; // root of TST
-
-	//Lo necesito para lo de Cache
-	///////////////////////////////////////////////////////
 	private int current;
-	//////////////////////////////////////////////////////
+	
+	/**
+	 * Node
+	 * Usada para crear el arbol
+	 */
 	private class Node {
 		private char c; // character
 		private Node left, mid, right; // left, middle, and right subtries
 		private Value val; // value associated with string
 	}
 
-	// return number of key-value pairs
+	/**
+	 * Devuelve el numero de elementos
+	 * @return int
+	 */
 	public int size() {
 		return N;
 	}
 
-	/**************************************************************
-	 * Is string key in the symbol table?
-	 **************************************************************/
+	/**
+	 * Post: Indica si existe o no valor en la clave indicada
+	 * @param key
+	 * @return boolean
+	 */
 	public boolean contains(String key) {
 		if (key == null || key.length() == 0) return false;
+		
 		try{
 			return get(key.toLowerCase()) != null;
 		}
 		catch (Exception e) {
-			Console.print("Exception: ");
-			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
 	//if not present returns null
+	/**
+	 * Devuelve el contendo de la llave indicada
+	 * Pre: key debe ser un nombre valido
+	 * Post: En caso de existir devuelve el objeto asociado
+	 * 		En caso de no exisiter devuelve null;
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
 	public Value get(String key) throws Exception{
 
 		if(!Util.checkName(key)) throw new Exception(key + " is not valid");
@@ -47,7 +67,13 @@ public class TST<Value> {
 		return x.val;
 	}
 
-	// return subtrie corresponding to given key
+	/**
+	 * 
+	 * @param x
+	 * @param key
+	 * @param d
+	 * @return Node
+	 */
 	private Node get(Node x, String key, int d) {
 		if (x == null)
 			return null;
@@ -62,15 +88,26 @@ public class TST<Value> {
 			return x;
 	}
 
-	/**************************************************************
-	 * Insert string s into the symbol table.
-	 * @throws Exception 
-	 **************************************************************/
+	/**
+	 * Post: Inserta el elemento val con la llave s
+	 * @param s
+	 * @param val
+	 * @throws Exception
+	 */
 	public void put(String s, Value val) throws Exception {
-		// if (!contains(s)) N++;
 		root = put(root, s.toLowerCase(), val, 0);
 	}
 
+	/**
+	 * Pre: x no debe ser nulo
+	 * Post: Crea un nuevo nodo con la infomacion de val
+	 * @param x
+	 * @param s
+	 * @param val
+	 * @param d
+	 * @return
+	 * @throws Exception
+	 */
 	private Node put(Node x, String s, Value val, int d) throws Exception {
 		char c = s.charAt(d);
 		if (x == null) {
@@ -95,9 +132,11 @@ public class TST<Value> {
 		return x;
 	}
 
-	/**************************************************************
-	 * Find and return longest prefix of s in TST
-	 **************************************************************/
+	/**
+	 * Busca y devuevel le prefijo mas largo de s
+	 * @param s
+	 * @return
+	 */
 	public String longestPrefixOf(String s) {
 		s = s.toLowerCase();
 		
@@ -122,28 +161,22 @@ public class TST<Value> {
 		return s.substring(0, length);
 	}
 
-	// all keys in symbol table
+	/**
+	 * Devuelve todas las llaves del TST ordenadas
+	 * @return
+	 */
 	public Iterable<String> keys() {
 		Queue<String> queue = new LinkedList<String>();
 		collect(root, "", queue);
 		return queue;
 	}
 
-	// all keys starting with given prefix
-	public Iterable<String> prefixMatch(String prefix) {
-		prefix = prefix.toLowerCase();
-		
-		Queue<String> queue = new LinkedList<String>();
-		Node x = get(root, prefix, 0);
-		if (x == null)
-			return queue;
-		if (x.val != null)
-			queue.add(prefix);
-		collect(x.mid, prefix, queue);
-		return queue;
-	}
-
-	// all keys in subtrie rooted at x with given prefix
+	/**
+	 * Pre: X no debe ser nulo
+	 * @param x
+	 * @param prefix
+	 * @param queue
+	 */
 	private void collect(Node x, String prefix, Queue<String> queue) {		
 		if (x == null)
 			return;
@@ -154,14 +187,23 @@ public class TST<Value> {
 		collect(x.right, prefix, queue);
 	}
 	
-	// all keys in symbol table
+	/**
+	 * Devuelve todos los objetos almacenados en el TST
+	 * @return
+	 */
 	public Iterable<Value> values() {
 		Queue<Value> queue = new LinkedList<Value>();
 		collectValues(root, "", queue);
 		return queue;
 	}
 	
-	// all keys in subtrie rooted at x with given prefix
+	/**
+	 * Pre: x no debe ser nulo
+	 * Post: Guarda en queue los objetos del TST
+	 * @param x
+	 * @param prefix
+	 * @param queue
+	 */
 	private void collectValues(Node x, String prefix, Queue<Value> queue) {		
 		if (x == null)
 			return;
@@ -173,101 +215,19 @@ public class TST<Value> {
 		collectValues(x.mid, prefix + x.c, queue);
 		collectValues(x.right, prefix, queue);
 	}
-	// return all keys matching given wildcard pattern
-	public Iterable<String> wildcardMatch(String pat) {
-		pat = pat.toLowerCase();
-		
-		Queue<String> queue = new LinkedList<String>();
-		collect(root, "", 0, pat, queue);
-		return queue;
-	}
-
-	private void collect(Node x, String prefix, int i, String pat,
-			Queue<String> q) {
-		if (x == null)
-			return;
-		char c = pat.charAt(i);
-		if (c == '.' || c < x.c)
-			collect(x.left, prefix, i, pat, q);
-		if (c == '.' || c == x.c) {
-			if (i == pat.length() - 1 && x.val != null)
-				q.add(prefix + x.c);
-			if (i < pat.length() - 1)
-				collect(x.mid, prefix + x.c, i + 1, pat, q);
-		}
-		if (c == '.' || c > x.c)
-			collect(x.right, prefix, i, pat, q);
-	}
 	
-	///////////////////////////////////////////////////////////////////////////
-
-	// all keys in subtrie rooted at x with given prefix; limited
-	/*private void collectValuesCache(Node x, String prefix, ArrayList<Value> queue, int max) {		
-
-		if (current > max || x == null) return;
-		
-		collectValuesCache(x.left, prefix, queue, max);
-		if (x.val != null){
-			queue.add(x.val);
-			current++;
-			System.out.printf("Current: %d\n", current);
-		}
-		
-		collectValuesCache(x.mid, prefix + x.c, queue, max);
-		collectValuesCache(x.right, prefix, queue, max);
-	}
-
-	public ArrayList<Value> valuesCache(String key, int max) throws Exception{
-		
-		if(max < 1) throw new Exception("Mandatory: max > 0");
-		current = 1;
-		Node x = get(root, key.toLowerCase(), 0);
-		if(x == null) throw new Exception("Key not present");
-		
-		ArrayList<Value> queue = new ArrayList<Value>();
-
-		//A partir de primera palabra, miro para abajo
-		collectValuesCache(x.mid, ""+x.c, queue, max);
-			System.out.printf("Current inter: %d\n", current);
-
-		//A partir de primera palabra, miro para la derecha
-		collectValuesCache(x.right, "", queue, max);
-			System.out.printf("Current inter2: %d\n", current);
-
-		//Saco última letra, y si no era un char...
-		key = key.substring(0, key.length()-1);
-			Console.print("KEY: "+key);
-		if(!key.equals("") && current <= max){
-			x = get(root, key.toLowerCase(), 0);
-			if(x != null){ //&& x.mid != null ??
-
-				Console.print("chivato");
-				if(x.mid != null) Console.print("CHIVATO");  
-				if(x.mid.val != null){ Console.print("---->"+x.mid.val.toString()); queue.add(x.mid.val); ++current; }
-				collectValuesCache(x.mid.mid, "", queue, max);
-				collectValuesCache(x.mid.right, "", queue, max);
-			}
-		}
-
-
-		while(!key.equals("") && current <= max){
-
-			x = get(root, key.toLowerCase(), 0);
-
-			if(x != null){
-				if(x.val != null){ queue.add(x.val); ++current; }
-				if(current > max) break;
-				collectValuesCache(x.right, "", queue, max);
-			}
-
-			key = key.substring(0, key.length()-1);
-				Console.print("KEY: "+key);
-
-		}
-
-		return queue;
-	}*/
-
+	
+	/**
+	 * Devuelve los elementos del TST limitados por un max y un min
+	 * Pre: X no debe ser nulo
+	 * 		current <= max
+	 * Post: Alamcena en queue los emenetos que cumplan los cirterios
+	 * @param x
+	 * @param prefix
+	 * @param key
+	 * @param queue
+	 * @param max
+	 */
 	private void collectValuesCache(Node x, String prefix, String key, ArrayList<Value> queue, int max) {
 
 		if (x == null || current > max)
@@ -293,6 +253,13 @@ public class TST<Value> {
 
 	}
 
+	/**
+	 * 
+	 * @param key
+	 * @param max
+	 * @return
+	 * @throws Exception
+	 */
 	public ArrayList<Value> valuesCache(String key, int max) throws Exception{
 
 		if(max < 1) throw new Exception("Mandatory: max > 0");
@@ -307,12 +274,23 @@ public class TST<Value> {
 	}
 
 
-
+	/**
+	 * Devuelve el primer elemento del TST
+	 * Pre: El TST debe tener algun valor
+	 * @return
+	 * @throws Exception
+	 */
 	public Value first() throws Exception{
 		if(N == 0) throw new Exception ("Empty TST!");
 		return first(root);
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @return
+	 * @throws Exception
+	 */
 	private Value first(Node x) throws Exception{
 		
 		//Testear!
@@ -323,11 +301,22 @@ public class TST<Value> {
 		else throw new Exception("Debugging exception");
 	}
 
+	/**
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public String firstKey() throws Exception{
 		if(N == 0) throw new Exception ("Empty TST!");
 		return firstKey(root);
 	}
 
+	/**
+	 * 
+	 * @param x
+	 * @return
+	 * @throws Exception
+	 */
 	public String firstKey(Node x) throws Exception{
 
 		//Testear!
@@ -338,17 +327,20 @@ public class TST<Value> {
 		else throw new Exception("Debugging exception");
 	}
 
-	///////////////////////////////////////////////////////////////////////
-
-	/**************************************************************
-	 * Remove
-	 **************************************************************/
-
+	/**
+	 * Post: Elimina todo el arbol y el contador
+	 */
 	public void clear() {
 		root = null;
 		N = 0;
 	}
 
+	/**
+	 * Pre: Key debe ser un nombre valido
+	 * Post: Elimina el valor asociado a esa key y todas las key inecesarias
+	 * @param key
+	 * @throws Exception
+	 */
 	public void remove(String key) throws Exception {
 
 		if(!Util.checkName(key)) throw new Exception(key + " is not valid");
@@ -358,6 +350,13 @@ public class TST<Value> {
 			throw new Exception("The key " + key + " doesn't exist");
 	}
 
+	/**
+	 * Pre: X no debe ser nulo
+	 * @param x
+	 * @param key
+	 * @param d
+	 * @return
+	 */
 	private boolean remove(Node x, String key, int d) {
 		if (x == null)
 			return false;

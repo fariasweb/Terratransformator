@@ -6,7 +6,7 @@ import java.util.regex.*;
  * @author farias
  *
  */
-public class Galaxy implements Entity {
+public class Galaxy implements EntityInterface {
 
 	private String name;
 	private int x;
@@ -221,7 +221,18 @@ public class Galaxy implements Entity {
 	 * 
 	 */
 	public String toString() {
-		return name+" "+x+" "+y;	
+		//Datos basicos
+		String r = name+" "+x+" "+y;
+		
+		//Planetas asociados
+		Iterator<Planet> iterator = planets.values().iterator();
+
+		while (iterator.hasNext()) {
+			//Cogemos el siguiente planeta
+			Planet p = (Planet) iterator.next();
+			r+= " "+p.getName();
+		}
+		
+		return r;	
 	}
-	
 }

@@ -172,6 +172,10 @@ class GalaxyDriver extends AbstractDriver {
 					remove_all_planets_to_galaxy(g);
 					break;
 					
+				case 14:
+					Console.log(g.toString());
+					break;
+					
 				default:
 					_msg_opc_invalid();
 					break;
@@ -209,6 +213,7 @@ class GalaxyDriver extends AbstractDriver {
 
 		menu.add("removePlanet(String PlanetName)");
 		menu.add("removeAllPlanets() : Boolean");
+		menu.add("toString() : String");
 		
 		print_menu();
 	}
