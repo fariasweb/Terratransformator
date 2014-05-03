@@ -17,7 +17,12 @@ public class RelationPacketResource {
 		setQuantity(qtt);
 	}
 	
-	
+	public RelationPacketResource(){
+		p = null;
+		r = null;
+		quantity = 0;
+	}
+
 	//Getter
 	//-----------------------------------------------
 	
@@ -71,5 +76,4 @@ public class RelationPacketResource {
 	public String toString(){
 		return p.getName() + " " + r.getName() + " " + quantity;
 	}
-	
 }

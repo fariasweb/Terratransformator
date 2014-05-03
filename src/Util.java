@@ -44,6 +44,11 @@ public class Util {
 		return is_correct;
 	}
 	
+
+	public static double vectorialDistance(PairInt pair1, PairInt pair2){
+		    return Math.sqrt(((pair1.getX() - pair2.getX())*((pair1.getX() - pair2.getX()) + (( pair1.getY() - pair2.getY())*( pair1.getY() - pair2.getY())))));
+	}
+
 	/**
 	 * Comprueba que los entereso x_posp y y_posp sean validos
 	 * para ser atributos de posicion

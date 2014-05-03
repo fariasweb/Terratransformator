@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 public class QAPInput {
 	
@@ -19,7 +21,7 @@ public class QAPInput {
 	 */
 	public QAPInput(Galaxy galaxy, TST<Packet> packets){
 		setDistanceMatrix(galaxy);
-		//flowMatrix = packets.getFlowMatrix();
+		setFlowMatrix(packets);
 	}
 	
 	/**
@@ -27,7 +29,24 @@ public class QAPInput {
 	 * @param g
 	 */
 	public void  setDistanceMatrix(Galaxy g){
-		distanceMatrix = g.getDistanceMatrix();
+		Iterable<Planet> l = new ArrayList<Planet>();
+		l =	g.getPlanets().values();
+		int n = g.getPlanets().size();
+		double[][] d = new double[n][n];
+		
+		Planet[] vect = new Planet[n];
+		int i = 0; 
+		for(Planet p : l){						
+			vect[i] = p;
+			++i;
+		}
+		for(i = 0; i < n; ++i){
+			for(int j = i+1; j < n-1;++j){
+				d[i][j] = Util.vectorialDistance(vect[i].getPosition(),vect[j].getPosition());
+				d[j][i] = d[i][j];
+			}
+		}
+		distanceMatrix = d;
 	}
 	
 	/**

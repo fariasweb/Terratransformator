@@ -121,6 +121,7 @@ public class PlanetController extends AbstractController {
 	 * @param newName
 	 * @throws Exception
 	 */
+
 	public void updatePlanetName(String oldName, String newName) throws Exception {
 		// Cogemos el planeta
 		Planet p = Clt.get(oldName);
@@ -128,6 +129,7 @@ public class PlanetController extends AbstractController {
 			throw new Exception("This planet doesn't exist");
 
 		// Cimprobamos qu eno sea las misma galaxi
+
 		if (p.getName() != newName) {
 			if (!Util.checkName(newName))
 				throw new Exception(newName + " is not valid");
