@@ -1,8 +1,8 @@
 public class Packet {
 
 	private String name;
-	private Planet planet;
-	private TST<RelationPacketResource> rel; 
+	private Planet planet = new Planet();
+	private TST<RelationPacketResource> rel = new TST<RelationPacketResource>(); 
 	//TST<String, RelationPacketResource> rel;
 	//TODO Relacion con recurso
 	
@@ -66,7 +66,8 @@ public class Packet {
 	 * 
 	 * @return int
 	 */
-	public String getName() {
+	public String getName() throws NullPointerException{
+		if(this == null) throw new NullPointerException("Null Packet!");
 		return name;
 	}
 	
@@ -74,7 +75,8 @@ public class Packet {
 	/**
 	 * @return the planet
 	 */
-	public Planet getPlanet() {
+	public Planet getPlanet() throws NullPointerException{
+		if(this == null) throw new NullPointerException("Null Packet!");
 		return planet;
 	}
 	
@@ -128,8 +130,18 @@ public class Packet {
 	/**************************************************************
 	 * To Basic Types
 	 **************************************************************/
-	public String toString(){
-		return name + " " + planet.getName() + " " + rel.toString();
+	public String toString() throws NullPointerException{
+		if(this == null) throw new NullPointerException("Null Packet!");
+
+		/*Console.print(name);
+		Console.print(planet.getName());
+		Console.print(rel.toString());*/
+		String s = name + " " + planet.getName();
+		Iterable<RelationPacketResource> it = rel.values();
+		for(RelationPacketResource rpr : it)
+			s+=(" " + rpr.toString());
+
+		return s;
 	}
 	
 	

@@ -81,7 +81,8 @@ public class Planet {
 	 * 
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName() throws NullPointerException{
+		if(this == null) throw new NullPointerException("No such Planet!");
 		return name;
 	}
 
@@ -135,7 +136,8 @@ public class Planet {
 	/**
 		 * 
 		 */
-	public String toString() {
+	public String toString() throws NullPointerException{
+		if(this == null) throw new NullPointerException("Null Packet!");
 		return name + " " + x_pos + " " + y_pos;
 	}
 

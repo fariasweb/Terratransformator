@@ -17,7 +17,12 @@ public class RelationPacketResource {
 		setQuantity(qtt);
 	}
 	
-	
+	public RelationPacketResource(){
+		p = null;
+		r = null;
+		quantity = 0;
+	}
+
 	//Getter
 	//-----------------------------------------------
 	
@@ -68,7 +73,8 @@ public class RelationPacketResource {
 	/**************************************************************
 	 * To Basic Types
 	 **************************************************************/
-	public String toString(){
+	public String toString() throws NullPointerException{
+		if(this == null) throw new NullPointerException("Null Relation!");
 		return p.getName() + " " + r.getName() + " " + Integer.valueOf(quantity).toString();
 	}
 	

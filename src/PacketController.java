@@ -221,6 +221,8 @@ public class PacketController extends AbstractController{
 	public void load(String path, PlanetController pltCont, ResourceController resCont) throws Exception{
 		
 		String s = dCont.read(path);
+		//Chivato
+		Console.print(s+"bla");
 
 		String name = new String();
 		String planet = new String();
@@ -234,15 +236,21 @@ public class PacketController extends AbstractController{
 
 		for (int i = 0; i < s.length(); ++i) {
 			if(s.charAt(i) == ';'){
+				//Chivato
+				Console.print("Chivato>>>;");
 				name = planet = null; 
 				aux = "";
 			}
 			else if (s.charAt(i) == ' '){
+				//Chivato
+				Console.print("Chivato>>>name=null");
 				if (name == null){
 					name = aux;
 					aux = "";
 				}
 				else if (planet == null){
+					//Chivato
+					Console.print("Chivato>>>planet=null");
 					planet = aux;
 					aux = "";
 					try{

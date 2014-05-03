@@ -48,7 +48,7 @@ public class PacketControllerDriver extends AbstractDriver{
                     	renamePacket(p,argv[1],argv[2]);
                         break;
                     case 7:
-                    	packet = getPacket(p,argv[1]);
+                    	getPacket(p,argv[1]);
                         break;
                     case 8:
                     	planet = getPlanet(p,argv[1]);
@@ -199,9 +199,7 @@ public class PacketControllerDriver extends AbstractDriver{
 
 	private static void setPlanet(PacketController p, String namePacket, String namePlanet, PlanetController plaCont){
 		try{
-			Console.print("1: Chivato");
 			p.setPlanet(namePacket,namePlanet, plaCont);
-			Console.print("2: Chivato");
 		}
 		catch (Exception e){
 			_msg_error(e.getMessage());
@@ -250,14 +248,16 @@ public class PacketControllerDriver extends AbstractDriver{
 
 		//Getter
 	//---------------------------------------------
-	private static Packet getPacket(PacketController p, String namep){
+	private static void getPacket(PacketController p, String namep){
 		try{
-			return p.getPacket(namep); 
+			Packet paux = p.getPacket(namep);
+			if(paux == null) Console.print("No such packet");
+			else Console.print(paux.toString()); 
 		}
 		catch (Exception e){
 			_msg_error(e.getMessage());
+			e.printStackTrace();
 		}
-		return null;
 	}
 
 	private static Planet getPlanet(PacketController p, String namep){

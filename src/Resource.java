@@ -1,8 +1,8 @@
 
 public class Resource{
 
-	String name;
-	ResourceType type;
+	private String name;
+	private ResourceType type;
 
 	/**************************************************************
 	 * Private Methods
@@ -73,7 +73,8 @@ public class Resource{
 	/**************************************************************
 	 * To Basic Types
 	 **************************************************************/
-	public String toString(){
+	public String toString() throws NullPointerException{
+		if(this == null) throw new NullPointerException("Null Resource!");
 		return getName() + " " + getType();
 	}
 }
