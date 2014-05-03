@@ -65,6 +65,7 @@ public class PlanetController extends AbstractController {
 		return result;
 	}
 
+	
 	/**
 	 * Pre: El nombre no debe ser nulo y con longitud > 0 La galaxia debe
 	 * existir
@@ -294,5 +295,6 @@ public class PlanetController extends AbstractController {
 		}
 
 		return encodeS;
-	}
+	} 
 }
+

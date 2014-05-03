@@ -9,7 +9,6 @@ public class Planet extends Entity {
 	private Integer y_pos;
 	private Galaxy galaxy;
 
-	
 
 	// Contructs
 	// ---------------------------------------------
@@ -19,11 +18,11 @@ public class Planet extends Entity {
 	 * 		namep debe estar formado por letras y numeros
 	 * 		x_posp, y_psop mayores que 0
 	 * Post: Inicializa planeta con el nombre y la posicion indicada
-	 * @param namep
 	 * @param x_posp
 	 * @param y_posp
 	 * @throws Exception
 	 */
+
 	public Planet(String namep, int x_posp, int y_posp) throws Exception {
 		setPosition(x_posp, y_posp); // Se chequea aqui
 		setName(namep); // Se chequea aqui
@@ -32,7 +31,7 @@ public class Planet extends Entity {
 
 	/**
 	 * Planet
-	 * Post: Inicializa planeta con todos los atriubutos nulos
+	 * Post: Inicializa planeta con todos los atributos nulos
 	 */
 	public Planet() {
 		name = "";
@@ -44,10 +43,26 @@ public class Planet extends Entity {
 	// ---------------------------------------------
 
 	/**
-	 * Asigna al planeta una posicion
-	 * Pre: x_posp, y_psop mayores que 0
-	 * @param Integer x_pos
-	 * @param Integer y_pos
+	 * Modifica el nombre de un planeta
+	 * pre:El nombre a asignar no ha de existir en el sistema
+	 * post:Se cambia el nombre del planeta 
+	 * @param namep
+	 * @throws Exception
+	 */
+	public void setName(String namep) throws Exception {
+		if (!Util.checkName(namep))
+			throw new Exception(namep + " is not valid");
+		name = namep;
+	}
+
+	/**
+	 * Modifica la posicion de un planeta
+	 * pre:La coordenadas han de ser positivas
+	 * post:Se cambia la posicion del planeta
+	 * 
+	 * @param x_posp
+	 * @param y_posp
+	 * @throws Exception
 	 */
 	public void setPosition(Integer x_posp, Integer y_posp) throws Exception {
 		Util.checkPosition(x_posp, y_posp);
@@ -70,15 +85,24 @@ public class Planet extends Entity {
 	// -----------------------------------------------
 
 	/**
-	 * @return PairInt pos
+	 * Devuelve el nombre del planeta
+	 * @return String
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * post: Devuelve la posicion del planeta 
+	 * @return PairInt
 	 */
 	public PairInt getPosition() {
 		return new PairInt(x_pos, y_pos);
 	}
 
 	/**
-	 * 
-	 * @return
+	 * post: Devuelve la galaxia asignada al planeta
+	 * @return Galaxy
 	 */
 	public Galaxy getGalaxy() {
 		return galaxy;
@@ -105,10 +129,10 @@ public class Planet extends Entity {
 	// -----------------------------------------------
 
 	/**
-	 * @return String
+	 * Post: Devuelve un string con los atributos de planeta
+	 * @return String 
 	 */
 	public String toString() {
 		return name + " " + x_pos + " " + y_pos;
 	}
-
 }

@@ -215,5 +215,4 @@ public class Galaxy extends Entity {
 		
 		return r;	
 	}
-	
 }
