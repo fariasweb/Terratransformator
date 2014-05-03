@@ -110,14 +110,6 @@ public class GalaxyTSTDriver extends AbstractDriver {
 					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
-						wildcardMatch_TST(Clt, argv[1]);
-					}
-					break;
-					
-				case 11:
-					if (argv.length < 2)
-						_msg_error_param_insuf();
-					else {
 						String s = Clt.longestPrefixOf(argv[1]);
 						if (s == null) {
 							Console.print("Longest prefix does not found");
@@ -160,7 +152,6 @@ public class GalaxyTSTDriver extends AbstractDriver {
 		menu.add("values() : Iterable<Galaxy>");
 
 		menu.add("longestPrefixOf(String s) : String"); // 10
-		menu.add("wildcardMatch(String pat) : Iterable<String>");
 
 		print_menu();
 	}
@@ -211,16 +202,6 @@ public class GalaxyTSTDriver extends AbstractDriver {
 		
 	}
 	
-	public static void wildcardMatch_TST(TST<Galaxy> clt, String s) {
-		Iterable<String> cltKeys = clt.wildcardMatch(s);
-		List<String> content = new ArrayList<String>();
-		
-		for (String g : cltKeys) {
-		    content.add(g);
-		}
-		
-		Console.simplyTable("Wildcard Match", content);
-	}
 	
 	private static void getGalaxyTST(TST<Galaxy> clt, String name) {
 		try {

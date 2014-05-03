@@ -6,11 +6,12 @@ class PlanetDriver extends AbstractDriver{
 		
 		//Generico del driver
 		Planet p = new Planet();
-		Packet packet = new Packet();
+
 		//Generico del menu
 		Scanner in = new Scanner(System.in);
 		int opc = 0;
 		String argv[];		
+		
 		//Menu
 		_menu();
 		
@@ -37,19 +38,17 @@ class PlanetDriver extends AbstractDriver{
 					set_position(p,Integer.parseInt(argv[1]) , Integer.parseInt(argv[2]));
 					break;
 				case 5:
-					set_packet(p,PacketDriver.create_packet_full(argv[1]));
-					break;
-				case 6:
-					remove_packet(p,packet);
-					break;
-				case 7:
 					Console.print(p.getName());
 					break;
-				case 8:
+				case 6:
 					Console.print(p.getPosition().getX() + " " + p.getPosition().getY());
 					break;
-				//case 9:
-				//	Console.print(p.getPacket().getName() + "");
+				case 7:
+					Console.print(p.toString());
+					break;
+				default:
+					_msg_opc_invalid();
+					break;
 				}
 			}
 		}
@@ -63,11 +62,9 @@ class PlanetDriver extends AbstractDriver{
 		menu.add("Planet() : Planet");
 		menu.add("SetName(String namePlanet)"); //3
 		menu.add("SetPosition(int x_pos, int y_pos)");
-		menu.add("SetPacket(Packet p)");
-		menu.add("removePacket(Packet packetp)");
-		menu.add("GetName() : String"); //7
+		menu.add("GetName() : String"); //5
 		menu.add("GetPosition() : PairInt");
-		//menu.add("GetPacket(): Packet");
+		menu.add("toString() : String"); //7
 		print_menu();
 	}
 	

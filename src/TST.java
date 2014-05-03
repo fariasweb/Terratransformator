@@ -38,13 +38,13 @@ public class TST<Value> {
 	 */
 	public boolean contains(String key) {
 		if (key == null || key.length() == 0) return false;
+		
 		try{
 			return get(key.toLowerCase()) != null;
 		}
 		catch (Exception e) {
-			Console.print("Exception: ");
+			return false;
 		}
-		return false;
 	}
 
 	//if not present returns null

@@ -201,7 +201,19 @@ public class Galaxy extends Entity {
 	 * @return String
 	 */
 	public String toString() {
-		return name+" "+x+" "+y;	
+		//Datos basicos
+		String r = name+" "+x+" "+y;
+		
+		//Planetas asociados
+		Iterator<Planet> iterator = planets.values().iterator();
+
+		while (iterator.hasNext()) {
+			//Cogemos el siguiente planeta
+			Planet p = (Planet) iterator.next();
+			r+= " "+p.getName();
+		}
+		
+		return r;	
 	}
 	
 }
