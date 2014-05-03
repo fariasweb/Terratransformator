@@ -227,8 +227,6 @@ public class PlanetControllerDriver extends AbstractDriver {
 	private static void _menu() {
 		title = "Planet Controller Driver";
 
-		// Operaciones con conjunto galaxias
-
 		menu.add("PlanetController() : PlanetController"); // 1
 
 		menu.add("addPlanet(String name, int x, int y) : void"); // 2

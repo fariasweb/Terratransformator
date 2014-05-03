@@ -124,7 +124,7 @@ public class GalaxyController extends AbstractController {
 	 * @param y
 	 * @throws Exception
 	 */
-	public void updateGalaxyName(String name, String new_name) throws Exception {
+	public void updateGalaxyName(String name, String newName) throws Exception {
 
 		// Cogemos la galxia
 		Galaxy g = Clt.get(name);
@@ -134,13 +134,17 @@ public class GalaxyController extends AbstractController {
 		// Actualizamos informacion
 		// Si la galaxia tiene un nombre diferente se debe
 		// extraer del arbol y volver a meter
-		if (g.getName() != new_name) {
+		if (g.getName() != newName) {
 
-			String oldName = g.getName();
-			g.setName(new_name);
+			if (!Util.checkName(newName))
+				throw new Exception(newName + " is not valid");
 
-			Clt.remove(oldName);
-			Clt.put(new_name, g);
+			if (Clt.contains(newName))
+				throw new Exception(newName + " is using in other galaxy");
+			
+			Clt.remove(g.getName());
+			g.setName(newName);
+			Clt.put(newName, g);
 		}
 
 	}

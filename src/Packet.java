@@ -68,7 +68,7 @@ public class Packet {
 
 
 	// Getters
-			//---------------------------------------------
+	//---------------------------------------------
 	/**
 	 * pre:El paquete debe existir
 	 * @return String

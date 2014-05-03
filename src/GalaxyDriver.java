@@ -3,13 +3,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * 
- */
-
-//import AbstractDriver;
-
-/**
- * @author farias
+ * GalaxyDriver
  * 
  */
 class GalaxyDriver extends AbstractDriver {

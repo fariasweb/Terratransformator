@@ -2,7 +2,7 @@
  * Entity
  *
  */
-abstract class Entity implements EntityInterface {
+class Entity implements EntityInterface {
 
 	//Atributos basicos
 	protected String name;
@@ -28,6 +28,8 @@ abstract class Entity implements EntityInterface {
 	 * Transforam la clase Entity en un string
 	 * @return String
 	 */
-	public abstract String toString();
+	public String toString() {
+		return name;
+	};
 	
 }

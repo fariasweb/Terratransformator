@@ -6,6 +6,7 @@ class PlanetDriver extends AbstractDriver{
 		
 		//Generico del driver
 		Planet p = new Planet();
+		Galaxy g = new Galaxy();
 
 		//Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -26,25 +27,64 @@ class PlanetDriver extends AbstractDriver{
 				case 0:
 					break;
 				case 1:
-					p = create_planet(argv[1], Integer.parseInt(argv[2]), Integer.parseInt(argv[3]));
+					if (argv.length < 4)
+						_msg_error_param_insuf();
+					else {
+						p = create_planet(argv[1], Integer.parseInt(argv[2]), Integer.parseInt(argv[3]));
+					}
 					break;
 				case 2:
 					p = new Planet();
 					break;
 				case 3:
-					set_name(p,argv[1]);
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						set_name(p,argv[1]);
+					}
 					break;
 				case 4:
-					set_position(p,Integer.parseInt(argv[1]) , Integer.parseInt(argv[2]));
+					if (argv.length < 3)
+						_msg_error_param_insuf();
+					else {
+						set_position(p,Integer.parseInt(argv[1]) , Integer.parseInt(argv[2]));
+					}
+					
 					break;
 				case 5:
-					Console.print(p.getName());
+					if (argv.length < 3)
+						_msg_error_param_insuf();
+					else {
+						g = GalaxyDriver.create_galaxy_full(argv[1], Integer.parseInt(argv[2]), Integer.parseInt(argv[3]));
+					}
+					
 					break;
 				case 6:
-					Console.print(p.getPosition().getX() + " " + p.getPosition().getY());
+					addGalaxyToPlanet(p, g);
 					break;
 				case 7:
-					Console.print(p.toString());
+					if (p != null)
+						Console.print(p.getName());
+					break;
+				case 8:
+					if (p != null)
+						Console.print(p.getPosition().getX() + " " + p.getPosition().getY());
+					break;
+				case 9:
+					
+					Galaxy gg = p.getGalaxy();
+					if (gg == null) {
+						Console.print("This planet doen not have galaxy");
+					} else {
+						Console.print(gg.toString());
+					}
+					break;
+				case 10:
+					removeGalaxyToPlanet(p);
+					break;
+				case 11:
+					if (p != null)
+						Console.print(p.toString());
 					break;
 				default:
 					_msg_opc_invalid();
@@ -55,19 +95,21 @@ class PlanetDriver extends AbstractDriver{
 		while(opc != 0);
 	}
 	
-	private static void _menu(){
-		title = "Planet Collection Driver";
-		
-		menu.add("Planet(String name,int x_pos, int y_pos) : Planet"); 
-		menu.add("Planet() : Planet");
-		menu.add("SetName(String namePlanet)"); //3
-		menu.add("SetPosition(int x_pos, int y_pos)");
-		menu.add("GetName() : String"); //5
-		menu.add("GetPosition() : PairInt");
-		menu.add("toString() : String"); //7
-		print_menu();
-	}
 	
+	// Actions
+	// ---------------------------------------------
+
+	private static void removeGalaxyToPlanet(Planet p) {
+		try{
+			p.removeGalaxy();
+		}
+		catch(Exception e){
+			_msg_error(e.getMessage());
+		}
+		
+	}
+
+
 	/**
 	 * @param namep
 	 * @param x
@@ -111,28 +153,35 @@ class PlanetDriver extends AbstractDriver{
 		}
 	}
 	
-	/**
-	 * @param p
-	 * @param packet
-	 */
-	public static void set_packet(Planet p, Packet packet){
-		try{
-			//p.setPacket(packet);
-		}
-		catch(Exception e){
+	private static void addGalaxyToPlanet(Planet p, Galaxy g) {
+		try {
+			
+			p.setGalaxy(g);
+
+		} catch (Exception e) {
 			_msg_error(e.getMessage());
 		}
+		
 	}
-	/**
-	*@param p
-	*@param packet
-	*/
-	public static void remove_packet(Planet p, Packet packet){
-		try{
-			//p.setPacket(packet);
-		}
-		catch(Exception e){
-			_msg_error(e.getMessage());
-		}
+	
+	// Menu
+	// ---------------------------------------------
+
+	private static void _menu(){
+		title = "Planet Collection Driver";
+		
+		menu.add("Planet(String name,int x_pos, int y_pos) : Planet"); 
+		menu.add("Planet() : Planet");
+		menu.add("SetName(String namePlanet)"); //3
+		menu.add("SetPosition(int x_pos, int y_pos) : void");
+		menu.add("GalaxyDriver(String name, int x, int y) : Galaxy g");
+		menu.add("SetGalaxy(Galaxy g) : void");
+		menu.add("GetName() : String"); //7
+		menu.add("GetPosition() : PairInt");
+		menu.add("GetGalaxy() : Galaxy");
+		menu.add("removeGalaxy() : void");
+		menu.add("toString() : String"); //11
+		print_menu();
 	}
+	
 }

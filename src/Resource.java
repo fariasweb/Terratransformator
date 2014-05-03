@@ -1,79 +1,69 @@
+/**
+ * Resource
+ * 
+ */
+public class Resource extends Entity {
 
-public class Resource{
+	//Atributos espeficicos
+	String type;
 
-	String name;
-	ResourceType type;
-
-	/**************************************************************
-	 * Private Methods
-	 **************************************************************/
-	private static void checkType(String res) throws IllegalArgumentException{ //Enseñar
-		if(!(res.equals("HUMAN") || res.equals("TECHNOLOGICAL")))  throw new IllegalArgumentException("type is not valid");
+	//Private methods
+	private static void checkType(String res) throws Exception {
+		if (!(res.equals("HUMAN") || res.equals("TECHNOLOGICAL")))
+			throw new Exception("Type is not valid");
 	}
 
+	// Contructs
+	// ---------------------------------------------
 
-	/**************************************************************
-	 * Contructs
-	 **************************************************************/	
-	public Resource(String namep, String typep) throws Exception{
-        setName(namep);
-        setType(typep);
-	}
-
-    public Resource(){
-        name = "";
-        type = null;
-    }
-
-
-	/**************************************************************
-	 * Setter
-	 **************************************************************/
 	/**
+	 * Constructor 
 	 * @param namep
+	 * @param typep
 	 * @throws Exception
 	 */
-	public void setName(String namep) throws Exception {
-		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
-        name = namep;
+	public Resource(String namep, String typep) throws Exception {
+		setName(namep);
+		setType(typep);
 	}
 
+	/**
+	 * Constructor basico, todos los atributos nulos
+	 */
+	public Resource() {
+		name = "";
+		type = null;
+	}
+
+	// Setter
+	// ---------------------------------------------
 
 	/**
-	 * @param type the type to set
+	 * @param type
 	 */
 	public void setType(String typep) throws Exception {
 		checkType(typep);
-        type = ResourceType.valueOf(typep);
+		type = typep;
 	}
 
-
-	/**************************************************************
-	 * Getters
-	 **************************************************************/	
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-        return name;
-	}
+	// Getter
+	// -----------------------------------------------
 
 	/**
 	 * @return the type as a String
 	 */
 	public String getType() {
-        if(type == null) return "";
-        return type.name();
+		return type;
 	}
 
-	/**************************************************************
-	 * Delete
-	 **************************************************************/
+	// toString
+	// -----------------------------------------------
 
-	/**************************************************************
-	 * To Basic Types
-	 **************************************************************/
-	public String toString(){
-		return getName() + " " + getType();
+	/**
+	 * @return String
+	 */
+	public String toString() {
+		// Datos basicos
+		return name + " " + type;
 	}
 }

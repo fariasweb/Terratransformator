@@ -35,9 +35,8 @@ public class PlanetController extends AbstractController {
 	 * @return boolean
 	 */
 	public void addPlanet(String name, int x, int y) throws Exception {
+		
 		Planet g = new Planet(name, x, y);
-		if (Clt.get(g.getName()) != null)
-			throw new Exception("This planet already exists!");
 
 		// A–adimos el planeta al TST
 		Clt.put(g.getName(), g);
@@ -46,7 +45,7 @@ public class PlanetController extends AbstractController {
 	// Read
 	// ---------------------------------------------
 	/**
-	 * Devuelve un listado con el nombre de las galaxias ordenado por orden
+	 * Devuelve un listado con el nombre de los planetas ordenado por orden
 	 * alfabetico
 	 * 
 	 * @return String
@@ -67,8 +66,8 @@ public class PlanetController extends AbstractController {
 
 	
 	/**
-	 * Pre: El nombre no debe ser nulo y con longitud > 0 La galaxia debe
-	 * existir
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 
+	 * El planeta debe existir
 	 * 
 	 * @param name String
 	 * @return
@@ -85,7 +84,7 @@ public class PlanetController extends AbstractController {
 
 	/**
 	 * Pre: El nombre no debe ser nulo y con longitud > 0 
-	 * La galaxia debe existir
+	 * El planeta debe existir
 	 * 
 	 * @param name String
 	 * @return
@@ -133,6 +132,9 @@ public class PlanetController extends AbstractController {
 			if (!Util.checkName(newName))
 				throw new Exception(newName + " is not valid");
 
+			if (Clt.contains(newName))
+				throw new Exception(newName + " is using in other planet");
+			
 			Clt.remove(p.getName());
 			p.setName(newName);
 			Clt.put(newName, p);
@@ -158,29 +160,10 @@ public class PlanetController extends AbstractController {
 		if (p == null)
 			throw new Exception("This planet doesn't exist");
 
-		// Son correctas las cordenadas nuevas?
-		Util.checkPosition(x, y);
+		// Cambiamos la posicoon
+		p.setPosition(x, y);
 
-		if (!(p.getPosition().getX() == x && p.getPosition().getY() == y)) {
-
-			// Comprobamos si esta en una galaxia
-			Galaxy g = p.getGalaxy();
-			if (g != null) {
-				// La posicion esta dentro de la galaxia
-				PairInt pi = g.getSize();
-				if (x > pi.getX() || y > pi.getY()) {
-					throw new Exception("Position is not valid for galaxy "
-							+ g.getName());
-				}
-
-				// Existe otro planeta en esta posicion
-				if (g.existPlanetInPos(x, y))
-					throw new Exception("Exit other planet in this position");
-			}
-
-			// En caso de no estar en galaxi y ser diferentes
-			p.setPosition(x, y);
-		}
+		
 	}
 
 	// Delete
