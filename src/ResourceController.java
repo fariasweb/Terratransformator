@@ -200,6 +200,7 @@ public class ResourceController extends AbstractController {
 		Clt.remove(name);
 
 		//TODO: Eliminar las referencias de los paquetes
+		
 
 	}
 

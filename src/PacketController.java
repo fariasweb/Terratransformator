@@ -1,277 +1,442 @@
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
-public class PacketController extends AbstractController{
+public class PacketController extends AbstractController {
 
-	private TST<Packet> Clt;
-	private DataController dCont;
+	// protected attributes
+	protected TST<Packet> Clt;
+	private ResourceController rc;
 
-
-	/**************************************************************
-	 * Contructs
-	 **************************************************************/
-	public PacketController() {
+	/**
+	 * Constructor Post: Inicializa el contructor padre y el TST
+	 */
+	public PacketController(ResourceController rcp) {
+		super();
 		Clt = new TST<Packet>();
-		dCont = new DataController();
+		rc = rcp;
+
 	}
 
-	public void assignDataController(DataController dc)throws Exception{
-		if(dc == null) throw new Exception("DataController needed");
-		dCont = dc;
-	}
+	// Create
+	// ---------------------------------------------
 
-	public void createPacket(String name) throws Exception {
+	/**
+	 * Crea una paquete en el sistema Pre: El nombre de la paquete no debe
+	 * existir en el sistema Post: Se crea una paquete con el nombre indicado
+	 * 
+	 * @param name
+	 * @param x
+	 * @param y
+	 * @return boolean
+	 * @throws Exception
+	 */
+	public void addPacket(String name) throws Exception {
+
 		Packet p = new Packet(name);
 		Clt.put(name, p);
 	}
 
-	/**************************************************************
-	 * Setters
-	 **************************************************************/
+	// Read
+	// ---------------------------------------------
+
 	/**
-	 * Crea un recurso en el sistema y lo agrega a la ED
-	 * Pre: el formato del nombre es correcto; el tipo estÃ¡ en la enum
-	 * Post: Se crea un recurso con el nombre y tipo indicado; se 
-	 * agrega a la ED
+	 * Devuelve un listado con el nombre de los paquetes ordenado por orden
+	 * alfabetico
+	 * 
+	 * @return String
+	 */
+
+	public String getAll() {
+
+		String result = "";
+
+		// Comprobamos que exista algo en el array
+		if (Clt.size() > 0) {
+			for (Packet i : Clt.values()) {
+				result += i.toString() + "\n";
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 La paquete debe
+	 * existir
 	 * 
 	 * @param name
-	 * @param type ResourceType
-	 * @return 
+	 *            String
+	 * @return
+	 * @throws Exception
 	 */
-	public void add(String name) throws Exception{
-		Packet p = new Packet(name);
-		Clt.put(name, p);	
-	}
+	public String getByNameToString(String name) throws Exception {
 
-	public void add(Packet p) throws Exception{
-		if(p == null) throw new Exception("Bad input");
-		Clt.put(p.getName(), p);	
-	}
-
-	/**
-	 * @param rp
-	 * @param qp
-	 * @throws Exception 
-	 */
-	public void addResource(String p, String r, String t, int qtt) throws Exception{
-		Packet pack = Clt.get(p);
-		if(pack == null) throw new Exception ("No such packet");
-		Resource res = new Resource(r, t);
-		pack.addResource(res, qtt);
-	}
-
-	/**
-	 * @param planet the planet to set
-	 */
-	public void setPlanet(String namePacket, String namePlanet, PlanetController pCont) throws Exception {
-		Packet p = Clt.get(namePacket);
-		if(p == null) throw new Exception ("Debugging");
-		Planet planet = pCont.getPlanetByName(namePlanet);
-		p.setPlanet(planet);
-	}
-
-	/**
-	 * @param name the name to set
-	 * @throws Exception 
-	 */
-	public void renamePacket(String oldName, String name) throws Exception{
-		Packet p = Clt.get(oldName);
-		if(p == null) throw new Exception("No packet called " + oldName);
-		Packet paux = p;
-		Clt.remove(p.getName());
-		paux.setName(name);
-		Clt.put(paux.getName(), paux);
-	}
-
-
-	/**************************************************************
-	 * Getters
-	 **************************************************************/
-	public Packet getPacket(String name) throws Exception{
-		return Clt.get(name);
-	}
-
-	/**
-	 * @return the planet
-	 */
-	public Planet getPlanet(String name) throws Exception{
 		Packet p = Clt.get(name);
-		return p.getPlanet();
+		if (p == null)
+			throw new Exception("This packet doesn't exist");
+
+		return p.toString();
 	}
-	
+
 	/**
-	 * @return the map
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 La paquete debe
+	 * existir
+	 * 
+	 * @param name
+	 *            String
+	 * @return
+	 * @throws Exception
 	 */
-	public TST<RelationPacketResource> getResources(String namep) throws Exception{
-		return Clt.get(namep).getResources();
-	}
-	
-/*	public ArrayList<Resource> getMany(String name, int qtt) throws Exception {
+	public Packet getByName(String name) throws Exception {
 
-        if(Clt.size() == 0) throw new Exception("No resources!");
-		
-		ArrayList<Resource> ar = Clt.valuesCache(name, qtt);
-		return ar;
+		Packet g = Clt.get(name);
+		if (g == null)
+			throw new Exception("This galaxy doesn't exist");
 
+		return g;
 	}
 
-	public String getManyAsString(String name, int qtt) throws Exception {
+	/**
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 La paquete debe
+	 * existir
+	 * 
+	 * @param name
+	 * @return Boolean
+	 */
+	public boolean existPacket(String name) {
+		return Clt.contains(name);
+	}
 
-        if(Clt.size() == 0) throw new Exception("No resources!");
-		
-		ArrayList<Resource> ar = Clt.valuesCache(name, qtt);
-		String s = "";
-		for (Resource r : ar) {
-			s+=r.toString();
-		}
-
-	}*/
-	
-	public boolean containsResource(String name){
+	/**
+	 * Indica si un paquete contiene de un recurso
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public boolean containsResource(String name) {
 		Iterable<Packet> ps = Clt.values();
-		for(Packet p : ps){
+		for (Packet p : ps) {
 			Iterable<RelationPacketResource> rps = p.getResources().values();
-			for(RelationPacketResource r : rps)
-				if(r.getResource().getName() == name) return true;
+			for (RelationPacketResource r : rps)
+				if (r.getResource().getName() == name)
+					return true;
 		}
 		return false;
 	}
-	
+
+	// Update
+	// ---------------------------------------------
+
 	/**
-	 * @param namep
-	 * @return boolean
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 
+	 * EL paquete debe exisitr
+	 * El nombre del nuevo paquete no debe de existir 
+	 * Post: Modifica los datos del paquete con new_nam
+	 * 
+	 * @param name
+	 * @param new_name
+	 * @param x
+	 * @param y
+	 * @throws Exception
 	 */
-	public boolean exists(String p){
-		return Clt.contains(p);
+	public void updatePacketName(String name, String newName) throws Exception {
+
+		// Cogemos el paquete
+		Packet g = Clt.get(name);
+		if (g == null)
+			throw new Exception("This packet doesn't exist");
+
+		// Actualizamos informacion
+		// Si el pacquete tiene un nombre diferente se debe
+		// extraer del arbol y volver a meter
+		if (g.getName() != newName) {
+
+			if (!Util.checkName(newName))
+				throw new Exception(newName + " is not valid");
+
+			if (Clt.contains(newName))
+				throw new Exception(newName + " is using in other packet");
+
+			Clt.remove(g.getName());
+			g.setName(newName);
+			Clt.put(newName, g);
+		}
+
 	}
 
-	public int size(){
+	// Delete
+	// ---------------------------------------------
+
+	/**
+	 * Pre: El nombre no debe ser nulo 
+	 * El paquete debe exisitir
+	 * Post: Eliminada el paquete con nombre "name"
+	 * 
+	 * @param name
+	 * @throws Exception
+	 */
+	public void removePacket(String name) throws Exception {
+		Packet g = Clt.get(name);
+		if (g == null)
+			throw new Exception("This packet doesn't exist");
+
+		// Eliminos del conjunto
+		Clt.remove(name);
+
+		// Eliminamos todos los recursos
+		g.removeAllResources();
+
+	}
+
+	/**
+	 * Post: No existe ningun paquete
+	 * 
+	 * @throws Exception
+	 */
+	public void removeAllPacket() throws Exception {
+
+		Iterator<Packet> iterator = Clt.values().iterator();
+
+		// Recoremos todas los paquetes
+		while (iterator.hasNext()) {
+			Packet g = (Packet) iterator.next();
+			// Eliminamos de la colecion
+			Clt.remove(g.getName());
+			// Eliminamos todos los recursos del paquete
+			g.removeAllResources();
+		}
+
+	}
+
+	// ---------------------------------------------
+	// Resource
+	// ---------------------------------------------
+
+	// Create
+	// ---------------------------------------------
+	// EL otro controlador debe devolverme la referencia del recuros, no un
+	// string
+
+	/**
+	 * Pre: La paquete y el recurso deben existir El recurso no debe tener otra
+	 * paquete asignaada o estar en esta ya
+	 * 
+	 * @param PacketName
+	 * @param ResourceName
+	 * @param Quantity
+	 * @throws Exception
+	 */
+	public void addResource(String PacketName, String ResourceName, int q) throws Exception {
+
+		// 1. Comprobar la existencia de paquete
+		Packet g = Clt.get(PacketName);
+		if (g == null)
+			throw new Exception("The packet " + PacketName + " does not exist");
+
+		// 2. Comprobar la existencia de recurso en controlador de recursos
+		Resource p = rc.getByName(ResourceName);
+		if (p == null)
+			throw new Exception("The resource " + ResourceName + " does not exist");
+
+		// 3. Asignar recurso a paquete y viceversa
+		g.addResource(p, q);
+
+	}
+
+	// Read
+	// ---------------------------------------------
+
+	/**
+	 * Pre: La paquete debe existir
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getResourcesFromPacket(String name) throws Exception {
+		// Cogemos el paquete
+		Packet g = Clt.get(name);
+		if (g == null)
+			throw new Exception("This packet doesn't exist");
+
+		String result = "";
+		// Comprobamos que exista algo en el array
+		if (g.getResources().size() > 0) {
+			for (RelationPacketResource i : g.getResources().values()) {
+				result += i.toString() + "\n";
+			}
+		}
+
+		return result;
+	}
+
+	// Update
+	// ---------------------------------------------
+
+	public void updateResourceQuantity(String Pname, String Rname, int q) throws Exception {
+		// Cogemos el paquete
+		Packet g = Clt.get(Pname);
+		if (g == null)
+			throw new Exception("This packet doesn't exist");
+
+		//Actualizamos el recurpo del paquete
+		g.updateResource(Rname, q);
+	}
+	
+	// Delete
+	// ---------------------------------------------
+
+	/**
+	 * Pre: La paquete y el recurso deben existir
+	 * 
+	 * @param PacketName
+	 * @param Resourcename
+	 * @throws Exception
+	 */
+	public void removeResourceFromPacket(String PacketName, String Resourcename)
+			throws Exception {
+		// Cogemos la galxia
+		Packet g = Clt.get(PacketName);
+		if (g == null)
+			throw new Exception("This packet " + PacketName + "doesn't exist");
+
+		// Eliminamos el recurso de la paquete
+		g.removeResource(Resourcename);
+
+	}
+
+	/**
+	 * Pre: La paquete debe existir Post: Eliminado todos los recursos de la
+	 * paquete indicada
+	 * 
+	 * @param PacketName
+	 * @throws Exception
+	 */
+	public void removeResourcesFromPacket(String PacketName) throws Exception {
+		// Cogemos la galxia
+		Packet g = Clt.get(PacketName);
+		if (g == null)
+			throw new Exception("This packet doesn't exist");
+
+		// Eliminamos todas las paquetes
+		g.removeAllResources();
+	}
+	
+	// Save&Load
+	// ---------------------------------------------
+
+	/**
+	 * Debe indicarse en cada controlador Post: Pasa el String a memoria como
+	 * objetos
+	 * 
+	 * @param l
+	 * @throws Exception
+	 */
+	protected void decodeString(String l) throws Exception {
+
+		// Corta el string por el separador interno
+		String[] s = l.split(" ");
+
+		// Comprueba que sea correcto y tengo el numero de elemntos minimo
+		if (s.length < 2)
+			throw new Exception("The record is not correct");
+
+		// Separaci—n especifica de paquete
+		String name = s[0];
+
+		// A–ade a la colecci—n
+		addPacket(name);
+
+		// TODO: Relacion con recursos
+		if (s.length > 2) {
+			Packet g = getByName(name);
+			Resource p;
+			String error = "";
+			
+			int pos = 2;
+			int i = 0;
+			int loops = (s.length - 2) / 2;
+
+			// Recoremos todos los recursos
+			while (i < loops) {
+				try {
+					// Cogemos e recurso
+					p = rc.getByName(s[pos]);
+					if (p == null)
+						throw new Exception("The planet does not exist");
+
+					// A–adimos a la paquete
+					g.addResource(p, Integer.parseInt(s[pos + 1]));
+					
+					//Aumentamos la posicion
+					pos += 2;
+
+				} catch (Exception e) {
+					error += "Relation with resource " + s[i] + " can not do: "
+							+ e.getMessage() + "\n";
+				}
+
+				// Aumentamos la posicion
+				i += 1;
+			} 
+
+			// En caso de error en alguna relacion lanzamos una excepcion
+			if (error.length() > 0)
+				throw new Exception("Fail to relation resources whit packet "
+						+ name + "\n" + error);
+		}
+
+	}
+
+	/**
+	 * Debe indicarse en cada controlador Post: Pasa el String a memoria como
+	 * objetos
+	 * 
+	 * @param l
+	 * @throws Exception
+	 */
+	protected String encodeString() throws Exception {
+
+		String encodeS = "";
+		ArrayList<Packet> list;
+
+		// Diferenciamos si es la primera vez
+		if (_last_key == "") {
+			// En caso de ser la primera vez como no tenemos indicado
+			// el _last_key usamos el primer elemento
+			encodeS = Clt.first().toString() + _SEPARATOR;
+			list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM - 1);
+		} else {
+			// Como tenemos un _last_key partimos desde este
+			list = Clt.valuesCache(_last_key, _CACHE_NUM);
+		}
+
+		// Pasamos objetos a cache
+		for (Packet p : list) {
+			encodeS += p.toString() + _SEPARATOR;
+			_last_key = p.getName();
+		}
+
+		return encodeS;
+	}
+
+	/**
+	 * Devuelvel numero de paquetes que contiene
+	 * 
+	 * @return int
+	 */
+	public int size() {
 		return Clt.size();
 	}
-	
-	/**************************************************************
-	 * Delete
-	 **************************************************************/
-	
-	/**
-	 * @param namep
-	 * @throws Exception
-	 */
-	public void removePacket(String p) throws Exception {
-		Clt.remove(p);
-	}
-	    
-	public void removeAllPackets(){
-		Clt.clear();
-	}
 
 	/**
-	 * 
-	 * @param rp
-	 * @throws Exception
-	 */
-	public void removeResource(String p,String r) throws Exception{
-		Packet pack = Clt.get(p);
-		pack.removeResource(r);
-	}
-	
-	/**
+	 * Compruba que esten todos los datos necesarios para hacer la carga de
+	 * datos Pre: Deben existir recursos en el controlador de Resourceas
 	 * 
 	 */
-	public void removeAllResources(String p) throws Exception{
-		Packet paq = Clt.get(p);
-		paq.removeAllResources();
-	}
-	
-	/**
-	 * 
-	 */
-	public void removePlanet(String p) throws Exception{
-		Packet paq = Clt.get(p);
-		//paq.removePlanet();
-	}
-
-	/**************************************************************
-	 * Save & Load
-	 **************************************************************/
-
-	public void save(String path, String file) throws Exception{
-
-		/*String cache = Clt.first().toString()+";";
-		ArrayList<Packet> list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM-1);
-		
-		for(Packet p : list)
-			cache += (p.toString()+";");
-
-		dCont.write(path, file, cache, true);
-
-		while(list.size() > 0){
-
-			list = Clt.valuesCache(list.get(list.size()-1).getName(),_CACHE_NUM);
-			cache = "";
-			for(Packet p : list)
-				cache += (p.toString()+";");
-
-			if(cache != "") dCont.write(path, file, cache, true);
-
-		}*/
-	}
-
-	public void load(String path, PlanetController pltCont, ResourceController resCont) throws Exception{
-		
-		/*String s = dCont.read(path);
-
-		String name = new String();
-		String planet = new String();
-		String packRel = new String();
-		String resRel = new String();
-		String qttRel = new String();
-		String aux = new String();
-
-		Packet pk = new Packet();
-		Planet pl;
-
-		for (int i = 0; i < s.length(); ++i) {
-			if(s.charAt(i) == ';'){
-				name = planet = null; 
-				aux = "";
-			}
-			else if (s.charAt(i) == ' '){
-				if (name == null){
-					name = aux;
-					aux = "";
-				}
-				else if (planet == null){
-					planet = aux;
-					aux = "";
-					try{
-						pk = new Packet(name);
-						pl = pltCont.getPlanetByName(planet);
-						pk.setPlanet(pl);
-						add(pk);
-					}
-					catch (Exception e) {
-						Console.print("Exception: ");
-						e.printStackTrace();
-					}
-				}
-				else if (packRel == null){
-					packRel = aux;
-					aux = "";
-				}
-				else if (resRel == null){
-					resRel = aux;
-					aux = "";
-				}
-				else if (qttRel == null){
-					qttRel = aux;
-					aux = "";
-					pk.addResource(resCont.get(resRel), Integer.parseInt(qttRel));
-					packRel = resRel = qttRel = null;
-				}
-			}
-			else aux+=s.charAt(i);
-		}*/
+	protected void preConditionLoad() throws Exception {
+		if (rc.size() == 0)
+			throw new Exception(
+					"Resource Controler must have resource to load packets");
 	}
 
 }

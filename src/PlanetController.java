@@ -135,9 +135,19 @@ public class PlanetController extends AbstractController {
 			if (Clt.contains(newName))
 				throw new Exception(newName + " is using in other planet");
 			
-			Clt.remove(p.getName());
+			Clt.remove(oldName);
 			p.setName(newName);
 			Clt.put(newName, p);
+			
+			//En caso de estar en una galaxia
+			//Cambier en el conjunto de la galaxia
+			Galaxy g = p.getGalaxy();
+			if (g != null) {
+				//Eliminamos el antiguo
+				g.getPlanets().remove(oldName);
+				//A–adimos el nuevo
+				g.getPlanets().put(newName, p);
+			}
 		}
 	}
 

@@ -1,324 +1,380 @@
 import java.util.Scanner;
 
-public class PacketControllerDriver extends AbstractDriver{
+/**
+ * PacketControllerDriver
+ * 
+ */
+class PacketControllerDriver extends AbstractDriver {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//Generico del driver
-		PacketController p = new PacketController();
-		ResourceController resCont = new ResourceController();
-		PlanetController plaCont = new PlanetController();
-		DataController dc = new DataController();
-		Planet planet = new Planet();
-		Packet packet = new Packet();
-		TST<RelationPacketResource> rpr = new TST<RelationPacketResource>();
-		//Generico del menu
+
+		// Generico del driver
+		ResourceController rc = new ResourceController();
+		PacketController pc = new PacketController(rc);
+		
+
+		// Generico del menu
 		Scanner in = new Scanner(System.in);
-		int opc = 0;
-		String argv[];		
-		//Menu
-		_menu();       
+
+		// Menu
+		_menu();
+
+		// Opciones
 		do {
-            argv = Console.read_line(in);
-            if(argv == null ) opc = 0;
-            else if(argv.length > 0){
-            	opc = Integer.parseInt(argv[0]);
-				switch(opc) {
-                    case 1:
-                        p = createPacketController();
-                        break;
-                    case 2:
-                    	add(p,argv[1]);
-                    	break;
-                    case 3: 
-                    	getPacket(p,argv[1]);
-                    	add(p,packet);
-                        break;
-                            
-                    case 4:
-                     	rpr = getResources(p,argv[1]);
-                     	addResource(p,argv[1], argv[2], argv[3], Integer.parseInt(argv[4]));
-                        break;        
-                    case 5:
-                    	setPlanet(p,argv[1], argv[2], plaCont);
-                        break;
-                    case 6:
-                    	renamePacket(p,argv[1],argv[2]);
-                        break;
-                    case 7:
-                    	packet = getPacket(p,argv[1]);
-                        break;
-                    case 8:
-                    	planet = getPlanet(p,argv[1]);
-                        break;
-                    case 9:
-                    	rpr = getResources(p,argv[1]);
-                        break;
-                    case 10:
-                		if(containsResource(p,argv[1])) Console.print("YES");
-                		else Console.print("NO"); 
-                        break;
-                    case 11:
-                		exists(p,argv[1]);
-                    	break;
-                    case 12:
-                    	Console.print("" + p.size());
-                        break;
-                    case 13:
-                    	removeResource(p,argv[1],argv[2]);
-                        break; 
-                    case 14:
-                    	removePacket(p,argv[1]);
-                        break; 
-                    case 15:
-                    	removeAllPackets(p);
-                        break;
-                    case 16:
-                      	removePlanet(p,argv[1]);
-                      	break;
-                    case 17:
-                      	save(p,argv[1],argv[2]);
-                      	break;
-                    case 18:
-                    	load(p,argv[1],plaCont,resCont);
-                        break;
-                    case 19:
-						try{resCont.add(argv[1],argv[2]);}
-						catch (Exception e){_msg_error(e.getMessage());}
-						break;
-					case 20:
-						try{plaCont.createPlanet(argv[1],Integer.parseInt(argv[2]), Integer.parseInt(argv[3]));}
-						catch (Exception e){_msg_error(e.getMessage());}
-						break;
 
+			// Lectura de datos
+			argv = Console.read_line(in);
 
+			if (argv == null) { // Terminaos el fichero
+				opc = 0;
+
+			} else if (argv.length > 0) {
+				// Recoger la opcion del usuario
+				opc = Integer.parseInt(argv[0]);
+
+				// Accion
+				switch (opc) {
+				case 0: // Exit
+					break;
+				case 1:
+					pc = new PacketController(rc);
+					break;
+
+				case 2:
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						addPacket(pc, argv[1]);
+					}
+					break;
+
+				case 3:
+					Console.print(pc.getAll());
+					break;
+
+				case 4:
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						getByName(pc, argv[1]);
+					}
+
+					break;
+
+				case 5: // exist
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						if (pc.existPacket(argv[1])) {
+							Console.print("The packet " + argv[1] + " exist");
+						} else {
+							Console.print("The packet " + argv[1]
+									+ " does not exist");
+						}
+					}
+					break;
+
+				case 6:
+					if (argv.length < 3)
+						_msg_error_param_insuf();
+					else {
+						updatePacketName(pc, argv[1], argv[2]);
+
+					}
+					break;
+
+				case 7:
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						removePacket(pc, argv[1]);
+
+					}
+					break;
+
+				case 8: // Remove All
+					removeAllPacket(pc);
+
+					break;
+					
+				case 9:
+					Console.print("Size: "+pc.size());
+					break;
+
+				case 10:
+					if (argv.length < 3)
+						_msg_error_param_insuf();
+					else {
+						createResourceInResourceController(rc, argv[1], argv[2]);
+					}
+					break;
+
+				case 11:
+					if (argv.length < 3)
+						_msg_error_param_insuf();
+					else {
+						addResourceToPacket(pc, rc, argv[1], argv[2], Integer.parseInt(argv[3]));
+					}
+					break;
+
+				case 12:
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						getResourcesFromPacket(pc, argv[1]);
+					}
+					break;
+					
+				case 13:
+					if (argv.length < 4)
+						_msg_error_param_insuf();
+					else {
+						updateResourcesFromPacket(pc, argv[1], argv[2], Integer.parseInt(argv[3]));
+					}
+					break;
+
+				case 14:
+					if (argv.length < 3)
+						_msg_error_param_insuf();
+					else {
+						removeResourceFromPacket(pc, argv[1], argv[2]);
+					}
+					break;
+
+				case 15:
+					if (argv.length < 1)
+						_msg_error_param_insuf();
+					else {
+						removeAllResourcesFromPacket(pc, argv[1]);
+					}
+					break;
+					
+				case 16: //save
+					if (argv.length < 1)
+						_msg_error_param_insuf();
+					else {
+						savePacketController(pc, argv[1], argv[2].equals("true"));
+					}
+					break;
+					
+				case 17: //load
+					if (argv.length < 1)
+						_msg_error_param_insuf();
+					else {
+						loadPacketController(pc, argv[1]);
+					}
+					break;
+
+				default:
+					_msg_opc_invalid();
+					break;
 				}
 			}
-		} 
-		while (opc != 0);
+
+		} while (opc != 0);
 	}
 
-	private static void _menu(){
-		title = "Planet Controller Driver";
+	// Actions
+	// ---------------------------------------------
 
-		menu.add("PacketController(String namep)"); //
-		menu.add("add(String name)"); //
-		menu.add("add(Packet p)  "); //
-		menu.add("addResource(String p, String r, String t, int qtt)"); //
-		menu.add("setPlanet(String namePacket, String namePlanet)");// 
-		menu.add("renamePacket(String oldName, String newName)"); //
-		menu.add("getPacket(String name) : Packet");
-		menu.add("getPlanet(String name) : Planet");
-		menu.add("getResources(String namep) : TST<RelationPacketResource>"); //
-		menu.add("containsResource(String name) : boolean");
-		menu.add("exists(String p) : boolean");
-		menu.add("size() : int"); //
-		menu.add("removeResource(String namePacket,String nameResource)");
-		menu.add("removePacket(String p)");
-		menu.add("removeAllPackets()");
-		menu.add("removePlanetByName(String namep)");
-		menu.add("save(String path, String file, int cacheSize)");
-		menu.add("load()");
-		menu.add("[AUX]ResourceControllerDriver.add(String namep, ResourceType typep) : void");
-		menu.add("[AUX]PlanetControllerDriver.createPlanet(String namep, int x_posp, int y_posp) : void");
+	private static void updateResourcesFromPacket(PacketController pc,
+			String PacketName, String ResourceName, int q) {
+		try {
+			pc.updateResourceQuantity(PacketName, ResourceName, q);
 
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	public static void loadPacketController(PacketController pc, String path) {
+		try {
+			pc.load(path);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	public static void savePacketController(PacketController pc, String path, boolean append) {
+		try {
+			pc.save(path, append);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	public static void addResourceToPacket(PacketController pc,
+			ResourceController rc, String PacketName, String ResourceName, int q) {
+		try {
+
+			pc.addResource(PacketName, ResourceName, q);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+		
+	}
+
+	private static void createResourceInResourceController(ResourceController rc,
+			String name, String type) {
+		try {
+
+			rc.addResource(name, type);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	public static void removeAllPacket(PacketController pc) {
+		try {
+
+			pc.removeAllPacket();
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	public static void removeAllResourcesFromPacket(PacketController pc,
+			String name) {
+		try {
+
+			pc.removeResourcesFromPacket(name);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	public static void getResourcesFromPacket(PacketController pc,
+			String PacketName) {
+		try {
+
+			Console.print(pc.getResourcesFromPacket(PacketName));
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	public static void removeResourceFromPacket(PacketController pc,
+			String PacketName, String Resourcename) {
+		try {
+
+			pc.removeResourceFromPacket(PacketName, Resourcename);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	public static void removePacket(PacketController pc, String name) {
+		try {
+
+			pc.removePacket(name);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	public static void getByName(PacketController pc, String name) {
+		try {
+
+			Console.print(pc.getByNameToString(name));
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+
+	}
+
+	public static void updatePacketName(PacketController pc, String name,
+			String newname) {
+		try {
+
+			pc.updatePacketName(name, newname);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+
+	}
+
+	public static void addPacket(PacketController pc, String name) {
+		try {
+
+			pc.addPacket(name);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	// Menu
+	// ---------------------------------------------
+
+	/**
+	 * Menu
+	 */
+	private static void _menu() {
+
+		title = "Packet Controller Driver";
+
+		//Operaciones con conjunto galaxias
+		
+		menu.add("PacketController() : PacketController"); // 1
+
+		menu.add("addPacket(String name) : void"); // 2
+
+		menu.add("getAll() : String"); // 3
+		menu.add("getByName(String name) : String");
+
+		menu.add("existPacket(String name) : boolean"); // 5
+
+		menu.add("updatePacketName(String name, String new_name) : void"); // 6
+
+		menu.add("removePacket(String name) : void"); // 7
+		menu.add("removeAllPacket(): void");
+		
+		menu.add("size() : int"); //9
+
+		// Operaciones sobre las galaxias
+
+		menu.add("ResourceController.addResource(String name, String type) : Resource"); // 10
+		menu.add("addResource(String PacketName, String ResourceName, Int quantity, ResourceController rc) : void"); // 9
+
+		menu.add("getResourceFromPacket(String name) : String"); // 12
+
+		menu.add("updateResourceFromPacket(String PacketName, String ResourceName, int quantity) : void");
+		
+		menu.add("removeResourceFromPacket(String PacketName, String ResourceName) : void"); // 13
+		menu.add("removeResourceFromPacket(String PacketName) : void");
+
+		//Save&Load
+		menu.add("save(String path, boolean append) : void"); //16
+		menu.add("load(String path) : void");
+		
 		print_menu();
 	}
-	
-	private static PacketController createPacketController() {
-		try{
-			return new PacketController(); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-		return null;
-	}
 
-
-	private static boolean createPacket(PacketController p, String namep) {
-		try{
-			p.createPacket(namep); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-		return false;
-	}
-
-	private static void assignDataController(PacketController p, DataController dc){
-		try{
-			p.assignDataController(dc);
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
-
-	//Setter
-	//---------------------------------------------
-
-
-	private static void renamePacket(PacketController p, String oldName, String newName){
-		try{
-			p.renamePacket(oldName,newName); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
-
-	private static void add(PacketController p, String namep){
-		try{
-			p.add(namep); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
-
-	private static void add(PacketController p, Packet packet){
-		try{
-			p.add(packet); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
-
-	private static void addResource(PacketController p, String namep, String namer, String namet, int qtt){
-		try{
-			p.addResource(namep,namer,namet,qtt); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
-
-	private static void setPlanet(PacketController p, String namePacket, String namePlanet, PlanetController plaCont){
-		try{
-			Console.print("1: Chivato");
-			p.setPlanet(namePacket,namePlanet, plaCont);
-			Console.print("2: Chivato");
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-			e.printStackTrace();
-		}
-	}
-
-	private static void removePacket(PacketController p, String namep){
-		try{
-			p.removePacket(namep); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
-
-	private static void removeAllPackets(PacketController p){
-		try{
-			p.removeAllPackets(); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
-	/**
-	 * 
-	 * @param name
-	 */
-	private static void removePlanet(PacketController p, String namep){
-		try{
-			p.removePacket(namep); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
-	
-	private static void removeResource(PacketController p,String namePacket, String nameResource){
-		try{
-			p.removeResource(namePacket, nameResource); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
-
-		//Getter
-	//---------------------------------------------
-	private static Packet getPacket(PacketController p, String namep){
-		try{
-			return p.getPacket(namep); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-		return null;
-	}
-
-	private static Planet getPlanet(PacketController p, String namep){
-		try{
-			return p.getPlanet(namep); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-		return null;
-	}
-
-	private static TST<RelationPacketResource> getResources(PacketController p, String namep){
-		try{
-			return p.getResources(namep); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-		return null;
-	}
-
-		//Exists
-	//---------------------------------------------
-
-	private static boolean containsResource(PacketController p, String namep){
-		try{
-			return p.containsResource(namep); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-		return false;
-	}
-
-	private static boolean exists(PacketController p, String namep){
-		try{
-			return p.exists(namep); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-		return false;
-	}
-
- 
-	private static void save(PacketController p, String path, String file){
-		try{
-			p.save(path, file); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
-	
-	private static void load(PacketController p, String path, PlanetController pltCont, ResourceController resCont){
-		try{
-			p.load(path, pltCont,resCont); 
-		}
-		catch (Exception e){
-			_msg_error(e.getMessage());
-		}
-	}
 }

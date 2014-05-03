@@ -7,7 +7,7 @@ import java.util.Iterator;
  */
 public class GalaxyController extends AbstractController {
 
-	// protected attributes
+	// protected/private attributes
 	protected TST<Galaxy> Clt;
 	private PlanetController pc;
 

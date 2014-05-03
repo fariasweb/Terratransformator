@@ -4,7 +4,7 @@
  */
 public class RelationPacketResource {
 
-	Packet p;//hace falta? parece ineficiente!
+	Packet p;
 	Resource r;
 	int quantity;
 	
@@ -69,7 +69,7 @@ public class RelationPacketResource {
 	 * To Basic Types
 	 **************************************************************/
 	public String toString(){
-		return p.getName() + " " + r.getName() + " " + Integer.valueOf(quantity).toString();
+		return p.getName() + " " + r.getName() + " " + quantity;
 	}
 	
 }
