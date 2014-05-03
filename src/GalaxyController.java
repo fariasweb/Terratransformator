@@ -9,14 +9,16 @@ public class GalaxyController extends AbstractController {
 
 	// protected attributes
 	protected TST<Galaxy> Clt;
+	private PlanetController pc;
 
 	/**
-	 * Constructor
+	 * Constructor 
 	 * Post: Inicializa el contructor padre y el TST
 	 */
-	public GalaxyController() {
+	public GalaxyController(PlanetController Planetc) {
 		super();
 		Clt = new TST<Galaxy>();
+		pc = Planetc;
 	}
 
 	// Create
@@ -158,11 +160,13 @@ public class GalaxyController extends AbstractController {
 		if (g == null)
 			throw new Exception("This galaxy doesn't exist");
 
+		// Eliminos del conjunto
+		Clt.remove(name);
+		
 		// Eliminamos todos los planets
 		g.removeAllPlanets();
 
-		// Eliminos del conjunto
-		Clt.remove(name);
+		
 	}
 
 	/**
@@ -174,12 +178,12 @@ public class GalaxyController extends AbstractController {
 
 		Iterator<Galaxy> iterator = Clt.values().iterator();
 
-		//Recoremos todas las galaxias
+		// Recoremos todas las galaxias
 		while (iterator.hasNext()) {
 			Galaxy g = (Galaxy) iterator.next();
-			//Eliminamos de la colecion
+			// Eliminamos de la colecion
 			Clt.remove(g.getName());
-			//Eliminamos todos los planetnas de esa galaxia
+			// Eliminamos todos los planetnas de esa galaxia
 			g.removeAllPlanets();
 		}
 
@@ -213,7 +217,7 @@ public class GalaxyController extends AbstractController {
 		// 2. Comprobar la existencia de planeta en controlador de planetas
 		// Pre: El planeta no debe tener otra galaxia asignaada o estar en esta
 		// ya
-		Planet p = pc.getPlanetByName(PlanetName);
+		Planet p = pc.getByName(PlanetName);
 		if (p == null)
 			throw new Exception("The planet " + PlanetName + " does not exist");
 		if (p.getGalaxy() != null)
@@ -268,7 +272,7 @@ public class GalaxyController extends AbstractController {
 		if (g == null)
 			throw new Exception("This galaxy " + GalaxyName + "doesn't exist");
 
-		//Eliminamos el planeta de la galaxia
+		// Eliminamos el planeta de la galaxia
 		g.removePlanet(Planetname);
 
 	}
@@ -285,8 +289,8 @@ public class GalaxyController extends AbstractController {
 		Galaxy g = Clt.get(GalaxyName);
 		if (g == null)
 			throw new Exception("This galaxy doesn't exist");
-		
-		//Eliminamos todas las galaxias
+
+		// Eliminamos todas las galaxias
 		g.removeAllPlanets();
 	}
 
@@ -294,67 +298,108 @@ public class GalaxyController extends AbstractController {
 	// ---------------------------------------------
 
 	/**
-	 * Debe indicarse en cada controlador
-	 * Post: Pasa el String a memoria como objetos
+	 * Debe indicarse en cada controlador Post: Pasa el String a memoria como
+	 * objetos
+	 * 
 	 * @param l
 	 * @throws Exception
 	 */
-	protected void parseString(String l) throws Exception {
+	protected void decodeString(String l) throws Exception {
 
-		//Corta el string por el separador interno
+		// Corta el string por el separador interno
 		String[] s = l.split(" ");
 
-		//Comprueba que sea correcto y tengo el numero de elemntos minimo
-		if (s.length != 3)
+		// Comprueba que sea correcto y tengo el numero de elemntos minimo
+		if (s.length < 3)
 			throw new Exception("The record is not correct");
 
-		//Separaci—n especifica de galaxia
+		// Separaci—n especifica de galaxia
 		String name = s[0];
 		int x = Integer.parseInt(s[1]);
 		int y = Integer.parseInt(s[2]);
 
-		//A–ade a la colecci—n
+		// A–ade a la colecci—n
 		addGalaxy(name, x, y);
+		
+		//Relacion con planetas
+		if (s.length > 3) {
+			Galaxy g = getByName(name);
+			Planet p;
+			String error = "";
+			int i = 3;
+			
+			//Recoremos todos los planetas
+			while (i < s.length) {
+				try {
+					//Cogemos e planeta
+					p = pc.getByName(s[i]);
+					if (p == null) throw new Exception("The planet does not exist");
+					
+					//A–adimos a la galaxia
+					g.addPlanet(p);
+					
+				} catch (Exception e) {
+					error += "Relation with planet "+s[i]+" can not do: "+e.getMessage()+"\n";
+				}
+				
+				//Aumentamos la posicion
+				i += 1;
+			}
+			
+			//En caso de error en alguna relacion lanzamos una excepcion
+			if (error.length() > 0) 
+				throw new Exception("Fail to relation planets whit galaxy "+name+"\n"+error);
+		}
 
 	}
-	
+
 	/**
-	 * Debe indicarse en cada controlador
-	 * Post: Pasa el String a memoria como objetos
+	 * Debe indicarse en cada controlador Post: Pasa el String a memoria como
+	 * objetos
+	 * 
 	 * @param l
 	 * @throws Exception
 	 */
 	protected String encodeString() throws Exception {
-	
+
 		String encodeS = "";
 		ArrayList<Galaxy> list;
-		
-		//Diferenciamos si es la primera vez
+
+		// Diferenciamos si es la primera vez
 		if (_last_key == "") {
-			//En caso de ser la primera vez como no tenemos indicado
-			//el _last_key usamos el primer elemento
+			// En caso de ser la primera vez como no tenemos indicado
+			// el _last_key usamos el primer elemento
 			encodeS = Clt.first().toString() + _SEPARATOR;
 			list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM - 1);
 		} else {
-			//Como tenemos un _last_key partimos desde este
+			// Como tenemos un _last_key partimos desde este
 			list = Clt.valuesCache(_last_key, _CACHE_NUM);
 		}
-		
+
 		// Pasamos objetos a cache
 		for (Galaxy p : list) {
 			encodeS += p.toString() + _SEPARATOR;
 			_last_key = p.getName();
 		}
-		
+
 		return encodeS;
+	}
+
+	/**
+	 * Devuelvel numero de galaxias que contiene
+	 * @return int
+	 */
+	public int size() {
+		return Clt.size();
 	}
 	
 	/**
-	 * Post: Devuelve el tama–o de la coleci—n
-	 * @return int
+	 * Compruba que esten todos los datos necesarios para hacer la carga de datos
+	 * Pre: Deben existir planetas en el controlador de Planetas
+	 * 
 	 */
-	protected int size() { 
-		return Clt.size(); 
+	protected void preConditionLoad() throws Exception {
+		if (pc.size() == 0) throw new Exception("Planet Controler must have planets to load galaxis");
 	}
 
 }

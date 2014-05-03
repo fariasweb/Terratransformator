@@ -1,37 +1,28 @@
-public class Planet {
+/**
+ * Planet
+ * 
+ */
 
-	private String name;
+public class Planet extends Entity {
+
 	private Integer x_pos;
 	private Integer y_pos;
 	private Galaxy galaxy;
 
-	/**
-	 * post:Comprueba que las posiciones son v‡lidas
-	 * @param x_posp
-	 * @param y_posp
-	 * @throws Exception
-	 */
-	private static void checkPosition(int x_posp, int y_posp) throws Exception {
-		if (x_posp < 0)
-			throw new Exception(x_posp + " position not valid");
-		if (y_posp < 0)
-			throw new Exception(y_posp + " position not valid");
-	}
 
 	// Contructs
 	// ---------------------------------------------
-	
 	/**
-	 * 
-	 * Crea un planeta en el sistema
-	 * Pre: El nombre del planeta no debe existir en el sistema
-	 * Post: Se crea un planeta con el nombre y posicion indicados
-	 * 
-	 * @param namep
+	 * Planet
+	 * Pre: namep no puede ser nulo ni vacio
+	 * 		namep debe estar formado por letras y numeros
+	 * 		x_posp, y_psop mayores que 0
+	 * Post: Inicializa planeta con el nombre y la posicion indicada
 	 * @param x_posp
 	 * @param y_posp
 	 * @throws Exception
 	 */
+
 	public Planet(String namep, int x_posp, int y_posp) throws Exception {
 		setPosition(x_posp, y_posp); // Se chequea aqui
 		setName(namep); // Se chequea aqui
@@ -39,11 +30,12 @@ public class Planet {
 	}
 
 	/**
-	 * 
+	 * Planet
+	 * Post: Inicializa planeta con todos los atributos nulos
 	 */
 	public Planet() {
-		name = null;
-		x_pos = y_pos = null;
+		name = "";
+		x_pos = y_pos = 0;
 		galaxy = null;
 	}
 
@@ -73,35 +65,25 @@ public class Planet {
 	 * @throws Exception
 	 */
 	public void setPosition(Integer x_posp, Integer y_posp) throws Exception {
-		checkPosition(x_posp, y_posp);
+		Util.checkPosition(x_posp, y_posp);
 		x_pos = x_posp;
 		y_pos = y_posp;
 	}
 
-
-	/*public void setPacket(Packet packetp) {
-
-		if (packetp != packet) {
-			packet = packetp;
-			packetp.setPlanet(this);
-		}
-	}*/
-	
 	/**
-	 *post:Cambia la galaxia asignada a un planeta 
+	 * Post: Asigna al planetea una galaxia
 	 * @param g
 	 * @throws Exception
 	 */
-
 	public void setGalaxy(Galaxy g) throws Exception {
 		if (galaxy != g) {
 			galaxy = g;
-			//g.getPlanets().put(name,this);
 		}
 	}
 
 	// Getter
 	// -----------------------------------------------
+
 	/**
 	 * Devuelve el nombre del planeta
 	 * @return String
@@ -118,11 +100,6 @@ public class Planet {
 		return new PairInt(x_pos, y_pos);
 	}
 
-	
-	/*public Packet getPacket() {
-		return packet;
-	}*/
-
 	/**
 	 * post: Devuelve la galaxia asignada al planeta
 	 * @return Galaxy
@@ -134,23 +111,16 @@ public class Planet {
 	// Deleter
 	// -----------------------------------------------
 
-	/*public void removePacket() {
-		if (packet != null) {
-			Packet p = packet;
-			packet = null;
-			p.removePlanet();
-		}
-	}*/
-
-	
 	/**
-	 * post: Elimina la galaxia asignada al planeta 
+	 * Post: Elimina la galaxia del planeta
 	 * @throws Exception
 	 */
 	public void removeGalaxy() throws Exception {
+		//Comprobamos que tenga una galaxia previamente
 		if (galaxy != null) {
 			Galaxy g = galaxy;
 			galaxy = null;
+			//Eliminamos de la galaxia el planeta
 			g.removePlanet(g.getName());
 		}
 	}
@@ -159,11 +129,10 @@ public class Planet {
 	// -----------------------------------------------
 
 	/**
-	 * post: Devuelve un string con los atributos de planeta
+	 * Post: Devuelve un string con los atributos de planeta
 	 * @return String 
 	 */
 	public String toString() {
 		return name + " " + x_pos + " " + y_pos;
 	}
-
 }

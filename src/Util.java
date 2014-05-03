@@ -1,13 +1,15 @@
 /**
- * 
- */
-
-/**
- * @author farias
- *
+ * Util
+ * Contiene funciones genericas de ayuda en el software
  */
 public class Util {
-
+	/**
+	 * Comprueba que el strin namep sea valido
+	 * Pre: name no puede ser nulo ni vacio
+	 * 		name debe estar formado por letras y numeros
+	 * @param namep
+	 * @return
+	 */
 	public static boolean checkName(String namep) {
 	
 		//Que no sea nulo
@@ -42,7 +44,25 @@ public class Util {
 		return is_correct;
 	}
 	
+
 	public static double vectorialDistance(PairInt pair1, PairInt pair2){
 		    return Math.sqrt(((pair1.getX() - pair2.getX())*((pair1.getX() - pair2.getX()) + (( pair1.getY() - pair2.getY())*( pair1.getY() - pair2.getY())))));
 	}
+
+	/**
+	 * Comprueba que los entereso x_posp y y_posp sean validos
+	 * para ser atributos de posicion
+	 * Pre: x_posp, y_psop mayores que 0
+	 * @param x_posp
+	 * @param y_posp
+	 * @throws Exception
+	 */
+	
+	public static void checkPosition(int x_posp, int y_posp) throws Exception {
+		if (x_posp < 0)
+			throw new Exception(x_posp + " position not valid");
+		if (y_posp < 0)
+			throw new Exception(y_posp + " position not valid");
+	}
+	
 }

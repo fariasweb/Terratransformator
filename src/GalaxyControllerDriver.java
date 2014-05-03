@@ -12,8 +12,9 @@ class GalaxyControllerDriver extends AbstractDriver {
 	public static void main(String[] args) {
 
 		// Generico del driver
-		GalaxyController gc = new GalaxyController();
 		PlanetController pc = new PlanetController();
+		GalaxyController gc = new GalaxyController(pc);
+		
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -39,7 +40,7 @@ class GalaxyControllerDriver extends AbstractDriver {
 				case 0: // Exit
 					break;
 				case 1:
-					gc = new GalaxyController();
+					gc = new GalaxyController(pc);
 					break;
 
 				case 2:
@@ -99,9 +100,9 @@ class GalaxyControllerDriver extends AbstractDriver {
 					removeAllGalaxy(gc);
 
 					break;
-
-				case 9: // Create Planet Controller
-					pc = new PlanetController();
+					
+				case 9:
+					Console.print("Size: "+gc.size());
 					break;
 
 				case 10:
@@ -211,7 +212,7 @@ class GalaxyControllerDriver extends AbstractDriver {
 			String name, int x, int y) {
 		try {
 
-			pc.createPlanet(name, x, y);
+			pc.addPlanet(name, x, y);
 
 		} catch (Exception e) {
 
@@ -338,19 +339,20 @@ class GalaxyControllerDriver extends AbstractDriver {
 
 		menu.add("removeGalaxy(String name) : void"); // 7
 		menu.add("removeAllGalaxy(): void");
+		
+		menu.add("size() : int"); //9
 
 		// Operaciones sobre las galaxias
 
-		menu.add("PlanetController(): PlanetController pc"); // 9
-		menu.add("PlanetController.addPlanet(String name, int x, int y");
+		menu.add("PlanetController.addPlanet(String name, int x, int y) : Planet");
 		menu.add("addPlanet(String GalaxyName, String PlanetName, PlanetController pc) : void"); // 9
 
-		menu.add("getPlanetsFromGalaxy(String name) : String"); // 12
+		menu.add("getPlanetsFromGalaxy(String name) : String"); // 13
 
 		menu.add("removePlanetFromGalaxy(String GalaxyName, String Planetname) : void"); // 13
 		menu.add("removePlanetsFromGalaxy(String GalaxyName) : void");
 
-		menu.add("save(String path, boolean append) : void"); //15
+		menu.add("save(String path, boolean append) : void"); //16
 		menu.add("load(String path) : void");
 		
 		print_menu();

@@ -5,7 +5,7 @@
 public abstract class AbstractController {
 
 	//Constants
-	protected final int _CACHE_NUM = 7;
+	protected final int _CACHE_NUM = 100;
 	protected final String _SEPARATOR = ";";
 	
 	//Private and general
@@ -47,7 +47,6 @@ public abstract class AbstractController {
 				
 				//Codificamos una parte - cache
 				cache = encodeString();
-				Console.log("Guardar :"+cache);
 				
 				// Gaurdamos en disco
 				if (cache.length() > 0)
@@ -77,19 +76,34 @@ public abstract class AbstractController {
 
 		// Bucle de lectura
 		String cache;
+		String error = "";
 		String[] parseS;
+		
+		int total = 0;
+		
 		while ((cache = dCont.read()) != null) {
 			parseS = cache.split(_SEPARATOR);
 
 			// Descomponemos el objeto
 			for (int i = 0; i < parseS.length; i++) {
-				parseString(parseS[i]);
+				//Aumentamos el numero de registros leidos
+				total += 1;
+				
+				//Lanzamos la decodificacion y carga
+				try {
+					decodeString(parseS[i]);
+				} catch(Exception e) {
+					error += "Record "+total+": "+e.getMessage()+"\n";
+				}
 			}
 
 		}
 		
 		//Cerrar el archivo
 		dCont.close();
+		
+		//En caso de haber errores en la carga, lanzamos 
+		if (error.length() > 0) throw new Exception("Fail to load information\n"+error);
 	}
 
 	/**
@@ -98,7 +112,7 @@ public abstract class AbstractController {
 	 * @param l
 	 * @throws Exception
 	 */
-	protected abstract void parseString(String l) throws Exception;
+	protected abstract void decodeString(String l) throws Exception;
 
 	/**
 	 * Debe indicarse en cada controlador
@@ -122,6 +136,6 @@ public abstract class AbstractController {
 	 * Post: Devuelve el tama–o de la coleci—n
 	 * @return
 	 */
-	protected abstract int size();
+	public abstract int size();
 
 }

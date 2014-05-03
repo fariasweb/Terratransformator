@@ -150,6 +150,17 @@ public class Console {
 		
 	}
 	
+	public static void tableDouble(double[][] m) {
+		
+		for (int i = 0; i < m.length; i++) {
+			for (int j = 0; j < m[i].length; j++) {
+				Console.print(m[i][j]+" ");
+			}
+			Console.ln();
+		}
+		
+	}
+	
 	
 	// ENTRADAS	
 	//---------------------------------------------

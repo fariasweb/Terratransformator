@@ -1,24 +1,32 @@
-/*import planet;
-import planetCollection;
-*/
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
-public class PlanetController extends AbstractController{
+/**
+ * PlanetController
+ * 
+ */
 
-	private TST<Planet> planetCtl;
-	private DataController dCont;
+public class PlanetController extends AbstractController {
 
-	private final String path_file = "";
+	// protected attributes
+	protected TST<Planet> Clt;
 
-	public PlanetController() {
-		planetCtl = new TST<Planet>();
-		dCont = new DataController();
-	}
 	/**
-	 * Crea una galaxia en el sistema
-	 * Pre: El nombre del planeta no debe existir en el sistema
-	 * 		Las posiciones del planeta no deben de estar ocupadas
+	 * Constructora 
+	 * Post: Inicializa el contructor padre y el TST
+	 */
+	public PlanetController() {
+		super();
+		Clt = new TST<Planet>();
+	}
+
+	// Create
+	// ---------------------------------------------
+
+	/**
+	 * Crea un planeta en el sistema 
+	 * Pre: El nombre del planeta no debe existir
+	 * en el sistema Las posiciones del planeta no deben de estar ocupadas +
 	 * Post: Se crea un planeta con el nombre y pos indicado
 	 * 
 	 * @param name
@@ -26,274 +34,269 @@ public class PlanetController extends AbstractController{
 	 * @param y
 	 * @return boolean
 	 */
-	public void createPlanet(String name, int x, int y) throws Exception {
-			Planet g = new Planet(name, x, y);
-			if(planetCtl.get(g.getName()) != null) throw new Exception("This planet already exists!");
-			planetCtl.put(g.getName(),g);	
+	public void addPlanet(String name, int x, int y) throws Exception {
+		Planet g = new Planet(name, x, y);
+		if (Clt.get(g.getName()) != null)
+			throw new Exception("This planet already exists!");
+
+		// A–adimos el planeta al TST
+		Clt.put(g.getName(), g);
 	}
-	
-	//Setter
-	//---------------------------------------------
+
+	// Read
+	// ---------------------------------------------
 	/**
-	 * @param namep
-	 * @throws Exception
-	 */
-	/*public void removePacket(String namep) throws Exception{
-		Planet g = planetCtl.get(namep);
-<<<<<<< HEAD
-		if(g.getPacket() != null) g.removePacket();
-	}*/
-	
-	/**
+	 * Devuelve un listado con el nombre de las galaxias ordenado por orden
+	 * alfabetico
 	 * 
-	 * @param namep
-	 * @param namePacket
-	 * @throws Exception
+	 * @return String
 	 */
 
-		//if(g.getPacket() != null) g.removePacket();
+	public String getAll() {
+
+		String result = "";
+
+		// Comprobamos que exista algo en el array
+		if (Clt.size() > 0) {
+			for (Planet i : Clt.values()) {
+				result += i.toString() + "\n";
+			}
+		}
+		return result;
 	}
+
 	
-
-
-	/*public void setPacket(String namep, String namePacket) throws Exception{
-		Planet p = planetCtl.get(namep);
-		if (p == null) throw new Exception("This planet doesn't exist");
-		//if(p.getPacket() != null) throw new Exception("There is a packet already assigned!");
-		Packet paq = p.getPacket();
-		p.setPacket(paq);
-
-
-	}
-    */
 	/**
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 La galaxia debe
+	 * existir
+	 * 
+	 * @param name String
+	 * @return
+	 * @throws Exception
+	 */
+	public String getByNameToString(String name) throws Exception {
+
+		Planet g = Clt.get(name);
+		if (g == null)
+			throw new Exception("This planet doesn't exist");
+
+		return g.toString();
+	}
+
+	/**
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 
+	 * La galaxia debe existir
+	 * 
+	 * @param name String
+	 * @return
+	 * @throws Exception
+	 */
+	public Planet getByName(String name) throws Exception {
+
+		Planet g = Clt.get(name);
+		if (g == null)
+			throw new Exception("This planet doesn't exist");
+
+		return g;
+	}
+
+	/**
+	 * Pre: El nombre no debe ser nulo y con longitud > 0. El planeta debe
+	 * existir
+	 * 
+	 * @param name
+	 * @return Boolean
+	 */
+	public boolean existPlanet(String name) {
+		return Clt.contains(name);
+	}
+
+	// Update
+	// ---------------------------------------------
+	/**
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 El planeta debe
+	 * existir El nombre de a nuevo planeta no debe de existir 
+	 * Post: Modifica los datos del planeta con newName
 	 * 
 	 * @param oldName
 	 * @param newName
 	 * @throws Exception
 	 */
 
+	public void updatePlanetName(String oldName, String newName) throws Exception {
+		// Cogemos el planeta
+		Planet p = Clt.get(oldName);
+		if (p == null)
+			throw new Exception("This planet doesn't exist");
 
-	public void setName(String oldName, String newName) throws Exception{
-		Planet p = planetCtl.get(oldName);
-		if (p == null) throw new Exception("This planet doesn't exist");
+		// Cimprobamos qu eno sea las misma galaxi
+
 		if (p.getName() != newName) {
-			if (!Util.checkName(newName)) throw new Exception(newName + " is not valid");
-			planetCtl.remove(p.getName());
+			if (!Util.checkName(newName))
+				throw new Exception(newName + " is not valid");
+
+			Clt.remove(p.getName());
 			p.setName(newName);
-			planetCtl.put(newName, p);	
+			Clt.put(newName, p);
 		}
 	}
 
 	/**
-	 * 
+	 * Actualiza la posicon de un planeta
+	 * Pre: El planeta debe exisitr
+	 * 		Las cordenadas deben ser validas
+	 * 		En caso de estar en una galaxia, las cordenadas deben estar
+	 * 		dentro de la galaxia y que no exista otro planeta en su interior
+	 * Post: El planeta tiene nuevas cordenadas
 	 * @param namep
 	 * @param x
 	 * @param y
 	 * @throws Exception
 	 */
-	public void setPosition(String namep, int x, int y) throws Exception {
-		//TODO: Comprobar solapamiento
-		Planet p = planetCtl.get(namep);
-		if (p == null) throw new Exception("This planet doesn't exist");
-		if (!(p.getPosition().getX() == x && p.getPosition().getY() == y)){
-			p.setPosition(x,y);
-			planetCtl.remove(p.getName());
-			planetCtl.put(namep,p);
+	public void updatePlanetPosition(String namep, int x, int y) throws Exception {
+
+		// Cogemos el planeta
+		Planet p = Clt.get(namep);
+		if (p == null)
+			throw new Exception("This planet doesn't exist");
+
+		// Son correctas las cordenadas nuevas?
+		Util.checkPosition(x, y);
+
+		if (!(p.getPosition().getX() == x && p.getPosition().getY() == y)) {
+
+			// Comprobamos si esta en una galaxia
+			Galaxy g = p.getGalaxy();
+			if (g != null) {
+				// La posicion esta dentro de la galaxia
+				PairInt pi = g.getSize();
+				if (x > pi.getX() || y > pi.getY()) {
+					throw new Exception("Position is not valid for galaxy "
+							+ g.getName());
+				}
+
+				// Existe otro planeta en esta posicion
+				if (g.existPlanetInPos(x, y))
+					throw new Exception("Exit other planet in this position");
+			}
+
+			// En caso de no estar en galaxi y ser diferentes
+			p.setPosition(x, y);
 		}
 	}
 
-	
-	//Getter
-	//---------------------------------------------
+	// Delete
+	// ---------------------------------------------
+
 	/**
+	 * Elimina todos los planetas de la colecci—n
+	 * Post: No existe ningun planeta
 	 * 
-	 * @param namep
-	 * @return
 	 * @throws Exception
 	 */
-	public PairInt getPosition(String namep) throws Exception{
-		Planet p = planetCtl.get(namep);
-		if (p == null) throw new Exception("This planet doesn't exist");
-		return p.getPosition();
-		
-	}
-	
-<<<<<<< HEAD
-	/**
-	 * 
-	 * @param namep
-	 * @return
-	 * @throws Exception
-	 */
-=======
->>>>>>> 81ea9cbe4d2b7d02f69d2cf7ebcbaa4553343c80
-	/*public Packet getPacket(String namep) throws Exception {
-		Planet p = planetCtl.get(namep);
-		if (p == null) throw new Exception("This planet doesn't exist");
-		return p.getPacket();
-		
-	}*/
- 	
-	/////////////////////////////////FUNCIONES TST<PLANET>
 
-	/**
-	 * @param namep
-	 * @return
-	 */
-	
-	public void clear(){
-		planetCtl.clear();
-	}
+	public void removeAllPlanets() throws Exception {
+		Iterator<Planet> iterator = Clt.values().iterator();
 
-	//Setter
-	
-	/** 
-	 * @param namep
-	 * @return
-	 */
-	public void removePlanetByName(String namep) throws Exception {
-		Planet g = planetCtl.get(namep);
-		if (g == null) throw new Exception("This planet doesn't exist");
-		planetCtl.remove(namep);
-	}
-
-
-
-	//Getter
-	//-----------------------------------------------
-	/**
-	 * 
-	 * @return
-	 */
-	public List<String> getAll() {
-		List<String> list = new ArrayList<String>();
-		for(Planet i : planetCtl.values()){
-			list.add(i.getName());
+		// Recoremos todas los planetas
+		while (iterator.hasNext()) {
+			Planet p = (Planet) iterator.next();
+			// Eliminamos de la colecion
+			Clt.remove(p.getName());
+			// Eliminamos la referencia a galaxia
+			p.removeGalaxy();
 		}
-		return list;
 	}
 
 	/**
-	 * @return TST<Planet>
-	 */
-	public TST<Planet> getAllPlanet(){
-		return planetCtl;
-	}
-	
-	/**
-	 * @param namep
-	 * @return
-	 */
-	public Planet getPlanetByName(String namep) throws Exception{
-		if (!existByName(namep)) throw new Exception("This planet doesn't exist!"); 
-		return planetCtl.get(namep);
-	}
-	// Exist
-	//-----------------------------------------------
-	/**
-	 * @param g
-	 * @return
-	 */
-	public boolean exist(Planet g){
-		return planetCtl.contains(g.getName());
-	}
-	
-	/**
+	 * Pre: El nombre no debe ser nulo y con longitud > 0
+	 * 		El planeta debe existir 
+	 * Post: Eliminada el planeta con nombre "name"
+	 * 
 	 * @param name
-	 * @return
+	 * @throws Exception
 	 */
-	public boolean existByName(String namep) {
-		return planetCtl.contains(namep);
+	public void removePlanet(String name) throws Exception {
+		Planet p = Clt.get(name);
+		if (p == null)
+			throw new Exception("This planet doesn't exist");
+
+		// Eliminos del conjunto
+		Clt.remove(name);
+
+		// Eliminamos la refenrecia a galaxia
+		p.removeGalaxy();
+
 	}
 
-	// Utils
-	//-----------------------------------------------
+	// Save&Load
+	// ---------------------------------------------
+
 	/**
+	 * Post: Devuelve el tama–o de la coleci—n
 	 * 
-	 * @return
+	 * @return int
 	 */
-	public int size(){
-		return planetCtl.size();
+	public int size() {
+		return Clt.size();
 	}
-	
 
+	/**
+	 * Debe indicarse en cada controlador Post: Pasa el String a memoria como
+	 * objetos
+	 * 
+	 * @param l
+	 * @throws Exception
+	 */
+	protected void decodeString(String l) throws Exception {
 
-	/*public void save(String path, String file, int cacheSize) throws Exception {
+		// Corta el string por el separador interno
+		String[] s = l.split(" ");
 
+		// Comprueba que sea correcto y tengo el numero de elemntos minimo
+		if (s.length != 3)
+			throw new Exception("The record is not correct");
 
-		String cache = planetCtl.first().toString();
-		ArrayList<Planet> list = planetCtl.valuesCache(planetCtl.firstKey(), 5);
-		for(Planet p : list)
-			cache += (p.toString()+";");
-		dCont.write(path, file, cache, false);
+		// Separaci—n especifica del planeta
+		String name = s[0];
+		int x = Integer.parseInt(s[1]);
+		int y = Integer.parseInt(s[2]);
 
-		while(list.size() > 0){
+		// A–ade a la colecci—n
+		addPlanet(name, x, y);
 
-			list = planetCtl.valuesCache(list.get(list.size()-1).getName(),5);
-			cache = "";
-			for(Planet p : list)
-				cache += p.toString();
-			dCont.write(path, file, cache, true);
+	}
 
+	/**
+	 * Debe indicarse en cada controlador Post: Pasa el String a memoria como
+	 * objetos
+	 * 
+	 * @param l
+	 * @throws Exception
+	 */
+	protected String encodeString() throws Exception {
+
+		String encodeS = "";
+		ArrayList<Planet> list;
+
+		// Diferenciamos si es la primera vez
+		if (_last_key == "") {
+			// En caso de ser la primera vez como no tenemos indicado
+			// el _last_key usamos el primer elemento
+			encodeS = Clt.first().toString() + _SEPARATOR;
+			list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM - 1);
+		} else {
+			// Como tenemos un _last_key partimos desde este
+			list = Clt.valuesCache(_last_key, _CACHE_NUM);
 		}
 
+		// Pasamos objetos a cache
+		for (Planet p : list) {
+			encodeS += p.toString() + _SEPARATOR;
+			_last_key = p.getName();
+		}
+
+		return encodeS;
 	} 
-
-	public void load(String path, PlanetController pltCont, ResourceController resCont) throws Exception{
-	/*
-		String s = dCont.read(path);
-
-		String name = new String();
-		String planet = new String();
-		String packRel = new String();
-		String resRel = new String();
-		String qttRel = new String();
-		String aux = new String();
-
-		Packet pk = new Packet();
-		Planet pl;
-
-		for (int i = 0; i < s.length(); ++i) {
-			if(s.charAt(i) == ';'){
-				name = planet = null; 
-				aux = "";
-			}
-			else if (s.charAt(i) == ' '){
-				if (name == null){
-					name = aux;
-					aux = "";
-				}
-				else if (planet == null){
-					planet = aux;
-					aux = "";
-					try{
-						pk = new Packet(name);
-						pl = pltCont.getPlanetByName(planet);
-						pk.setPlanet(pl);
-						add(pk);
-					}
-					catch (Exception e) {
-						Console.print("Exception: ");
-						e.printStackTrace();
-					}
-				}
-				else if (packRel == null){
-					packRel = aux;
-					aux = "";
-				}
-				else if (resRel == null){
-					resRel = aux;
-					aux = "";
-				}
-				else if (qttRel == null){
-					qttRel = aux;
-					aux = "";
-					pk.addResource(resCont.get(resRel), Integer.parseInt(qttRel));
-					packRel = resRel = qttRel = null;
-				}
-			}
-			else aux+=s.charAt(i);
-		}*/
-	}
+}
 
