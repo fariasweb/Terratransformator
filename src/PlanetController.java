@@ -50,18 +50,20 @@ public class PlanetController extends AbstractController{
 	 * @param namePacket
 	 * @throws Exception
 	 */
-=======
+
 		//if(g.getPacket() != null) g.removePacket();
 	}
 	
->>>>>>> 81ea9cbe4d2b7d02f69d2cf7ebcbaa4553343c80
+
+
 	/*public void setPacket(String namep, String namePacket) throws Exception{
 		Planet p = planetCtl.get(namep);
 		if (p == null) throw new Exception("This planet doesn't exist");
 		//if(p.getPacket() != null) throw new Exception("There is a packet already assigned!");
 		Packet paq = p.getPacket();
 		p.setPacket(paq);
-<<<<<<< HEAD
+
+
 	}
     */
 	/**
@@ -70,11 +72,8 @@ public class PlanetController extends AbstractController{
 	 * @param newName
 	 * @throws Exception
 	 */
-=======
-	}*/
 
 
->>>>>>> 81ea9cbe4d2b7d02f69d2cf7ebcbaa4553343c80
 	public void setName(String oldName, String newName) throws Exception{
 		Planet p = planetCtl.get(oldName);
 		if (p == null) throw new Exception("This planet doesn't exist");

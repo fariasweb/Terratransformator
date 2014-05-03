@@ -166,9 +166,4 @@ public class Planet {
 		return name + " " + x_pos + " " + y_pos;
 	}
 
-	public double getDistance(Planet p2){
-		PairInt p = p2.getPosition();
-	    return Math.sqrt(((x_pos - p.getX())*((x_pos - p.getX())) + (( y_pos - p2.y_pos)*( y_pos - p2.y_pos))));
-	
-	}
 }

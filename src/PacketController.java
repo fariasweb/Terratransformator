@@ -99,6 +99,10 @@ public class PacketController extends AbstractController{
 		return p.getPlanet();
 	}
 	
+	public TST<Packet> getAll(){
+		return Clt;
+	}
+	
 	/**
 	 * @return the map
 	 */
