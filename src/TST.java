@@ -132,34 +132,6 @@ public class TST<Value> {
 		return x;
 	}
 
-	/**
-	 * Busca y devuevel le prefijo mas largo de s
-	 * @param s
-	 * @return
-	 */
-	public String longestPrefixOf(String s) {
-		s = s.toLowerCase();
-		
-		if (s == null || s.length() == 0)
-			return null;
-		int length = 0;
-		Node x = root;
-		int i = 0;
-		while (x != null && i < s.length()) {
-			char c = s.charAt(i);
-			if (c < x.c)
-				x = x.left;
-			else if (c > x.c)
-				x = x.right;
-			else {
-				i++;
-				if (x.val != null)
-					length = i;
-				x = x.mid;
-			}
-		}
-		return s.substring(0, length);
-	}
 
 	/**
 	 * Devuelve todas las llaves del TST ordenadas
