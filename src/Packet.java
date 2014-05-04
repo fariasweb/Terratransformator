@@ -1,5 +1,7 @@
-import java.util.Iterator;
-
+/**
+ * Packet
+ *
+ */
 public class Packet {
 
 	private String name;
