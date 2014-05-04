@@ -190,7 +190,7 @@ public class TabooSearch{
 
 	private static void generate_random_solution(long n, ArrayList<Integer> p)
  	{
-  		for (int i = 0; i <= n; ++i) p.set(i, i);
+  		for (int i = 0; i < n; ++i) p.set(i, i);
   		for (int i = 1; i <  n; ++i){
   			Integer aux = p.get(i);
   			p.set(i, p.get((int)unif(i, n)));
@@ -199,8 +199,8 @@ public class TabooSearch{
  	}
 
  	private static int n;                    // problem size
-	private static ArrayList<ArrayList<Integer>> a, b;         // flows and distances matrices
-	private static ArrayList<Integer> solution;      /*solution (permutation) */
+	private static ArrayList<ArrayList<Integer>> a, b;
+	private static ArrayList<Integer> solution; 
 	private static long cost;                // solution cost
 
 	int i, j;
@@ -220,3 +220,4 @@ public class TabooSearch{
 
 	}
 }
+

@@ -2,9 +2,8 @@
  * Packet
  *
  */
-public class Packet {
+public class Packet extends Entity {
 
-	private String name;
 	private TST<RelationPacketResource> rel; 
 	private int qttResources;
 	
@@ -35,18 +34,6 @@ public class Packet {
 
 	// Setter
 	// ---------------------------------------------
-	/**
-	 * Modifica el nombre de un paquete
-	 * pre:El nombre a asignar no ha de existir en el sistema
-	 * post:Se cambia el nombre del paquete 
-	 * 
-	 * @param namep
-	 * @throws Exception
-	 */
-	public void setName(String namep) throws Exception {
-		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
-		name = namep;
-	}
 	
 
 	/**
@@ -91,13 +78,6 @@ public class Packet {
 
 	// Getters
 	//---------------------------------------------
-	/**
-	 * pre:El paquete debe existir
-	 * @return String
-	 */
-	public String getName() {
-		return name;
-	}
 	
 	/**
 	 * Post: Devuelve los recursos dentro de un paquete
