@@ -1,100 +1,63 @@
-import java.util.List;
+/**
+ * QAPSend
+ *
+ */
 public class QAPSend {
 	
-	private List<Send> CltSend;
+	private Planet planet;
+	private Packet packet;
 	
-	public QAPSend(){
-		CltSend = null;
+	/**
+	 * Constructor
+	 * @param p
+	 * @param pack
+	 * @return 
+	 */
+	public QAPSend (Planet p , Packet pack){
+		planet = p;
+		packet = pack;
 	}
 	
-	public void addSend(Send s){
-		CltSend.add(s);
-	}
-	
+	// Setters
+	//---------------------------------------------
 	/**
 	 * 
 	 * @param p
-	 * @return
-	 * @throws Exception
 	 */
-	public Send getSendWithPlanet(Planet p) throws Exception{  // Devuelve Send que tenga paquete = p;
-		for(Send i :CltSend){
-			if(p == i.getPlanet()) return i;
-		}
-		throw new Exception("Planet not found");
+	public void setPlanet(Planet p){
+		planet = p;
 	}
-	
 	/**
 	 * 
 	 * @param p
-	 * @return
-	 * @throws Exception
 	 */
-	public Send getSendWithPacket(Packet p) throws Exception{ // Devuelve Send que tenga paquete = p;
-		for(Send i :CltSend){
-			if(p == i.getPacket()) return i;
-		}
-		throw new Exception("Packet not found");
+	public void setPacket(Packet p){
+		packet = p;
 	}
 	
+	// Getters
+	//---------------------------------------------	
 	/**
 	 * 
-	 * @param packet
-	 * @param planet
 	 * @return
-	 * @throws Exception
 	 */
-	public Send getSendWithPacketAndPlanet(Packet packet, Planet planet) throws Exception{
-		for(Send i :CltSend){
-			if(packet == i.getPacket() && planet== i.getPlanet()) return i;
-		}
-		throw new Exception("Packet or Planet not found");
+	public Planet getPlanet(){
+		return planet;
 	}
-	
 	/**
 	 * 
-	 * @param s1
-	 * @param s2
+	 * @return
 	 */
-	public void swapSends (Send s1, Send s2){
-		Packet r = s1.getPacket();
-		s1.setPacket(s2.getPacket());
-		s2.setPacket(r);
+	public Packet getPacket(){
+		return packet;
 	}
 	
+	// To Basic
+	//---------------------------------------------
 
-	/**
-	 * 
-	 * @param p
-	 */
-	public void removePacketSolution(Packet p) throws Exception{
-		Send i = getSendWithPacket(p);
-		i.setPacket(null);
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public List<Send> getList(){
-		return CltSend;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public int size(){
-		return CltSend.size();
+	public String ToString(){
+		return planet.getName() + " " + packet.getName();
 	}
 	
 	
-	public String toString() {
-		String r = new String();
-		for(Send i : CltSend){
-			r += i.getPlanet().getName() + " " + i.getPacket().getName();
-		}
-		return r;	
-	}
 }
-

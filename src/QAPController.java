@@ -2,55 +2,65 @@ public class QAPController {
 
 	private GalaxyController CG;
 	private PacketController CP;
-	private QAPInput iqap;
-	private QAP qap;
+
 	private QAPSolution oqap;
 	private Galaxy g;
-	private String QAPType;
-	private String[] planets;
-	private String[] packets;
+	private TST<Packet> p;
 
-	
+	/**
+	 * 
+	 * @param galaxyc
+	 * @param packetc
+	 */
 	public QAPController(GalaxyController galaxyc ,PacketController packetc){
+		//Referencias a otros controladores
 		CG = galaxyc;
 		CP = packetc;
-		iqap = null;
+		 
+		//Soluci—n y objetos copiados
 		oqap = null;
 		g = null;
-		qap = null;
+		p = null;
 	}
 
-	
-	public void setGalaxy(String galaxy) throws Exception{
-		g = CG.getByName(galaxy);
-	}
-	
-	public void setQAPType(String name){
-		QAPType = name;
-	}
-	
+	// Read
+	// ---------------------------------------------
+
 	public Galaxy getGalaxy(){
 		return g;
 	}
 	
-	public String getQAPType(){
-		return QAPType;
+	public String getQAPtype() {
+		//TODO Devolver un string con los posibles tipo de QAP
+		//TODO Devolver elementos de una interface
+		return "";
 	}
 	
-	
-	
-	public void QAP(String GalaxyName) throws Exception {
+	// Create
+	// ---------------------------------------------
+
+	public void QAP(String GalaxyName, String QAPType) throws Exception {
 		
 		//1.Comprobar que la galaxia exista , comprobar que existe numPaquetes > 0
-		if(g.getPlanets().get(GalaxyName) == null) throw new Exception("Galaxy is not defined");
+		Galaxy gOriginal = CG.getByName(GalaxyName);
+		if(gOriginal == null) throw new Exception("Galaxy does not exist");
 		if(CP.size() <= 0 ) throw new Exception("No Packets to Assign");
+		
 		//2.Comprobar que el tipo de QAP exista
+		//TODO: Comprobar con una interface
 		if(QAPType != "Gilmore Lazy" && QAPType != "Gilmore Eager" && QAPType !="Taboo Search") throw new Exception("Not Exists");
 		
-		//3.Entrada
-		iqap = new QAPInput(g,CP.getAll());
 		
-		//4.Seleccion de algoritmo y ejecucion
+		//3. Clonamamos el planeta y TST<Paquete>
+		//TODO Hecho asi para continuar, pero se debe clonar
+		g = gOriginal; //GC.cloneGalaxy(GalaxyName);
+		//p = CP.clone();
+		
+		//4.Entrada
+		QAPInput iqap = new QAPInput(g, p);
+		
+		//5.Seleccion de algoritmo y ejecucion
+		//Falta indicar
 		QAP alg;
 		switch(QAPType){
 			case "Gilmore Lazy":
@@ -60,25 +70,25 @@ public class QAPController {
 				alg = new QAPLazyGLB(iqap);	//Hay que pasarle parametros
 				break;
 			default: 
-				throw new Exception("Not Exists");
+				throw new Exception("QAPType is not defined");
 		}
-		//Ejecucion y salida
-		oqap = alg.run();
 		
-		//Hay que construir la lista de Sends a partir de la salida del algoritm
-	}
-	
-	//FALTA FUNCION DE CLONAR?
-	public Galaxy cloneGalaxy(Galaxy g){
-		Galaxy g1 = new Galaxy();
-		//
-		return g1;
+		//6.Ejecucion del QAP
+		alg.run();
+		
+		//7.Generar salida
+		oqap = new QAPSolution(alg, g, p);
 		
 	}
 	
-	public Packet clonePacket(Packet p){
-		Packet p1 = new Packet();
-		p1 = p;
-		return p1;
-	}
+	
+	// ---------------------------------------------
+	// QAP Solution
+	// TODO Reasignar paquetes,...
+	// ---------------------------------------------
+
+	// Save&Load
+	// ---------------------------------------------
+	//TODO
+	
 }

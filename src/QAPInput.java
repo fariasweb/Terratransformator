@@ -4,16 +4,9 @@ public class QAPInput {
 
 	private double distanceMatrix[][];
 	private double flowMatrix[][];
+
 	private String[] CltPlanet;
 	private String[] CltPacket;
-	
-	/**
-	 * 
-	 */
-	public QAPInput() {
-		distanceMatrix = null;
-		flowMatrix = null;
-	}
 
 	/**
 	 * 
@@ -21,13 +14,12 @@ public class QAPInput {
 	 * @param packets
 	 */
 	public QAPInput(Galaxy galaxy, TST<Packet> packets) {
-		setGalaxy(galaxy);
 		setDistanceMatrix(galaxy);
 		setFlowMatrix(packets);
 		setVectorPlanets(galaxy);
 		setVectorPackets(packets);
 	}
-	
+
 	/**
 	 * 
 	 * @param g
@@ -54,10 +46,6 @@ public class QAPInput {
 		distanceMatrix = d;
 	}
 
-	public void setPackets(TST<Packet> packets){
-		p = packets;
-	}
-	
 	/**
 	 * 
 	 * @param packets
@@ -83,7 +71,7 @@ public class QAPInput {
 
 		flowMatrix = flow;
 	}
-	
+
 	public void setVectorPackets(TST<Packet> p){
 		CltPacket = new String[p.size()];
 		int j = 0;
@@ -100,10 +88,7 @@ public class QAPInput {
 			++j;
 		}
 	}
-	
-	public void setGalaxy(Galaxy galaxy){
-		g = galaxy;
-	}
+
 	/**
 	 * 
 	 * @return
@@ -112,35 +97,23 @@ public class QAPInput {
 		return distanceMatrix;
 	}
 
-	public int getSizePlanets() {
-		return CltPlanet.length;
-	}
-	
-	public int getSizePackets() {
-		return CltPacket.length;
-	}
-	
-	public String[] getPlanets(){
-		return CltPlanet;
-	}
-	
-	public String[] getPackets(){
-		return CltPacket;
-	}
-	
-	public Galaxy getGalaxy(){
-		return g;
-	}
-	
-	public TST<Packet> getPacket(){
-		return p;
-	}
-	/**
-	 * 
-	 * @return
-	 */
 	public double[][] getFlowMatrix() {
 		return flowMatrix;
 	}
 
+	public int getSizePlanets() {
+		return CltPlanet.length;
+	}
+
+	public int getSizePackets() {
+		return CltPacket.length;
+	}
+
+	public String[] getPlanets(){
+		return CltPlanet;
+	}
+
+	public String[] getPackets(){
+		return CltPacket;
+	}
 }
