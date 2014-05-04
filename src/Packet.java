@@ -34,6 +34,10 @@ public class Packet extends Entity{
 
 	// Setter
 	// ---------------------------------------------
+<<<<<<< HEAD
+=======
+	
+>>>>>>> be47766f7b6226141a3e390980e85b6b4d68a9d1
 
 	/**
 	 * pre:El nombre no debe ser nulo y qtt > 0 
@@ -77,13 +81,6 @@ public class Packet extends Entity{
 
 	// Getters
 	//---------------------------------------------
-	/**
-	 * pre:El paquete debe existir
-	 * @return String
-	 */
-	public String getName() {
-		return name;
-	}
 	
 	/**
 	 * Post: Devuelve los recursos dentro de un paquete

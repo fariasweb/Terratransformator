@@ -42,18 +42,6 @@ public class Planet extends Entity {
 	// Setter
 	// ---------------------------------------------
 
-	/**
-	 * Modifica el nombre de un planeta
-	 * pre:El nombre a asignar no ha de existir en el sistema
-	 * post:Se cambia el nombre del planeta 
-	 * @param namep
-	 * @throws Exception
-	 */
-	public void setName(String namep) throws Exception {
-		if (!Util.checkName(namep))
-			throw new Exception(namep + " is not valid");
-		name = namep;
-	}
 
 	/**
 	 * Modifica la posicion de un planeta
@@ -106,13 +94,6 @@ public class Planet extends Entity {
 	// Getter
 	// -----------------------------------------------
 
-	/**
-	 * Devuelve el nombre del planeta
-	 * @return String
-	 */
-	public String getName() {
-		return name;
-	}
 
 	/**
 	 * post: Devuelve la posicion del planeta 

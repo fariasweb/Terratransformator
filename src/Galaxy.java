@@ -7,7 +7,6 @@ import java.util.*;
  */
 public class Galaxy extends Entity{
 
-	private String name;
 	private int x;
 	private int y;
 
@@ -48,16 +47,6 @@ public class Galaxy extends Entity{
 	// Setter
 	// ---------------------------------------------
 
-	/**
-	 * 
-	 * @param namep
-	 * @throws Exception
-	 */
-	public void setName(String namep) throws Exception {
-		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
-		name = namep;
-
-	}
 
 	/**
 	 * Pre: xp > 0 y yp > 0
@@ -115,13 +104,6 @@ public class Galaxy extends Entity{
 	// Getter
 	// -----------------------------------------------
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public String getName() {
-		return name;
-	}
 
 	/**
 	 * 
