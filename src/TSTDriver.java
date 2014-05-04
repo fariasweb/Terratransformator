@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
-public class TSTDriver extends AbstractDriver{
-	
-	public static void main(String[] args){
+public class TSTDriver extends AbstractDriver {
+
+	public static void main(String[] args) {
 
 		TST<Entity> Clt = new TST<Entity>();
 		Entity r = null;
@@ -28,11 +28,11 @@ public class TSTDriver extends AbstractDriver{
 
 				// Accion
 				switch (opc) {
-				case 0: //Exit
+				case 0: // Exit
 					break;
 
 				case 1:
-					 try {
+					try {
 						r = new Entity();
 						r.setName(argv[1]);
 					} catch (Exception e) {
@@ -41,99 +41,95 @@ public class TSTDriver extends AbstractDriver{
 					break;
 
 				case 2:
-					Console.print("Size: "+Clt.size());
+					Console.print("Size: " + Clt.size());
 					break;
 
 				case 3:
-					if(Clt.contains(argv[1])) Console.print("YES");
-					if(Clt.contains(argv[1])) Console.print("NO");
+					if (Clt.contains(argv[1]))
+						Console.print("YES");
+					if (Clt.contains(argv[1]))
+						Console.print("NO");
 					break;
 
 				case 4:
 					try {
 						Entity r2 = Clt.get(argv[1]);
-						if(r2 == null) Console.print("Resource not present");
-						else Console.print(r2.toString());
+						if (r2 == null)
+							Console.print("Resource not present");
+						else
+							Console.print(r2.toString());
 					} catch (Exception e) {
 						_msg_error(e.getMessage());
 					}
-					
+
 					break;
 
 				case 5:
-					try{
+					try {
 						if (r == null)
 							throw new Exception("Entity is null");
 						Clt.put(argv[1], r);
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						_msg_error(e.getMessage());
 					}
 					break;
 
 				case 6:
-					Console.print(Clt.longestPrefixOf(argv[1]));
-					break;
-
-				case 7:
 					Iterable<String> it1 = Clt.keys();
-					for(String str : it1)
-						Console.echo(str+" ");
+					for (String str : it1)
+						Console.echo(str + " ");
 
 					Console.print("");
 					break;
 
-				case 8:
+				case 7:
 					Iterable<Entity> it2 = Clt.values();
-					for(Entity i : it2)
+					for (Entity i : it2)
 						Console.print(i.toString());
 
 					break;
 
-				case 9:
-					try{
-						Iterable<Entity> it4 = Clt.valuesCache(argv[1], Integer.parseInt(argv[2]));
-						for(Entity i : it4)
-							Console.echo(i.toString()+" ");
+				case 8:
+					try {
+						Iterable<Entity> it4 = Clt.valuesCache(argv[1],
+								Integer.parseInt(argv[2]));
+						for (Entity i : it4)
+							Console.echo(i.toString() + " ");
 
 						Console.print("");
+					} catch (Exception e) {
+						_msg_error(e.getMessage());
 					}
-					catch (Exception e) {
+					break;
+
+				case 9:
+					try {
+						Console.print(Clt.first().toString());
+					} catch (Exception e) {
 						_msg_error(e.getMessage());
 					}
 					break;
 
 				case 10:
-					try{
-						Console.print(Clt.first().toString());
-					}
-					catch (Exception e) {
+					try {
+						Console.print(Clt.firstKey());
+					} catch (Exception e) {
 						_msg_error(e.getMessage());
 					}
 					break;
 
 				case 11:
-					try{
-						Console.print(Clt.firstKey());
-					}
-					catch (Exception e) {
-						_msg_error(e.getMessage());
-					}
-					break;
-
-				case 12:
 					Clt.clear();
 					break;
 
-				case 13:
-					try{
+				case 12:
+					try {
 						Clt.remove(argv[1]);
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						_msg_error(e.getMessage());
 					}
 					break;
-					
+
 				default:
 					_msg_opc_invalid();
 					break;
@@ -143,7 +139,6 @@ public class TSTDriver extends AbstractDriver{
 		} while (opc != 0);
 	}
 
-
 	// Menu
 	// ---------------------------------------------
 
@@ -152,7 +147,7 @@ public class TSTDriver extends AbstractDriver{
 		 */
 	private static void _menu() {
 
-		title = "Galaxy TST Driver";
+		title = "TST Driver";
 
 		menu.add("Entity(String namep, ResourceType typep) : r");
 

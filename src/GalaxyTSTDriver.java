@@ -103,19 +103,6 @@ public class GalaxyTSTDriver extends AbstractDriver {
 				case 9:
 					values_TST(Clt);
 					break;
-					
-				case 10:
-					if (argv.length < 2)
-						_msg_error_param_insuf();
-					else {
-						String s = Clt.longestPrefixOf(argv[1]);
-						if (s == null) {
-							Console.print("Longest prefix does not found");
-						} else {
-							Console.print("Longest prefix: "+s);
-						}
-					}
-					break;
 
 				}
 			}
@@ -148,8 +135,6 @@ public class GalaxyTSTDriver extends AbstractDriver {
 
 		menu.add("keys() : Iterable<String>"); // 8
 		menu.add("values() : Iterable<Galaxy>");
-
-		menu.add("longestPrefixOf(String s) : String"); // 10
 
 		print_menu();
 	}

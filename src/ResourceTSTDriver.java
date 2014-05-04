@@ -76,10 +76,6 @@ public class ResourceTSTDriver extends AbstractDriver {
 					break;
 
 				case 6:
-					Console.print(Clt.longestPrefixOf(argv[1]));
-					break;
-
-				case 7:
 					Iterable<String> it1 = Clt.keys();
 					for (String str : it1)
 						Console.echo(str + " ");
@@ -87,7 +83,7 @@ public class ResourceTSTDriver extends AbstractDriver {
 					Console.print("");
 					break;
 
-				case 8:
+				case 7:
 					Iterable<Resource> it3 = Clt.values();
 					for (Resource i : it3)
 						Console.echo(i.toString() + " ");
@@ -95,7 +91,7 @@ public class ResourceTSTDriver extends AbstractDriver {
 					Console.print("");
 					break;
 
-				case 9:
+				case 8:
 					try {
 						Iterable<Resource> it5 = Clt.valuesCache(argv[1],
 								Integer.parseInt(argv[2]));
@@ -109,7 +105,7 @@ public class ResourceTSTDriver extends AbstractDriver {
 					}
 					break;
 
-				case 10:
+				case 9:
 					try {
 						Console.print(Clt.first().toString());
 					} catch (Exception e) {
@@ -118,7 +114,7 @@ public class ResourceTSTDriver extends AbstractDriver {
 					}
 					break;
 
-				case 11:
+				case 10:
 					try {
 						Console.print(Clt.firstKey());
 					} catch (Exception e) {
@@ -127,11 +123,11 @@ public class ResourceTSTDriver extends AbstractDriver {
 					}
 					break;
 
-				case 12:
+				case 11:
 					Clt.clear();
 					break;
 
-				case 13:
+				case 12:
 					try {
 						Clt.remove(argv[1]);
 					} catch (Exception e) {
@@ -154,7 +150,7 @@ public class ResourceTSTDriver extends AbstractDriver {
 
 	private static void _menu() {
 
-		title = "Galaxy TST Driver";
+		title = "Resource TST Driver";
 
 		menu.add("[AUX]ResourceDriver.Resource(String namep, ResourceType typep) : Resource");
 
@@ -162,7 +158,6 @@ public class ResourceTSTDriver extends AbstractDriver {
 		menu.add("contains(String key) : boolean");
 		menu.add("get(String key) : Resource");
 		menu.add("put(String r.getName(), r)");
-		menu.add("longestPrefixOf(String s) : String");
 		menu.add("keys() : Iterable<String>");
 		menu.add("values() : Iterable<Resource>");
 		menu.add("valuesCache(String key, int max) : Iterable<Resource>");
