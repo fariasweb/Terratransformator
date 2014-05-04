@@ -405,5 +405,22 @@ public class GalaxyController extends AbstractController {
 	protected void preConditionLoad() throws Exception {
 		if (pc.size() == 0) throw new Exception("Planet Controler must have planets to load galaxis");
 	}
+	
+	public Galaxy cloneGalaxy (Galaxy g) throws Exception{
+		if(g == null) throw new Exception ("Galaxy not defined");
+		Galaxy copy = new Galaxy();
+		copy.setName(g.getName());
+		PairInt p = g.getSize();
+		copy.setSize(p.getX(),p.getY());
+		
+		Iterable<Planet> planets = g.getPlanets().values();
+		for(Planet i : planets){
+			String name = i.getName();
+			PairInt aux = i.getPosition();
+			Planet j = new Planet(name,aux.getX(),aux.getY());
+			copy.getPlanets().put(j.getName(), j);
+		}
+		return copy;
+	}
 
 }

@@ -4,8 +4,6 @@ public class QAPInput {
 
 	private double distanceMatrix[][];
 	private double flowMatrix[][];
-	private Galaxy g;
-	private TST<Packet> p;
 	private String[] CltPlanet;
 	private String[] CltPacket;
 	
