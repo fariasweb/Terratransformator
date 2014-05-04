@@ -2,7 +2,7 @@ public class QAPLazyGLB extends QAP{
 
 	public QAPLazyGLB(QAPInput qap) throws Exception {
 		super(qap);
-		QAPType = "Lazy";
+		QAPType = "GilmoreLazy";
 	}
 
 	public static double BranchAndBound(double[][] d, double[][] f, int[] va,int val[], int level) {
@@ -104,26 +104,10 @@ public class QAPLazyGLB extends QAP{
 		long startTime = System.nanoTime();
 		double d = BranchAndBound(input.getDistanceMatrix(), input.getFlowMatrix(), sol1,sol2,0); //Se le a–ade parametro adicional al Eager
 		long endTime = System.nanoTime();
+		
 		time = endTime - startTime;
 		result = d;
 		solution = sol2;
+		isRun = true;
 	}
-
-
-	/*public void convertSolutionSends() throws Exception{
-		QAPSolution q = run();
-		QAPSend qs = new QAPSend();
-		TST<Planet> nameP = input.getGalaxy().getPlanets();
-		TST<Packet> namePk = input.getPacket();
-		String auxP[] = input.getPlanets();
-		String auxPk[] = input.getPackets();
-		for(int i = 0; i < q.getSolution().length; ++i ){
-			Send s = new Send();
-			
-			s.setPlanet(nameP.get(auxP[i]));
-			s.setPacket(namePk.get(auxPk[i]));
-			qs.addSend(s);
-		}
-		q.setQAPSend(qs);
-	}*/
 }

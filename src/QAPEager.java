@@ -12,7 +12,7 @@ public class QAPEager extends QAP{
 	 */
 	public QAPEager(QAPInput qap) throws Exception {
 		super(qap);
-		QAPType = "Eager";
+		QAPType = "GilmoreEager";
 	}
 
 	public static double BranchAndBound(double[][] d, double[][] f, int[] va,int val[]) {

@@ -5,7 +5,7 @@ import java.util.*;
  * @author farias
  *
  */
-public class Galaxy implements EntityInterface {
+public class Galaxy extends Entity{
 
 	private String name;
 	private int x;

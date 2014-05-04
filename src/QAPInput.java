@@ -44,12 +44,13 @@ public class QAPInput {
 			++i;
 		}
 		for (i = 0; i < n; ++i) {
-			for (int j = i + 1; j < n - 1; ++j) {
+			for (int j = i; j < n; ++j) {
 				d[i][j] = Util.vectorialDistance(vect[i].getPosition(),
 						vect[j].getPosition());
 				d[j][i] = d[i][j];
 			}
 		}
+		//Console.WriteMatrix(d);
 		distanceMatrix = d;
 	}
 
@@ -76,6 +77,7 @@ public class QAPInput {
 			}
 		}
 
+		//Console.WriteMatrix(flow);
 		flowMatrix = flow;
 	}
 

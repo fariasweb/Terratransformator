@@ -24,16 +24,16 @@ public class QAPSolution{
 	
 	
 	private void setQAPInfo(QAP qap) {
-		//TODO
 		//Informacion como tiempo, typo y eficiencia
-		QAPType = qap.QAPType;
-		executionTime = qap.time;
-		efficiency = qap.result;
+		QAPType = qap.getQAPType();
+		executionTime = qap.getTime();
+		efficiency = qap.getResult();
 	}
 	
 	private void setQAPSend(QAP qap, Galaxy g, TST<Packet> p) throws Exception {
 		//1.Recoger el vector solucion de QAP
-		int [] solution = qap.solution; 
+		if (!qap.isRun()) throw new Exception("The QAP has not run yet");
+		int [] solution = qap.getSolution(); 
 		//2. Generar los arrays que antes estaban en QAPInput
 		//No hace falta guardarlos
 		String[] namePackets = qap.input.getPackets();
@@ -44,11 +44,12 @@ public class QAPSolution{
 		CltSend = new ArrayList<QAPSend>();
 		for(int i = 0; i < solution.length; ++i){
 			Planet auxPlanet = g.getPlanets().get(namePlanets[i]); //Al planeta i se le asigna el paquete solution[i]
-			Packet auxPacket = p.get(namePackets[solution[i]]);
+			Packet auxPacket = p.get(namePackets[solution[i] - 1]);
+			
+			//Creamos y asignamos el envio
 			QAPSend j = new QAPSend(auxPlanet, auxPacket);
 			CltSend.add(j);
 		}
-		
 	}
 	
 	// Getters
@@ -80,7 +81,7 @@ public class QAPSolution{
 		for(QAPSend i :CltSend){
 			if(p == i.getPlanet()) return i;
 		}
-		throw new Exception("Planet not found");
+		throw new Exception("Planet "+p.getName()+" not found");
 	}
 	
 	/**
@@ -126,7 +127,7 @@ public class QAPSolution{
 	 * @param s1
 	 * @param s2
 	 */
-	public void swapSends (Send s1, Send s2){
+	public void swapSends (QAPSend s1, QAPSend s2){
 		Packet r = s1.getPacket();
 		s1.setPacket(s2.getPacket());
 		s2.setPacket(r);
@@ -150,9 +151,14 @@ public class QAPSolution{
 	 * TODO 
 	 */
 	public String toString() {
-		String r = new String();
+		
+		
+		//Informacion basica
+		String r = QAPType+" "+executionTime+" "+efficiency+"\n";
+		
+		//Envios
 		for(QAPSend i : CltSend){
-			r += i.getPlanet().getName() + " " + i.getPacket().getName();
+			r += i.getPlanet().getName() + " " + i.getPacket().getName()+"\n";
 		}
 		return r;	
 	}

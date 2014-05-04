@@ -553,12 +553,34 @@ public class PacketController extends AbstractController {
 		
 		//Copaimos el paquete
 		Packet p1 = new Packet();
-		p.setName(p.getName());
+		p1.setName(p.getName());
 		
 		//A–adimos los mismmo recursos
 		Iterable<RelationPacketResource> rpr = p.getResources().values();
 		for (RelationPacketResource i : rpr) {
-			p.addResource(i.getResource(), i.getQuantity());
+			p1.addResource(i.getResource(), i.getQuantity());
+		}
+		
+		return p1;
+	}
+	
+	/**
+	 * Pre: Paquete debe ser valida 
+	 * Post: Devuelve una copia exacta del paquete con sus recursos
+	 * 
+	 * @param g
+	 * @return
+	 * @throws Exception
+	 */
+
+	public TST<Packet> cloneCollection() throws Exception {
+		//Copaimos el paquete
+		TST<Packet> p1 = new TST<Packet>();
+		
+		//A–adimos los mismmo recursos
+		Iterable<Packet> ip = Clt.values();
+		for (Packet i : ip) {
+			p1.put(i.getName(), clonePacket(i));
 		}
 		
 		return p1;

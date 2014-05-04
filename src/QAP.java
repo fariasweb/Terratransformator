@@ -9,6 +9,7 @@ public abstract class QAP {
 
 	//Variables de ejecucion
 	boolean isRun;
+
 	long time; 
 	double result; 
 	
@@ -16,8 +17,12 @@ public abstract class QAP {
 	int[] solution;
 	
 	//Tipo de algoritmo
-	String QAPType = "QAP";
+	protected String QAPType = "QAP";
 
+
+	// Constructor
+	// ---------------------------------------------
+		
 	/**
 	 * Constructora
 	 * @param qap
@@ -31,6 +36,47 @@ public abstract class QAP {
 		isRun = false;
 	}
 	
+	// Getters
+	// ---------------------------------------------
+		
+	/**
+	 * Devuelve el tipo de QAP
+	 */
+	public String getQAPType() {
+		return QAPType;
+	}
+	
+	/**
+	 * @return the isRun
+	 */
+	public boolean isRun() {
+		return isRun;
+	}
+
+	/**
+	 * @return the time
+	 */
+	public long getTime() {
+		return time;
+	}
+
+	/**
+	 * @return the result
+	 */
+	public double getResult() {
+		return result;
+	}
+	
+	/**
+	 * @return the solution
+	 */
+	public int[] getSolution() {
+		return solution;
+	}
+	
+	// Run
+	// ---------------------------------------------
+		
 	/**
 	 * 
 	 * @throws Exception

@@ -1,8 +1,11 @@
+
 public class QAPController {
 
 	//Referencia a los valores actuales
 	private GalaxyController CG;
 	private PacketController CP;
+	//Private and general
+	protected DataController dCont;
 	
 	//Copias de los valores en el momento de ejecutar la solucion
 	private Galaxy g;
@@ -10,6 +13,11 @@ public class QAPController {
 	
 	//Solucion dada para galaxua g y paquetes p
 	private QAPSolution oqap;
+	
+	//Enum QAPType
+	public enum QAPTypeList {
+		GilmoreLazy, GilmoreEager
+	}
 
 	/**
 	 * 
@@ -20,6 +28,7 @@ public class QAPController {
 		//Referencias a otros controladores
 		CG = galaxyc;
 		CP = packetc;
+		dCont = new DataController();
 		 
 		//Soluci—n y objetos copiados
 		oqap = null;
@@ -29,14 +38,47 @@ public class QAPController {
 
 	// Read
 	// ---------------------------------------------
+	
+	/**
+	 * Devuelve un string con todos los valores posibles para
+	 * selecionar el tipo de QAP
+	 * @return
+	 */
+	public String getQAPtype() {
+		String t = "";
 
-	public Galaxy getGalaxy(){
-		return g;
+		//Cogemos todos los tipos posibles de QAP
+		for(QAPTypeList c: QAPTypeList.values()){
+	        t += c.name()+"\n";
+		}
+
+		return t;
 	}
 	
-	public String getQAPtype() {
-		//TODO Devolver un string con los posibles tipo de QAP
-		//TODO Devolver elementos de una interface
+	/**
+	 * Comprueba si el elemento se encuentra en en enum
+	 * @param n
+	 * @return
+	 */
+	private boolean containsQAPType(String n) {
+
+	    for (QAPTypeList c : QAPTypeList.values()) {
+	        if (c.name().equals(n)) {
+	            return true;
+	        }
+	    }
+
+	    return false;
+	}
+	
+	/**
+	 * Pre: Debe exisitir una solucion
+	 * @return
+	 */
+	public String getQAPSolution() {
+		if (oqap != null)
+			return oqap.toString();
+		
 		return "";
 	}
 	
@@ -47,34 +89,30 @@ public class QAPController {
 		
 		//1.Comprobar que la galaxia exista , comprobar que existe numPaquetes > 0
 		Galaxy gOriginal = CG.getByName(GalaxyName);
-		if(gOriginal == null) throw new Exception("Galaxy does not exist");
-		if(CP.size() <= 0 ) throw new Exception("No Packets to Assign");
+		if (gOriginal == null) throw new Exception("Galaxy does not exist");
+		if (gOriginal.getPlanets().size() == 0) throw new Exception("Galaxy must have planets");
+		if (CP.size() <= 0 ) throw new Exception("No Packets to Assign");
 		
 		//2.Comprobar que el tipo de QAP exista
-		//TODO: Comprobar con una interface
-		if(QAPType != "Gilmore Lazy" && QAPType != "Gilmore Eager" && QAPType !="Taboo Search") throw new Exception("Not Exists");
-		
-		
+		if (!containsQAPType(QAPType)) 
+			throw new Exception("QAP type does Not Exists");
+	
 		//3. Clonamamos el planeta y TST<Paquete>
-		//TODO Hecho asi para continuar, pero se debe clonar
-		g = gOriginal; //GC.cloneGalaxy(GalaxyName);
-		//p = CP.clone();
+		g = CG.cloneGalaxy(gOriginal);		
+		p = CP.cloneCollection(); 
 		
 		//4.Entrada
 		QAPInput iqap = new QAPInput(g, p);
 		
 		//5.Seleccion de algoritmo y ejecucion
-		//Falta indicar
 		QAP alg;
-		switch(QAPType){
-			case "Gilmore Lazy":
-				alg = new QAPEager(iqap); // Hay que pasarle parametros
-				break;
-			case "Gilmore Eager":
-				alg = new QAPLazyGLB(iqap);	//Hay que pasarle parametros
-				break;
-			default: 
-				throw new Exception("QAPType is not defined");
+		
+		if (QAPType.equals(QAPTypeList.GilmoreLazy.name())) {
+			alg = new QAPLazyGLB(iqap);
+		} else if (QAPType.equals(QAPTypeList.GilmoreEager.name())) {
+			alg = new QAPEager(iqap);
+		} else {
+			throw new Exception("QAPType is not defined");
 		}
 		
 		//6.Ejecucion del QAP
@@ -82,7 +120,6 @@ public class QAPController {
 		
 		//7.Generar salida
 		oqap = new QAPSolution(alg, g, p);
-		
 	}
 	
 	
@@ -90,6 +127,40 @@ public class QAPController {
 	// QAP Solution
 	// TODO Reasignar paquetes,...
 	// ---------------------------------------------
+	
+	// Update
+	// ---------------------------------------------
+	
+	/**
+	 * Pre: Los planetas deben de ser de la galaxia para la cual
+	 * se ha generado la solucion.
+	 * Los planetas deben de tener un paquete asignado
+	 * 
+	 * Post: Cambia los paquete de planetas
+	 * 
+	 * @param PlanetA
+	 * @param PlanetB
+	 * @throws Exception
+	 */
+	public void exchangePackets(String PlanetA, String PlanetB) throws Exception {
+		if (oqap == null)
+			throw new Exception("Any solution created");
+		
+		Planet p1 = g.getPlanets().get(PlanetA);
+		Planet p2 = g.getPlanets().get(PlanetB);
+		
+		if (p1 == null || p2 == null)
+			throw new Exception("The planets must be in the galaxy");
+		
+		QAPSend s1 = oqap.getSendWithPlanet(p1);
+		QAPSend s2 = oqap.getSendWithPlanet(p2);
+		
+		if (s1 == null || s2 == null)
+			throw new Exception("The planets does not have sends");
+		
+		oqap.swapSends(s1, s2);
+		
+	}
 
 	// Save&Load
 	// ---------------------------------------------
