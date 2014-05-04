@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
-public class ResourceTSTDriver extends AbstractDriver {
+public class PlanetTSTDriver extends AbstractDriver {
 
 	public static void main(String[] args) {
 
-		TST<Resource> Clt = new TST<Resource>();
-		Resource r = new Resource();
+		TST<Planet> Clt = new TST<Planet>();
+		Planet r = new Planet();
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -34,7 +34,7 @@ public class ResourceTSTDriver extends AbstractDriver {
 				case 1:
 					// llamar al otro driver? como?
 					try {
-						r = new Resource(argv[1], argv[2]);
+						r = new Planet(argv[1], Integer.parseInt(argv[2]), Integer.parseInt(argv[3]));
 					} catch (Exception e) {
 						Console.print("Exception: ");
 						e.printStackTrace();
@@ -56,7 +56,7 @@ public class ResourceTSTDriver extends AbstractDriver {
 					try {
 						r = Clt.get(argv[1]);
 						if (r == null)
-							Console.print("Resource not present");
+							Console.print("Planet not present");
 						else
 							Console.print(r.toString());// llamar al otro
 														// driver? como?
@@ -88,8 +88,8 @@ public class ResourceTSTDriver extends AbstractDriver {
 					break;
 
 				case 8:
-					Iterable<Resource> it3 = Clt.values();
-					for (Resource i : it3)
+					Iterable<Planet> it3 = Clt.values();
+					for (Planet i : it3)
 						Console.echo(i.toString() + " ");
 
 					Console.print("");
@@ -97,9 +97,9 @@ public class ResourceTSTDriver extends AbstractDriver {
 
 				case 9:
 					try {
-						Iterable<Resource> it5 = Clt.valuesCache(argv[1],
+						Iterable<Planet> it5 = Clt.valuesCache(argv[1],
 								Integer.parseInt(argv[2]));
-						for (Resource i : it5)
+						for (Planet i : it5)
 							Console.echo(i.toString() + " ");
 
 						Console.print("");
@@ -156,17 +156,17 @@ public class ResourceTSTDriver extends AbstractDriver {
 
 		title = "Galaxy TST Driver";
 
-		menu.add("[AUX]ResourceDriver.Resource(String namep, ResourceType typep) : Resource");
+		menu.add("PlanetDriver.Planet(String namep, PlanetType typep) : Planet");
 
 		menu.add("size(): int");
 		menu.add("contains(String key) : boolean");
-		menu.add("get(String key) : Resource");
+		menu.add("get(String key) : Planet");
 		menu.add("put(String r.getName(), r)");
 		menu.add("longestPrefixOf(String s) : String");
 		menu.add("keys() : Iterable<String>");
-		menu.add("values() : Iterable<Resource>");
-		menu.add("valuesCache(String key, int max) : Iterable<Resource>");
-		menu.add("first() : Resource");
+		menu.add("values() : Iterable<Planet>");
+		menu.add("valuesCache(String key, int max) : Iterable<Planet>");
+		menu.add("first() : Planet");
 		menu.add("firstKey() : String");
 		menu.add("clear() : void");
 		menu.add("remove:(String key)");

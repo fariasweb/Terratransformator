@@ -1,71 +1,107 @@
 import java.util.Scanner;
 
-class ResourceDriver extends AbstractDriver{
+/**
+ * GalaxyDriver
+ * 
+ */
+
+class ResourceDriver extends AbstractDriver {
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//Generico del driver
+		
+		// Generico del driver
 		Resource r = new Resource();
-		//Generico del menu
+		
+		// Generico del menu
 		Scanner in = new Scanner(System.in);
 		int opc = 0;
-		String argv[];		
-		//Menu
-		_menu();   
+		String argv[];
+		
+		// Menu
+		_menu();
 
+		// Opciones
 		do {
-            argv = Console.read_line(in);
-            if(argv == null ) opc = 0;
-            else if(argv.length > 0){
-            	try{ opc = Integer.parseInt(argv[0]);}
-            	catch (Exception e) {Console.print("ERROR"); opc = -1;}
+			// Lectura de datos
+			argv = Console.read_line(in);
+			
+			if (argv == null) {
+				opc = 0;
+			
+			} else if (argv.length > 0) {
+				opc = Integer.parseInt(argv[0]);
 
-				switch(opc) {
+				switch (opc) {
 
-					case 0:
-						break;
+				case 0:
+					break;
 
-                    case 1:
-                    	create_resource(r,argv[1], argv[2]);
-						break;
+				case 1:
+					if (argv.length < 3)
+						_msg_error_param_insuf();
+					else {
+						r = create_resource(argv[1], argv[2]);
+					}
+					break;
 
-                    case 2:
-                    	r = new Resource();
-                        break;
-                            
-                    case 3:
-                    	try{ r.setName(argv[1]); }
-						catch (Exception e){ _msg_error(e.getMessage()); }
-						break;
+				case 2:
+					r = new Resource();
+					break;
 
-                    case 4:
-                    	try{ r.setType(argv[1]); }
-						catch (Exception e){ _msg_error(e.getMessage()); }
-						break;
+				case 3:
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						try {
+							r.setName(argv[1]);
+						} catch (Exception e) {
+							_msg_error(e.getMessage());
+						}
+					}
+					break;
 
-                    case 5:     
-                    	Console.print(r.getName()); 
-                    	break;
+				case 4:
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						try {
+							r.setType(argv[1]);
+						} catch (Exception e) {
+							_msg_error(e.getMessage());
+						}
+					}
+					break;
 
-                    case 6:
-                    	Console.print(r.getType()); 
-                    	break;    
+				case 5:
+					if (r != null)
+						Console.print(r.getName());
+					break;
 
-                    case 7:     
-                       	Console.print(r.toString());
-                        break;
+				case 6:
+					if (r != null)
+						Console.print(r.getType());
+					break;
 
-                    default:
-						_msg_opc_invalid();
-                        break;
+				case 7:
+					if (r != null)
+						Console.print(r.toString());
+					break;
+
+				default:
+					_msg_opc_invalid();
+					break;
 				}
 			}
-		} 
-		while (opc != 0);
+		} while (opc != 0);
 	}
 
-	private static void _menu(){
+	// Menu
+	// ---------------------------------------------
+	
+	private static void _menu() {
 
 		title = "Resource Driver";
 
@@ -79,12 +115,17 @@ class ResourceDriver extends AbstractDriver{
 
 		print_menu();
 	}
-	public static void create_resource(Resource r , String namep1, String namep2){
-		try{ 
-			r = new Resource(argv[1], argv[2]); 
+
+	// Actions
+	// ---------------------------------------------
+
+	public static Resource create_resource(String name, String type) {
+		try {
+			return new Resource(name, type);
+		} catch (Exception e) {
+			_msg_error(e.getMessage());
 		}
-		catch (Exception e){ 
-			_msg_error(e.getMessage()); 
-		}
+		
+		return null;
 	}
 }

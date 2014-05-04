@@ -1,212 +1,276 @@
-import java.util.LinkedList;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
 
+/**
+ * ResourceController
+ * 
+ */
 
-public class ResourceController extends AbstractController{
+public class ResourceController extends AbstractController {
 
+	// protected attributes
 	private TST<Resource> Clt;
-	private DataController dCont;
-
-	/**************************************************************
-	 * Contructs
-	 **************************************************************/
+	private PacketController pc;
 
 	/**
-	 * Crea un Clt
-	 * Pre: cierto
-	 * Post: Existe un nuevo Clt
+	 * Constructora Post: Inicializa el contructor padre y el TST
 	 */
-	public ResourceController() {
+	public ResourceController(PacketController PacketC) {
+		super();
 		Clt = new TST<Resource>();
-		dCont = new DataController();
+		pc = PacketC;
 	}
 
-	public void assignDataController(DataController dc)throws Exception{
-		if(dc == null) throw new Exception("DataController needed");
-		dCont = dc;
-	}
+	// Create
+	// ---------------------------------------------
 
-	/**************************************************************
-	 * Setters
-	 **************************************************************/
 	/**
-	 * Crea un recurso en el sistema y lo agrega a la ED
-	 * Pre: el formato del nombre es correcto; el tipo estÃ¡ en la enum
-	 * Post: Se crea un recurso con el nombre y tipo indicado; se 
-	 * agrega a la ED
+	 * Crea un recurso en el sistema 
+	 * Pre: El nombre del recurso no debe existir en el sistema 
+	 * Post: Se crea un recurso con el nombre indicado
 	 * 
 	 * @param name
-	 * @param type ResourceType
-	 * @return 
 	 */
-	public void add(String name, String type) throws Exception{
-		Resource r = new Resource(name, type);
-		Clt.put(name, r);	
+	public void addResource(String name, String type) throws Exception {
+		Resource g = new Resource(name, type);
+
+		// A–adimos el Resourcea al TST
+		Clt.put(g.getName(), g);
 	}
 
-	public void rename(String oldName, String name) throws Exception{
-		Resource r= Clt.get(oldName);
-		if(r == null) throw new Exception("No packet called " + oldName);
-		Resource raux = r;
-		Clt.remove(r.getName());
-		raux.setName(name);
-		Clt.put(raux.getName(), raux);
-	}
-
-
-	/**************************************************************
-	 * Getters
-	 **************************************************************/
+	// Read
+	// ---------------------------------------------
 	/**
-	 * Devuelve un String con los campos del recurso.
-	 * El primer elemento es el nombre, el segundo el tipo, separados por " "
-	 * Pre: existe un recurso con este nombre
-	 * Post: Devuelve un String con los campos del recurso
+	 * Devuelve un listado con el nombre de los recursos ordenado por orden
+	 * alfabetico
+	 * 
 	 * @return String
-	 * @param name String
+	 */
+
+	public String getAll() {
+
+		String result = "";
+
+		// Comprobamos que exista algo en el array
+		if (Clt.size() > 0) {
+			for (Resource i : Clt.values()) {
+				result += i.toString() + "\n";
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * Pre: El nombre no debe ser nulo y con longitud > 0
+	 * El recurso debe existir
+	 * 
+	 * @param name
+	 *            String
+	 * @return
 	 * @throws Exception
 	 */
- 	public Resource get(String name) throws Exception {
-		
-        if(Clt.size() == 0) throw new Exception("No resources!");
-		
-		Resource r = Clt.get(name);
-		if (r == null) throw new Exception("This resource doesn't exist");
-		return r;
+	public String getByNameToString(String name) throws Exception {
 
-	}
+		Resource g = Clt.get(name);
+		if (g == null)
+			throw new Exception("This resource does not exist");
 
-	public Iterable<Resource> getAll() throws Exception {
-
-        if(Clt.size() == 0) throw new Exception("No resources!");
-		
-		Iterable<Resource> ar = Clt.values();
-		return ar;
-
-	}
-
-	public ArrayList<Resource> getMany(String name, int qtt) throws Exception {
-
-        if(Clt.size() == 0) throw new Exception("No resources!");
-		
-		ArrayList<Resource> ar = Clt.valuesCache(name, qtt);
-		return ar;
-
-	}
-
-	public String getManyAsString(String name, int qtt) throws Exception {
-
-        if(Clt.size() == 0) throw new Exception("No resources!");
-		
-		ArrayList<Resource> ar = Clt.valuesCache(name, qtt);
-		String s = "";
-		for (Resource r : ar) {
-			s+=r.toString();
-		}
-		return s;
+		return g.toString();
 	}
 
 	/**
-	 * @param namep
-	 * @return boolean
+	 * Pre: El nombre no debe ser nulo y con longitud > 0
+	 * El recurso debe existir
+	 * 
+	 * @param name
+	 *            String
+	 * @return
+	 * @throws Exception
 	 */
-	public boolean exists(String r){
-		return Clt.contains(r);
+	public Resource getByName(String name) throws Exception {
+
+		Resource g = Clt.get(name);
+		if (g == null)
+			throw new Exception("This resource does not exist");
+
+		return g;
 	}
 
-	public int size(){
+	/**
+	 * Pre: El nombre no debe ser nulo y con longitud > 0. El recurso debe
+	 * existir
+	 * 
+	 * @param name
+	 * @return Boolean
+	 */
+	public boolean existResource(String name) {
+		return Clt.contains(name);
+	}
+
+	// Update
+	// ---------------------------------------------
+	/**
+	 * Pre: El nombre no debe ser nulo
+	 * El recurso debe existir 
+	 * El nombre de a nuevo recurso no debe de existir 
+	 * Post: Modifica los datos del recurso con newName
+	 * 
+	 * @param oldName
+	 * @param newName
+	 * @throws Exception
+	 */
+	public void updateResourceName(String oldName, String newName)
+			throws Exception {
+		// Cogemos el recurso
+		Resource p = Clt.get(oldName);
+		if (p == null)
+			throw new Exception("This resource does not exist");
+
+		// Cimprobamos qu eno sea las misma galaxi
+		if (p.getName() != newName) {
+			if (!Util.checkName(newName))
+				throw new Exception(newName + " is not valid");
+
+			if (Clt.contains(newName))
+				throw new Exception(newName + " is using in other resource");
+			
+			Clt.remove(p.getName());
+			p.setName(newName);
+			Clt.put(newName, p);
+			
+			//Cambiamos el nombre en los paquetes
+			pc.updateResourceName(oldName, newName);
+		}
+	}
+
+	/**
+	 * Actualiza la posicon de un recurso Pre: El recurso debe exisitr Las
+	 * cordenadas deben ser validas En caso de estar en una galaxia, las
+	 * cordenadas deben estar dentro de la galaxia y que no exista otro recurso
+	 * en su interior Post: El recurso tiene nuevas cordenadas
+	 * 
+	 * @param namep
+	 * @param x
+	 * @param y
+	 * @throws Exception
+	 */
+	public void updateResourceType(String namep, String type)
+			throws Exception {
+
+		// Cogemos el recurso
+		Resource p = Clt.get(namep);
+		if (p == null)
+			throw new Exception("This resource does not exist");
+
+		// Cambiamos el typo
+		p.setType(type);
+
+	}
+
+	// Delete
+	// ---------------------------------------------
+
+	/**
+	 * Elimina todos los recursos de la colecci—n Post: No existe ningun recurso
+	 * 
+	 * @throws Exception
+	 */
+
+	public void removeAllResources() throws Exception {
+		
+		//Eliminamos todos los recuros
+		Clt.clear();
+		//Eliminimos todos los recuroso de todos los paquetes
+		pc.removeResourcesFromAllPacket();
+	}
+
+	/**
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 El recurso debe
+	 * existir Post: Eliminada el recurso con nombre "name"
+	 * 
+	 * @param name
+	 * @throws Exception
+	 */
+	public void removeResource(String name) throws Exception {
+		Resource p = Clt.get(name);
+		if (p == null)
+			throw new Exception("This planet doesn't exist");
+
+		// Eliminos del conjunto
+		Clt.remove(name);
+
+		//Eliminar las referencias de los paquetes
+		pc.removeResourceFromAllPacket(name);
+
+	}
+
+
+	// Save&Load
+	// ---------------------------------------------
+
+	/**
+	 * Post: Devuelve el tama–o de la coleci—n
+	 * 
+	 * @return int
+	 */
+	public int size() {
 		return Clt.size();
 	}
 
-
-	/**************************************************************
-	 * Delete
-	 **************************************************************/
-	public void remove(String name, PacketController pCont) throws Exception{
-		if(pCont.containsResource(name)) throw new Exception ("Resource in use! Please delete all instances and retry.");
-		Clt.remove(name);
-	}
-
-     /**
-	 * Devuelve un listado de todos los recursos ordenados por nombre. Cada elemento es
-	 * un recurso, y de cada elemento, el primer elemento es el nombre, el segundo el tipo
-	 * en forma de String
-	 * Pre: cierto
-	 * Post: Devuelve un listado con los campos recursos ordenados por nombre
-	 * @return List<String>
+	/**
+	 * Debe indicarse en cada controlador 
+	 * Post: Pasa el String a memoria como objetos
+	 * 
+	 * @param l
 	 * @throws Exception
 	 */
-   /* public ArrayList<ArrayList<String>> getAll() throws Exception{   
-        ArrayList<ArrayList<String>> listOfLists = new ArrayList<ArrayList<String>> ();
-        List<String> list = new ArrayList<String>();
+	protected void decodeString(String l) throws Exception {
 
-       	if(resourceTST.size() == 0) throw new Exception("No resources!");
+		// Corta el string por el separador interno
+		String[] s = l.split(" ");
 
-        for(Resource i: resourceTST.values())
-   	    	listOfLists.add(i.toString());
+		// Comprueba que sea correcto y tengo el numero de elemntos minimo
+		if (s.length != 2)
+			throw new Exception("The record is not correct");
 
-        return listOfLists;
-    }*/
-
-
-	/**************************************************************
-	 * Save & Load
-	 **************************************************************/
-
-	public void save(String path, String file) throws Exception{
-
-		/*String cache = Clt.first().toString()+";";
-		ArrayList<Resource> list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM-1);
-
-		/*Console.print("------------->");
-		for(Resource i : list)
-			Console.echo(i.toString()+" ");
-		Console.print("");
-		Console.print("------------->");*/
+		// Separaci—n especifica del recurso
+		String name = s[0];
+		String type = s[1];
 		
-		/*for(Resource r : list)
-			cache += (r.toString()+";");
+		// A–ade a la colecci—n
+		addResource(name, type);
 
-
-		dCont.write(path, file, cache, true);
-
-		while(list.size() > 0){
-
-			list = Clt.valuesCache(list.get(list.size()-1).getName(), _CACHE_NUM);
-			cache = "";
-			for(Resource r : list)
-				cache += (r.toString()+";");
-
-			if(cache != "") dCont.write(path, file, cache, true);
-
-		}*/
 	}
 
-	public void load(String path) throws Exception{
+	/**
+	 * Debe indicarse en cada controlador 
+	 * Post: Pasa el String a memoria como objetos
+	 * 
+	 * @param l
+	 * @throws Exception
+	 */
+	protected String encodeString() throws Exception {
 
-		/*String s = dCont.read(path);
-		String name = new String();
-		String type = new String();
-		String aux = new String();
+		String encodeS = "";
+		ArrayList<Resource> list;
 
-		for (int i = 0; i < s.length(); ++i) {
-			if(s.charAt(i) == ';'){
-				type = aux;
-				aux = "";
-				try{
-					add(name, type);
-					name = type = null; 
-				}
-				catch (Exception e) {
-					Console.print("Exception: ");
-					e.printStackTrace();
-				}
-			}
-			else if (s.charAt(i) == ' '){ name = aux; aux = ""; }
-			else aux+=s.charAt(i);
-		}*/
+		// Diferenciamos si es la primera vez
+		if (_last_key == "") {
+			// En caso de ser la primera vez como no tenemos indicado
+			// el _last_key usamos el primer elemento
+			encodeS = Clt.first().toString() + _SEPARATOR;
+			list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM - 1);
+		} else {
+			// Como tenemos un _last_key partimos desde este
+			list = Clt.valuesCache(_last_key, _CACHE_NUM);
+		}
+
+		// Pasamos objetos a cache
+		for (Resource p : list) {
+			encodeS += p.toString() + _SEPARATOR;
+			_last_key = p.getName();
+		}
+
+		return encodeS;
 	}
 
 }

@@ -1,13 +1,11 @@
 import java.util.Scanner;
-import java.util.LinkedList;
-import java.util.Queue;
 
-public class ResourceTSTDriver extends AbstractDriver{
+public class TSTDriver extends AbstractDriver{
 	
 	public static void main(String[] args){
 
-		TST<Resource> Clt = new TST<Resource>();
-		Resource r;
+		TST<Entity> Clt = new TST<Entity>();
+		Entity r = null;
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -34,11 +32,16 @@ public class ResourceTSTDriver extends AbstractDriver{
 					break;
 
 				case 1:
-					// r = ResourceDriver.new Resource(argv[1], argv[2]);
+					 try {
+						r = new Entity();
+						r.setName(argv[1]);
+					} catch (Exception e) {
+						_msg_error(e.getMessage());
+					}
 					break;
 
 				case 2:
-					Console.print(Clt.size());
+					Console.print("Size: "+Clt.size());
 					break;
 
 				case 3:
@@ -47,18 +50,24 @@ public class ResourceTSTDriver extends AbstractDriver{
 					break;
 
 				case 4:
-					r = Clt.get(argv[1]);
-					if(r == null) Console.print("Resource not present");
-					else Console.print(r.ResourceDriver.toString());
+					try {
+						Entity r2 = Clt.get(argv[1]);
+						if(r2 == null) Console.print("Resource not present");
+						else Console.print(r2.toString());
+					} catch (Exception e) {
+						_msg_error(e.getMessage());
+					}
+					
 					break;
 
 				case 5:
 					try{
+						if (r == null)
+							throw new Exception("Entity is null");
 						Clt.put(argv[1], r);
 					}
 					catch (Exception e) {
-						Console.print("Exception: ");
-						e.printStackTrace();
+						_msg_error(e.getMessage());
 					}
 					break;
 
@@ -75,70 +84,53 @@ public class ResourceTSTDriver extends AbstractDriver{
 					break;
 
 				case 8:
-					Console.print(Clt.prefixMatch(argv[1]));
+					Iterable<Entity> it2 = Clt.values();
+					for(Entity i : it2)
+						Console.print(i.toString());
+
 					break;
 
 				case 9:
-					Iterable<Resource> it2 = Clt.values();
-					for(Resource i : it2)
-						Console.echo(i.toString()+" ");
-
-					Console.print("");
-					break;
-
-				case 10:
-					Iterable<String> it3 = Clt.wildcardMatch(argv[1]);
-					for(String str : it3)
-						Console.echo(str+" ");
-
-					Console.print("");
-					break;
-
-				case 11:
 					try{
-						Iterable<Resource> it4 = Clt.valuesCache(argv[1], Integer.parseInt(argv[2]));
-						for(Resource i : it4)
+						Iterable<Entity> it4 = Clt.valuesCache(argv[1], Integer.parseInt(argv[2]));
+						for(Entity i : it4)
 							Console.echo(i.toString()+" ");
 
 						Console.print("");
 					}
 					catch (Exception e) {
-						Console.print("Exception: ");
-						e.printStackTrace();
+						_msg_error(e.getMessage());
+					}
+					break;
+
+				case 10:
+					try{
+						Console.print(Clt.first().toString());
+					}
+					catch (Exception e) {
+						_msg_error(e.getMessage());
+					}
+					break;
+
+				case 11:
+					try{
+						Console.print(Clt.firstKey());
+					}
+					catch (Exception e) {
+						_msg_error(e.getMessage());
 					}
 					break;
 
 				case 12:
-					try{
-						Consolo.print(Clt.first().toString());
-					}
-					catch (Exception e) {
-						Console.print("Exception: ");
-						e.printStackTrace();
-					}
+					Clt.clear();
 					break;
 
 				case 13:
 					try{
-						Consolo.print(Clt.firstKey());
-					}
-					catch (Exception e) {
-						Console.print("Exception: ");
-						e.printStackTrace();
-					}
-					break;
-
-				case 14:
-					Clt.clear();
-					break;
-
-				case 15:
-					try{
 						Clt.remove(argv[1]);
 					}
 					catch (Exception e) {
-						Console.print("Exception: ");
-						e.printStackTrace();
+						_msg_error(e.getMessage());
 					}
 					break;
 					
@@ -162,18 +154,15 @@ public class ResourceTSTDriver extends AbstractDriver{
 
 		title = "Galaxy TST Driver";
 
-		menu.add("[AUX]ResourceDriver.Resource(String namep, ResourceType typep) : Resource");
+		menu.add("Entity(String namep, ResourceType typep) : r");
 
 		menu.add("size(): int");
 		menu.add("contains(String key) : boolean");
-		menu.add("get(String key) : Resource");
-		menu.add("put(String g.getName(), g)");
-		menu.add("longestPrefixOf(String s) : String");
+		menu.add("get(String key) : Entity");
+		menu.add("put(String g.getName(), g) : void");
 		menu.add("keys() : Iterable<String>");
-		menu.add("prefixMatch(String prefix) : Iterable<String>");
-		menu.add("values() : Iterable<Resource>");
-		menu.add("wildcardMatch(String pat) : Iterable<String>");
-		menu.add("valuesCache(String key, int max) : Iterable<Resource>");
+		menu.add("values() : Iterable<Entity>");
+		menu.add("valuesCache(String key, int max) : Iterable<Entity>");
 		menu.add("first() : Resource");
 		menu.add("firstKey() : String");
 		menu.add("clear() : void");

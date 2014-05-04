@@ -65,9 +65,31 @@ public class Planet extends Entity {
 	 * @throws Exception
 	 */
 	public void setPosition(Integer x_posp, Integer y_posp) throws Exception {
+		//Control basico de datos
 		Util.checkPosition(x_posp, y_posp);
-		x_pos = x_posp;
-		y_pos = y_posp;
+		
+		//Solo cambiamos si son diferentes
+		if (!(x_posp == x_pos && y_posp == y_pos)) {
+
+			// Comprobamos si esta en una galaxia
+			
+			if (galaxy != null) {
+				// La posicion esta dentro de la galaxia
+				PairInt pi = galaxy.getSize();
+				if (x_posp > pi.getX() || y_posp > pi.getY()) {
+					throw new Exception("Position is not valid for galaxy "
+							+ galaxy.getName());
+				}
+
+				// Existe otro planeta en esta posicion
+				if (galaxy.existPlanetInPos(x_posp, y_posp))
+					throw new Exception("Exit other planet in this position");
+			}
+
+			// En caso de no estar en galaxi y ser diferentes
+			x_pos = x_posp;
+			y_pos = y_posp;
+		}
 	}
 
 	/**
@@ -76,7 +98,7 @@ public class Planet extends Entity {
 	 * @throws Exception
 	 */
 	public void setGalaxy(Galaxy g) throws Exception {
-		if (galaxy != g) {
+		if (g != null && galaxy != g) {
 			galaxy = g;
 		}
 	}

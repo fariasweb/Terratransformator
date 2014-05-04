@@ -1,10 +1,13 @@
+import java.util.Iterator;
+
 public class Packet {
 
 	private String name;
 	private TST<RelationPacketResource> rel; 
 	private int qttResources;
+	
 	// Constructors
-		// ---------------------------------------------
+	// ---------------------------------------------
 	/**
 	 * 
 	 */
@@ -22,14 +25,14 @@ public class Packet {
 	 * @throws Exception
 	 */
 	public Packet(String name) throws Exception {
-		new Packet();
+		rel = new TST<RelationPacketResource>();
 		setName(name);
 		qttResources = 0;
 	}
 	
 
 	// Setter
-		// ---------------------------------------------
+	// ---------------------------------------------
 	/**
 	 * Modifica el nombre de un paquete
 	 * pre:El nombre a asignar no ha de existir en el sistema
@@ -42,13 +45,7 @@ public class Packet {
 		if(!Util.checkName(namep)) throw new Exception(namep + " is not valid");
 		name = namep;
 	}
-
 	
-	/*public void setPlanet(Planet planetp) {
-		if (planet != planetp && planetp != null) {
-			planet = planetp;
-		}
-	}*/
 
 	/**
 	 * pre:El nombre no debe ser nulo y qtt > 0 
@@ -65,10 +62,33 @@ public class Packet {
 		rel.put(r.getName(), rpr);
 		qttResources += qtt;
 	}
+	
+	/**
+	 * Pre: EL recurso debe exisitir
+	 * @param name
+	 * @param qtt
+	 * @throws Exception
+	 */
+	public void updateResource(String name, int qtt) throws Exception {
+		// Cogemos el recuros dentro del paquete
+		RelationPacketResource rpr = rel.get(name);
+		if (rpr == null)
+			throw new Exception("The resource does not exist in the packet");
+
+		//Calculamos la difernecia entre la cantidad antigua y la nueva
+		int diff_q = qtt - rpr.getQuantity();
+		
+		// Actualizamso la cantidad
+		rpr.setQuantity(qtt);
+		
+		//Una vez es correcto la actualizacion de la cantiad
+		//lo reflejamos en el general
+		qttResources += diff_q;
+	}
 
 
 	// Getters
-			//---------------------------------------------
+	//---------------------------------------------
 	/**
 	 * pre:El paquete debe existir
 	 * @return String
@@ -76,10 +96,6 @@ public class Packet {
 	public String getName() {
 		return name;
 	}
-	
-	/*public Planet getPlanet() {
-		return planet;
-	}*/
 	
 	/**
 	 * Post: Devuelve los recursos dentro de un paquete
@@ -95,23 +111,7 @@ public class Packet {
 	
 	
 	// Delete
-		// ---------------------------------------------
-	
-	/*public void removePlanet() {
-		if (planet != null) {
-			planet.removePacket();
-			planet = null;
-		}
-	}*/
-
-	/**************************************************************
-	 * Delete
-	 **************************************************************/
-
-
-	/*public void removeResource(Resource rp) throws Exception {
-		rel.remove(rp.getName());
-	}*/
+	// ---------------------------------------------
 	
 	/**
 	 * pre:El recurso debe existir en el paquete
@@ -122,6 +122,9 @@ public class Packet {
 	 */
 	public void removeResource(String name) throws Exception {
 		RelationPacketResource res = rel.get(name);
+		if (res == null)
+			throw new Exception("The resource "+name+" does not exist in this packet");
+		
 		qttResources -= res.getQuantity();
 		rel.remove(name);
 	}
@@ -135,13 +138,24 @@ public class Packet {
 	}
 	
 	// Basic Types
-		// ---------------------------------------------
+	// ---------------------------------------------
 	/**
 	 * post: Convierte a String los atributos de un paquete
 	 * @return String 
 	 */
 	public String toString(){
-		return name + " " + rel.toString();
+		String r = name + " " +qttResources;
+		
+		// Relacion con recursos
+		Iterator<RelationPacketResource> iterator = rel.values().iterator();
+
+		while (iterator.hasNext()) {
+			// Cogemos el siguiente planeta
+			RelationPacketResource p = (RelationPacketResource) iterator.next();
+			r += " " + p.getResource().getName()+" "+p.getQuantity();
+		}
+		
+		return r;
 	}
 	
 	

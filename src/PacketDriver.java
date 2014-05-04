@@ -15,15 +15,8 @@ public class PacketDriver extends AbstractDriver {
 
 		// Generico del driver
 		Packet p = new Packet();
+		Resource r = null;
 		
-		QAP myL;
-	
-		//...
-			myL = new QAPTaboo();
-		//...
-			
-		myL.generate(1);
-
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
 
@@ -69,43 +62,44 @@ public class PacketDriver extends AbstractDriver {
 					break;
 
 				case 4:
-
-					set_planet_to_a_packet(p, PlanetDriver.create_planet(argv[1],
-												Integer.parseInt(argv[2]),
-												Integer.parseInt(argv[3])));
-
+					r = ResourceDriver.create_resource(argv[1],argv[2]);
 					break;
-
+					
 				case 5:
-					Resource r = new Resource();
-					ResourceDriver.create_resource(r,argv[1],argv[2]);
-					set_resource_to_a_packet(p, r, Integer.parseInt(argv[3]));
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						set_resource_to_a_packet(p, r, Integer.parseInt(argv[1]));
+					}
+					
 					break;
-
+					
 				case 6:
-					if (p != null)
-						Console.print(p.getName());
+					if (argv.length < 4)
+						_msg_error_param_insuf();
+					else {
+						update_resource_to_a_packet(p, argv[1], Integer.parseInt(argv[2]));
+					}
 					break;
 
 				case 7:
-					Planet planet_now = p.getPlanet();
-					if (planet_now == null) {
-						Console.print("This packet doesn't have planet");
-					} else {
-						Console.print("Planet: " + planet_now.getName());
-					}
-
+					if (p != null)
+						Console.print(p.getName());
 					break;
-
+					
 				case 8:
+					if (p != null)
+						Console.print("Quantity: "+p.getQuantity());
+					break;
+				case 9:
 					TST<RelationPacketResource> lr = p.getResources();
+
 					if (lr.size() == 0) {
 						Console.print("This packet doesn't have resource");
 					} else {
 						String[] head = { "Resource", "Type", "Quantity" };
 						List<String[]> content = new ArrayList<String[]>();
 
-						//for (String key : lr.keySet()) {
 						for(RelationPacketResource rpr : lr.values()) {
 							String[] c = new String[3];
 
@@ -121,16 +115,21 @@ public class PacketDriver extends AbstractDriver {
 
 					break;
 
-				case 9:
-					remove_resource_from_packet(p, argv[1]);
-					break;
-
 				case 10:
-					p.removeAllResources();
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						remove_resource_from_packet(p, argv[1]);
+					}
 					break;
 
 				case 11:
-					//p.removePlanet();
+					p.removeAllResources();
+					break;
+
+				case 12:
+					if (p != null)
+						Console.print(p.toString());
 					break;
 
 				default:
@@ -155,14 +154,15 @@ public class PacketDriver extends AbstractDriver {
 		menu.add("Packet(String name) : Packet"); // 1
 		menu.add("Packet() : Packet");
 		menu.add("SetName(String name) : void"); // 3
-		menu.add("SetPlanet(String PlanetName, int x, int y) : void");
-		menu.add("AddResource(String ResourceName, ResourceType type, int quantity) : void");
-		menu.add("GetName() : String"); // 6
-		menu.add("GetPlanet() : Planet");
+		menu.add("ResourceDriver.create_resource(String name, Strig type) : Resource r");
+		menu.add("AddResource(Resource r, int quantity) : void");
+		menu.add("updateResource(String name, int qtt) : void"); // 6
+		menu.add("GetName() : String"); // 7
+		menu.add("GetQuantity() : int");
 		menu.add("GetResource(): TST<RelationPacketResource>");
 		menu.add("removeResource(Strig ResourceName) : void"); // 9
 		menu.add("removeAllResource() : void");
-		menu.add("removePlanet() : void"); // 11
+		menu.add("toString() : String");
 
 		print_menu();
 	}
@@ -170,6 +170,15 @@ public class PacketDriver extends AbstractDriver {
 	// Actions
 	// ---------------------------------------------
 
+	private static void update_resource_to_a_packet(Packet p, String name,
+			int qtt) {
+		try {
+			p.updateResource(name, qtt);
+		} catch (Exception e) {
+			_msg_error(e.getMessage());
+		}
+	}
+	
 	public static Packet create_packet_full(String name) {
 		try {
 			return new Packet(name);
@@ -197,24 +206,18 @@ public class PacketDriver extends AbstractDriver {
 	/**
 	 * 
 	 * @param p
-	 * @param p
-	 */
-	public static void set_planet_to_a_packet(Packet p, Planet planetp) {
-		try {
-			p.setPlanet(planetp);
-		} catch (Exception e) {
-			_msg_error(e.getMessage());
-		}
-	}
-
-	/**
-	 * 
-	 * @param p
 	 * @param r
 	 * @param qp
 	 */
 	public static void set_resource_to_a_packet(Packet p, Resource r, int qp) {
 		try {
+			
+			if (p == null)
+				throw new Exception("The packet is null");
+			
+			if (r == null)
+				throw new Exception("The resourse is null");
+			
 			p.addResource(r, qp);
 		} catch (Exception e) {
 			_msg_error(e.getMessage());
@@ -228,8 +231,7 @@ public class PacketDriver extends AbstractDriver {
 	 */
 	public static void remove_resource_from_packet(Packet p, String rName) {
 		try {
-			TST<RelationPacketResource> lr = p.getResources();
-			lr.remove(rName);
+			p.removeResource(rName);
 
 		} catch (Exception e) {
 			_msg_error(e.getMessage());
