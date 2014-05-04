@@ -5,8 +5,8 @@ import java.util.List;
 public class QAPSolution{
 
 	private String QAPType;
-	private int executionTime;
-	private int efficiency;
+	private long executionTime;
+	private double efficiency;
 	
 	private List<QAPSend> CltSend;
 	
@@ -17,7 +17,7 @@ public class QAPSolution{
 	 * @param g
 	 * @param p
 	 */
-	public QAPSolution(QAP qap, Galaxy g, TST<Packet> p){
+	public QAPSolution(QAP qap, Galaxy g, TST<Packet> p) throws Exception{
 		setQAPInfo(qap);
 		setQAPSend(qap, g, p);
 	}
@@ -26,20 +26,29 @@ public class QAPSolution{
 	private void setQAPInfo(QAP qap) {
 		//TODO
 		//Informacion como tiempo, typo y eficiencia
-		QAPType = "";
-		executionTime = 0;
-		efficiency = 0;
+		QAPType = qap.QAPType;
+		executionTime = qap.time;
+		efficiency = qap.result;
 	}
 	
-	private void setQAPSend(QAP qap, Galaxy g, TST<Packet> p) {
+	private void setQAPSend(QAP qap, Galaxy g, TST<Packet> p) throws Exception {
 		//1.Recoger el vector solucion de QAP
-		
+		int [] solution = qap.solution; 
 		//2. Generar los arrays que antes estaban en QAPInput
 		//No hace falta guardarlos
+		String[] namePackets = qap.input.getPackets();
+		String[] namePlanets = qap.input.getPlanets();
 		
 		//3. Generar los QAPSend y guardamos en CltSend
 		//Priemro inicializar CltSeend por si acaso
 		CltSend = new ArrayList<QAPSend>();
+		for(int i = 0; i < solution.length; ++i){
+			Planet auxPlanet = g.getPlanets().get(namePlanets[i]); //Al planeta i se le asigna el paquete solution[i]
+			Packet auxPacket = p.get(namePackets[solution[i]]);
+			QAPSend j = new QAPSend(auxPlanet, auxPacket);
+			CltSend.add(j);
+		}
+		
 	}
 	
 	// Getters
@@ -49,11 +58,11 @@ public class QAPSolution{
 		return QAPType;
 	}
 
-	public int getEfficiency() {
+	public double getEfficiency() {
 		return efficiency;
 	}
 	
-	public int getExecutionTime() {
+	public long getExecutionTime() {
 		return executionTime;
 	}
 	

@@ -4,9 +4,9 @@ public class QAPGLBDriver {
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-
-		double f[][] = Console.LectureMatrix(sc);
-		double d[][] = Console.LectureMatrix(sc);
+		int N = sc.nextInt();
+		double f[][] = Console.LectureMatrix(sc,N);
+		double d[][] = Console.LectureMatrix(sc,N);
 
 		int[] va = Console.LectureVector(sc);
 		int[] val = new int[va.length];

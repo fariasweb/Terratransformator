@@ -1,9 +1,9 @@
 import java.util.*;
 
 public class QAPEager extends QAP{
-
 	public QAPEager(QAPInput qap) throws Exception {
 		super(qap);
+		QAPType = "Eager";
 	}
 
 	public static double BranchAndBound(double[][] d, double[][] f, int[] va,int val[]) {
@@ -104,24 +104,21 @@ public class QAPEager extends QAP{
 
 	}
 
-	public QAPSolution run() throws Exception{
+	public void run() throws Exception{	
 		int nPackets = input.getSizePackets();
 		int nPlanets = input.getSizePlanets();
 		if(nPackets != nPlanets) throw new Exception("Number of Packets diferent than Number of Planets");
 		int sol1[] = new int[nPackets];
 		int sol2[] = new int[nPlanets];
+		long startTime = System.nanoTime();
 		double d = BranchAndBound(input.getDistanceMatrix(), input.getFlowMatrix(), sol1,sol2);
-		output.setSolution(sol2);
-		output.setResult((int) d);
-		output.setPackets(input.getPackets());
-		output.setPlanets(input.getPlanets());
-		output.setGalaxy(input.getGalaxy());
-		output.setQAPType("Gilmore Eager");
-		// TODO Auto-generated method stub
-		return output;
+		long endTime = System.nanoTime();
+		time = endTime - startTime;
+		result = d;
+		solution = sol2;
 	}
 
-	public void convertSolutionSends() throws Exception{
+	/*public void convertSolutionSends() throws Exception{
 		QAPSolution q = run();
 		QAPSend qs = new QAPSend();
 		TST<Planet> nameP = input.getGalaxy().getPlanets();
@@ -136,5 +133,5 @@ public class QAPEager extends QAP{
 			qs.addSend(s);
 		}
 		q.setQAPSend(qs);
-	}
+	}*/
 }

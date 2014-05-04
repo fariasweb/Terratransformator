@@ -2,8 +2,6 @@ public class QAPController {
 
 	private GalaxyController CG;
 	private PacketController CP;
-
-	private QAPSolution oqap;
 	private Galaxy g;
 	private TST<Packet> p;
 

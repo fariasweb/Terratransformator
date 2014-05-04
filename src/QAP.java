@@ -1,16 +1,18 @@
 //ALGORITMOS IRAN AQUI Y EN NINGUN SITIO MAS
 public abstract class QAP {
 	QAPInput input;
-	QAPSolution output;
-	
-	public abstract void convertSolutionSends() throws Exception;
-	
+	//QAPSolution output;
+	boolean isRun;
+	long time; 
+	double result; 
+	int[] solution;
+	String QAPType;
+
 	public QAP(QAPInput qap) throws Exception{
 		input = qap;
 	}
 	
 	
-	public abstract QAPSolution run() throws Exception;
-	
+	public abstract void run() throws Exception;
 	
 }

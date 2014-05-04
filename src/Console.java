@@ -214,15 +214,11 @@ public class Console {
 		
 	}
 	
-	public static double[][] LectureMatrix(Scanner sc) {
+	public static double[][] LectureMatrix(Scanner sc,int n) {
+		double[][] A = new double[n][n];
 
-		int row, col;
-		row = sc.nextInt();
-		col = row;
-		double[][] A = new double[row][col];
-
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < col; j++) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
 				A[i][j] = sc.nextDouble();
 			}
 		}

@@ -5,7 +5,8 @@ public class QAPHungarianDriver {
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
-		double d[][] = Console.LectureMatrix(sc);
+		int N = sc.nextInt();
+		double d[][] = Console.LectureMatrix(sc,N);
 
 		double n = QAPHungarian.Assigment(d);
 		System.out.println(n);
