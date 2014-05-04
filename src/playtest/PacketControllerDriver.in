@@ -1,8 +1,14 @@
 1
 2
 3
-12 Fran HUMAN
+4 P0
+4 P1
 12 Med HUMAN
 12 Enf HUMAN
+13 P0 Med 20
+18 ./save/Packet.txt false
+10
+5
 19 ./save/Packet.txt
 5
+14 P0
