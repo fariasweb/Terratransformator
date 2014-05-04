@@ -1,6 +1,15 @@
 import java.util.*;
 
+/**
+ * QAPEager
+ *
+ */
 public class QAPEager extends QAP{
+	/**
+	 * 
+	 * @param qap
+	 * @throws Exception
+	 */
 	public QAPEager(QAPInput qap) throws Exception {
 		super(qap);
 		QAPType = "Eager";
@@ -105,33 +114,29 @@ public class QAPEager extends QAP{
 	}
 
 	public void run() throws Exception{	
+		//Numero de planetas/paquetes
 		int nPackets = input.getSizePackets();
 		int nPlanets = input.getSizePlanets();
+		
 		if(nPackets != nPlanets) throw new Exception("Number of Packets diferent than Number of Planets");
+		
+		//Matrices de entrada
 		int sol1[] = new int[nPackets];
 		int sol2[] = new int[nPlanets];
+		
+		//Inicio de tiempo
 		long startTime = System.nanoTime();
+		
+		//Algoritmo
 		double d = BranchAndBound(input.getDistanceMatrix(), input.getFlowMatrix(), sol1,sol2);
+		
+		//Fin de ejecuci—n
 		long endTime = System.nanoTime();
+		
+		//Guardamos los datos de la ejecuci—n
+		isRun = true;
 		time = endTime - startTime;
 		result = d;
 		solution = sol2;
 	}
-
-	/*public void convertSolutionSends() throws Exception{
-		QAPSolution q = run();
-		QAPSend qs = new QAPSend();
-		TST<Planet> nameP = input.getGalaxy().getPlanets();
-		TST<Packet> namePk = input.getPacket();
-		String auxP[] = input.getPlanets();
-		String auxPk[] = input.getPackets();
-		for(int i = 0; i < q.getSolution().length; ++i ){
-			Send s = new Send();
-			
-			s.setPlanet(nameP.get(auxP[i]));
-			s.setPacket(namePk.get(auxPk[i]));
-			qs.addSend(s);
-		}
-		q.setQAPSend(qs);
-	}*/
 }

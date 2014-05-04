@@ -534,15 +534,33 @@ public class PacketController extends AbstractController {
 			throw new Exception(
 					"Resource Controler must have resource to load packets");
 	}
-	
-	public Packet clonePacket(Packet p) throws Exception{
-		if(p == null) throw new Exception("Packet not defined");
+
+	// Clone
+	// ---------------------------------------------
+
+	/**
+	 * Pre: Paquete debe ser valida 
+	 * Post: Devuelve una copia exacta del paquete con sus recursos
+	 * 
+	 * @param g
+	 * @return
+	 * @throws Exception
+	 */
+
+	public Packet clonePacket(Packet p) throws Exception {
+		if (p == null)
+			throw new Exception("Packet not defined");
+		
+		//Copaimos el paquete
 		Packet p1 = new Packet();
 		p.setName(p.getName());
+		
+		//A–adimos los mismmo recursos
 		Iterable<RelationPacketResource> rpr = p.getResources().values();
-		for(RelationPacketResource i : rpr){
+		for (RelationPacketResource i : rpr) {
 			p.addResource(i.getResource(), i.getQuantity());
 		}
+		
 		return p1;
 	}
 }

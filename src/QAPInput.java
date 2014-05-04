@@ -1,10 +1,16 @@
 import java.util.*;
 
+/**
+ * QAPInput
+ *
+ */
 public class QAPInput {
 
+	//Matrices de entrada
 	private double distanceMatrix[][];
 	private double flowMatrix[][];
 
+	//Listado con los planetas y paquetes
 	private String[] CltPlanet;
 	private String[] CltPacket;
 
@@ -16,6 +22,7 @@ public class QAPInput {
 	public QAPInput(Galaxy galaxy, TST<Packet> packets) {
 		setDistanceMatrix(galaxy);
 		setFlowMatrix(packets);
+		
 		setVectorPlanets(galaxy);
 		setVectorPackets(packets);
 	}

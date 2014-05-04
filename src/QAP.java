@@ -1,18 +1,40 @@
-//ALGORITMOS IRAN AQUI Y EN NINGUN SITIO MAS
+/**
+ * QAP
+ *
+ */
 public abstract class QAP {
+	
+	//Clase con las matrices de entrada del QAP
 	QAPInput input;
-	//QAPSolution output;
+
+	//Variables de ejecucion
 	boolean isRun;
 	long time; 
 	double result; 
+	
+	//Solucion generada
 	int[] solution;
-	String QAPType;
+	
+	//Tipo de algoritmo
+	String QAPType = "QAP";
 
+	/**
+	 * Constructora
+	 * @param qap
+	 * @throws Exception
+	 */
 	public QAP(QAPInput qap) throws Exception{
+		//Asignamos la entrada del QAP
 		input = qap;
+		
+		//No ha ejecutado nada el algoritmo
+		isRun = false;
 	}
 	
-	
+	/**
+	 * 
+	 * @throws Exception
+	 */
 	public abstract void run() throws Exception;
 	
 }

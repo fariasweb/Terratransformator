@@ -1,9 +1,15 @@
 public class QAPController {
 
+	//Referencia a los valores actuales
 	private GalaxyController CG;
 	private PacketController CP;
+	
+	//Copias de los valores en el momento de ejecutar la solucion
 	private Galaxy g;
 	private TST<Packet> p;
+	
+	//Solucion dada para galaxua g y paquetes p
+	private QAPSolution oqap;
 
 	/**
 	 * 
