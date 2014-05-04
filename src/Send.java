@@ -48,7 +48,9 @@ public class Send {
 		return packet;
 	}
 	
-	
+	public String ToString(){
+		return planet.getName() + " " + packet.getName();
+	}
 	
 	
 }

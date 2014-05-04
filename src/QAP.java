@@ -3,23 +3,14 @@ public abstract class QAP {
 	QAPInput input;
 	QAPSolution output;
 	
-	public QAP(QAPInput qap){
+	public abstract void convertSolutionSends() throws Exception;
+	
+	public QAP(QAPInput qap) throws Exception{
 		input = qap;
 	}
 	
-	public QAPSolution runGilmoreLawler() {
-		//Ejecucion del algoritmo 
-		return null;
-	}
 	
-	public QAPSolution runGilmoreLazy(){
-		return null;
-	}
-	
-	public QAPSolution runTabooSearch(){
-		
-		return null;
-	}
+	public abstract QAPSolution run() throws Exception;
 	
 	
 }

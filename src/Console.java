@@ -213,5 +213,67 @@ public class Console {
 	    return argv;
 		
 	}
+	
+	public static double[][] LectureMatrix(Scanner sc) {
+
+		int row, col;
+		row = sc.nextInt();
+		col = row;
+		double[][] A = new double[row][col];
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < col; j++) {
+				A[i][j] = sc.nextDouble();
+			}
+		}
+		return A;
+	}
+
+	public static int[] LectureVector(Scanner sc) {
+
+		int row;
+		row = sc.nextInt();
+		int[] A = new int[row];
+
+		for (int i = 0; i < row; i++) {
+			A[i] = sc.nextInt();
+		}
+		return A;
+	}
+
+	public static void WriteVector(int[] z) {
+
+		System.out.print("|");
+		for (int y = 0; y < z.length; y++) {
+			System.out.print(z[y]);
+			if (y != z.length - 1)
+				System.out.print("\t");
+		}
+		System.out.println("|");
+	}
+
+	public static void WriteVectorDouble(double[] z) {
+
+		System.out.print("|");
+		for (int y = 0; y < z.length; y++) {
+			System.out.print(z[y]);
+			if (y != z.length - 1)
+				System.out.print("\t");
+		}
+		System.out.println("|");
+	}
+
+	public static void WriteMatrix(double[][] d) {
+
+		for (int x = 0; x < d.length; x++) {
+			System.out.print("|");
+			for (int y = 0; y < d[x].length; y++) {
+				System.out.print(d[x][y]);
+				if (y != d[x].length - 1)
+					System.out.print("\t");
+			}
+			System.out.println("|");
+		}
+	}
 
 }

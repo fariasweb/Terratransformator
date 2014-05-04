@@ -65,4 +65,24 @@ public class Util {
 			throw new Exception(y_posp + " position not valid");
 	}
 	
+	public static double[][] CopyMatrix(double[][] m1) {
+		int n = m1.length;
+		double[][] m2 = new double[n][n];
+		for (int x = 0; x < n; x++) {
+			for (int y = 0; y < m1[x].length; y++) {
+				m2[x][y] = m1[x][y];
+			}
+		}
+		return m2;
+	}
+
+	public static int[] CopyVector(int[] m1) {
+		int n = m1.length;
+		int[] m2 = new int[n];
+
+		for (int y = 0; y < m1.length; y++) {
+			m2[y] = m1[y];
+		}
+		return m2;
+	}
 }

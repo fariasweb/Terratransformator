@@ -1,4 +1,3 @@
-
 public class QAPController {
 
 	private GalaxyController CG;
@@ -8,6 +7,8 @@ public class QAPController {
 	private QAPSolution oqap;
 	private Galaxy g;
 	private String QAPType;
+	private String[] planets;
+	private String[] packets;
 
 	
 	public QAPController(GalaxyController galaxyc ,PacketController packetc){
@@ -36,6 +37,8 @@ public class QAPController {
 		return QAPType;
 	}
 	
+	
+	
 	public void QAP(String GalaxyName) throws Exception {
 		
 		//1.Comprobar que la galaxia exista , comprobar que existe numPaquetes > 0
@@ -51,21 +54,31 @@ public class QAPController {
 		QAP alg;
 		switch(QAPType){
 			case "Gilmore Lazy":
-				alg = new QAPGilmoreLazy(iqap); // Hay que pasarle parametros
+				alg = new QAPEager(iqap); // Hay que pasarle parametros
 				break;
 			case "Gilmore Eager":
-				alg = new QAPGilmoreEager(iqap);	//Hay que pasarle parametros
-				break;
-			case "Taboo Search":
-				alg = new QAPTaboo(iqap);
+				alg = new QAPLazyGLB(iqap);	//Hay que pasarle parametros
 				break;
 			default: 
 				throw new Exception("Not Exists");
-				break;
 		}
 		//Ejecucion y salida
 		oqap = alg.run();
+		
+		//Hay que construir la lista de Sends a partir de la salida del algoritm
 	}
 	
+	//FALTA FUNCION DE CLONAR?
+	public Galaxy cloneGalaxy(Galaxy g){
+		Galaxy g1 = new Galaxy();
+		//
+		return g1;
+		
+	}
 	
+	public Packet clonePacket(Packet p){
+		Packet p1 = new Packet();
+		p1 = p;
+		return p1;
+	}
 }
