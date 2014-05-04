@@ -117,7 +117,7 @@ public class Packet {
 	 * pre:El recurso debe existir en el paquete
 	 * post: Se elimina el recurso del paquete
 	 * 
-	 * @param name
+	 * @param names
 	 * @throws Exception 
 	 */
 	public void removeResource(String name) throws Exception {
@@ -144,18 +144,7 @@ public class Packet {
 	 * @return String 
 	 */
 	public String toString(){
-		String r = name + " " +qttResources;
-		
-		// Relacion con recursos
-		Iterator<RelationPacketResource> iterator = rel.values().iterator();
-
-		while (iterator.hasNext()) {
-			// Cogemos el siguiente planeta
-			RelationPacketResource p = (RelationPacketResource) iterator.next();
-			r += " " + p.getResource().getName()+" "+p.getQuantity();
-		}
-		
-		return r;
+		return name + " " +qttResources;
 	}
 	
 	

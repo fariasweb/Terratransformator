@@ -476,7 +476,17 @@ public class PacketController extends AbstractController {
 		if (_last_key == "") {
 			// En caso de ser la primera vez como no tenemos indicado
 			// el _last_key usamos el primer elemento
-			encodeS = Clt.first().toString() + _SEPARATOR;
+			encodeS = Clt.first().toString();
+			//Recursos del paquete
+			Iterator<RelationPacketResource> iterator = Clt.first().getResources().values().iterator();
+			while (iterator.hasNext()) {
+				// Cogemos el siguiente recurso
+				RelationPacketResource rpr = (RelationPacketResource) iterator.next();
+				encodeS += " " + rpr.getResource().getName()+" "+rpr.getQuantity();
+			}
+			
+			encodeS	+= _SEPARATOR;
+			
 			list = Clt.valuesCache(Clt.firstKey(), _CACHE_NUM - 1);
 		} else {
 			// Como tenemos un _last_key partimos desde este
@@ -485,7 +495,17 @@ public class PacketController extends AbstractController {
 
 		// Pasamos objetos a cache
 		for (Packet p : list) {
-			encodeS += p.toString() + _SEPARATOR;
+			encodeS += p.toString();
+			
+			//Recursos del paquete
+			Iterator<RelationPacketResource> iterator = p.getResources().values().iterator();
+			while (iterator.hasNext()) {
+				// Cogemos el siguiente recurso
+				RelationPacketResource rpr = (RelationPacketResource) iterator.next();
+				encodeS += " " + rpr.getResource().getName()+" "+rpr.getQuantity();
+			}
+			
+			encodeS	+= _SEPARATOR;
 			_last_key = p.getName();
 		}
 
