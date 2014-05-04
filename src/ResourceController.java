@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * ResourceController
@@ -10,13 +9,15 @@ public class ResourceController extends AbstractController {
 
 	// protected attributes
 	private TST<Resource> Clt;
+	private PacketController pc;
 
 	/**
 	 * Constructora Post: Inicializa el contructor padre y el TST
 	 */
-	public ResourceController() {
+	public ResourceController(PacketController PacketC) {
 		super();
 		Clt = new TST<Resource>();
+		pc = PacketC;
 	}
 
 	// Create
@@ -135,6 +136,9 @@ public class ResourceController extends AbstractController {
 			Clt.remove(p.getName());
 			p.setName(newName);
 			Clt.put(newName, p);
+			
+			//Cambiamos el nombre en los paquetes
+			pc.updateResourceName(oldName, newName);
 		}
 	}
 
@@ -172,16 +176,11 @@ public class ResourceController extends AbstractController {
 	 */
 
 	public void removeAllResources() throws Exception {
-		Iterator<Resource> iterator = Clt.values().iterator();
-
-		// Recoremos todas los recursos
-		while (iterator.hasNext()) {
-			Resource p = (Resource) iterator.next();
-			// Eliminamos de la colecion
-			Clt.remove(p.getName());
-
-			//TODO: Eliminar la referencia en las relaciones
-		}
+		
+		//Eliminamos todos los recuros
+		Clt.clear();
+		//Eliminimos todos los recuroso de todos los paquetes
+		pc.removeResourcesFromAllPacket();
 	}
 
 	/**
@@ -199,8 +198,8 @@ public class ResourceController extends AbstractController {
 		// Eliminos del conjunto
 		Clt.remove(name);
 
-		//TODO: Eliminar las referencias de los paquetes
-		
+		//Eliminar las referencias de los paquetes
+		pc.removeResourceFromAllPacket(name);
 
 	}
 

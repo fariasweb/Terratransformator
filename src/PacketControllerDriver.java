@@ -12,10 +12,11 @@ class PacketControllerDriver extends AbstractDriver {
 	public static void main(String[] args) {
 
 		// Generico del driver
-		ResourceController rc = new ResourceController();
-		PacketController pc = new PacketController(rc);
-		
+		PacketController pc = new PacketController();
+		ResourceController rc = new ResourceController(pc);
 
+		pc.setResourceController(rc);
+		
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
 
@@ -40,10 +41,18 @@ class PacketControllerDriver extends AbstractDriver {
 				case 0: // Exit
 					break;
 				case 1:
-					pc = new PacketController(rc);
+					pc = new PacketController();
 					break;
 
 				case 2:
+					rc = new ResourceController(pc);
+					break;
+					
+				case 3:
+					pc.setResourceController(rc);
+					break;
+					
+				case 4:
 					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
@@ -51,11 +60,11 @@ class PacketControllerDriver extends AbstractDriver {
 					}
 					break;
 
-				case 3:
+				case 5:
 					Console.print(pc.getAll());
 					break;
 
-				case 4:
+				case 6:
 					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
@@ -64,7 +73,7 @@ class PacketControllerDriver extends AbstractDriver {
 
 					break;
 
-				case 5: // exist
+				case 7: // exist
 					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
@@ -77,7 +86,7 @@ class PacketControllerDriver extends AbstractDriver {
 					}
 					break;
 
-				case 6:
+				case 8:
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
@@ -86,7 +95,7 @@ class PacketControllerDriver extends AbstractDriver {
 					}
 					break;
 
-				case 7:
+				case 9:
 					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
@@ -95,16 +104,16 @@ class PacketControllerDriver extends AbstractDriver {
 					}
 					break;
 
-				case 8: // Remove All
+				case 10: // Remove All
 					removeAllPacket(pc);
 
 					break;
 					
-				case 9:
+				case 11:
 					Console.print("Size: "+pc.size());
 					break;
 
-				case 10:
+				case 12:
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
@@ -112,7 +121,7 @@ class PacketControllerDriver extends AbstractDriver {
 					}
 					break;
 
-				case 11:
+				case 13:
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
@@ -120,7 +129,7 @@ class PacketControllerDriver extends AbstractDriver {
 					}
 					break;
 
-				case 12:
+				case 14:
 					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
@@ -128,7 +137,7 @@ class PacketControllerDriver extends AbstractDriver {
 					}
 					break;
 					
-				case 13:
+				case 15:
 					if (argv.length < 4)
 						_msg_error_param_insuf();
 					else {
@@ -136,7 +145,7 @@ class PacketControllerDriver extends AbstractDriver {
 					}
 					break;
 
-				case 14:
+				case 16:
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
@@ -144,7 +153,7 @@ class PacketControllerDriver extends AbstractDriver {
 					}
 					break;
 
-				case 15:
+				case 17:
 					if (argv.length < 1)
 						_msg_error_param_insuf();
 					else {
@@ -152,7 +161,7 @@ class PacketControllerDriver extends AbstractDriver {
 					}
 					break;
 					
-				case 16: //save
+				case 18: //save
 					if (argv.length < 1)
 						_msg_error_param_insuf();
 					else {
@@ -160,7 +169,7 @@ class PacketControllerDriver extends AbstractDriver {
 					}
 					break;
 					
-				case 17: //load
+				case 19: //load
 					if (argv.length < 1)
 						_msg_error_param_insuf();
 					else {
@@ -343,35 +352,36 @@ class PacketControllerDriver extends AbstractDriver {
 		//Operaciones con conjunto galaxias
 		
 		menu.add("PacketController() : PacketController"); // 1
+		menu.add("ResourceController(PacketController pc) : ResourceController rc");
+		menu.add("rc.setResourceController(ResourceController rc) : void");
+		menu.add("addPacket(String name) : void"); // 4
 
-		menu.add("addPacket(String name) : void"); // 2
-
-		menu.add("getAll() : String"); // 3
+		menu.add("getAll() : String"); // 5
 		menu.add("getByName(String name) : String");
 
-		menu.add("existPacket(String name) : boolean"); // 5
+		menu.add("existPacket(String name) : boolean"); // 7
 
-		menu.add("updatePacketName(String name, String new_name) : void"); // 6
+		menu.add("updatePacketName(String name, String new_name) : void"); // 8
 
-		menu.add("removePacket(String name) : void"); // 7
+		menu.add("removePacket(String name) : void"); // 9
 		menu.add("removeAllPacket(): void");
 		
-		menu.add("size() : int"); //9
+		menu.add("size() : int"); //11
 
 		// Operaciones sobre las galaxias
 
-		menu.add("ResourceController.addResource(String name, String type) : Resource"); // 10
+		menu.add("ResourceController.addResource(String name, String type) : Resource"); // 12
 		menu.add("addResource(String PacketName, String ResourceName, Int quantity, ResourceController rc) : void"); // 9
 
-		menu.add("getResourceFromPacket(String name) : String"); // 12
+		menu.add("getResourceFromPacket(String name) : String"); // 14
 
 		menu.add("updateResourceFromPacket(String PacketName, String ResourceName, int quantity) : void");
 		
-		menu.add("removeResourceFromPacket(String PacketName, String ResourceName) : void"); // 13
-		menu.add("removeResourceFromPacket(String PacketName) : void");
+		menu.add("removeResourceFromPacket(String PacketName, String ResourceName) : void"); // 16
+		menu.add("removeResourcesFromPacket(String PacketName) : void");
 
 		//Save&Load
-		menu.add("save(String path, boolean append) : void"); //16
+		menu.add("save(String path, boolean append) : void"); //18
 		menu.add("load(String path) : void");
 		
 		print_menu();

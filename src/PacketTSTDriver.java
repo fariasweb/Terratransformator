@@ -10,15 +10,15 @@ import java.util.Scanner;
  * @author farias
  * 
  */
-public class GalaxyTSTDriver extends AbstractDriver {
+public class PacketTSTDriver extends AbstractDriver {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// Generico del driver
-		TST<Galaxy> Clt = new TST<Galaxy>();
-		Galaxy g = null;
+		TST<Packet> Clt = new TST<Packet>();
+		Packet g = null;
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -71,24 +71,24 @@ public class GalaxyTSTDriver extends AbstractDriver {
 					}
 					break;
 
-				case 4: //Create galaxy
-					if (argv.length < 4)
+				case 4: //Create packet
+					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
-						g = GalaxyDriver.create_galaxy_full(argv[1], Integer.parseInt(argv[2]), Integer.parseInt(argv[3]));
+						g = PacketDriver.create_packet_full(argv[1]);
 					}
 					
 					break;
 
 				case 5:
-					add_galaxy_to_TST(Clt, g);
+					add_packet_to_TST(Clt, g);
 					break;
 
 				case 6:
 					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
-						remove_galaxy_to_TST(Clt, argv[1]);
+						remove_packet_to_TST(Clt, argv[1]);
 					}
 					break;
 					
@@ -132,14 +132,14 @@ public class GalaxyTSTDriver extends AbstractDriver {
 		 */
 	private static void _menu() {
 
-		title = "Galaxy TST Driver";
+		title = "Packet TST Driver";
 
 		menu.add("clear()"); // 1
 		menu.add("contains(String key) : boolean");
 
 		menu.add("get(String key)"); // 3
 
-		menu.add("GalaxyDriver.create_galaxy_full(String name, int x, int y) : Galaxy g");
+		menu.add("GalaxyDriver.create_packet_full(String name, int x, int y) : Packet g");
 		menu.add("put(String g.getName(), g)"); // 5
 
 		menu.add("remove:(String key)");
@@ -147,7 +147,7 @@ public class GalaxyTSTDriver extends AbstractDriver {
 		menu.add("size(): int"); // 7
 
 		menu.add("keys() : Iterable<String>"); // 8
-		menu.add("values() : Iterable<Galaxy>");
+		menu.add("values() : Iterable<Packet>");
 
 		menu.add("longestPrefixOf(String s) : String"); // 10
 
@@ -157,9 +157,9 @@ public class GalaxyTSTDriver extends AbstractDriver {
 	// Actions
 	// ---------------------------------------------
 	
-	public static void add_galaxy_to_TST(TST<Galaxy> clt, Galaxy g) {
+	public static void add_packet_to_TST(TST<Packet> clt, Packet g) {
 		try {
-			if (g == null) throw new Exception("The galaxy is null");
+			if (g == null) throw new Exception("The packet is null");
 			clt.put(g.getName(), g);
 			
 		} catch(Exception e) {
@@ -167,7 +167,7 @@ public class GalaxyTSTDriver extends AbstractDriver {
 		}
 	}
 	
-	public static void remove_galaxy_to_TST(TST<Galaxy> clt, String key) {
+	public static void remove_packet_to_TST(TST<Packet> clt, String key) {
 		try {
 			clt.remove(key);
 			
@@ -176,11 +176,11 @@ public class GalaxyTSTDriver extends AbstractDriver {
 		}
 	}
 	
-	public static void values_TST(TST<Galaxy> clt) {
-		Iterable<Galaxy> cltValues = clt.values();
+	public static void values_TST(TST<Packet> clt) {
+		Iterable<Packet> cltValues = clt.values();
 		List<String> content = new ArrayList<String>();
 		
-		for (Galaxy g : cltValues) {
+		for (Packet g : cltValues) {
 		    content.add(g.toString());
 		}
 		
@@ -188,7 +188,7 @@ public class GalaxyTSTDriver extends AbstractDriver {
 		
 	}
 
-	public static void keys_TST(TST<Galaxy> clt) {
+	public static void keys_TST(TST<Packet> clt) {
 		Iterable<String> cltKeys = clt.keys();
 		List<String> content = new ArrayList<String>();
 		
@@ -201,11 +201,11 @@ public class GalaxyTSTDriver extends AbstractDriver {
 	}
 	
 	
-	private static void getGalaxyTST(TST<Galaxy> clt, String name) {
+	private static void getGalaxyTST(TST<Packet> clt, String name) {
 		try {
-			Galaxy gt = clt.get(name);
+			Packet gt = clt.get(name);
 			if (gt == null) {
-				Console.print("The galaxy "+name+" doens't exist");
+				Console.print("The packet "+name+" doens't exist");
 			} else {
 				List<String> content = new ArrayList<String>();
 				content.add(gt.toString());

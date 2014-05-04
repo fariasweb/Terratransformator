@@ -10,11 +10,19 @@ public class PacketController extends AbstractController {
 	/**
 	 * Constructor Post: Inicializa el contructor padre y el TST
 	 */
-	public PacketController(ResourceController rcp) {
+	public PacketController() {
 		super();
 		Clt = new TST<Packet>();
-		rc = rcp;
+		rc = null;
 
+	}
+	
+	/**
+	 * Post: Asigna el controlador de recurso
+	 * @param rcp
+	 */
+	public void setResourceController(ResourceController rcp) {
+		rc = rcp;
 	}
 
 	// Create
@@ -233,6 +241,9 @@ public class PacketController extends AbstractController {
 			throw new Exception("The packet " + PacketName + " does not exist");
 
 		// 2. Comprobar la existencia de recurso en controlador de recursos
+		if (rc == null)
+			throw new Exception("Resource Controller is not defined");
+		
 		Resource p = rc.getByName(ResourceName);
 		if (p == null)
 			throw new Exception("The resource " + ResourceName + " does not exist");
@@ -272,6 +283,17 @@ public class PacketController extends AbstractController {
 	// Update
 	// ---------------------------------------------
 
+	/**
+	 * Pre: El paquete debe exisitr
+	 * 		El recurso debe existir
+	 * 		Cantidad mayor que 0
+	 * 
+	 * Post: El paquete contiene un recurso con la cantidad q
+	 * @param Pname
+	 * @param Rname
+	 * @param q
+	 * @throws Exception
+	 */
 	public void updateResourceQuantity(String Pname, String Rname, int q) throws Exception {
 		// Cogemos el paquete
 		Packet g = Clt.get(Pname);
@@ -280,6 +302,26 @@ public class PacketController extends AbstractController {
 
 		//Actualizamos el recurpo del paquete
 		g.updateResource(Rname, q);
+	}
+	
+	/**
+	 * Modifica el nombre de un recurso de todos los paquetes
+	 * Post: Cambia el nombre con el que referencias los paquetes a un recurso
+	 * @param OldName
+	 * @param NewName
+	 * @throws Exception
+	 */
+	public void updateResourceName(String OldName, String NewName) throws Exception {
+		Iterable<Packet> ps = Clt.values();
+		for (Packet p : ps) {
+			//Existe este recurso?
+			RelationPacketResource rpr = p.getResources().get(OldName);
+			if (rpr != null) {
+				//Existe en este recuros
+				p.removeResource(OldName);
+				p.addResource(rpr.getResource(), rpr.getQuantity());
+			}
+		}
 	}
 	
 	// Delete
@@ -321,6 +363,35 @@ public class PacketController extends AbstractController {
 		g.removeAllResources();
 	}
 	
+	/**
+	 * Elimina un recurso de todos los paquetes
+	 * Post: Los paquetes no contienene el recurso
+	 * @param ResourceName
+	 * @throws Exception
+	 */
+	public void removeResourceFromAllPacket(String ResourceName) throws Exception {
+		
+		Iterable<Packet> ps = Clt.values();
+		for (Packet p : ps) {
+			//Existe este recurso?
+			if (p.getResources().contains(ResourceName)) {
+				//Elimina la relacion de recuros
+				p.removeResource(ResourceName);
+			}
+		}
+	}
+	
+	/**
+	 * Post: Elimina todos los recursos de todos los paquetes
+	 */
+	public void removeResourcesFromAllPacket() {
+		Iterable<Packet> ps = Clt.values();
+		for (Packet p : ps) {
+			p.removeAllResources();
+		}
+	}
+	 
+	
 	// Save&Load
 	// ---------------------------------------------
 
@@ -346,7 +417,7 @@ public class PacketController extends AbstractController {
 		// A–ade a la colecci—n
 		addPacket(name);
 
-		// TODO: Relacion con recursos
+		// Relacion con recursos
 		if (s.length > 2) {
 			Packet g = getByName(name);
 			Resource p;
@@ -362,19 +433,21 @@ public class PacketController extends AbstractController {
 					// Cogemos e recurso
 					p = rc.getByName(s[pos]);
 					if (p == null)
-						throw new Exception("The planet does not exist");
+						throw new Exception("The resource does not exist");
 
 					// A–adimos a la paquete
 					g.addResource(p, Integer.parseInt(s[pos + 1]));
 					
-					//Aumentamos la posicion
-					pos += 2;
+					
+					
 
 				} catch (Exception e) {
-					error += "Relation with resource " + s[i] + " can not do: "
+					error += "Relation with resource " + s[pos] + " can not do: "
 							+ e.getMessage() + "\n";
 				}
 
+				//Aumentamos la posicion
+				pos += 2;
 				// Aumentamos la posicion
 				i += 1;
 			} 
@@ -434,6 +507,9 @@ public class PacketController extends AbstractController {
 	 * 
 	 */
 	protected void preConditionLoad() throws Exception {
+		if (rc == null)
+			throw new Exception("Resource Controler is not defined");
+		
 		if (rc.size() == 0)
 			throw new Exception(
 					"Resource Controler must have resource to load packets");

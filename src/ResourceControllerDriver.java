@@ -11,7 +11,8 @@ public class ResourceControllerDriver extends AbstractDriver {
 	public static void main(String[] args) {
 
 		// Generico del driver
-		ResourceController rc = new ResourceController();
+		PacketController pc = new PacketController();
+		ResourceController rc = new ResourceController(pc);
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -35,7 +36,7 @@ public class ResourceControllerDriver extends AbstractDriver {
 				case 0:
 					break;
 				case 1:
-					rc = new ResourceController();
+					rc = new ResourceController(pc);
 					break;
 				case 2:
 					if (argv.length < 3)
@@ -225,7 +226,7 @@ public class ResourceControllerDriver extends AbstractDriver {
 	private static void _menu() {
 		title = "Resource Controller Driver";
 
-		menu.add("ResourceController() : ResourceController"); // 1
+		menu.add("ResourceController(PacketController pc) : ResourceController"); // 1
 
 		menu.add("addResource(String name,  String type) : void"); // 2
 
