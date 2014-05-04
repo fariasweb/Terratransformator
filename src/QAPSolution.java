@@ -158,7 +158,9 @@ public class QAPSolution{
 		
 		//Envios
 		for(QAPSend i : CltSend){
-			r += i.getPlanet().getName() + " " + i.getPacket().getName()+"\n";
+			r += i.getPlanet().getName() + " " 
+					+ i.getPacket().getName()
+					+"\n";
 		}
 		return r;	
 	}

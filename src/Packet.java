@@ -34,10 +34,6 @@ public class Packet extends Entity{
 
 	// Setter
 	// ---------------------------------------------
-<<<<<<< HEAD
-=======
-	
->>>>>>> be47766f7b6226141a3e390980e85b6b4d68a9d1
 
 	/**
 	 * pre:El nombre no debe ser nulo y qtt > 0 

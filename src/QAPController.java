@@ -82,6 +82,35 @@ public class QAPController {
 		return "";
 	}
 	
+	/**
+	 * Pre: Debe exisitir una galaxia
+	 * @return
+	 */
+	public String getGalaxy() {
+		if (g != null)
+			return g.toString();
+		
+		return "";
+	}
+	
+	/**
+	 * Pre: Debe exisitir una galaxia
+	 * @return
+	 */
+	public String getPackets() {
+		if (p != null) {
+			String r = "";
+			
+			for (Packet i : p.values()){
+				r += i.toString() + "\n";
+			}
+			
+			return r;
+		}
+		
+		return "";
+	}
+	
 	// Create
 	// ---------------------------------------------
 
@@ -125,7 +154,6 @@ public class QAPController {
 	
 	// ---------------------------------------------
 	// QAP Solution
-	// TODO Reasignar paquetes,...
 	// ---------------------------------------------
 	
 	// Update
@@ -164,6 +192,59 @@ public class QAPController {
 
 	// Save&Load
 	// ---------------------------------------------
-	//TODO
+	
+	/**
+	 * Post: Guarda los datos de memoria a archivo
+	 * @param path
+	 * @param append
+	 * @throws Exception
+	 */
+	public void save(String path, boolean append) throws Exception {
+
+		// Guardamos si existen datos
+		if (oqap != null) {
+			
+			int num;
+			String cache = "";
+			
+			//Abrimos el archivo
+			dCont.open(path, append);
+			
+			//1. Guardamos la galaxia
+			PairInt pi = g.getSize();
+			dCont.write("G "+g.getName()+" "+pi.getX()+" "+pi.getY());
+
+			//2. Guardar planetas
+			num = (int) Math
+					.ceil((double) g.getPlanets().size() / (double) 100);
+
+			for (int i = 0; i < num; i++) {
+				
+				//Codificamos una parte - cache  
+				
+				// Gaurdamos en disco
+				if (cache.length() > 0)
+					dCont.write(cache);
+
+				// Limpiamos el string
+				cache = "";
+			}
+			
+			//3. Guardamos los paquetes
+			for (Packet k: p.values()) {
+				dCont.write("K "+k.toString());
+			}
+			
+			//4. Guardamos la solucion
+			dCont.write("S "+oqap.toString());
+			for (QAPSend ss: oqap.getCltSend()) {
+				dCont.write("SS "+ss.toString());
+			}
+			
+			dCont.close();
+
+		} else
+			throw new Exception ("Is necessary a solution to save");
+	}
 	
 }

@@ -193,9 +193,15 @@ public class QAPControllerDriver extends AbstractDriver {
 					}
 					break;
 				case 20:
-					Console.print(qapc.getQAPSolution());
+					Console.print(qapc.getGalaxy());
 					break;
 				case 21:
+					Console.print(qapc.getPackets());
+					break;
+				case 22:
+					Console.print(qapc.getQAPSolution());
+					break;
+				case 23:
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
@@ -281,6 +287,8 @@ public class QAPControllerDriver extends AbstractDriver {
 
 		//Lanzar QAP //19
 		menu.add("QAP(String GalaxyName, String QAPType) : void");
+		menu.add("getGalaxy() : String");
+		menu.add("getPackets() : String");
 		menu.add("getQAPSolution() : String");
 		menu.add("exchangePackets(String PlanetA, String PlanetB) : void");
 		print_menu();
