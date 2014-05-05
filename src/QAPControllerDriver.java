@@ -188,8 +188,7 @@ public class QAPControllerDriver extends AbstractDriver {
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
-						runQAP(qapc, argv[1],
-								argv[2]);
+						runQAP(qapc, argv[1], argv[2]);
 					}
 					break;
 				case 20:
@@ -202,14 +201,32 @@ public class QAPControllerDriver extends AbstractDriver {
 					Console.print(qapc.getQAPSolution());
 					break;
 				case 23:
+					Console.print(qapc.getQAPSolutionSend());
+					break;
+				case 24:
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
-						exchangePackets(qapc, argv[1],
-								argv[2]);
+						exchangePackets(qapc, argv[1], argv[2]);
+					}
+					break;
+				// QAP
+				// -------------------------------------
+				case 25:
+					if (argv.length < 3)
+						_msg_error_param_insuf();
+					else {
+						saveQAPController(qapc, argv[1], argv[2].equals("true"));
 					}
 					break;
 
+				case 26:
+					if (argv.length < 2)
+						_msg_error_param_insuf();
+					else {
+						loadQAPController(qapc, argv[1]);
+					}
+					break;
 				default:
 					_msg_opc_invalid();
 					break;
@@ -221,8 +238,30 @@ public class QAPControllerDriver extends AbstractDriver {
 
 	// Actions
 	// ---------------------------------------------
+
+	private static void loadQAPController(QAPController qapc, String path) {
+		try {
+			//qapc.load(path);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
+	}
+
+	public static void saveQAPController(QAPController qapc, String path,
+			boolean append) {
+		try {
+			qapc.save(path, append);
+
+		} catch (Exception e) {
+
+			_msg_error(e.getMessage());
+		}
 		
-	private static void exchangePackets(QAPController qapc, String PlanetA,
+	}
+
+	public static void exchangePackets(QAPController qapc, String PlanetA,
 			String PlanetB) {
 		try {
 
@@ -232,10 +271,11 @@ public class QAPControllerDriver extends AbstractDriver {
 
 			_msg_error(e.getMessage());
 		}
-		
+
 	}
 
-	private static void runQAP(QAPController qapc, String GalaxyName, String QAPType) {
+	public static void runQAP(QAPController qapc, String GalaxyName,
+			String QAPType) {
 		try {
 
 			qapc.QAP(GalaxyName, QAPType);
@@ -244,7 +284,7 @@ public class QAPControllerDriver extends AbstractDriver {
 
 			_msg_error(e.getMessage());
 		}
-		
+
 	}
 
 	// Menu
@@ -285,12 +325,18 @@ public class QAPControllerDriver extends AbstractDriver {
 		menu.add("ResourceControllerDriver.addResource(ResourceController rc, String name, String type) : void");
 		menu.add("ResourceControllerDriver.removeResource(ResourceController rc, String name) : void");
 
-		//Lanzar QAP //19
+		// Lanzar QAP //19
 		menu.add("QAP(String GalaxyName, String QAPType) : void");
 		menu.add("getGalaxy() : String");
 		menu.add("getPackets() : String");
 		menu.add("getQAPSolution() : String");
+		menu.add("getQAPSolutionSends() : String");
 		menu.add("exchangePackets(String PlanetA, String PlanetB) : void");
+
+		// Load&save //25
+		menu.add("save(String path, boolean append) : void");
+		menu.add("load(String path) : void");
+
 		print_menu();
 	}
 }

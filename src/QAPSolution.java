@@ -154,14 +154,8 @@ public class QAPSolution{
 		
 		
 		//Informacion basica
-		String r = QAPType+" "+executionTime+" "+efficiency+"\n";
+		String r = QAPType+" "+executionTime+" "+efficiency;
 		
-		//Envios
-		for(QAPSend i : CltSend){
-			r += i.getPlanet().getName() + " " 
-					+ i.getPacket().getName()
-					+"\n";
-		}
 		return r;	
 	}
 
