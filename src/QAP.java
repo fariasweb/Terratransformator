@@ -34,6 +34,7 @@ public abstract class QAP {
 		
 		//No ha ejecutado nada el algoritmo
 		isRun = false;
+		time = 0;
 	}
 	
 	// Getters
@@ -74,9 +75,32 @@ public abstract class QAP {
 		return solution;
 	}
 	
+	// Setters
+	// ---------------------------------------------
+	/**
+	 * @param isRun the isRun to set
+	 */
+	public void setRun(boolean isRunp) {
+		isRun = isRunp;
+	}
+
+	/**
+	 * @param time the time to set
+	 */
+	public void setTime(long timep) {
+		time = timep;
+	}
+
+	/**
+	 * @param result the result to set
+	 */
+	public void setResult(double resultp) {
+		result = resultp;
+	}
+
 	// Run
 	// ---------------------------------------------
-		
+			
 	/**
 	 * 
 	 * @throws Exception

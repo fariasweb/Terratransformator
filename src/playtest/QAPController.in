@@ -32,8 +32,6 @@
 15 Packet3 Prof 1
 5
 6
-19 Galaxy1 GilmoreLazy
-19 Galaxy1 GilmoreEager
 19 Galaxy2 GilmoreLazy
 22
 23
@@ -43,3 +41,9 @@
 20
 21
 25 ./save/QAPSolution.txt false
+19 Galaxy1 GilmoreEager
+22
+23
+26 ./save/QAPSolution.txt
+20
+23

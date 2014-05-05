@@ -241,7 +241,7 @@ public class QAPControllerDriver extends AbstractDriver {
 
 	private static void loadQAPController(QAPController qapc, String path) {
 		try {
-			//qapc.load(path);
+			qapc.load(path);
 
 		} catch (Exception e) {
 

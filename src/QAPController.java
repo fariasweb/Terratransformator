@@ -178,6 +178,7 @@ public class QAPController {
 
 		// 7.Generar salida
 		oqap = new QAPSolution(alg, g, p);
+		oqap.setQAPSend();
 	}
 
 	// ---------------------------------------------
@@ -250,7 +251,7 @@ public class QAPController {
 					.ceil((double) g.getPlanets().size() / (double) 100);
 
 			// Primer elemento
-			encodeS = "P " + g.getPlanets().first().toString() + ";";
+			encodeS = "";
 			_last_key = g.getPlanets().first().getName();
 
 			for (int i = 0; i < num; i++) {
@@ -277,7 +278,7 @@ public class QAPController {
 			num = (int) Math.ceil((double) p.size() / (double) 100);
 
 			// Primer elemento
-			encodeS = "K " + p.first().toString() + ";";
+			encodeS = "";
 			_last_key = p.first().getName();
 
 			for (int i = 0; i < num; i++) {
@@ -329,6 +330,133 @@ public class QAPController {
 
 		} else
 			throw new Exception("Is necessary a solution to save");
+	}
+	
+	/**
+	 * Pre: El archivo path debe exisitir
+	 * Post: Carga los datos del archvio a memoria
+	 * @param path
+	 * @throws Exception
+	 */
+	protected void load(String path) throws Exception {
+
+		// Llamar la funcion load de archivo
+		dCont.open(path, true);
+		
+		//Reiniciamos valores
+		g = null;
+		p = new TST<Packet>();
+		oqap = null;
+
+		// Bucle de lectura
+		String cache;
+		String error = "";
+		String[] parseS;
+		
+		int total = 0;
+		
+		while ((cache = dCont.read()) != null) {
+			parseS = cache.split(";");
+
+			// Descomponemos el objeto
+			for (int i = 0; i < parseS.length; i++) {
+				//Aumentamos el numero de registros leidos
+				total += 1;
+				//Lanzamos la decodificacion y carga
+				try {
+					if (parseS.length == 0)
+						throw new Exception("Error in string length");
+					
+					//Separro por espacios
+					String[] s = parseS[i].split(" ");
+					
+					//Separamos segun el tipo
+					if (s[0].equals("G")) { //Galaxia
+						if (s.length != 4)
+							throw new Exception("The record to galaxy is not correct");
+						
+						g = new Galaxy(s[1], Integer.parseInt(s[2]), Integer.parseInt(s[3]));
+						
+					} else if (s[0].equals("P")) { //Planeta
+						if (s.length != 4)
+							throw new Exception("The record to planet is not correct");
+						//Precondiciones
+						if (g == null) 
+							throw new Exception("Galaxy is not defined");
+						
+						//A–adimos el planeta
+						g.addPlanet(new Planet(s[1], Integer.parseInt(s[2]), Integer.parseInt(s[3])));
+						
+					} else if (s[0].equals("K")) { //Paquetes
+						
+						if (s.length != 3)
+							throw new Exception("The record to Packets is not correct");
+							
+							//Cremos el paquete con el totoal de recuross
+							Packet k = new Packet(s[1]);
+							Resource r = new Resource("Resources", "HUMAN");
+							k.addResource(r, Integer.parseInt(s[2]));
+							
+							p.put(k.getName(), k);
+
+					} else if (s[0].equals("S")) { //Solucion
+						
+						if (s.length != 4)
+							throw new Exception("The record to QAPsolution is not correct");
+						
+						//Creamos el input
+						QAPInput iqap = new QAPInput(g, p);
+						
+						//Creamos el algoritmo
+						QAP alg;
+
+						if (s[1].equals(QAPTypeList.GilmoreLazy.name())) {
+							alg = new QAPLazyGLB(iqap);
+						} else if (s[1].equals(QAPTypeList.GilmoreEager.name())) {
+							alg = new QAPEager(iqap);
+						} else {
+							throw new Exception("QAPType is not defined");
+						}
+						
+						//Datos basicos
+						alg.setResult(Float.parseFloat(s[2]));
+						//alg.setTime();
+						alg.setRun(true);
+						
+						oqap = new QAPSolution(alg ,g, p);
+						
+					} else if (s[0].equals("SS")) { //Envio
+
+						if (s.length != 3)
+							throw new Exception("The record to QAPsolution is not correct");
+						if (oqap == null)
+							throw new Exception("The QAPSolution is null");
+						
+						//Cogemos paqiete y planeta
+						Planet auxPlanet = g.getPlanets().get(s[1]); //Al planeta i se le asigna el paquete solution[i]
+						Packet auxPacket = p.get(s[2]);
+						
+						if (auxPlanet == null)
+							throw new Exception ("The planet does not exist");
+						if (auxPacket == null)
+							throw new Exception ("The packet does not exist");
+
+						//Asignamos un envio a la solucion
+						oqap.addSend(new QAPSend(auxPlanet, auxPacket));
+					}
+					
+				} catch(Exception e) {
+					error += "Record "+total+": "+e.getMessage()+"\n";
+				}
+			}
+
+		}
+		
+		//Cerrar el archivo
+		dCont.close();
+		
+		//En caso de haber errores en la carga, lanzamos 
+		if (error.length() > 0) throw new Exception("Fail to load information\n"+error);
 	}
 
 }
