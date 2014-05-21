@@ -41,7 +41,7 @@ public class QAPSolution {
 		if (!qap.isRun())
 			throw new Exception("The QAP has not run yet");
 		int[] solution = qap.getSolution();
-		// 2. Generar los arrays que antes estaban en QAPInput
+		// 2. Generar los arrays que antes estaban en QxAPInput
 		// No hace falta guardarlos
 		String[] namePackets = qap.input.getPackets();
 		String[] namePlanets = qap.input.getPlanets();
