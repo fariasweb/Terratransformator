@@ -39,12 +39,7 @@ public class TST<Value> {
 	public boolean contains(String key) {
 		if (key == null || key.length() == 0) return false;
 		
-		try{
-			return get(key.toLowerCase()) != null;
-		}
-		catch (Exception e) {
-			return false;
-		}
+		return get(root, key.toLowerCase(), 0) != null;
 	}
 
 	//if not present returns null
@@ -62,6 +57,8 @@ public class TST<Value> {
 		if(!Util.checkName(key)) throw new Exception(key + " is not valid");
 
 		Node x = get(root, key.toLowerCase(), 0);
+		if (x == null)
+			throw new Exception(key+" does not exist");
 		
 		return x.val;
 	}

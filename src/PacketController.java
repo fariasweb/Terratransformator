@@ -300,9 +300,9 @@ public class PacketController extends AbstractController {
 		Iterable<Packet> ps = Clt.values();
 		for (Packet p : ps) {
 			//Existe este recurso?
-			RelationPacketResource rpr = p.getResources().get(OldName);
-			if (rpr != null) {
+			if (p.getResources().contains(OldName)) {
 				//Existe en este recuros
+				RelationPacketResource rpr = p.getResources().get(OldName);
 				p.removeResource(OldName);
 				p.addResource(rpr.getResource(), rpr.getQuantity());
 			}
