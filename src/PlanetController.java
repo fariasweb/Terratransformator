@@ -76,8 +76,7 @@ public class PlanetController extends AbstractController {
 	public String getByNameToString(String name) throws Exception {
 
 		Planet g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This planet doesn't exist");
+		//if (g == null)throw new Exception("This planet doesn't exist");
 
 		return g.toString();
 	}
@@ -93,8 +92,7 @@ public class PlanetController extends AbstractController {
 	public Planet getByName(String name) throws Exception {
 
 		Planet g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This planet doesn't exist");
+		//if (g == null) throw new Exception("This planet doesn't exist");
 
 		return g;
 	}
@@ -125,8 +123,7 @@ public class PlanetController extends AbstractController {
 	public void updatePlanetName(String oldName, String newName) throws Exception {
 		// Cogemos el planeta
 		Planet p = Clt.get(oldName);
-		if (p == null)
-			throw new Exception("This planet doesn't exist");
+		//if (p == null) throw new Exception("This planet doesn't exist");
 
 		// Cimprobamos qu eno sea las misma galaxi
 
@@ -169,8 +166,7 @@ public class PlanetController extends AbstractController {
 
 		// Cogemos el planeta
 		Planet p = Clt.get(namep);
-		if (p == null)
-			throw new Exception("This planet doesn't exist");
+		//if (p == null) throw new Exception("This planet doesn't exist");
 
 		// Cambiamos la posicoon
 		p.setPosition(x, y);
@@ -211,8 +207,7 @@ public class PlanetController extends AbstractController {
 	 */
 	public void removePlanet(String name) throws Exception {
 		Planet p = Clt.get(name);
-		if (p == null)
-			throw new Exception("This planet doesn't exist");
+		//if (p == null) throw new Exception("This planet doesn't exist");
 
 		// Eliminos del conjunto
 		Clt.remove(name);

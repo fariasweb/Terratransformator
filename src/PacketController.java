@@ -79,9 +79,6 @@ public class PacketController extends AbstractController {
 	public String getByNameToString(String name) throws Exception {
 
 		Packet p = Clt.get(name);
-		if (p == null)
-			throw new Exception("This packet doesn't exist");
-
 		return p.toString();
 	}
 
@@ -97,9 +94,6 @@ public class PacketController extends AbstractController {
 	public Packet getByName(String name) throws Exception {
 
 		Packet g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This galaxy doesn't exist");
-
 		return g;
 	}
 
@@ -150,8 +144,6 @@ public class PacketController extends AbstractController {
 
 		// Cogemos el paquete
 		Packet g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This packet doesn't exist");
 
 		// Actualizamos informacion
 		// Si el pacquete tiene un nombre diferente se debe
@@ -184,8 +176,6 @@ public class PacketController extends AbstractController {
 	 */
 	public void removePacket(String name) throws Exception {
 		Packet g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This packet doesn't exist");
 
 		// Eliminos del conjunto
 		Clt.remove(name);
@@ -237,8 +227,6 @@ public class PacketController extends AbstractController {
 
 		// 1. Comprobar la existencia de paquete
 		Packet g = Clt.get(PacketName);
-		if (g == null)
-			throw new Exception("The packet " + PacketName + " does not exist");
 
 		// 2. Comprobar la existencia de recurso en controlador de recursos
 		if (rc == null)
@@ -266,8 +254,6 @@ public class PacketController extends AbstractController {
 	public String getResourcesFromPacket(String name) throws Exception {
 		// Cogemos el paquete
 		Packet g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This packet doesn't exist");
 
 		String result = "";
 		// Comprobamos que exista algo en el array
@@ -297,8 +283,6 @@ public class PacketController extends AbstractController {
 	public void updateResourceQuantity(String Pname, String Rname, int q) throws Exception {
 		// Cogemos el paquete
 		Packet g = Clt.get(Pname);
-		if (g == null)
-			throw new Exception("This packet doesn't exist");
 
 		//Actualizamos el recurpo del paquete
 		g.updateResource(Rname, q);
@@ -310,6 +294,7 @@ public class PacketController extends AbstractController {
 	 * @param OldName
 	 * @param NewName
 	 * @throws Exception
+	 * TODO TODO TODO
 	 */
 	public void updateResourceName(String OldName, String NewName) throws Exception {
 		Iterable<Packet> ps = Clt.values();

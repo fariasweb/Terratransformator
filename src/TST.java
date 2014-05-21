@@ -62,8 +62,7 @@ public class TST<Value> {
 		if(!Util.checkName(key)) throw new Exception(key + " is not valid");
 
 		Node x = get(root, key.toLowerCase(), 0);
-		if (x == null)
-			return null;
+		
 		return x.val;
 	}
 

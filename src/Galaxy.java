@@ -212,9 +212,13 @@ public class Galaxy extends Entity{
 	 */
 	public void removePlanet(String namep) throws Exception {
 		
-		Planet p = planets.get(namep);
-		if (p != null) {
+		//Comprobamos que tenga el planeta
+		if (planets.contains(namep)) {
+			//Selecionamos el planeta
+			Planet p = planets.get(namep);
+			//Eliminamos dle TST
 			planets.remove(namep);
+			//Eliminamos la galaxia
 			p.removeGalaxy();
 		}
 	}

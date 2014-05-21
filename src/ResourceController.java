@@ -71,8 +71,7 @@ public class ResourceController extends AbstractController {
 	public String getByNameToString(String name) throws Exception {
 
 		Resource g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This resource does not exist");
+		//if (g == null) throw new Exception("This resource does not exist");
 
 		return g.toString();
 	}
@@ -89,8 +88,7 @@ public class ResourceController extends AbstractController {
 	public Resource getByName(String name) throws Exception {
 
 		Resource g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This resource does not exist");
+		//if (g == null) throw new Exception("This resource does not exist");
 
 		return g;
 	}
@@ -122,8 +120,7 @@ public class ResourceController extends AbstractController {
 			throws Exception {
 		// Cogemos el recurso
 		Resource p = Clt.get(oldName);
-		if (p == null)
-			throw new Exception("This resource does not exist");
+		//if (p == null) throw new Exception("This resource does not exist");
 
 		// Cimprobamos qu eno sea las misma galaxi
 		if (p.getName() != newName) {
@@ -158,8 +155,7 @@ public class ResourceController extends AbstractController {
 
 		// Cogemos el recurso
 		Resource p = Clt.get(namep);
-		if (p == null)
-			throw new Exception("This resource does not exist");
+		//if (p == null) throw new Exception("This resource does not exist");
 
 		// Cambiamos el typo
 		p.setType(type);
@@ -192,8 +188,7 @@ public class ResourceController extends AbstractController {
 	 */
 	public void removeResource(String name) throws Exception {
 		Resource p = Clt.get(name);
-		if (p == null)
-			throw new Exception("This planet doesn't exist");
+		//if (p == null) throw new Exception("This planet doesn't exist");
 
 		// Eliminos del conjunto
 		Clt.remove(name);

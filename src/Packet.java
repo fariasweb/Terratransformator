@@ -60,8 +60,6 @@ public class Packet extends Entity{
 	public void updateResource(String name, int qtt) throws Exception {
 		// Cogemos el recuros dentro del paquete
 		RelationPacketResource rpr = rel.get(name);
-		if (rpr == null)
-			throw new Exception("The resource does not exist in the packet");
 
 		//Calculamos la difernecia entre la cantidad antigua y la nueva
 		int diff_q = qtt - rpr.getQuantity();
@@ -103,9 +101,7 @@ public class Packet extends Entity{
 	 */
 	public void removeResource(String name) throws Exception {
 		RelationPacketResource res = rel.get(name);
-		if (res == null)
-			throw new Exception("The resource "+name+" does not exist in this packet");
-		
+	
 		qttResources -= res.getQuantity();
 		rel.remove(name);
 	}

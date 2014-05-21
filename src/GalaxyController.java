@@ -75,9 +75,6 @@ public class GalaxyController extends AbstractController {
 	public String getByNameToString(String name) throws Exception {
 
 		Galaxy g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This galaxy doesn't exist");
-
 		return g.toString();
 	}
 
@@ -93,9 +90,6 @@ public class GalaxyController extends AbstractController {
 	public Galaxy getByName(String name) throws Exception {
 
 		Galaxy g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This galaxy doesn't exist");
-
 		return g;
 	}
 
@@ -128,8 +122,6 @@ public class GalaxyController extends AbstractController {
 
 		// Cogemos la galxia
 		Galaxy g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This galaxy doesn't exist");
 
 		// Actualizamos informacion
 		// Si la galaxia tiene un nombre diferente se debe
@@ -161,8 +153,6 @@ public class GalaxyController extends AbstractController {
 	 */
 	public void removeGalaxy(String name) throws Exception {
 		Galaxy g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This galaxy doesn't exist");
 
 		// Eliminos del conjunto
 		Clt.remove(name);
@@ -215,8 +205,6 @@ public class GalaxyController extends AbstractController {
 
 		// 1. Comprobar la existencia de galaxia
 		Galaxy g = Clt.get(GalaxyName);
-		if (g == null)
-			throw new Exception("The galaxy " + GalaxyName + " does not exist");
 
 		// 2. Comprobar la existencia de planeta en controlador de planetas
 		// Pre: El planeta no debe tener otra galaxia asignaada o estar en esta
@@ -245,8 +233,6 @@ public class GalaxyController extends AbstractController {
 	public String getPlanetsFromGalaxy(String name) throws Exception {
 		// Cogemos la galxia
 		Galaxy g = Clt.get(name);
-		if (g == null)
-			throw new Exception("This galaxy doesn't exist");
 
 		String result = "";
 		// Comprobamos que exista algo en el array
@@ -273,8 +259,6 @@ public class GalaxyController extends AbstractController {
 			throws Exception {
 		// Cogemos la galxia
 		Galaxy g = Clt.get(GalaxyName);
-		if (g == null)
-			throw new Exception("This galaxy " + GalaxyName + "doesn't exist");
 
 		// Eliminamos el planeta de la galaxia
 		g.removePlanet(Planetname);
@@ -291,8 +275,6 @@ public class GalaxyController extends AbstractController {
 	public void removePlanetsFromGalaxy(String GalaxyName) throws Exception {
 		// Cogemos la galxia
 		Galaxy g = Clt.get(GalaxyName);
-		if (g == null)
-			throw new Exception("This galaxy doesn't exist");
 
 		// Eliminamos todas las galaxias
 		g.removeAllPlanets();
