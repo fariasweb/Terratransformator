@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.ArrayList;
@@ -21,6 +22,48 @@ public class TST<Value> {
 		private char c; // character
 		private Node left, mid, right; // left, middle, and right subtries
 		private Value val; // value associated with string
+	}
+	
+	
+	/**
+	 * Iterator TST
+	 *
+	 */
+	private class TSTIterator implements Iterator {
+
+		private Node current;
+		
+		/**
+		 * 
+		 * @param first
+		 */
+		public TSTIterator(Node first) {
+			current = first;
+		}
+		
+		/**
+		 * 
+		 */
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		/**
+		 * 
+		 */
+		public Object next() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		/**
+		 * 
+		 */
+		public void remove() {
+			// TODO Auto-generated method stub
+		}
+		
 	}
 
 	/**
@@ -346,5 +389,10 @@ public class TST<Value> {
 		}
 
 		return del;
+	}
+	
+	
+	public Iterator newIterator() {
+		return new TSTIterator(root);
 	}
 }
