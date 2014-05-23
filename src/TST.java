@@ -2,6 +2,7 @@ import java.util.Iterator;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * TST<Value>
@@ -29,39 +30,75 @@ public class TST<Value> {
 	 * Iterator TST
 	 *
 	 */
-	private class TSTIterator implements Iterator {
-
-		private Node current;
+	private class TSTIterator implements Iterator<Value> {
+		private Stack<Node> fringe = new Stack<Node>();
 		
 		/**
 		 * 
 		 * @param first
 		 */
-		public TSTIterator(Node first) {
-			current = first;
+		public TSTIterator(Node x) {
+			if (x != null) {
+				
+				fringe.push (x);
+				if (x.val == null) {
+					
+					//Miramos la izquierda
+					while(x.left != null) {
+						x = x.left;
+						fringe.push (x);
+					}
+					
+					//Tenemos el valor primero?
+					if(x.val == null) {
+						//Miramos el centro
+						while(x.mid != null ) {
+							x = x.mid;
+							fringe.push (x);
+						}
+						
+						if (x.val == null) {
+							//Miramos la izquierda
+							while(x.right != null ) {
+								x = x.right;
+								fringe.push (x);
+							}
+						}
+					}
+					
+				}
+			}
 		}
 		
 		/**
 		 * 
 		 */
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return false;
+			 return !fringe.empty ( );
 		}
 
 		/**
 		 * 
 		 */
-		public Object next() {
-			// TODO Auto-generated method stub
-			return null;
+		public Value next() {
+			
+			if (!hasNext ( )) return null;
+	        
+			Node node = fringe.pop();
+	        if (node.right != null) {
+	            fringe.push (node.right);
+	        }
+	        if (node.left != null) {
+	            fringe.push (node.left);
+	        }
+	        return node.val;
 		}
 
 		/**
 		 * 
 		 */
 		public void remove() {
-			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException ();
 		}
 		
 	}
@@ -308,7 +345,7 @@ public class TST<Value> {
 		while(x.left != null) x = x.left;
 		if(x.val != null) return x.val;
 		else if(x.mid != null) return first(x.mid);
-		//else if(x.val != null) return x.val;
+		else if(x.val != null) return x.val;
 		else throw new Exception("Debugging exception");
 	}
 
@@ -334,7 +371,7 @@ public class TST<Value> {
 		while(x.left != null) x = x.left;
 		if(x.val != null) return ""+x.c;
 		else if(x.mid != null) return x.c+firstKey(x.mid);
-		//else if(x.val != null) return ""+x.c;
+		else if(x.val != null) return ""+x.c;
 		else throw new Exception("Debugging exception");
 	}
 
@@ -391,8 +428,11 @@ public class TST<Value> {
 		return del;
 	}
 	
-	
-	public Iterator newIterator() {
+	/**
+	 * 
+	 * @return
+	 */
+	public Iterator<Value> newIterator() {
 		return new TSTIterator(root);
 	}
 }
