@@ -36,24 +36,16 @@ public abstract class AbstractController {
 			//Abrimos el archivo
 			dCont.open(path, append);
 			
-			String cache;
 			//Reinicimos para que encodeString empieze desde el incio
 			_last_key = ""; 
-			//Numero de vueltas
-			int num = (int) Math
-					.ceil((double) size() / (double) _CACHE_NUM);
 
-			for (int i = 0; i < num; i++) {
-				
-				//Codificamos una parte - cache
-				cache = encodeString();
-				
-				// Gaurdamos en disco
-				if (cache.length() > 0)
-					dCont.write(cache);
+			TSTIterator it = new TSTIterator();
+			while(it.hasNext()){
+				String cache = "";
+				for(int i = 0; i < _CACHE_NUM && it.hasNext(); ++i)
+					cache += (it.next().toString()+_SEPARATOR);
 
-				// Limpiamos el string
-				cache = "";
+				dCont.write(cache);
 			}
 
 			dCont.close();
