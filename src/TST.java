@@ -615,7 +615,7 @@ public class TST<Value> {
 	 * 
 	 * @return
 	 */
-	public Iterator<Value> newIterator() {
+	public Iterator<Value> iterator() {
 		return new TSTIterator(root);
 	}
 }

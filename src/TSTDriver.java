@@ -134,7 +134,7 @@ public class TSTDriver extends AbstractDriver {
 
 				case 13:
 					//Clt.dump();
-					it = Clt.newIterator();
+					it = Clt.iterator();
 					break;
 				case 14:
 					try {

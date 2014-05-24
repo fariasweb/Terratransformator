@@ -48,7 +48,7 @@ public abstract class AbstractController {
 			//Reinicimos para que encodeString empieze desde el incio
 			_last_key = ""; 
 
-			TSTIterator it = new TSTIterator();
+			Iterator<Entity> it = Clt.iterator();
 			while(it.hasNext()){
 				String cache = "";
 				for(int i = 0; i < _CACHE_NUM && it.hasNext(); ++i)
