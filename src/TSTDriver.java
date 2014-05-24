@@ -7,7 +7,7 @@ public class TSTDriver extends AbstractDriver {
 
 		TST<Entity> Clt = new TST<Entity>();
 		Entity r = null;
-		Iterator it = null;
+		Iterator<Entity> it = null;
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -70,7 +70,7 @@ public class TSTDriver extends AbstractDriver {
 					try {
 						if (r == null)
 							throw new Exception("Entity is null");
-						Clt.put(argv[1], r);
+						Clt.put(r.getName(), r);
 					} catch (Exception e) {
 						_msg_error(e.getMessage());
 					}
@@ -133,6 +133,7 @@ public class TSTDriver extends AbstractDriver {
 					break;
 
 				case 13:
+					//Clt.dump();
 					it = Clt.newIterator();
 					break;
 				case 14:
@@ -142,8 +143,7 @@ public class TSTDriver extends AbstractDriver {
 						if (!it.hasNext())
 							throw new Exception("Iterator i does not have next");
 						
-						Entity e = it.next();
-						Console.log(e.getName());
+						Console.print(it.next().getName());
 						
 					} catch (Exception e) {
 						_msg_error(e.getMessage());
@@ -155,9 +155,9 @@ public class TSTDriver extends AbstractDriver {
 							throw new Exception("Iterator i is null");
 						
 						if (it.hasNext())
-							Console.log("Iterator i has next");
+							Console.print("Iterator i has next");
 						else	
-							Console.log("Iterator i does not have next");
+							Console.print("Iterator i does not have next");
 					} catch (Exception e) {
 						_msg_error(e.getMessage());
 					}
@@ -182,7 +182,7 @@ public class TSTDriver extends AbstractDriver {
 
 		title = "TST Driver";
 
-		menu.add("Entity(String namep, ResourceType typep) : r");
+		menu.add("Entity(String namep) : r");
 
 		menu.add("size(): int");
 		menu.add("contains(String key) : boolean");

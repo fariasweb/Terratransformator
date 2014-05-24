@@ -1,3 +1,4 @@
+
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.LinkedList;
@@ -11,100 +12,81 @@ import java.util.Stack;
 public class TST<Value> {
 	
 	//Atributos generales
-	private int N; // size
-	private Node root; // root of TST
-	private int current;
+	private int N; // tama–o
+	private Node root; // raiz del TST
+	private int current; // variable auxiliar global para el metodo collectValuesCache
 	
 	/**
 	 * Node
 	 * Usada para crear el arbol
+	 * Nodo generico sin valor asociado
 	 */
-	private class Node {
-		private char c; // character
-		private Node left, mid, right; // left, middle, and right subtries
-		private Value val; // value associated with string
-	}
-	
-	
-	/**
-	 * Iterator TST
-	 *
-	 */
-	private class TSTIterator implements Iterator<Value> {
-		private Stack<Node> fringe = new Stack<Node>();
-		
-		/**
-		 * 
-		 * @param first
-		 */
-		public TSTIterator(Node x) {
-			if (x != null) {
-				
-				fringe.push (x);
-				if (x.val == null) {
-					
-					//Miramos la izquierda
-					while(x.left != null) {
-						x = x.left;
-						fringe.push (x);
-					}
-					
-					//Tenemos el valor primero?
-					if(x.val == null) {
-						//Miramos el centro
-						while(x.mid != null ) {
-							x = x.mid;
-							fringe.push (x);
-						}
-						
-						if (x.val == null) {
-							//Miramos la izquierda
-							while(x.right != null ) {
-								x = x.right;
-								fringe.push (x);
-							}
-						}
-					}
-					
-				}
-			}
-		}
-		
-		/**
-		 * 
-		 */
-		public boolean hasNext() {
-			 return !fringe.empty ( );
+	private class Node{
+		protected char c; // caracter del nodo
+		protected Node left, mid, right; // left, middle, y right subtries
+
+		public Node(char ch, Node l, Node m, Node r){
+			c = ch;
+			left = l;
+			mid = m;
+			right = r;
 		}
 
-		/**
-		 * 
-		 */
-		public Value next() {
-			
-			if (!hasNext ( )) return null;
-	        
-			Node node = fringe.pop();
-	        if (node.right != null) {
-	            fringe.push (node.right);
-	        }
-	        if (node.left != null) {
-	            fringe.push (node.left);
-	        }
-	        return node.val;
-		}
-
-		/**
-		 * 
-		 */
-		public void remove() {
-			throw new UnsupportedOperationException ();
+		public Node(){
+			c = '\0';
+			left = null;
+			mid = null;
+			right = null;
 		}
 		
+		public Value getValue() {
+			return null;
+		}
+		
+		public char getC() {
+			return c;
+		}
 	}
 
 	/**
-	 * Devuelve el numero de elementos
+	 * FinalInner
+	 * Usada para crear el arbol
+	 * Nodo que marca final de palabra y tiene valor asociado
+	 */
+	private class FinalNode extends Node {
+		private Value val; // valor asociado con el string que acaba en este nodo
+
+		public FinalNode(char ch, Node l, Node m, Node r){
+			c = ch;
+			left = l;
+			mid = m;
+			right = r;
+		}
+
+		public FinalNode(){
+			c = '\0';
+			left = null;
+			mid = null;
+			right = null;
+		}
+		
+		public Value getValue() {
+			return val;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param x
+	 * @return
+	 */
+	private boolean is_Node(Node x) {
+		return x.getClass().getSimpleName().equals("Node");
+	}
+
+	/**
+	 * Pre: True 
+	 * Post: Devuelve el numero de elementos del TST
 	 * @return int
 	 */
 	public int size() {
@@ -112,22 +94,29 @@ public class TST<Value> {
 	}
 
 	/**
-	 * Post: Indica si existe o no valor en la clave indicada
+	 * Pre: True 
+	 * Post: Devuelve true o false si existe o no un valor asociado
+	 * a la clave key
 	 * @param key
 	 * @return boolean
 	 */
 	public boolean contains(String key) {
 		if (key == null || key.length() == 0) return false;
 		
-		return get(root, key.toLowerCase(), 0) != null;
+		try{
+			return get(key.toLowerCase()) != null;
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	//if not present returns null
 	/**
 	 * Devuelve el contendo de la llave indicada
-	 * Pre: key debe ser un nombre valido
-	 * Post: En caso de existir devuelve el objeto asociado
-	 * 		En caso de no exisiter devuelve null;
+	 * Pre: key debe ser un  nombre valido
+	 * Post: En caso de existir devuelve el objeto asociado.
+	 * 		En caso de no existir devuelve null.
 	 * @param key
 	 * @return
 	 * @throws Exception
@@ -136,21 +125,20 @@ public class TST<Value> {
 
 		if(!Util.checkName(key)) throw new Exception(key + " is not valid");
 
-		Node x = get(root, key.toLowerCase(), 0);
-		if (x == null)
-			throw new Exception(key+" does not exist");
-		
-		return x.val;
+		return get(root, key.toLowerCase(), 0);
 	}
 
 	/**
-	 * 
+	 * Auxiliar de get(String key)
+	 * Pre: True
+	 * Post: En caso de existir devuelve el objeto asociado.
+	 * 		En caso de no existir devuelve null.
 	 * @param x
 	 * @param key
 	 * @param d
 	 * @return Node
 	 */
-	private Node get(Node x, String key, int d) {
+	private Value get(Node x, String key, int d) throws Exception {
 		if (x == null)
 			return null;
 		char c = key.charAt(d);
@@ -160,14 +148,17 @@ public class TST<Value> {
 			return get(x.right, key, d);
 		else if (d < key.length() - 1)
 			return get(x.mid, key, d + 1);
-		else
-			return x;
+		else{
+			return x.getValue();
+		}
 	}
 
 	/**
-	 * Post: Inserta el elemento val con la llave s
+	 * Pre: s es un string valido
+	 * Post: Inserta el elemento val con la clave s
 	 * @param s
 	 * @param val
+	 * @return
 	 * @throws Exception
 	 */
 	public void put(String s, Value val) throws Exception {
@@ -175,13 +166,14 @@ public class TST<Value> {
 	}
 
 	/**
-	 * Pre: x no debe ser nulo
-	 * Post: Crea un nuevo nodo con la infomacion de val
+	 * Pre: x no debe ser nulo, s es un string valido
+	 * Post: Crea un nuevo nodo con la infomacion de val; si ya existe un nodo con
+	 * nombre key, lo sobrescribe con el nuevo valor de val
 	 * @param x
 	 * @param s
 	 * @param val
 	 * @param d
-	 * @return
+	 * @return Node
 	 * @throws Exception
 	 */
 	private Node put(Node x, String s, Value val, int d) throws Exception {
@@ -197,21 +189,20 @@ public class TST<Value> {
 		else if (d < s.length() - 1)
 			x.mid = put(x.mid, s, val, d + 1);
 		else {
-			if (x.val == null) {
-				
-				N++;
-				x.val = val;
-			} else {
-				throw new Exception("The key " + s + " exists");
+			if (x.getClass().getSimpleName().equals("Node")){
+				N++; x = new FinalNode(x.c, x.left, x.mid, x.right); 
 			}
+			
+			((FinalNode)x).val = val;
 		}
 		return x;
 	}
 
 
 	/**
-	 * Devuelve todas las llaves del TST ordenadas
-	 * @return
+	 * Pre: True
+	 * Post: Devuelve todas las llaves del TST ordenadas
+	 * @return Iterable<String>
 	 */
 	public Iterable<String> keys() {
 		Queue<String> queue = new LinkedList<String>();
@@ -220,24 +211,27 @@ public class TST<Value> {
 	}
 
 	/**
-	 * Pre: X no debe ser nulo
+	 * Auxiliar de keys()
+	 * Pre: True
+	 * Post: queue contiene todas las claves del TST ordenadas
 	 * @param x
 	 * @param prefix
 	 * @param queue
+	 * @return 
 	 */
 	private void collect(Node x, String prefix, Queue<String> queue) {		
-		if (x == null)
-			return;
+		if (x == null) return;
 		collect(x.left, prefix, queue);
-		if (x.val != null)
+		if (!is_Node(x))
 			queue.add(prefix + x.c);
 		collect(x.mid, prefix + x.c, queue);
 		collect(x.right, prefix, queue);
 	}
 	
 	/**
-	 * Devuelve todos los objetos almacenados en el TST
-	 * @return
+	 * Pre: True
+	 * Post: Devuelve todos los objetos almacenados en el TST
+	 * @return Iterable<String>
 	 */
 	public Iterable<Value> values() {
 		Queue<Value> queue = new LinkedList<Value>();
@@ -246,19 +240,22 @@ public class TST<Value> {
 	}
 	
 	/**
-	 * Pre: x no debe ser nulo
-	 * Post: Guarda en queue los objetos del TST
+	 * Auxiliar de values()
+	 * Pre: True
+	 * Post: queue contiene todos los objetos del TST ordenados por su
+	 * clave
 	 * @param x
 	 * @param prefix
 	 * @param queue
+	 * @return
 	 */
 	private void collectValues(Node x, String prefix, Queue<Value> queue) {		
-		if (x == null)
-			return;
+		if (x == null) return;
 		
 		collectValues(x.left, prefix, queue);
-		if (x.val != null)
-			queue.add(x.val);
+		
+		if (!is_Node(x))
+			queue.add(x.getValue());
 		
 		collectValues(x.mid, prefix + x.c, queue);
 		collectValues(x.right, prefix, queue);
@@ -266,43 +263,9 @@ public class TST<Value> {
 	
 	
 	/**
-	 * Devuelve los elementos del TST limitados por un max y un min
-	 * Pre: X no debe ser nulo
-	 * 		current <= max
-	 * Post: Alamcena en queue los emenetos que cumplan los cirterios
-	 * @param x
-	 * @param prefix
-	 * @param key
-	 * @param queue
-	 * @param max
-	 */
-	private void collectValuesCache(Node x, String prefix, String key, ArrayList<Value> queue, int max) {
-
-		if (x == null || current > max)
-			return;
-		
-		//Chivato
-		//Console.print("Key: " + key + "  Prefix: " + prefix + x.c);
-
-		collectValuesCache(x.left, prefix, key, queue, max);
-
-		if (x.val != null && current <= max && key.compareTo(prefix+x.c) < 0){
-			queue.add(x.val);
-			
-			//Chivato
-			//Console.print("--->"+x.val.toString());
-			++current;
-			//Chivato
-			//Console.print("--->Current: " + Integer.valueOf(current).toString());
-		}
-		
-		collectValuesCache(x.mid, prefix + x.c, key, queue, max);
-		collectValuesCache(x.right, prefix, key, queue, max);
-
-	}
-
-	/**
-	 * 
+	 * Pre: True
+	 * Post: Devuelve un numero max de objetos (o los que hayan si no hay max) 
+	 * almacenados en el TST a partir de la clave key, no inclusive 
 	 * @param key
 	 * @param max
 	 * @return
@@ -311,9 +274,9 @@ public class TST<Value> {
 	public ArrayList<Value> valuesCache(String key, int max) throws Exception{
 
 		if(max < 1) throw new Exception("Mandatory: max > 0");
-		Node x = get(root, key.toLowerCase(), 0);
-		if(x == null) throw new Exception("Key not present");
 		if(!Util.checkName(key)) throw new Exception(key + " is not valid");
+		Value v = get(root, key.toLowerCase(), 0);
+		if(v == null) throw new Exception("Key not present");
 
 		current = 1;
 		ArrayList<Value> queue = new ArrayList<Value>();
@@ -321,10 +284,56 @@ public class TST<Value> {
 		return queue;
 	}
 
+	/**
+	 * Auxiliar de valuesCache(String, int)
+	 * Pre: True
+	 * Post: queue contiene un numero max de objetos (o los que hayan si no hay max) 
+	 * almacenados en el TST a partir de la clave key, no inclusive 
+	 * @param x
+	 * @param prefix
+	 * @param key
+	 * @param queue
+	 * @param max
+	 */
+	private void collectValuesCache(Node x, String prefix, String key, ArrayList<Value> queue, int max) {
+
+		if (x == null || current > max) return;
+		
+		//Chivato debug
+		// Console.print("Key: " + key + "  Prefix: " + prefix + x.c);
+
+		collectValuesCache(x.left, prefix, key, queue, max);
+
+		//Chivato debug
+		/*Console.echo("x.getClass().getSimpleName().equals("+"FinalNode"+"): ");
+		if(x.getClass().getSimpleName().equals("FinalNode")) Console.print("TRUE");
+		else Console.print("FALSE");
+		Console.echo("current <= max: ");
+		if(current <= max) Console.print("TRUE");
+		else Console.print("FALSE");
+		Console.echo("key.compareTo(" + prefix + x.c + ") < 0: ");
+		if(key.compareTo(prefix+x.c) < 0) Console.print("TRUE");
+		else Console.print("FALSE");*/
+
+		if (!is_Node(x) && current <= max && key.compareTo(prefix+x.c) < 0){
+			queue.add(((FinalNode)x).val);
+			
+			//Chivato debug
+			// Console.print("--->"+((FinalNode)x).val.toString());
+			++current;
+			//Chivato debug
+			// Console.print("--->Current: " + Integer.valueOf(current).toString());
+		}
+		
+		collectValuesCache(x.mid, prefix + x.c, key, queue, max);
+		collectValuesCache(x.right, prefix, key, queue, max);
+
+	}
+
 
 	/**
-	 * Devuelve el primer elemento del TST
 	 * Pre: El TST debe tener algun valor
+	 * Post: Devuelve el primer elemento del TST
 	 * @return
 	 * @throws Exception
 	 */
@@ -334,7 +343,8 @@ public class TST<Value> {
 	}
 
 	/**
-	 * 
+	 * Pre: True
+	 * Post: Devuelve el primer elemento del TST
 	 * @param x
 	 * @return
 	 * @throws Exception
@@ -343,14 +353,14 @@ public class TST<Value> {
 		
 		//Testear!
 		while(x.left != null) x = x.left;
-		if(x.val != null) return x.val;
+		if(!is_Node(x)) return ((FinalNode)x).val;
 		else if(x.mid != null) return first(x.mid);
-		else if(x.val != null) return x.val;
-		else throw new Exception("Debugging exception");
+		else throw new Exception("first: Debugging exception");
 	}
 
 	/**
-	 * 
+ 	 * Pre: El TST debe tener algun valor
+	 * Post: Devuelve la primera clave con algun elemento asociado del TST
 	 * @return
 	 * @throws Exception
 	 */
@@ -360,7 +370,8 @@ public class TST<Value> {
 	}
 
 	/**
-	 * 
+	 * Pre: True
+	 * Post: Devuelve la primera clave con algun elemento asociado del TST
 	 * @param x
 	 * @return
 	 * @throws Exception
@@ -369,14 +380,14 @@ public class TST<Value> {
 
 		//Testear!
 		while(x.left != null) x = x.left;
-		if(x.val != null) return ""+x.c;
+		if(!is_Node(x)) return ""+x.c;
 		else if(x.mid != null) return x.c+firstKey(x.mid);
-		else if(x.val != null) return ""+x.c;
-		else throw new Exception("Debugging exception");
+		else throw new Exception("firstKey: Debugging exception");
 	}
 
 	/**
-	 * Post: Elimina todo el arbol y el contador
+	 * Pre: True
+	 * Post: Resetea el TST como si se acabara de crear
 	 */
 	public void clear() {
 		root = null;
@@ -384,9 +395,10 @@ public class TST<Value> {
 	}
 
 	/**
-	 * Pre: Key debe ser un nombre valido
-	 * Post: Elimina el valor asociado a esa key y todas las key inecesarias
+	 * Pre: Key debe ser un nombre valido y estar presente en el TST
+	 * Post: Elimina el valor asociado a esa key
 	 * @param key
+	 * @return
 	 * @throws Exception
 	 */
 	public void remove(String key) throws Exception {
@@ -394,40 +406,211 @@ public class TST<Value> {
 		if(!Util.checkName(key)) throw new Exception(key + " is not valid");
 
 		// Remove
-		if (!remove(root, key.toLowerCase(), 0))
+		if (!remove(root, null, key.toLowerCase(), 0))
 			throw new Exception("The key " + key + " doesn't exist");
 	}
 
 	/**
-	 * Pre: X no debe ser nulo
+	 * Pre: True
+	 * Post: Si existe un valor en el TST asociado a la clave key, elimina
+	 * el valor y todos los nodos que ya no son necesarios debido a la eliminacion
 	 * @param x
 	 * @param key
 	 * @param d
-	 * @return
+	 * @return boolean
 	 */
-	private boolean remove(Node x, String key, int d) {
-		if (x == null)
-			return false;
+	private boolean remove(Node x, Node aux, String key, int d) throws Exception{
+		if (x == null) return false;
 
 		char c = key.charAt(d);
 		boolean del = false;
 
-		if (c < x.c)
-			del = remove(x.left, key, d);
-		else if (c > x.c)
-			del = remove(x.right, key, d);
-		else if (d < key.length() - 1)
-			del = remove(x.mid, key, d + 1);
+		if (c < x.c){
+			del = remove(x.left, x, key, d);
+
+			//Ayuda para debuggar
+			/*Console.echo("Letra: "+x.c+" ");
+			if(x.left == null) Console.echo("left ");
+			if(x.mid == null) Console.echo("mid ");
+			if(x.right == null) Console.echo("right ");
+			if(aux != null) Console.echo("aux ");
+			if(x.getClass().getSimpleName().equals("Node")) Console.echo("Node");
+			Console.print("");*/
+			//Fin ayuda para debuggar
+
+			if(x.left == null && x.mid == null && x.right == null 
+				&& aux != null && is_Node(x)) 
+				aux.left = null;
+		}
+		else if (c > x.c){
+			del = remove(x.right, x, key, d);
+
+			//Ayuda para debuggar
+			/*Console.echo("Letra: "+x.c+" ");
+			if(x.left == null) Console.echo("left ");
+			if(x.mid == null) Console.echo("mid ");
+			if(x.right == null) Console.echo("right ");
+			if(aux != null) Console.echo("aux ");
+			if(x.getClass().getSimpleName().equals("Node")) Console.echo("Node");
+			Console.print("");*/
+			//Fin ayuda para debuggar
+
+			if(x.left == null && x.mid == null && x.right == null 
+				&& aux != null && is_Node(x)) 
+				aux.right = null;
+
+		}
+		else if (d < key.length() - 1){
+			del = remove(x.mid, x, key, d + 1);
+
+			//Ayuda para debuggar
+			/*Console.echo("Letra: "+x.c+" ");
+			if(x.left == null) Console.echo("left ");
+			if(x.mid == null) Console.echo("mid ");
+			if(x.right == null) Console.echo("right ");
+			if(aux != null) Console.echo("aux ");
+			if(x.getClass().getSimpleName().equals("Node")) Console.echo("Node");
+			Console.print("");*/
+			//Fin ayuda para debuggar
+
+			if(x.left == null && x.mid == null && x.right == null 
+				&& aux != null && is_Node(x)) 
+				{ 
+					if(aux.left == x) aux.left = null;
+					else if(aux.mid == x) aux.mid = null;
+					else if(aux.right == x) aux.right = null;
+					else throw new Exception("remove: Debugging Exception");
+				}
+
+		}
 		else {
-			del = (x.val != null);
-			x.val = null;
+			if(!x.getClass().getSimpleName().equals("FinalNode"))
+				return false;
+			//Debug
+			//Console.print("Delete");
+
 			del = true;
-			N--;
+			
+			if(x.left == null && x.mid == null && x.right == null){
+				if(aux.left == x) aux.left = null;
+				else if(aux.mid == x) aux.mid = null;
+				else if(aux.right == x) aux.right = null;
+				else throw new Exception("remove: Debugging Exception");
+			}
+			else{ 
+				Node y = new Node(x.c, x.left, x.mid, x.right);
+				if(aux.left == x) aux.left = y;
+				else if(aux.mid == x) aux.mid = y;
+				else if(aux.right == x) aux.right = y;
+				else throw new Exception("remove: Debugging Exception");
+			}
+			--N;
 		}
 
 		return del;
 	}
+
+	/**
+	 * Utilidad exclusiva para debuggar, no tiene otro uso.
+	 * Pre: Cierto
+	 * Post: Vuelca por pantalla el TST para poder ver los nodos 
+	 * y a d—nde apunta cada uno.
+	 * @return
+	 */
+	public void dump(){
+		dump(root, "");
+	}
+
+	private void dump(Node x, String prefix) {		
+		if (x == null){ Console.print("null "); return; }
+		Console.print(""+x.c);
+		Console.print("left--->");
+		dump(x.left, prefix);
+		if (x.getClass().getSimpleName().equals("FinalNode"))
+			Console.print("value: "+((FinalNode)x).val.toString());
+		Console.print("..."+x.c);
+		Console.print("mid--->");
+		dump(x.mid, prefix + x.c);
+		Console.print("..."+x.c);
+		Console.print("right--->");
+		dump(x.right, prefix);
+	}
 	
+	
+	/**
+	 * Iterator TST
+	 *
+	 */
+	private class TSTIterator implements Iterator<Value> {
+		
+		private Stack<Node> stack = new Stack<Node>();
+		private Node current;
+		
+		/**
+		 * 
+		 * @param first
+		 */
+		public TSTIterator(Node x) {
+			current = x;
+		}
+		
+		/**
+		 * 
+		 */
+		public boolean hasNext() {
+			return (!stack.isEmpty() || current != null);
+		}
+		
+		/**
+		 * 
+		 */
+		public Value next() {
+
+			//Buscamos el siguiente nodo que sea una llave
+			while (current != null && current.getValue() == null) {
+			
+				if (current.right != null)
+					stack.push(current.right);
+				if (current.mid != null)
+					stack.push(current.mid);
+				if (current.left != null)
+					stack.push(current.left);
+
+				current = stack.pop();
+			}
+
+			//Al encontar miramos los hijos por que seran los siguientes en mirarse
+			if (current.right != null)
+				stack.push(current.right);
+			if (current.mid != null)
+				stack.push(current.mid);
+			if (current.left != null)
+				stack.push(current.left);
+
+			//Guardamos el valor actual
+			Node node = current;
+
+			//EN caso de no estar la pila vacia pasamos al sigueinte
+			if (!stack.empty()) {
+				current = stack.pop();
+			} else {
+				current = null;
+			}
+
+			/*
+			 * current = current.left; stack.push(current.right);
+			 * stack.push(current.mid);
+			 */
+
+			return node.getValue();
+		}
+		
+		public void remove() {
+			
+		}
+		
+	}
+
 	/**
 	 * 
 	 * @return
