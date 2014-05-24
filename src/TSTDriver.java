@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class TSTDriver extends AbstractDriver {
@@ -6,6 +7,7 @@ public class TSTDriver extends AbstractDriver {
 
 		TST<Entity> Clt = new TST<Entity>();
 		Entity r = null;
+		Iterator<Entity> it = null;
 
 		// Generico del menu
 		Scanner in = new Scanner(System.in);
@@ -68,7 +70,7 @@ public class TSTDriver extends AbstractDriver {
 					try {
 						if (r == null)
 							throw new Exception("Entity is null");
-						Clt.put(argv[1], r);
+						Clt.put(r.getName(), r);
 					} catch (Exception e) {
 						_msg_error(e.getMessage());
 					}
@@ -130,6 +132,37 @@ public class TSTDriver extends AbstractDriver {
 					}
 					break;
 
+				case 13:
+					//Clt.dump();
+					it = Clt.newIterator();
+					break;
+				case 14:
+					try {
+						if (it == null)
+							throw new Exception("Iterator i is null");
+						if (!it.hasNext())
+							throw new Exception("Iterator i does not have next");
+						
+						Console.print(it.next().getName());
+						
+					} catch (Exception e) {
+						_msg_error(e.getMessage());
+					}
+					break;
+				case 15:
+					try {
+						if (it == null)
+							throw new Exception("Iterator i is null");
+						
+						if (it.hasNext())
+							Console.print("Iterator i has next");
+						else	
+							Console.print("Iterator i does not have next");
+					} catch (Exception e) {
+						_msg_error(e.getMessage());
+					}
+					break;
+
 				default:
 					_msg_opc_invalid();
 					break;
@@ -149,12 +182,12 @@ public class TSTDriver extends AbstractDriver {
 
 		title = "TST Driver";
 
-		menu.add("Entity(String namep, ResourceType typep) : r");
+		menu.add("Entity(String namep) : r");
 
 		menu.add("size(): int");
 		menu.add("contains(String key) : boolean");
 		menu.add("get(String key) : Entity");
-		menu.add("put(String g.getName(), g) : void");
+		menu.add("put(String r.getName(), r) : void");
 		menu.add("keys() : Iterable<String>");
 		menu.add("values() : Iterable<Entity>");
 		menu.add("valuesCache(String key, int max) : Iterable<Entity>");
@@ -162,6 +195,9 @@ public class TSTDriver extends AbstractDriver {
 		menu.add("firstKey() : String");
 		menu.add("clear() : void");
 		menu.add("remove:(String key)");
+		menu.add("newIterator(): Iterator i");
+		menu.add("i.next() : Entity");
+		menu.add("i.hasNext() : Boolean");
 
 		print_menu();
 	}

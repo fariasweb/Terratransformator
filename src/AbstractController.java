@@ -1,3 +1,6 @@
+import java.util.Iterator;
+import java.util.Stack;
+
 /**
  * AbstractController
  *
@@ -13,12 +16,18 @@ public abstract class AbstractController {
 	protected DataController dCont;
 	protected String _last_key = "";
 	
+	//Cache system view
+	protected String[] cache; //Unicamente dos necesitamos
+	protected Stack< Iterator<Entity> > TSTIterators;
+	
 	/**
 	 * Constructor
 	 * Post: Inicializa el DataController
 	 */
 	public AbstractController() {
 		dCont = new DataController();
+		
+		cache = new String[2];
 	}
 	
 	
