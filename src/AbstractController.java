@@ -48,9 +48,13 @@ public abstract class AbstractController {
 			//Reinicimos para que encodeString empieze desde el incio
 			_last_key = ""; 
 
-			Iterator<Entity> it = Clt.iterator();
+			Iterator it = getIterator();
+			String cache;
+			
 			while(it.hasNext()){
-				String cache = "";
+				//Reset cache 
+				cache = "";
+				//Iteracion
 				for(int i = 0; i < _CACHE_NUM && it.hasNext(); ++i)
 					cache += (it.next().toString()+_SEPARATOR);
 
@@ -138,5 +142,11 @@ public abstract class AbstractController {
 	 * @return
 	 */
 	public abstract int size();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected abstract Iterator getIterator();
 
 }

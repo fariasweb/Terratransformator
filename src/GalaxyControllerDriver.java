@@ -188,9 +188,8 @@ class GalaxyControllerDriver extends AbstractDriver {
 	public static void saveGalaxyController(GalaxyController gc, String path, boolean append) {
 		try {
 			gc.save(path, append);
-
 		} catch (Exception e) {
-
+			e.printStackTrace();
 			_msg_error(e.getMessage());
 		}
 	}

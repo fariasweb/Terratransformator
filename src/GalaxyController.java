@@ -388,6 +388,13 @@ public class GalaxyController extends AbstractController {
 		if (pc.size() == 0) throw new Exception("Planet Controler must have planets to load galaxis");
 	}
 	
+	/**
+	 * 
+	 */
+	protected Iterator getIterator() {
+		return Clt.iterator();
+	}
+	
 	// Clone
 	// ---------------------------------------------
 

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * ResourceController
@@ -209,6 +210,13 @@ public class ResourceController extends AbstractController {
 	 */
 	public int size() {
 		return Clt.size();
+	}
+	
+	/**
+	 * 
+	 */
+	protected Iterator getIterator() {
+		return Clt.iterator();
 	}
 
 	/**

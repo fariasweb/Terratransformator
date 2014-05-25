@@ -519,6 +519,13 @@ public class PacketController extends AbstractController {
 			throw new Exception(
 					"Resource Controler must have resource to load packets");
 	}
+	
+	/**
+	 * 
+	 */
+	protected Iterator getIterator() {
+		return Clt.iterator();
+	}
 
 	// Clone
 	// ---------------------------------------------

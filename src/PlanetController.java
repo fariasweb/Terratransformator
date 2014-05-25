@@ -228,6 +228,13 @@ public class PlanetController extends AbstractController {
 	public int size() {
 		return Clt.size();
 	}
+	
+	/**
+	 * 
+	 */
+	protected Iterator getIterator() {
+		return Clt.iterator();
+	}
 
 	/**
 	 * Debe indicarse en cada controlador Post: Pasa el String a memoria como
