@@ -12,6 +12,8 @@ public class ViewPanel extends JPanel {
 	private JTable table;
 	private JScrollPane scrollPane;
 	
+	private JButton bCreatem, bDelete, bImport, bExport;
+	
 	/**
 	 * 
 	 * @param columnNames
@@ -19,7 +21,7 @@ public class ViewPanel extends JPanel {
 	ViewPanel() {
 		
 		//Table
-		table = new JTable();
+		table = new JTable(new Object [][] {}, new String[] {"Name"});
 		
 		//Scroll
 		scrollPane = new JScrollPane(table);
