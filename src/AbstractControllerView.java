@@ -19,7 +19,7 @@ public abstract class AbstractControllerView {
 	 * 
 	 */
 	public Container get_view() {
-		return view.get_view();
+		return view;
 	}
 	
 }

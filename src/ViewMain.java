@@ -6,20 +6,23 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
-public class ViewMain extends AbstractViewer {
+public class ViewMain extends JFrame {
 
 	/**
 	 * 
 	 */
-
+	ViewController controller;
 	private JTabbedPane tabbedLeft, tabbedRight, tabbedOpe;
 
 	/**
 	 * 
 	 * @param c
 	 */
-	ViewMain(AbstractControllerView c) {
-		super(c);
+	ViewMain(ViewController c) {
+		super("Terratransformator");
+		controller = c;
+		
+		create_view();
 	}
 
 	/**
@@ -27,15 +30,14 @@ public class ViewMain extends AbstractViewer {
 	 */
 	protected void create_view() {
 		// Creamos el frame
-		view = new JFrame("Terratransformator");
 
 		// Evento por defecto
-		((JFrame) view).setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		// Size y visibilidad
-		view.setSize(500, 500);
-		view.setMinimumSize(new Dimension(500,500));
-		view.setVisible(true);
+		setSize(500, 500);
+		setMinimumSize(new Dimension(500,500));
+		setVisible(true);
 		
 		//TapPanel principales
 		tabbedLeft = (JTabbedPane) new JTabbedPane();
@@ -43,8 +45,8 @@ public class ViewMain extends AbstractViewer {
 		tabbedOpe = (JTabbedPane) new JTabbedPane();
 		
 		// Layout
-		GroupLayout layout = new GroupLayout(((JFrame) view).getContentPane());
-		((JFrame) view).getContentPane().setLayout(layout);
+		GroupLayout layout = new GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 
@@ -78,7 +80,7 @@ public class ViewMain extends AbstractViewer {
 		);
 		
 		
-		((Window) view).pack();
+		pack();
 
 	}
 
@@ -89,6 +91,29 @@ public class ViewMain extends AbstractViewer {
 	 */
 	public void add_left_tab(Container p, String name) {
 		tabbedLeft.add(name, p);
+	}
+	
+	/**
+	 * Anade un panel al TabPanel derecho
+	 * @param p
+	 * @param name
+	 */
+	public void add_right_tab(Container p, String name) {
+		tabbedRight.add(name, p);
 	}	
 
+	/**
+	 * 
+	 * @param p
+	 * @param name
+	 */
+	public void add_operation_tab(Container p, String name) {
+		
+		//Elimino todo
+		tabbedOpe.removeAll();
+		
+		//Add nuevo
+		tabbedOpe.add(name, p);
+	}
+	
 }

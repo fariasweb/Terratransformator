@@ -3,13 +3,13 @@
  * @author farias
  *
  */
-public class PlanetView extends ViewPanel {
+public class PacketView extends ViewPanel {
 
 	/**
 	 * 
 	 * @param c
 	 */
-	PlanetView(AbstractControllerView c) {
+	PacketView(AbstractControllerView c) {
 		super(c);
 	}
 
