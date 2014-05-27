@@ -9,7 +9,7 @@ public class QAPmatching {
 	private int matching[], dist[], Q[];
 	private boolean used[], vis[];
 
-	private void init(int _n1, int _n2, List<PairInt> rel) {
+	public void init(int _n1, int _n2, List<PairInt> rel) {
 		n1 = _n1;
 		n2 = _n2;
 		maxN1 = rel.size();
@@ -35,7 +35,7 @@ public class QAPmatching {
 		}
 	}
 
-	private void addEdge(int u, int v) {
+	public void addEdge(int u, int v) {
 		head[edges] = v;
 		prev[edges] = last[u];
 		last[u] = edges++;
@@ -78,7 +78,7 @@ public class QAPmatching {
 		return false;
 	}
 
-	private int maxMatching() {
+	public int maxMatching() {
 		int i;
 		for (i = 0; i < n1; ++i)
 			used[i] = false;

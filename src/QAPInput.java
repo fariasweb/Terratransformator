@@ -5,7 +5,7 @@ import java.util.*;
  *
  */
 public class QAPInput {
-
+	
 	//Matrices de entrada
 	private double distanceMatrix[][];
 	private double flowMatrix[][];
@@ -69,11 +69,11 @@ public class QAPInput {
 			packetResource[j] = (double) i.getQuantity();
 			++j;
 		}
-
 		for (int i = 0; i < n; ++i) {
-			for (j = i + 1; j < n - 1; ++j) {
+			for (j = i + 1; j < n; ++j) {
 				flow[i][j] = packetResource[i] + packetResource[j];
 				flow[j][i] = flow[i][j];
+				
 			}
 		}
 
@@ -98,10 +98,15 @@ public class QAPInput {
 		}
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
+	public void setElementDistanceMatrix(double value, int i , int j){
+		distanceMatrix[i][j] = value;
+	}
+
+	public void setElementFlowMatrix(double value, int i , int j){
+		flowMatrix[i][j] = value;
+	}
+	
+	
 	public double[][] getDistanceMatrix() {
 		return distanceMatrix;
 	}
@@ -109,7 +114,15 @@ public class QAPInput {
 	public double[][] getFlowMatrix() {
 		return flowMatrix;
 	}
+	
 
+	public double getElementDistanceMatrixAtIndex(int i, int j ){
+		return distanceMatrix[i][j];
+	}
+	public double getElementFlowMatrixAtIndex(int i , int j){
+		return flowMatrix[i][j];
+	}
+	
 	public int getSizePlanets() {
 		return CltPlanet.length;
 	}

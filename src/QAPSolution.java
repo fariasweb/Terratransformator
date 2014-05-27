@@ -6,11 +6,10 @@ public class QAPSolution {
 	private String QAPType;
 	private long executionTime;
 	private double efficiency;
-
+	//FALTA ATRIBUTO ARBOL
 	private List<QAPSend> CltSend;
-
-	private QAP qap;
 	private Galaxy g;
+	private QAP qap;
 	private TST<Packet> p;
 
 	/**
@@ -21,15 +20,13 @@ public class QAPSolution {
 	 * @param p
 	 */
 	public QAPSolution(QAP qapp, Galaxy gp, TST<Packet> pg) throws Exception {
-		qap = qapp;
 		g = gp;
 		p = pg;
-
-		setQAPInfo(qap);
+		qap = qapp;
 		CltSend = new ArrayList<QAPSend>();
 	}
 
-	private void setQAPInfo(QAP qap) {
+	public void setQAPInfo(QAP qap) {
 		// Informacion como tiempo, typo y eficiencia
 		QAPType = qap.getQAPType();
 		executionTime = qap.getTime();
@@ -41,7 +38,7 @@ public class QAPSolution {
 		if (!qap.isRun())
 			throw new Exception("The QAP has not run yet");
 		int[] solution = qap.getSolution();
-		// 2. Generar los arrays que antes estaban en QxAPInput
+		// 2. Generar los arrays que antes estaban en QAPInput
 		// No hace falta guardarlos
 		String[] namePackets = qap.input.getPackets();
 		String[] namePlanets = qap.input.getPlanets();
@@ -63,7 +60,7 @@ public class QAPSolution {
 	}
 
 	/**
-	 * A–ade un envio al conjunto de envios
+	 * Anade un envio al conjunto de envios
 	 * 
 	 * @param s
 	 */
@@ -96,11 +93,7 @@ public class QAPSolution {
 	 * @return
 	 * @throws Exception
 	 */
-	public QAPSend getSendWithPlanet(Planet p) throws Exception { // Devuelve
-																	// Send que
-																	// tenga
-																	// paquete =
-																	// p;
+	public QAPSend getSendWithPlanet(Planet p) throws Exception { 
 		for (QAPSend i : CltSend) {
 			if (p == i.getPlanet())
 				return i;
