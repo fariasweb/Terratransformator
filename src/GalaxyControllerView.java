@@ -32,4 +32,24 @@ public class GalaxyControllerView extends AbstractControllerView {
 	public void getGalaxy() {
 		Console.log(((GalaxyController) controller).getAll());
 	}
+
+	//Una vez tenido un formulario con textfields se cambia nombre atributos
+	public void addGalaxy(String string, int readXForm, int readYForm) {
+		try{
+			((GalaxyController) controller).addGalaxy(string, readXForm, readYForm);
+		}
+		catch(Exception e){
+			Console.print("Cannot add galaxy");
+		}
+	}
+	public Galaxy getByName(String name){
+		try{
+			return ((GalaxyController) controller).getByName(name);
+		}
+		catch(Exception e){
+			Console.print("Cannot add galaxy");
+		}
+		return null;
+	}
+	
 }
