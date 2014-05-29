@@ -11,4 +11,9 @@ public class ViewError extends ViewShared {
 		
 	}
 
+	@Override
+	protected void show(String s) {
+		// TODO Auto-generated method stub
+
+	}
 }

@@ -80,11 +80,13 @@ public class GalaxyView extends ViewPanel {
 	
 	public void show(String s){
 
-		String[] ss = s.split(" ");
+		String[] ss = s.split(";");
+		String[] sss;
 		//Chivato
 		for (int i = 0; i < ss.length; ++i) {
-			Console.print(ss[i]);
-			tmodel.addRow(new String[] {ss[i]});
+			sss = ss[i].split(" ");
+			Console.print(sss);
+			tmodel.addRow(new String[] {sss[0]});
 		}
 		//tmodel.addRow(ss);
 	}

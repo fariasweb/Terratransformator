@@ -17,4 +17,10 @@ public class ViewOperation extends ViewShared {
 
 	}
 
+	@Override
+	protected void show(String s) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

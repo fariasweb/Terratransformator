@@ -83,6 +83,11 @@ public class Console {
 		System.out.println(x);
 	}
 	
+	public static void print(String[] x) {
+		for (String s : x)
+			System.out.println(s);
+	}
+
 	public static void echo(String x) {
 		System.out.print(x);
 	}
