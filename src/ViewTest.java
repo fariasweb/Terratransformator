@@ -1,7 +1,7 @@
 import java.awt.Color;
 import javax.swing.JLabel;
 
-public class ViewError extends ViewShared {
+public class ViewTest extends AbstractViewer {
 
 	private JLabel errorMessage;
 	
@@ -11,8 +11,8 @@ public class ViewError extends ViewShared {
 	protected void create_view() {
 		//Creamos un Label a rojo y add to este
 		errorMessage = new JLabel();
-		errorMessage.setForeground(Color.red);
-		errorMessage.hide();
+		errorMessage.setForeground(Color.blue);
+		errorMessage.setText("This is a test");
 		
 		//Add al Jpanel actual
 		add(errorMessage);
@@ -31,14 +31,5 @@ public class ViewError extends ViewShared {
 	public void show(String e) {
 		//Escribir en el label
 		errorMessage.setText(e);
-		errorMessage.show();
-	}
-	
-	/**
-	 * 
-	 */
-	public void hide() {
-		errorMessage.setText("");
-		errorMessage.hide();
 	}
 }

@@ -18,8 +18,4 @@ public class PlanetView extends ViewPanel {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-	@Override
-	protected void show(String s){}
 }

@@ -1,3 +1,8 @@
+import java.awt.Dimension;
+
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+
 /**
  * 
  * @author farias
@@ -5,16 +10,34 @@
  */
 public class ViewOperation extends ViewShared {
 
-	@Override
+	private JTabbedPane tabbedOpe;
+	
+	/**
+	 * 
+	 */
 	protected void create_view() {
-		// TODO Auto-generated method stub
-
+		tabbedOpe = new JTabbedPane();
+		//tabbedOpe.setSize(500, 300);
+		//tabbedOpe.setMinimumSize(new Dimension(500,300));
+		add(tabbedOpe);
 	}
-
-	@Override
+	
+	/**
+	 * 
+	 */
 	protected void create_events() {
-		// TODO Auto-generated method stub
-
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @param p
+	 */
+	public void add_tab(String name, JPanel p) {
+		//Eliminaos las anteriores Tabs
+		tabbedOpe.removeAll();
+		//Creamos la nueva
+		tabbedOpe.add(name, p);
 	}
 
 }

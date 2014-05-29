@@ -15,7 +15,14 @@ public abstract class AbstractControllerView {
 	
 	//Vista
 	protected AbstractViewer view;
-
+	//Vista - Elementos compartidos
+	protected ViewOperation vShared;
+	protected ViewError vError;
+	
+	//-------------------------------------------------------
+	// CACHE - TODO revisar
+	//-------------------------------------------------------
+			
 	protected static final int CACHE_SIZE = 100;
 	//100 elementos para listar en cada String cache
 	protected String firstCache;
@@ -23,6 +30,25 @@ public abstract class AbstractControllerView {
 	//Object demasiado general? Cada uno pone su clase (Galaxy, etc)
 	protected Stack<Entity> references;
 
+
+	//-------------------------------------------------------
+	// CONSTRCUTOR
+	//-------------------------------------------------------
+		
+	/**
+	 * 
+	 * @param vs
+	 * @param ve
+	 */
+	AbstractControllerView(ViewOperation vs, ViewError ve) {
+		//Elementos compartidos de todos los controladores
+		vShared = vs;
+		vError = ve;
+	}
+	
+	//-------------------------------------------------------
+	// VIEWS
+	//-------------------------------------------------------
 	/**
 	 * 
 	 */
@@ -30,6 +56,34 @@ public abstract class AbstractControllerView {
 		return view;
 	}
 	
+	//-------------------------------------------------------
+	// ERROR
+	//-------------------------------------------------------
+	
+	/**
+	 * 
+	 * @param e
+	 */
+	public void show_error(String e) {
+		vError.show(e);
+	}
+	
+	/**
+	 * 
+	 */
+	public void remove_error() {
+		vError.hide();
+	}
+	
+	//-------------------------------------------------------
+	// SAVE AND LOAD
+	//-------------------------------------------------------
+		
+	/**
+	 * 
+	 * @param path
+	 * @param append
+	 */
 	public void save(String path, boolean append){
 		try{
 			//Constructor que se le pasa controlador y nombre de Thread
@@ -46,6 +100,10 @@ public abstract class AbstractControllerView {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param path
+	 */
 	public void load(String path){
 		try{
 			//Constructor que se le pasa controlador y nombre de Thread

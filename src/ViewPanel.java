@@ -85,9 +85,25 @@ public abstract class ViewPanel extends AbstractViewer {
 												.addComponent(bDelete))
 								.addPreferredGap(
 										LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(scrollPane,
-										GroupLayout.DEFAULT_SIZE, 690,
-										Short.MAX_VALUE)));
+								.addComponent(scrollPane
+										//,GroupLayout.DEFAULT_SIZE, 690,
+										//Short.MAX_VALUE
+										)));
 
+	}
+	
+	/**
+	 * 
+	 * @param s
+	 */
+	public void show(String s){
+
+		String[] ss = s.split(" ");
+		//Chivato
+		for (int i = 0; i < ss.length; ++i) {
+			Console.print(ss[i]);
+			tmodel.addRow(new String[] {ss[i]});
+		}
+		//tmodel.addRow(ss);
 	}
 }
