@@ -18,4 +18,10 @@ public class PacketView extends ViewPanel {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	protected void show(String s) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -1,7 +1,7 @@
 
 import java.awt.Container;
 import javax.swing.JPanel;
-import java.utils.Stack;
+import java.util.Stack;
 
 /**
  * 
@@ -21,7 +21,7 @@ public abstract class AbstractControllerView {
 	protected String firstCache;
 	protected String secondCache;
 	//Object demasiado general? Cada uno pone su clase (Galaxy, etc)
-	protected Stack<Object> references;
+	protected Stack<Entity> references;
 
 	/**
 	 * 

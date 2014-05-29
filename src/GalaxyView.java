@@ -73,13 +73,14 @@ public class GalaxyView extends ViewPanel {
 		
 	}
 
-	protected void create_events(){
+	/*protected void create_events(){
 		
 
-	}
+	}*/
 	
-	public void show(){
+	public void show(String s){
 
-		
+		Object[] o = s.split("");
+		tmodel.addRow(o);
 	}
 }
