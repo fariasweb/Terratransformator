@@ -23,6 +23,13 @@ public class GalaxyControllerView extends AbstractControllerView {
 		
 		//Creamos la vista
 		view = new GalaxyView(this);
+
+		firstCache = new String;
+		secondCache = new String;
+		references = new Stack<Galaxy>;
+		//Tomamos los primeros de dominio y los mostramos
+		firstCache = controller.encodeStringPresentation(null, CACHE_SIZE);
+		view.show(firstCache);
 	}
 	
 	
@@ -51,5 +58,5 @@ public class GalaxyControllerView extends AbstractControllerView {
 		}
 		return null;
 	}
-	
+
 }

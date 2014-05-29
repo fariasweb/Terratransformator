@@ -1,6 +1,7 @@
 
 import java.awt.Container;
 import javax.swing.JPanel;
+import java.utils.Stack;
 
 /**
  * 
@@ -14,6 +15,13 @@ public abstract class AbstractControllerView {
 	
 	//Vista
 	protected AbstractViewer view;
+
+	protected static final int CACHE_SIZE = 100;
+	//100 elementos para listar en cada String cache
+	protected String firstCache;
+	protected String secondCache;
+	//Object demasiado general? Cada uno pone su clase (Galaxy, etc)
+	protected Stack<Object> references;
 
 	/**
 	 * 

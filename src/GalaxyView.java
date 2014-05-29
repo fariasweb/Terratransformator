@@ -72,5 +72,14 @@ public class GalaxyView extends ViewPanel {
 		});
 		
 	}
+
+	protected void create_events(){
+		
+
+	}
 	
+	public void show(){
+
+		
+	}
 }

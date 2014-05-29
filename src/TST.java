@@ -153,6 +153,21 @@ public class TST<Value> {
 		}
 	}
 
+/*	private Node getNode(Node x, String key, int d) throws Exception {
+		if (x == null)
+			return null;
+		char c = key.charAt(d);
+		if (c < x.c)
+			return getNode(x.left, key, d);
+		else if (c > x.c)
+			return getNode(x.right, key, d);
+		else if (d < key.length() - 1)
+			return getNode(x.mid, key, d + 1);
+		else{
+			return x;
+		}
+	}*/
+
 	/**
 	 * Pre: s es un string valido
 	 * Post: Inserta el elemento val con la clave s
@@ -546,6 +561,14 @@ public class TST<Value> {
 		private Stack<Node> stack = new Stack<Node>();
 		private Node current;
 		
+
+		/**
+		 * 
+		 */
+	/*	public TSTIterator() {
+			current = root;
+		}*/
+
 		/**
 		 * 
 		 * @param first
