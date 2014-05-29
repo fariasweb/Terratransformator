@@ -18,7 +18,7 @@ public class ViewController {
 	/**
 	 * 
 	 */
-	ViewController() {
+	ViewController(){
 		
 		//Creamos la ventana principal - Crear el FRAME
 		view = new ViewMain(this);
@@ -26,12 +26,14 @@ public class ViewController {
 		//Controladores de dominios temporales
 		PlanetController pc = new PlanetController();
 		
+		try{
 		//Creamos los controladores de vista
 		gcv = new GalaxyControllerView(pc);
 		pcv = new PlanetControllerView(pc);
 		
 		kcv = new PacketControllerView();
-		
+		}
+		catch(Exception e){Console.print(e.getMessage());}
 		//Anadimos a la ventana principal los controladores
 		view.add_left_tab(gcv.get_view(), "Galaxys");
 		view.add_left_tab(pcv.get_view(), "Planets");

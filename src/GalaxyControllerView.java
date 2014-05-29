@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 /**
  * 
  * @author farias
@@ -9,7 +11,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 * 
 	 * @param pc
 	 */
-	GalaxyControllerView(PlanetController pc) {
+	GalaxyControllerView(PlanetController pc) throws Exception{
 		//Creamos el enlace a capa de dominio
 		controller = new GalaxyController(pc);
 		try {
@@ -23,6 +25,17 @@ public class GalaxyControllerView extends AbstractControllerView {
 		
 		//Creamos la vista
 		view = new GalaxyView(this);
+
+		firstCache = new String();
+		secondCache = new String();
+		references = new Stack<Entity>();
+		//Tomamos los primeros de dominio y los mostramos
+		Galaxy g = null;
+		firstCache = controller.encodeStringPresentation(g, CACHE_SIZE);
+
+		//Chivato
+		Console.print(firstCache);
+		view.show(firstCache);
 	}
 	
 	
@@ -51,5 +64,5 @@ public class GalaxyControllerView extends AbstractControllerView {
 		}
 		return null;
 	}
-	
+
 }

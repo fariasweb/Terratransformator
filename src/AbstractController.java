@@ -135,6 +135,12 @@ public abstract class AbstractController {
 	 * @return
 	 * @throws Exception
 	 */
+
+	protected String encodeStringPresentation(Entity e, int cache_size) throws Exception {
+		//Prvisional, tiene que ser abstracta y que la implementen todas las Entity
+		return "foo";
+	}
+
 	protected void preConditionLoad() throws Exception {}
 	
 	/**

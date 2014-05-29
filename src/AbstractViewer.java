@@ -60,4 +60,6 @@ public abstract class AbstractViewer extends JPanel {
 	 */
 	protected abstract void create_events();
 
+	protected abstract void show(String s);
+
 }

@@ -72,5 +72,20 @@ public class GalaxyView extends ViewPanel {
 		});
 		
 	}
+
+	/*protected void create_events(){
+		
+
+	}*/
 	
+	public void show(String s){
+
+		String[] ss = s.split(" ");
+		//Chivato
+		for (int i = 0; i < ss.length; ++i) {
+			Console.print(ss[i]);
+			tmodel.addRow(new String[] {ss[i]});
+		}
+		//tmodel.addRow(ss);
+	}
 }

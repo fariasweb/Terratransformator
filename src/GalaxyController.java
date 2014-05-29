@@ -371,6 +371,27 @@ public class GalaxyController extends AbstractController {
 		return encodeS;
 	}
 
+		/**
+	 * Debe indicarse en cada controlador Post: Pasa el String a memoria como
+	 * objetos
+	 * 
+	 * @param l
+	 * @throws Exception
+	 */
+	protected String encodeStringPresentation(Entity e, int cache_size) throws Exception {
+
+		String encodeS = "";
+		Iterator<Galaxy> iter = Clt.iterator();
+
+		//Como hago esto del pointTo???
+/*		if (g != null) iter.pointTo(g);
+*/
+		for(int i = 0; i < cache_size && iter.hasNext(); ++i)
+			encodeS += (iter.next().toString() + _SEPARATOR);
+
+		return encodeS;
+	}
+
 	/**
 	 * Devuelvel numero de galaxias que contiene
 	 * @return int
