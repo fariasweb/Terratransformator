@@ -40,8 +40,7 @@ public class ViewOperation extends ViewShared {
 		tabbedOpe.add(name, p);
 	}
 
-	@Override
-	protected void show(String s) {
+	public void show(String s) {
 		// TODO Auto-generated method stub
 
 	}

@@ -16,4 +16,8 @@ public class GalaxyFormCreate extends AbstractViewer {
 
 	}
 
+	@Override
+	public void show(String s){}
+
+
 }

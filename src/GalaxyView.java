@@ -85,7 +85,7 @@ public class GalaxyView extends ViewPanel {
 		
 
 	}*/
-
+	public void show(String s){
 		String[] ss = s.split(";");
 		String[] sss;
 		//Chivato
@@ -95,5 +95,5 @@ public class GalaxyView extends ViewPanel {
 			tmodel.addRow(new String[] {sss[0]});
 		}
 	}
-	
+
 }

@@ -39,13 +39,17 @@ public class GalaxyControllerView extends AbstractControllerView {
 		firstCache = new String();
 		secondCache = new String();
 		references = new Stack<Entity>();
+
+		try{
 		//Tomamos los primeros de dominio y los mostramos
 		Galaxy g = null;
-		//firstCache = controller.encodeStringPresentation(g, CACHE_SIZE);
+		firstCache = controller.encodeStringPresentation(g, CACHE_SIZE);
+		}
+		catch(Exception e){Console.print(e.getMessage());}
 
 		//Chivato
-		//Console.print(firstCache);
-		//view.show(firstCache);
+		Console.print(firstCache);
+		view.show(firstCache);
 	}
 	
 	//-------------------------------------------------------
