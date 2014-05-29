@@ -18,11 +18,36 @@ public abstract class AbstractViewer extends JPanel {
 	 */
 	AbstractViewer(AbstractControllerView c) {
 		//Guargamos el controlador al que pertenecemos
-		controller = c;
+		set_controller(c);
 		
 		//Creacion de elementos y eventos -- Podrian estar vacias
 		create_view();
 		create_events();
+	}
+	
+	/**
+	 * 
+	 */
+	AbstractViewer() {
+		//Creacion de elementos y eventos -- Podrian estar vacias
+		create_view();
+		create_events();
+	}
+	
+	/**
+	 * 
+	 * @param c
+	 */
+	public void set_controller(AbstractControllerView c) {
+		controller = c;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	protected boolean have_controller() {
+		return controller != null;
 	}
 	
 	/**
