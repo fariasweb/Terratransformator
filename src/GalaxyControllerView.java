@@ -32,6 +32,9 @@ public class GalaxyControllerView extends AbstractControllerView {
 		//Tomamos los primeros de dominio y los mostramos
 		Galaxy g = null;
 		firstCache = controller.encodeStringPresentation(g, CACHE_SIZE);
+
+		//Chivato
+		Console.print(firstCache);
 		view.show(firstCache);
 	}
 	
