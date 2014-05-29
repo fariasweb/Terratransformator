@@ -12,7 +12,9 @@ public class ViewMain extends JFrame {
 	 * 
 	 */
 	ViewController controller;
-	private JTabbedPane tabbedLeft, tabbedRight, tabbedOpe;
+	private JTabbedPane tabbedLeft, tabbedRight;
+	private ViewOperation tabbedOpe;
+	private ViewError errorPanel;
 
 	/**
 	 * 
@@ -42,7 +44,11 @@ public class ViewMain extends JFrame {
 		//TapPanel principales
 		tabbedLeft = (JTabbedPane) new JTabbedPane();
 		tabbedRight = (JTabbedPane) new JTabbedPane();
-		tabbedOpe = (JTabbedPane) new JTabbedPane();
+		tabbedOpe = new ViewOperation();
+		errorPanel = new ViewError();
+		
+		//TEST - TODO: ELIMINAR
+		tabbedOpe.add_tab("Test", new ViewTest());
 		
 		// Layout
 		GroupLayout layout = new GroupLayout(getContentPane());
@@ -53,6 +59,7 @@ public class ViewMain extends JFrame {
 		//Horizontal
 		layout.setHorizontalGroup(layout
 				.createParallelGroup()
+				.addComponent(errorPanel)
 				.addComponent(tabbedOpe)
 				.addGroup(layout.createSequentialGroup()
 						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -67,6 +74,10 @@ public class ViewMain extends JFrame {
 		//Vertical
 		layout.setVerticalGroup(layout
 				.createSequentialGroup()
+				.addGroup(layout
+						.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(errorPanel)
+				)
 				.addGroup(layout
 						.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(tabbedLeft)
@@ -107,13 +118,16 @@ public class ViewMain extends JFrame {
 	 * @param p
 	 * @param name
 	 */
-	public void add_operation_tab(Container p, String name) {
-		
-		//Elimino todo
-		tabbedOpe.removeAll();
-		
-		//Add nuevo
-		tabbedOpe.add(name, p);
+	public ViewOperation get_operation_tab() {
+		return tabbedOpe;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ViewError get_error_panel() {
+		return errorPanel;
 	}
 	
 }

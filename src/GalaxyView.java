@@ -25,6 +25,7 @@ public class GalaxyView extends ViewPanel {
 		bCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// display/center the jdialog when the button is pressed
+				((GalaxyControllerView)controller).create_form_add();
 				
 				//Parametros que pasaremos a esta funcion dependiendo de lo que leamos del Textfield del futuro formulario de Galaxia
 				int ReadXForm = 42;
@@ -71,14 +72,19 @@ public class GalaxyView extends ViewPanel {
 			}
 		});
 		
+		//Boton de eliminar - TODO
+		bDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				controller.show_error("Oh! Un error");
+			}
+		});
+		
 	}
 
 	/*protected void create_events(){
 		
 
 	}*/
-	
-	public void show(String s){
 
 		String[] ss = s.split(";");
 		String[] sss;
@@ -88,6 +94,6 @@ public class GalaxyView extends ViewPanel {
 			Console.print(sss);
 			tmodel.addRow(new String[] {sss[0]});
 		}
-		//tmodel.addRow(ss);
 	}
+	
 }
