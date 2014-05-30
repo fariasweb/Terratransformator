@@ -141,6 +141,12 @@ public class GalaxyController extends AbstractController {
 
 	}
 
+	//Chapuza momentanea; es igual que lo de arriba pero todas las entidades
+	//deberian tener este metodo: generalizar en abstractController
+	public void updateEntityNameByName(String oldName, String newName) throws Exception{
+		updateGalaxyName(oldName, newName);
+	}
+
 	// Delete
 	// ---------------------------------------------
 

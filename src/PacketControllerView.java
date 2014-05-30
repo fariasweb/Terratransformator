@@ -25,4 +25,9 @@ public class PacketControllerView extends AbstractControllerView {
 		catch(Exception e){ Console.print("Cannot find packet"); }
 		return null;
 	}
+
+	public void updateEntityNameByName(String oldName, String newName){
+		/*try{ return controller.updateEntityNameByName(oldName, newName);}
+		catch(Exception e){ Console.print("Cannot find galaxy"); }*/
+	}
 }

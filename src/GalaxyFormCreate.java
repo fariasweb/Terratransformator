@@ -102,7 +102,7 @@ public class GalaxyFormCreate extends AbstractViewer {
 				Console.print("Coordenada X: " + name.getSize().getX() + "Coordenada Y:" + name.getSize().getY());
 				
 				//Funciona ejecutando un juego de pruebas sencillito para comprobar el bucle for funciona bien
-				tfname.setText("");;
+				tfname.setText("");
 				tfposx.setText("");
 				tfposy.setText("");
 			}

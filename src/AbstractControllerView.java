@@ -128,5 +128,7 @@ public abstract class AbstractControllerView {
 	}
 
 	public abstract String getEntityByName(String name);
+
+	public abstract void updateEntityNameByName(String oldName, String newName);
 	
 }

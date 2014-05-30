@@ -160,4 +160,8 @@ public abstract class AbstractController {
 		return "";
 	}
 
+	public void updateEntityNameByName(String oldName, String newName) throws Exception{
+		//Hacerla abstracta
+	}
+
 }

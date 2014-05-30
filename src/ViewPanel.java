@@ -54,7 +54,21 @@ public abstract class ViewPanel extends AbstractViewer {
       			if (!e.getValueIsAdjusting() && !cellSelectionModel.isSelectionEmpty()){
 	        		int selectedRow = table.getSelectedRow();
         			String selectedData = (String) table.getValueAt(selectedRow, 0);
-        			String info = controller.getEntityByName(selectedData);
+        			String info;
+
+        			//Esto era un intento de modificar el nombre in situ
+        			//No funciona pero lo miramos?
+
+        			/*String changedData = null;
+        			while(cellSelectionModel.getValueIsAdjusting()){
+        				changedData = (String) table.getValueAt(selectedRow, 0);
+        			}
+        			if(changedData != null){
+        				controller.updateEntityNameByName(selectedData, changedData);
+        				selectedData = changedData;
+        			}*/
+
+        			info = controller.getEntityByName(selectedData);
         			controller.showOp(info);
         			System.out.println("Selected: " + selectedData);
         		}
