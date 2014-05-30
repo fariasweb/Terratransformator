@@ -18,4 +18,10 @@ public class PlanetControllerView extends AbstractControllerView {
 		//Creamos la vista
 		view = new PlanetView(this);
 	}
+
+	public String getEntityByName(String name){
+		try{ return controller.getByNameToString(name);}
+		catch(Exception e){ Console.print("Cannot find planet"); }
+		return null;
+	}
 }

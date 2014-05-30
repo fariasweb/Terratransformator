@@ -155,4 +155,9 @@ public abstract class AbstractController {
 	 */
 	protected abstract Iterator getIterator();
 
+	public String getByNameToString(String name) throws Exception{
+		//Hacerla abstracta
+		return "";
+	}
+
 }

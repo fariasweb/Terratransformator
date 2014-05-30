@@ -119,5 +119,14 @@ public abstract class AbstractControllerView {
 			Console.log("Error laoding things!");
 		}
 	}
+
+	public void showOp(String s){
+		ViewTest vt = new ViewTest();
+		vt.create_view(s);
+		vShared.add_tab("Foo", vt);
+
+	}
+
+	public abstract String getEntityByName(String name);
 	
 }

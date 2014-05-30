@@ -19,6 +19,17 @@ public class ViewTest extends AbstractViewer {
 		
 	}
 
+	protected void create_view(String s) {
+		//Creamos un Label a rojo y add to este
+		errorMessage = new JLabel();
+		errorMessage.setForeground(Color.green);
+		errorMessage.setText(s);
+		
+		//Add al Jpanel actual
+		removeAll();
+		add(errorMessage);
+		
+	}
 	/**
 	 * 
 	 */

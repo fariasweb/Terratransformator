@@ -19,4 +19,10 @@ public class PacketControllerView extends AbstractControllerView {
 		//Creamos la vista
 		view = new PacketView(this);
 	}
+
+	public String getEntityByName(String name){
+		try{ return controller.getByNameToString(name);}
+		catch(Exception e){ Console.print("Cannot find packet"); }
+		return null;
+	}
 }

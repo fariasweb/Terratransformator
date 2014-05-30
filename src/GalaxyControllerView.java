@@ -96,4 +96,9 @@ public class GalaxyControllerView extends AbstractControllerView {
 		return null;
 	}
 
+	public String getEntityByName(String name){
+		try{ return controller.getByNameToString(name);}
+		catch(Exception e){ Console.print("Cannot find galaxy"); }
+		return null;
+	}
 }

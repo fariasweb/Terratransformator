@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 /**
  * 
@@ -17,6 +19,8 @@ public abstract class ViewPanel extends AbstractViewer {
 	protected DefaultTableModel tmodel;
 	protected JTable table;
 	protected JScrollPane scrollPane;
+	//Para testear; luego cambiamos por el panel de operaciones
+	protected ViewTest vtest;
 
 	protected JButton bCreate, bDelete, bImport, bExport;
 
@@ -36,6 +40,26 @@ public abstract class ViewPanel extends AbstractViewer {
 		tmodel = new DefaultTableModel(new Object[][] {},
 				new String[] { "Name" });
 		table = new JTable(tmodel);
+		vtest = new ViewTest();
+		vtest.create_view();
+
+		table.setCellSelectionEnabled(true);
+    	ListSelectionModel cellSelectionModel = table.getSelectionModel();
+    	cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+    	cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+      		public void valueChanged(ListSelectionEvent e) {
+
+      			//Sin este if se activan dos eventos (al clickar y soltar click)
+      			if (!e.getValueIsAdjusting() && !cellSelectionModel.isSelectionEmpty()){
+	        		int selectedRow = table.getSelectedRow();
+        			String selectedData = (String) table.getValueAt(selectedRow, 0);
+        			String info = controller.getEntityByName(selectedData);
+        			controller.showOp(info);
+        			System.out.println("Selected: " + selectedData);
+        		}
+      		}
+      	});
 
 		// Scroll
 		scrollPane = new JScrollPane(table);
