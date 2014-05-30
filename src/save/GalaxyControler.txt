@@ -1,1 +1,1 @@
-Fran 1 1;Fran2 2 1;Fran3 3 1;
+Fran 1 1;Fran2 2 1;Fran3 3 1;ReadGalaxyNameForm 42 242;
