@@ -120,4 +120,10 @@ public class GalaxyControllerView extends AbstractControllerView {
 		catch(Exception e){ Console.print("Cannot find galaxy"); }
 		return null;
 	}
+
+	public void updateEntityNameByName(String oldName, String newName){
+		try{ controller.updateEntityNameByName(oldName, newName);}
+		catch(Exception e){ Console.print("Cannot find galaxy"); }
+	}
+
 }

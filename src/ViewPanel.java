@@ -45,7 +45,10 @@ public abstract class ViewPanel extends AbstractViewer {
 
 		table.setCellSelectionEnabled(true);
 		table.removeAll();
-    	
+
+    	ListSelectionModel cellSelectionModel = table.getSelectionModel();
+    	cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
 		// Scroll
 		scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
