@@ -1,5 +1,7 @@
 import java.util.Stack;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  * 
  * @author farias
@@ -21,9 +23,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 		
 		//TEST - TODO: Eliminar
 		try {
-			((GalaxyController) controller).addGalaxy("Fran", 1, 1);
-			((GalaxyController) controller).addGalaxy("Fran2", 2, 1);
-			((GalaxyController) controller).addGalaxy("Fran3", 3, 1);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,8 +56,8 @@ public class GalaxyControllerView extends AbstractControllerView {
 	// CREAR
 	//-------------------------------------------------------
 	
-	public void create_form_add() {
-		vShared.add_tab("Create galaxy", new GalaxyFormCreate());
+	public void create_form_add(DefaultTableModel jt) {
+		vShared.add_tab("Create galaxy", new  GalaxyFormCreate(jt,this));
 	}
 	
 	//-------------------------------------------------------
