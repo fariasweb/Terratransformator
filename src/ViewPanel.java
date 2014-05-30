@@ -44,23 +44,8 @@ public abstract class ViewPanel extends AbstractViewer {
 		vtest.create_view();
 
 		table.setCellSelectionEnabled(true);
-    	ListSelectionModel cellSelectionModel = table.getSelectionModel();
-    	cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-    	cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
-      		public void valueChanged(ListSelectionEvent e) {
-
-      			//Sin este if se activan dos eventos (al clickar y soltar click)
-      			if (!e.getValueIsAdjusting() && !cellSelectionModel.isSelectionEmpty()){
-	        		int selectedRow = table.getSelectedRow();
-        			String selectedData = (String) table.getValueAt(selectedRow, 0);
-        			String info = controller.getEntityByName(selectedData);
-        			controller.showOp(info);
-        			System.out.println("Selected: " + selectedData);
-        		}
-      		}
-      	});
-
+		table.removeAll();
+    	
 		// Scroll
 		scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
@@ -123,11 +108,9 @@ public abstract class ViewPanel extends AbstractViewer {
 	public void show(String s){
 
 		String[] ss = s.split(" ");
-		//Chivato
-		for (int i = 0; i < ss.length; ++i) {
-			Console.print(ss[i]);
-			tmodel.addRow(new String[] {ss[i]});
+		if (ss.length > 0) {
+			Console.print(ss[0]);
+			tmodel.addRow(new String[] {ss[0]});
 		}
-		//tmodel.addRow(ss);
 	}
 }

@@ -12,7 +12,7 @@ public class ViewError extends ViewShared {
 		//Creamos un Label a rojo y add to este
 		errorMessage = new JLabel();
 		errorMessage.setForeground(Color.red);
-		errorMessage.hide();
+		errorMessage.setVisible(false);
 		
 		//Add al Jpanel actual
 		add(errorMessage);
@@ -31,7 +31,7 @@ public class ViewError extends ViewShared {
 	public void show(String e) {
 		//Escribir en el label
 		errorMessage.setText(e);
-		errorMessage.show();
+		errorMessage.setVisible(true);
 	}
 	
 	/**
@@ -39,6 +39,6 @@ public class ViewError extends ViewShared {
 	 */
 	public void hide() {
 		errorMessage.setText("");
-		errorMessage.hide();
+		errorMessage.setVisible(false);
 	}
 }

@@ -14,10 +14,8 @@ public class GalaxyFormCreate extends AbstractViewer {
 	private JTextField tfposy;
 	private JButton bcommit;
 	
-	private DefaultTableModel jt;
-	GalaxyFormCreate(DefaultTableModel jtp, GalaxyControllerView gcf){
+	GalaxyFormCreate(GalaxyControllerView gcf){
 		controller = gcf;
-		jt = jtp;
 	}
 	
 	@Override
@@ -31,7 +29,7 @@ public class GalaxyFormCreate extends AbstractViewer {
 		tfposx = new JTextField(3);
 		tfposy = new JTextField(3);
 		
-		bcommit = new JButton("Commit");
+		bcommit = new JButton("Save");
 		
 		//Creamos un Layout para colocar Labels y TextFields del formulario
 		 
@@ -78,39 +76,33 @@ public class GalaxyFormCreate extends AbstractViewer {
 
 	@Override
 	protected void create_events() {
-		// TODO Auto-generated method stub
+		
+		//FORMULARIO: Guardar
 		bcommit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
+			public void actionPerformed(ActionEvent event){
 				
-				if(tfposx.getText() != null && tfposy.getText() != null && tfname.getText() != null)((GalaxyControllerView)controller).addGalaxy(tfname.getText(), Integer.parseInt(tfposx.getText()), Integer.parseInt(tfposy.getText()));
-				
-				//Peta
-				
-				//Si No lanza Excepcion la funcion anterior, pido la galaxia a la capa de dominio y lo a–ado a la tabla suponiendo que no hay control de cache
-				Galaxy name = ((GalaxyControllerView)controller).getByName(tfname.getText());
+				try {
+					
+					//Comprobacion basica de campos
+					if(tfposx.getText() == null || tfposy.getText() == null || tfname.getText() == null)
+						throw new Exception("The values can not be empty");
+					
+					//Creaci—n del objeto por parte del controlador
+					((GalaxyControllerView)controller).addGalaxy(tfname.getText(), Integer.parseInt(tfposx.getText()), Integer.parseInt(tfposy.getText()));
 
-				//Compruebo que no anada otra vez el mismo nombre de la Galaxia iterando en las filas de la tabla 
-				boolean found = false;
-				for(int i = 0; i < jt.getRowCount() && !found; ++i){
-					if(jt.getValueAt(i,0).equals(name.getName())) found = true;
+					//Add to table - TODO: Orden alfabetico??
+					//jt.addRow(new Object[] { tfname.getText() });
+					
+					//Reinicio campos
+					tfname.setText("");;
+					tfposx.setText("");
+					tfposy.setText("");
+					
+				} catch (Exception e) {
+					controller.show_error(e.getMessage());
 				}
-				
-				//Si no encuentra una galaxia con mismo nombre -> La anade en la tabla
-				if(!found) jt.addRow(new Object[] { name.getName() });
-				
-				//Compruebo que esta registrada la galaxia en la capa de dominio en la terminal
-				Console.print("Coordenada X: " + name.getSize().getX() + "Coordenada Y:" + name.getSize().getY());
-				
-				//Funciona ejecutando un juego de pruebas sencillito para comprobar el bucle for funciona bien
-				tfname.setText("");;
-				tfposx.setText("");
-				tfposy.setText("");
 			}
 		});
 	}
-
-	@Override
-	public void show(String s){}
-
 }
 

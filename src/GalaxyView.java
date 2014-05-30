@@ -1,6 +1,10 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 /**
  * 
  * @author farias
@@ -52,21 +56,31 @@ public class GalaxyView extends ViewPanel {
 			}
 		});
 		
+		//Tabla
+		final ListSelectionModel cellSelectionModel = table.getSelectionModel();
+    	cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
+      		public void valueChanged(ListSelectionEvent e) {
+
+      			//Sin este if se activan dos eventos (al clickar y soltar click)
+      			if (!e.getValueIsAdjusting() && !cellSelectionModel.isSelectionEmpty()){
+	        		int selectedRow = table.getSelectedRow();
+        			String selectedData = (String) table.getValueAt(selectedRow, 0);
+        			//String info = controller.getEntityByName(selectedData);
+        			//controller.showOp(info);
+        			
+        			//Llamada al controlador
+        			System.out.println("Selected: " + selectedData);
+        			((GalaxyControllerView) controller).getGalaxyByName(selectedData);
+        		}
+      		}
+      	});
+		
 	}
 
 	/*protected void create_events(){
 		
 
 	}*/
-	public void show(String s){
-		String[] ss = s.split(";");
-		String[] sss;
-		//Chivato
-		for (int i = 0; i < ss.length; ++i) {
-			sss = ss[i].split(" ");
-			Console.print(sss);
-			tmodel.addRow(new String[] {sss[0]});
-		}
-	}
 
 }

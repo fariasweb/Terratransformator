@@ -21,13 +21,6 @@ public class GalaxyControllerView extends AbstractControllerView {
 		//-------------------------------------------------------
 		controller = new GalaxyController(pc);
 		
-		//TEST - TODO: Eliminar
-		try {
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
 		//-------------------------------------------------------
 		// Vistas
 		//-------------------------------------------------------
@@ -49,21 +42,56 @@ public class GalaxyControllerView extends AbstractControllerView {
 
 		//Chivato
 		Console.print(firstCache);
-		view.show(firstCache);
+		//view.show(firstCache);
 	}
 	
 	//-------------------------------------------------------
 	// CREAR
 	//-------------------------------------------------------
 	
+	/**
+	 * 
+	 * @param jt
+	 */
 	public void create_form_add(DefaultTableModel jt) {
-		vShared.add_tab("Create galaxy", new  GalaxyFormCreate(jt,this));
+		vShared.add_tab("Create galaxy", new  GalaxyFormCreate(this));
+	}
+	
+	/**
+	 * 
+	 * @param string
+	 * @param readXForm
+	 * @param readYForm
+	 * @throws Exception
+	 */
+	public void addGalaxy(String name, int readXForm, int readYForm) throws Exception {
+		//Creamos en el objeto en la capa de dominio
+		((GalaxyController) controller).addGalaxy(name, readXForm, readYForm);
+		
+		//Add to table
+		((ViewPanel) view).show(name);
 	}
 	
 	//-------------------------------------------------------
 	// LISTAR/EDITAR
 	//-------------------------------------------------------
-	//TODO
+	public void getGalaxy() {
+		Console.log(((GalaxyController) controller).getAll());
+	}
+	
+	public void getGalaxyByName(String name) {
+		try {
+			Console.log(((GalaxyController) controller).getByNameToString(name));
+			
+			//TODO: Coger los planetas de esta galaxia
+			
+			//TODO: Llamar al formuario pasando los datos
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			vError.show(e.getMessage());
+		}
+	}
 	
 	//-------------------------------------------------------
 	// ELIMINAR
@@ -73,19 +101,10 @@ public class GalaxyControllerView extends AbstractControllerView {
 	//-------------------------------------------------------
 	// TEST - TODO: Revisar
 	//-------------------------------------------------------
-	public void getGalaxy() {
-		Console.log(((GalaxyController) controller).getAll());
-	}
 
-	//Una vez tenido un formulario con textfields se cambia nombre atributos
-	public void addGalaxy(String string, int readXForm, int readYForm) {
-		try{
-			((GalaxyController) controller).addGalaxy(string, readXForm, readYForm);
-		}
-		catch(Exception e){
-			Console.print("Cannot add galaxy");
-		}
-	}
+	
+	//ESTO ESTA PROHIBIDO!!! ENTRE CAPAS NO COMPARTES OBJETOS - SOLO DATOS BASICOS
+	/*
 	public Galaxy getByName(String name){
 		try{
 			return ((GalaxyController) controller).getByName(name);
@@ -94,7 +113,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 			Console.print("Cannot add galaxy");
 		}
 		return null;
-	}
+	}*/
 
 	public String getEntityByName(String name){
 		try{ return controller.getByNameToString(name);}

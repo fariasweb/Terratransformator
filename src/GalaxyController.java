@@ -69,7 +69,7 @@ public class GalaxyController extends AbstractController {
 	 * 
 	 * @param name
 	 *            String
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
 	public String getByNameToString(String name) throws Exception {

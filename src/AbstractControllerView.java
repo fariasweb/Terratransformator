@@ -1,6 +1,8 @@
 
 import java.awt.Container;
+
 import javax.swing.JPanel;
+
 import java.util.Stack;
 
 /**
@@ -128,5 +130,6 @@ public abstract class AbstractControllerView {
 	}
 
 	public abstract String getEntityByName(String name);
+
 	
 }

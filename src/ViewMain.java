@@ -37,8 +37,8 @@ public class ViewMain extends JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		// Size y visibilidad
-		setSize(500, 500);
-		setMinimumSize(new Dimension(500,500));
+		setSize(800, 600);
+		setMinimumSize(new Dimension(800,600));
 		setVisible(true);
 		
 		//TapPanel principales
