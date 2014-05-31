@@ -1,11 +1,11 @@
 import java.awt.Color;
 import javax.swing.JLabel;
 
-public class ViewTest extends AbstractViewer {
+public class ViewTest extends ViewShared {
 
 	private JLabel errorMessage;
 	
-	/**
+	/**s
 	 * 
 	 */
 	protected void create_view() {

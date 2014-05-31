@@ -10,7 +10,7 @@ public class PacketControllerView extends AbstractControllerView {
 	 * 
 	 * @param pc
 	 */
-	PacketControllerView(ViewOperation vs, ViewError ve) {
+	PacketControllerView(ViewTabbedPane vs, ViewNotification ve) {
 		
 		super(vs, ve);
 		

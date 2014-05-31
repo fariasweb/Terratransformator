@@ -8,7 +8,7 @@ public class Terratransformator {
 	 */
 	public static void main(String[] args) {
 		
-		ViewController cpp = new ViewController();
+		PresentationController cpp = new PresentationController();
 		
 	}
 

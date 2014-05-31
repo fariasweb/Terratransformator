@@ -1,5 +1,6 @@
 
 import java.awt.Container;
+
 import javax.swing.JPanel;
 
 /**
@@ -14,25 +15,26 @@ public abstract class AbstractViewer extends JPanel {
 	
 	/**
 	 * 
+	 */
+	AbstractViewer() {
+		
+		controller = null;
+		
+	}
+	
+	/**
+	 * 
 	 * @param c
 	 */
 	AbstractViewer(AbstractControllerView c) {
 		//Guargamos el controlador al que pertenecemos
 		set_controller(c);
-		
-		//Creacion de elementos y eventos -- Podrian estar vacias
-		create_view();
-		create_events();
+			
 	}
 	
-	/**
-	 * 
-	 */
-	AbstractViewer() {
-		//Creacion de elementos y eventos -- Podrian estar vacias
-		create_view();
-		create_events();
-	}
+	//--------------------------------------------------------
+	// Controllador
+	//--------------------------------------------------------
 	
 	/**
 	 * 
@@ -50,6 +52,11 @@ public abstract class AbstractViewer extends JPanel {
 		return controller != null;
 	}
 	
+	//--------------------------------------------------------
+	// Vistas
+	//--------------------------------------------------------
+
+	
 	/**
 	 * 
 	 */
@@ -59,4 +66,35 @@ public abstract class AbstractViewer extends JPanel {
 	 * 
 	 */
 	protected abstract void create_events();
+	
+	//--------------------------------------------------------
+	// Utiles
+	//--------------------------------------------------------
+
+	/**
+	 * 
+	 * @return
+	 */
+	protected String[] decode(String l) {		
+		return l.split(" ");
+	}
+	
+	/**
+	 * 
+	 */
+	protected String[][] decode_list(String l) {
+		
+		String[] s = l.split(";");
+		if (s.length == 0 ) return null;
+		
+		String[][] ll = new String[s.length][];
+		
+		int i = 0;
+		while (i < s.length) {
+			ll[i] = decode(s[i]);
+			i += 1;
+		}
+		
+		return ll;
+	}
 }

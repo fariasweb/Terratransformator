@@ -6,21 +6,20 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
-public class ViewMain extends JFrame {
+public class PresentationView extends JFrame {
 
 	/**
 	 * 
 	 */
-	ViewController controller;
-	private JTabbedPane tabbedLeft, tabbedRight;
-	private ViewOperation tabbedOpe;
-	private ViewError errorPanel;
+	PresentationController controller;
+	private ViewTabbedPane tabbedOpe, tabbedLeft, tabbedRight;
+	private ViewNotification errorPanel;
 
 	/**
 	 * 
 	 * @param c
 	 */
-	ViewMain(ViewController c) {
+	PresentationView(PresentationController c) {
 		super("Terratransformator");
 		controller = c;
 		
@@ -37,15 +36,15 @@ public class ViewMain extends JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		// Size y visibilidad
-		setSize(800, 600);
-		setMinimumSize(new Dimension(800,600));
+		setSize(1000, 700);
+		setMinimumSize(new Dimension(1000,700));
 		setVisible(true);
 		
 		//TapPanel principales
-		tabbedLeft = (JTabbedPane) new JTabbedPane();
-		tabbedRight = (JTabbedPane) new JTabbedPane();
-		tabbedOpe = new ViewOperation();
-		errorPanel = new ViewError();
+		tabbedLeft = new ViewTabbedPane();
+		tabbedRight = new ViewTabbedPane();
+		tabbedOpe = new ViewTabbedPane();
+		errorPanel = new ViewNotification();
 		
 		//TEST - TODO: ELIMINAR
 		tabbedOpe.add_tab("Test", new ViewTest());
@@ -100,8 +99,8 @@ public class ViewMain extends JFrame {
 	 * @param p
 	 * @param name
 	 */
-	public void add_left_tab(Container p, String name) {
-		tabbedLeft.add(name, p);
+	public void add_left_tab(JPanel p, String name) {
+		tabbedLeft.add_tab(name, p);
 	}
 	
 	/**
@@ -109,8 +108,8 @@ public class ViewMain extends JFrame {
 	 * @param p
 	 * @param name
 	 */
-	public void add_right_tab(Container p, String name) {
-		tabbedRight.add(name, p);
+	public void add_right_tab(JPanel p, String name) {
+		tabbedRight.add_tab(name, p);
 	}	
 
 	/**
@@ -118,7 +117,7 @@ public class ViewMain extends JFrame {
 	 * @param p
 	 * @param name
 	 */
-	public ViewOperation get_operation_tab() {
+	public ViewTabbedPane get_operation_tab() {
 		return tabbedOpe;
 	}
 	
@@ -126,7 +125,7 @@ public class ViewMain extends JFrame {
 	 * 
 	 * @return
 	 */
-	public ViewError get_error_panel() {
+	public ViewNotification get_error_panel() {
 		return errorPanel;
 	}
 	

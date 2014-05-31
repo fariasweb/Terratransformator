@@ -124,8 +124,11 @@ public class TST<Value> {
 	public Value get(String key) throws Exception{
 
 		if(!Util.checkName(key)) throw new Exception(key + " is not valid");
-
-		return get(root, key.toLowerCase(), 0);
+		Value n = get(root, key.toLowerCase(), 0);
+		
+		if (n == null) throw new Exception (key+" does not exist");
+		
+		return n;
 	}
 
 	/**

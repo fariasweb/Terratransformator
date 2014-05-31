@@ -10,7 +10,7 @@ import javax.swing.event.ListSelectionListener;
  * @author farias
  * 
  */
-public class GalaxyView extends ViewPanel {
+public class GalaxyView extends ViewController {
 
 	/**
 	 * 
@@ -71,7 +71,7 @@ public class GalaxyView extends ViewPanel {
         			
         			//Llamada al controlador
         			System.out.println("Selected: " + selectedData);
-        			((GalaxyControllerView) controller).getGalaxyByName(selectedData);
+        			((GalaxyControllerView) controller).create_form_view(selectedData);
         		}
       		}
       	});

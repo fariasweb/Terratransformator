@@ -10,7 +10,7 @@ public class PlanetControllerView extends AbstractControllerView {
 	 * 
 	 * @param pc
 	 */
-	PlanetControllerView(PlanetController pc, ViewOperation vs, ViewError ve) {
+	PlanetControllerView(PlanetController pc, ViewTabbedPane vs, ViewNotification ve) {
 		super(vs, ve);
 		
 		//Creamos el enlace a capa de dominio

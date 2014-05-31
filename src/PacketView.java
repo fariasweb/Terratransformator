@@ -3,7 +3,7 @@
  * @author farias
  *
  */
-public class PacketView extends ViewPanel {
+public class PacketView extends ViewController {
 
 	/**
 	 * 

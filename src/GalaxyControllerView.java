@@ -13,7 +13,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 * 
 	 * @param pc
 	 */
-	GalaxyControllerView(PlanetController pc, ViewOperation vs, ViewError ve) {
+	GalaxyControllerView(PlanetController pc, ViewTabbedPane vs, ViewNotification ve) {
 		super(vs, ve);
 		
 		//-------------------------------------------------------
@@ -54,7 +54,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 * @param jt
 	 */
 	public void create_form_add(DefaultTableModel jt) {
-		vShared.add_tab("Create galaxy", new  GalaxyFormCreate(this));
+		vShared.add_once_tab("Create galaxy", new  GalaxyCreate(this));
 	}
 	
 	/**
@@ -64,33 +64,62 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 * @param readYForm
 	 * @throws Exception
 	 */
-	public void addGalaxy(String name, int readXForm, int readYForm) throws Exception {
-		//Creamos en el objeto en la capa de dominio
-		((GalaxyController) controller).addGalaxy(name, readXForm, readYForm);
+	public void save(String originalName, String name, int readXForm, int readYForm) throws Exception {
 		
-		//Add to table
-		((ViewPanel) view).show(name);
+		if (originalName == null) { //CREACION
+			//Creamos en el objeto en la capa de dominio
+			((GalaxyController) controller).addGalaxy(name, readXForm, readYForm);
+			//Mensaje de notificacion
+			vError.success("The galaxy "+name+" has been created");
+			
+			//Add to table - TODO: CACHE
+			((ViewController) view).show(name);
+			
+		} else { //ACTUALIZACION
+			
+			//Comprobamos el nombre
+			if (!originalName.equals(name)) {
+				((GalaxyController) controller).updateGalaxyName(originalName, name);
+			}
+			
+			//Actaulizamos los datos adjuntos
+			((GalaxyController) controller).updateGalaxy(name, readXForm, readYForm);
+			
+			//Mensaje de notificacion
+			vError.success("The galaxy "+name+" has been updated");
+			
+			//Table - TODO: Cache TODO: Eliminar esto
+			((ViewController) view).show(name);
+		}
 	}
 	
 	//-------------------------------------------------------
 	// LISTAR/EDITAR
 	//-------------------------------------------------------
-	public void getGalaxy() {
+	
+	/**
+	 * 
+	 * @param name
+	 */
+	public void create_form_view(String name) {
+		vShared.add_once_tab("Galaxy details", new  GalaxyDetails(this, name));
+	}
+	
+	/**
+	 * 
+	 */
+	public void get() {
 		Console.log(((GalaxyController) controller).getAll());
 	}
 	
-	public void getGalaxyByName(String name) {
-		try {
-			Console.log(((GalaxyController) controller).getByNameToString(name));
-			
-			//TODO: Coger los planetas de esta galaxia
-			
-			//TODO: Llamar al formuario pasando los datos
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			vError.show(e.getMessage());
-		}
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getByName(String name) throws Exception {
+		return ((GalaxyController) controller).getByNameToString(name);
 	}
 	
 	//-------------------------------------------------------

@@ -107,6 +107,13 @@ public class GalaxyController extends AbstractController {
 	// Update
 	// ---------------------------------------------
 
+	public void updateGalaxy(String name, int x, int y) throws Exception {
+		// Cogemos la galxia
+		Galaxy g = Clt.get(name);
+		//Actualizamos el tama–o
+		g.setSize(x, y);
+	}
+	
 	/**
 	 * Pre: El nombre no debe ser nulo y con longitud > 0 La galaxia debe
 	 * existir El nombre de a nueva galaxia no debe de existir Post: Modifica

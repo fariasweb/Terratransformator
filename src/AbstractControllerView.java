@@ -18,8 +18,8 @@ public abstract class AbstractControllerView {
 	//Vista
 	protected AbstractViewer view;
 	//Vista - Elementos compartidos
-	protected ViewOperation vShared;
-	protected ViewError vError;
+	protected ViewTabbedPane vShared;
+	protected ViewNotification vError;
 	
 	//-------------------------------------------------------
 	// CACHE - TODO revisar
@@ -42,7 +42,7 @@ public abstract class AbstractControllerView {
 	 * @param vs
 	 * @param ve
 	 */
-	AbstractControllerView(ViewOperation vs, ViewError ve) {
+	AbstractControllerView(ViewTabbedPane vs, ViewNotification ve) {
 		//Elementos compartidos de todos los controladores
 		vShared = vs;
 		vError = ve;
@@ -54,7 +54,7 @@ public abstract class AbstractControllerView {
 	/**
 	 * 
 	 */
-	public Container get_view() {
+	public JPanel get_view() {
 		return view;
 	}
 	
@@ -67,7 +67,7 @@ public abstract class AbstractControllerView {
 	 * @param e
 	 */
 	public void show_error(String e) {
-		vError.show(e);
+		vError.error(e);
 	}
 	
 	/**

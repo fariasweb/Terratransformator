@@ -8,7 +8,7 @@ import javax.swing.JTabbedPane;
  * @author farias
  *
  */
-public class ViewOperation extends ViewShared {
+public class ViewTabbedPane extends ViewShared {
 
 	private JTabbedPane tabbedOpe;
 	
@@ -34,15 +34,20 @@ public class ViewOperation extends ViewShared {
 	 * @param p
 	 */
 	public void add_tab(String name, JPanel p) {
-		//Eliminaos las anteriores Tabs
-		tabbedOpe.removeAll();
+		
 		//Creamos la nueva
 		tabbedOpe.add(name, p);
 	}
-
-	public void show(String s) {
-		// TODO Auto-generated method stub
-
+	
+	/**
+	 * 
+	 * @param name
+	 * @param p
+	 */
+	public void add_once_tab(String name, JPanel p) {
+		//Eliminaos las anteriores Tabs
+		tabbedOpe.removeAll();
+		add_tab(name, p);
 	}
 
 }

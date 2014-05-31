@@ -3,7 +3,7 @@
  * @author farias
  *
  */
-public class PlanetView extends ViewPanel {
+public class PlanetView extends ViewController {
 
 	/**
 	 * 
