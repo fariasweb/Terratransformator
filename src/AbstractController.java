@@ -9,7 +9,6 @@ public abstract class AbstractController {
 
 	//Constants
 	protected final int _CACHE_NUM = 100;
-	protected final int _CACHE_PRES_NUM = 100;
 	protected final String _SEPARATOR = ";";
 	
 	//Private and general
@@ -19,18 +18,12 @@ public abstract class AbstractController {
 	protected DataController dCont;
 	protected String _last_key = "";
 
-	//Cache system view
-	protected String[] cache; //Unicamente dos necesitamos
-	protected Stack< Iterator<Entity> > TSTIterators;
-	
 	/**
 	 * Constructor
 	 * Post: Inicializa el DataController
 	 */
 	public AbstractController() {
 		dCont = new DataController();
-		
-		cache = new String[2];
 	}
 	
 	
@@ -176,7 +169,7 @@ public abstract class AbstractController {
 		int count = 0;
 		Iterator it;
 
-		for (it = it3; it.hasNext() && count < _CACHE_PRES_NUM; ++count)
+		for (it = it3; it.hasNext() && count < _CACHE_NUM; ++count)
 			ret += it.next().toString();
 
 		stackIte.push(it1);
@@ -190,12 +183,34 @@ public abstract class AbstractController {
 		int count = 0;
 		Iterator it;
 
-		for (it = stackIte.pop(); it.hasNext() && count < _CACHE_PRES_NUM; ++count)
+		for (it = stackIte.pop(); it.hasNext() && count < _CACHE_NUM; ++count)
 			ret = (ret + it.next().toString());
 
 		it1 = it2;	it2 = it3; it3 = it;
 
 		return ret;
+	}
+
+		public String initFirstCache(){
+		String ret = new String();
+		int count = 0;
+		Iterator it;
+
+		for (it = it1; it.hasNext() && it != it2 && count < _CACHE_NUM; ++count)
+			ret += it.next().toString();
+		return ret;
+
+	}
+
+	public String initSecondCache(){
+		String ret = new String();
+		int count = 0;
+		Iterator it;
+		
+		for (it = it2; it.hasNext() && it != it3 && count < _CACHE_NUM; ++count)
+			ret += it.next().toString();
+		return ret;
+
 	}
 
 }
