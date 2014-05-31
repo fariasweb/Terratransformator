@@ -2,6 +2,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Adjustable;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -49,6 +52,11 @@ public abstract class ViewController extends ViewPanel {
 		scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
 		scrollPane.setViewportView(table);
+
+		// Listen for value changes in the scroll pane's scrollbars
+    	AdjustmentListener listener = new MyAdjustmentListener();
+    	scrollPane.getHorizontalScrollBar().addAdjustmentListener(listener);
+    	scrollPane.getVerticalScrollBar().addAdjustmentListener(listener);
 
 		// Buttons
 		bCreate = new JButton("Crear");
@@ -98,6 +106,7 @@ public abstract class ViewController extends ViewPanel {
 										//Short.MAX_VALUE
 										)));
 
+		//show(controller.getStringToShow());
 	}
 	
 	/**
@@ -111,4 +120,57 @@ public abstract class ViewController extends ViewPanel {
 		if (ss.length > 0) 
 			tmodel.addRow(new String[] {ss[0]});
 	}
+
+	//Private stuff
+
+	private class MyAdjustmentListener implements AdjustmentListener {
+		public void adjustmentValueChanged(AdjustmentEvent evt) {
+
+    	Adjustable source = evt.getAdjustable();
+    	int minAdj = (int) Math.floor(0.25 * (source.getMaximum() - source.getMinimum()) + source.getMinimum());
+    	int maxAdj = (int) Math.floor(0.75 * (source.getMaximum() - source.getMinimum()) + source.getMinimum());
+	    int value = evt.getValue();
+
+	    //WARNING!!!!!
+	    //NO DESCOMENTAR PQ PETA!!!
+	    //MANISH, TE HE DICHO QUE NOOOO!!!!
+
+    	/*if (evt.getValueIsAdjusting()) return;
+
+    	if(value < minAdj){
+    		controller.backwards();
+    		show(controller.getStringToShow());
+    	}
+    	else if(value < minAdj){
+    		controller.forwards();
+    		show(controller.getStringToShow());
+    	}*/
+
+	   int orient = source.getOrientation();
+	    if (orient == Adjustable.HORIZONTAL) {
+	      System.out.println("from horizontal scrollbar"); 
+	    } else {
+	      System.out.println("from vertical scrollbar");
+	    }
+	    int type = evt.getAdjustmentType();
+	    switch (type) {
+	    case AdjustmentEvent.UNIT_INCREMENT:
+	      System.out.println("Scrollbar was increased by one unit");
+	      break;
+	    case AdjustmentEvent.UNIT_DECREMENT:
+	      System.out.println("Scrollbar was decreased by one unit");
+	      break;
+	    case AdjustmentEvent.BLOCK_INCREMENT:
+	      System.out.println("Scrollbar was increased by one block");
+	      break;
+	    case AdjustmentEvent.BLOCK_DECREMENT:
+	      System.out.println("Scrollbar was decreased by one block");
+	      break;
+	    case AdjustmentEvent.TRACK:
+	      System.out.println("The knob on the scrollbar was dragged");
+	      break;
+	    }
+	  }
+	}
+
 }
