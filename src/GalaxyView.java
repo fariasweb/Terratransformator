@@ -29,7 +29,7 @@ public class GalaxyView extends ViewController {
 		bCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// display/center the jdialog when the button is pressed
-				((GalaxyControllerView)controller).create_form_add(tmodel);
+				((GalaxyControllerView)controller).create_form_add();
 			}
 		});
 		

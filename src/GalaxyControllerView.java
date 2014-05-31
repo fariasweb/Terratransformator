@@ -50,9 +50,8 @@ public class GalaxyControllerView extends AbstractControllerView {
 	
 	/**
 	 * 
-	 * @param jt
 	 */
-	public void create_form_add(DefaultTableModel jt) {
+	public void create_form_add() {
 		vShared.add_once_tab("Create galaxy", new  GalaxyCreate(this));
 	}
 	
