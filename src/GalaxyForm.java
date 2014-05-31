@@ -16,8 +16,6 @@ public class GalaxyForm extends ViewForm {
 	private JTextField tfname;
 	private JSpinner tfposx;
 	private JSpinner tfposy;
-	private JButton bcommit;
-	
 	private String originaName;
 
 	/**
@@ -26,10 +24,10 @@ public class GalaxyForm extends ViewForm {
 	 */
 	GalaxyForm(GalaxyControllerView gcf) {
 		super(gcf);
-	
+
 		originaName = null;
 	}
-	
+
 	public void setOriginalName(String n) {
 		originaName = n;
 	}
@@ -49,13 +47,13 @@ public class GalaxyForm extends ViewForm {
 
 		tfposx = new JSpinner(fx);
 		tfposy = new JSpinner(fy);
-
-		// bcommit = new JButton("Save");
-
+		
 		// Creamos un Layout para colocar Labels y TextFields del formulario
 
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
 
 		layout.setVerticalGroup(layout
 				.createParallelGroup()
@@ -125,7 +123,7 @@ public class GalaxyForm extends ViewForm {
 	public void setNameValue(String e) {
 		tfname.setText(e);
 	}
-	
+
 	/**
 	 * 
 	 * @param e
@@ -133,7 +131,7 @@ public class GalaxyForm extends ViewForm {
 	public void setXValue(String e) {
 		tfposx.setValue(Integer.parseInt(e));
 	}
-	
+
 	/**
 	 * 
 	 * @param e
@@ -141,6 +139,5 @@ public class GalaxyForm extends ViewForm {
 	public void setYValue(String e) {
 		tfposy.setValue(Integer.parseInt(e));
 	}
-	
-	
+
 }

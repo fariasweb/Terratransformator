@@ -24,11 +24,11 @@ public class GalaxyCreate extends View2Col {
 		
 		//Creacion del formuacio de Galaxy
 		fGalaxy = new GalaxyForm(((GalaxyControllerView)controller));
-		pLeft.add(fGalaxy);
+		add_left(fGalaxy);
 		
 		//Boton de enviar
 		bSubmit = create_button_submit();
-		pRight.add(bSubmit);
+		add_right(bSubmit);
 	}
 
 	/**

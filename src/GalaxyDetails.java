@@ -1,6 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 
 public class GalaxyDetails extends View3Col {
@@ -28,14 +29,16 @@ public class GalaxyDetails extends View3Col {
 
 		// Creacion del formuacio de Galaxy
 		fGalaxy = new GalaxyForm(((GalaxyControllerView) controller));
-		pLeft.add(fGalaxy);
+		add_left(fGalaxy);
 
 		// Tabla de planetas
-		pRight.add(new GalaxyPlanetsView(((GalaxyControllerView) controller)));
-
+		//pRight.add(new GalaxyPlanetsView(((GalaxyControllerView) controller)));
+		GalaxyPlanetsView gpv = new GalaxyPlanetsView(((GalaxyControllerView) controller));
+		add_center(gpv);
+		
 		// Boton de enviar
 		bSubmit = create_button_submit();
-		pRight.add(bSubmit);
+		add_right(bSubmit);
 
 	}
 

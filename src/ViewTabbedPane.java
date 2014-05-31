@@ -1,5 +1,7 @@
 import java.awt.Dimension;
 
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -19,14 +21,31 @@ public class ViewTabbedPane extends ViewShared {
 		tabbedOpe = new JTabbedPane();
 		//tabbedOpe.setSize(500, 300);
 		//tabbedOpe.setMinimumSize(new Dimension(500,300));
-		add(tabbedOpe);
+		
+		this.setBorder(BorderFactory.createTitledBorder(""));
+		
+        GroupLayout layout = new GroupLayout(this);          
+        this.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+        
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                .addComponent(tabbedOpe))
+        );
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(tabbedOpe))
+        );
+		
+        //add(tabbedOpe);
 	}
 	
 	/**
 	 * 
 	 */
 	protected void create_events() {
-	}
+	}	
 	
 	/**
 	 * 

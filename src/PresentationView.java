@@ -36,8 +36,8 @@ public class PresentationView extends JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		// Size y visibilidad
-		setSize(1000, 700);
-		setMinimumSize(new Dimension(1000,700));
+		setSize(900, 600);
+		setMinimumSize(new Dimension(900,600));
 		setVisible(true);
 		
 		//TapPanel principales

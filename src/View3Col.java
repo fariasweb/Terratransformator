@@ -1,3 +1,5 @@
+import java.awt.Component;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -9,7 +11,7 @@ import javax.swing.JPanel;
  */
 public abstract class View3Col extends ViewLayout {
 
-	protected JPanel pLeft, pRight, pCenter;
+	private JPanel pLeft, pRight, pCenter;
 
 	View3Col(AbstractControllerView c) {
 		super(c);
@@ -34,13 +36,13 @@ public abstract class View3Col extends ViewLayout {
 		layout.setHorizontalGroup(layout
 				.createParallelGroup()
 				.addGroup(layout.createSequentialGroup()
-						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup()
 								.addComponent(pLeft)
 						)
-						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup()
 								.addComponent(pCenter)
 						)
-						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup()
 								.addComponent(pRight)
 						)
 				)
@@ -58,5 +60,53 @@ public abstract class View3Col extends ViewLayout {
 		);
 		
 		
+	}
+	
+	//----------------------------------------------------------
+	// Funciones graficas
+	//----------------------------------------------------------
+	/**
+	 * 
+	 * @param p
+	 * @param c
+	 */
+	private void _add(JPanel p, Component c) {
+		GroupLayout layout = new GroupLayout(p);          
+		p.setLayout(layout);
+        layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+        
+        layout.setHorizontalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                .addComponent(c))
+        );
+        layout.setVerticalGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(c))
+        );
+	}
+	
+	/**
+	 * 
+	 * @param c
+	 */
+	public void add_left(Component c) {
+		_add(pLeft, c);
+	}
+	
+	/**
+	 * 
+	 * @param c
+	 */
+	public void add_center(Component c) {
+		_add(pCenter, c);
+	}
+	
+	/**
+	 * 
+	 * @param c
+	 */
+	public void add_right(Component c) {
+		_add(pRight, c);
 	}
 }

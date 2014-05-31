@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -62,6 +63,11 @@ public abstract class ViewController extends ViewPanel {
 		// Create in Panel
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
+		
+		layout.setAutoCreateGaps(true);
+        layout.setAutoCreateContainerGaps(true);
+		
+		
 		layout.setHorizontalGroup(layout
 				.createParallelGroup(GroupLayout.Alignment.LEADING)
 				.addGroup(
