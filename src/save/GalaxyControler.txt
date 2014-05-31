@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-Fran 1 1;
-=======
-ksdfk 23 25;ska 1 1;
->>>>>>> 66facfdd409a4cdac71b009dcf619b2e67181f74
+af 3 4;

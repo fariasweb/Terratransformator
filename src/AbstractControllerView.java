@@ -29,9 +29,6 @@ public abstract class AbstractControllerView {
 	//100 elementos para listar en cada String cache
 	protected String firstCache;
 	protected String secondCache;
-	//Object demasiado general? Cada uno pone su clase (Galaxy, etc)
-	protected Stack<Entity> references;
-
 
 	//-------------------------------------------------------
 	// CONSTRCUTOR

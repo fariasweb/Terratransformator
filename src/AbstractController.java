@@ -9,13 +9,16 @@ public abstract class AbstractController {
 
 	//Constants
 	protected final int _CACHE_NUM = 100;
+	protected final int _CACHE_PRES_NUM = 100;
 	protected final String _SEPARATOR = ";";
 	
 	//Private and general
 	protected TST<Entity> Clt;
+	protected Iterator it1, it2, it3;
+	protected Stack<Iterator> stackIte;
 	protected DataController dCont;
 	protected String _last_key = "";
-	
+
 	//Cache system view
 	protected String[] cache; //Unicamente dos necesitamos
 	protected Stack< Iterator<Entity> > TSTIterators;
@@ -162,6 +165,37 @@ public abstract class AbstractController {
 
 	public void updateEntityNameByName(String oldName, String newName) throws Exception{
 		//Hacerla abstracta
+	}
+
+	// ---------------------------------------------
+	// Cache Presentacion
+	// ---------------------------------------------
+
+	public String forwards(){
+		String ret = new String();
+		int count = 0;
+		Iterator it;
+
+		for (it = it3; it.hasNext() && count < _CACHE_PRES_NUM; ++count)
+			ret += it.next().toString();
+
+		stackIte.push(it1);
+		it1 = it2;	it2 = it3; it3 = it;
+
+		return ret;
+	}
+
+	public String backwards(){
+		String ret = new String();
+		int count = 0;
+		Iterator it;
+
+		for (it = stackIte.pop(); it.hasNext() && count < _CACHE_PRES_NUM; ++count)
+			ret = (ret + it.next().toString());
+
+		it1 = it2;	it2 = it3; it3 = it;
+
+		return ret;
 	}
 
 }
