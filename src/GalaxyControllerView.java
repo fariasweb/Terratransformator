@@ -31,7 +31,6 @@ public class GalaxyControllerView extends AbstractControllerView {
 		//-------------------------------------------------------
 		firstCache = new String();
 		secondCache = new String();
-		references = new Stack<Entity>();
 
 		try{
 		//Tomamos los primeros de dominio y los mostramos

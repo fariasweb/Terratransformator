@@ -29,9 +29,6 @@ public abstract class AbstractControllerView {
 	//100 elementos para listar en cada String cache
 	protected String firstCache;
 	protected String secondCache;
-	//Object demasiado general? Cada uno pone su clase (Galaxy, etc)
-	protected Stack<Entity> references;
-
 
 	//-------------------------------------------------------
 	// CONSTRCUTOR
@@ -118,7 +115,7 @@ public abstract class AbstractControllerView {
 			t1.start();
 		}
 		catch(Exception e){
-			Console.log("Error laoding things!");
+			Console.log("Error loading things!");
 		}
 	}
 
@@ -132,5 +129,19 @@ public abstract class AbstractControllerView {
 	public abstract String getEntityByName(String name);
 
 	public abstract void updateEntityNameByName(String oldName, String newName);
+
+	public void forwards(){
+		firstCache = secondCache;
+		secondCache = controller.forwards();
+	}
+
+	public void backwards(){
+		secondCache = firstCache;
+		firstCache = controller.backwards();
+	}
 	
+	public String getStringToShow(){
+		return firstCache+secondCache;
+	}
+
 }
