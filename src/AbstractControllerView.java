@@ -129,5 +129,13 @@ public abstract class AbstractControllerView {
 	public abstract String getEntityByName(String name);
 
 	public abstract void updateEntityNameByName(String oldName, String newName);
+
+	public String forwards(){
+		return controller.forwards();
+	}
+
+	public String backwards(){
+		return controller.backwards();
+	}
 	
 }
