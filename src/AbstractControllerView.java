@@ -115,7 +115,7 @@ public abstract class AbstractControllerView {
 			t1.start();
 		}
 		catch(Exception e){
-			Console.log("Error laoding things!");
+			Console.log("Error loading things!");
 		}
 	}
 
@@ -130,12 +130,18 @@ public abstract class AbstractControllerView {
 
 	public abstract void updateEntityNameByName(String oldName, String newName);
 
-	public String forwards(){
-		return controller.forwards();
+	public void forwards(){
+		firstCache = secondCache;
+		secondCache = controller.forwards();
 	}
 
-	public String backwards(){
-		return controller.backwards();
+	public void backwards(){
+		secondCache = firstCache;
+		firstCache = controller.backwards();
 	}
 	
+	public String getStringToShow(){
+		return firstCache+secondCache;
+	}
+
 }

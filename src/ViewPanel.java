@@ -131,10 +131,23 @@ public abstract class ViewPanel extends AbstractViewer {
 
 	private class MyAdjustmentListener implements AdjustmentListener {
 		public void adjustmentValueChanged(AdjustmentEvent evt) {
+
     	Adjustable source = evt.getAdjustable();
-    	if (evt.getValueIsAdjusting()) {
-      	return;
+    	int minAdj = (int) Math.floor(0.25 * (source.getMaximum() - source.getMinimum()) + source.getMinimum());
+    	int maxAdj = (int) Math.floor(0.75 * (source.getMaximum() - source.getMinimum()) + source.getMinimum());
+	    int value = evt.getValue();
+
+    	if (evt.getValueIsAdjusting()) return;
+
+    	if(value < minAdj){
+    		controller.backwards();
+    		show(controller.getStringToShow());
     	}
+    	else if(value < minAdj){
+    		controller.forwards();
+    		show(controller.getStringToShow());
+    	}
+
 	    int orient = source.getOrientation();
 	    if (orient == Adjustable.HORIZONTAL) {
 	      System.out.println("from horizontal scrollbar"); 
@@ -159,7 +172,6 @@ public abstract class ViewPanel extends AbstractViewer {
 	      System.out.println("The knob on the scrollbar was dragged");
 	      break;
 	    }
-	    int value = evt.getValue();
 	  }
 	}
 }
