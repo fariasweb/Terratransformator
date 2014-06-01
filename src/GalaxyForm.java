@@ -89,7 +89,7 @@ public class GalaxyForm extends ViewForm {
 		if (!validString(tfname.getText()))
 			throw new Exception("The galaxy name can not be empty");
 
-		// Creaci—n del objeto por parte del controlador
+		// Creacion del objeto por parte del controlador
 		((GalaxyControllerView) controller).save(originaName, tfname.getText(),
 				(Integer) tfposx.getValue(), (Integer) tfposy.getValue());
 

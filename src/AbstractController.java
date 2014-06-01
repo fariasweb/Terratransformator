@@ -140,7 +140,7 @@ public abstract class AbstractController {
 	protected void preConditionLoad() throws Exception {}
 	
 	/**
-	 * Post: Devuelve el tama–o de la coleci—n
+	 * Post: Devuelve el tamano de la coleccion
 	 * @return
 	 */
 	public abstract int size();

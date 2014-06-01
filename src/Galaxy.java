@@ -87,7 +87,7 @@ public class Galaxy extends Entity{
 		int px = pi.getX();
 		int py = pi.getY();
 		
-		//Es una posicion valida para el tama–o de la galaxia?
+		//Es una posicion valida para el tamano de la galaxia?
 		if ((px < 0 || px > x) ||
 			(py < 0 || py > y )) {
 				throw new Exception("The planet position is not correct for this galaxy");

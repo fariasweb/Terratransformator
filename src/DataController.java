@@ -60,7 +60,7 @@ public class DataController {
 
 	/**
 	 * Pre: El archivo debe estar abierto
-	 * Post: Devuelve parte de la informaci—n, en caso de ser null
+	 * Post: Devuelve parte de la informacion, en caso de ser null
 	 * 		 es que el archivo a finalizado
 	 * @param path
 	 * @throws Exception
@@ -76,7 +76,7 @@ public class DataController {
 
 	/**
 	 * Pre: El fichero debe estar abierto
-	 * Post: A–ade al final de archivo la informacion
+	 * Post: Anade al final de archivo la informacion
 	 * @param path
 	 * @param file
 	 * @param data

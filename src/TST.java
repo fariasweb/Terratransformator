@@ -12,7 +12,7 @@ import java.util.Stack;
 public class TST<Value> {
 	
 	//Atributos generales
-	private int N; // tama–o
+	private int N; // tamano
 	private Node root; // raiz del TST
 	private int current; // variable auxiliar global para el metodo collectValuesCache
 	
@@ -532,7 +532,7 @@ public class TST<Value> {
 	 * Utilidad exclusiva para debuggar, no tiene otro uso.
 	 * Pre: Cierto
 	 * Post: Vuelca por pantalla el TST para poder ver los nodos 
-	 * y a d—nde apunta cada uno.
+	 * y a donde apunta cada uno.
 	 * @return
 	 */
 	public void dump(){

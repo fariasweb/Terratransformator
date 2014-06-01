@@ -32,7 +32,7 @@ public class QAPController extends AbstractController{
 		CP = packetc;
 		dCont = new DataController();
 
-		// Soluci—n y objetos copiados
+		// Solucion y objetos copiados
 		oqap = null;
 		g = null;
 		p = null;
@@ -386,7 +386,7 @@ public class QAPController extends AbstractController{
 						if (g == null) 
 							throw new Exception("Galaxy is not defined");
 						
-						//A–adimos el planeta
+						//Anadimos el planeta
 						g.addPlanet(new Planet(s[1], Integer.parseInt(s[2]), Integer.parseInt(s[3])));
 						
 					} else if (s[0].equals("K")) { //Paquetes

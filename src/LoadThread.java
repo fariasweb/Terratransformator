@@ -13,7 +13,7 @@ public class LoadThread implements Runnable{
 			ac.load(path);  
 		}
 		catch(Exception e){
-			Console.print("Se ha producido un error al cargar!");
+			e.printStackTrace();
 		}
 	}
 }

@@ -1,9 +1,14 @@
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.ButtonGroup;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -25,42 +30,36 @@ public class QAPView extends ViewForm {
 	private String[][] ngMatrix;
 	
 	QAPView(AbstractControllerView c, GalaxyController gcp) {
-		super(c);
+		super(c);	
 		gc = gcp;
+		// Button of QAPInputForm
+		crear_vista();
 	}
-
-	
-	protected void create_events() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	public void submit_form() throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	protected void create_view() {
+	protected void crear_vista(){
 		// Button of QAPInputForm
 		inputButton = new JButton("Create Input Form");
 		levelLabel = new JLabel("Set Level (Value -1: Infinite for Lazy and None for Eager)");
+		
 		if(gc.size() > 0){
-			/*ngMatrix = new String[gc.size()][3];
+			ngMatrix = new String[gc.size()][3];
 			ngMatrix = decode_list(gc.getAll());
 			
 			nameGalaxies = new String[gc.size()];
 			for(int i = 0; i < gc.size() ; ++i){
 				nameGalaxies[i] = ngMatrix[i][0];
-			}*/
+			}
 		}
-		/*
-		galaxyLabel = new JLabel("Select Galaxy for Algorithm");
+		galaxyLabel = new JLabel("Select Galaxy for Algorithm :");
+		String[] nulo = new String[1];
+		nulo[0] = "None";
+		if(gc.size() > 0) gcb = new JComboBox(nameGalaxies);
+		else gcb = new JComboBox(nulo);
 		
-		gcb = new JComboBox(nameGalaxies);
-		rb1 = new JRadioButton("QAP Lazy Branch and Bound");
-		rb2 = new JRadioButton("QAP Eager Branch and Bound");
+		rb1 = new JRadioButton("QAP Lazy Branch and Bound",false);
+		rb2 = new JRadioButton("QAP Eager Branch and Bound",false);
+		
+		
+		
 		SpinnerNumberModel jspin = new SpinnerNumberModel(-1, -1, Integer.MAX_VALUE, 1);
 		jp = new JSpinner(jspin);
 		
@@ -70,12 +69,16 @@ public class QAPView extends ViewForm {
 				layout.createParallelGroup()
 					.addGroup(
 							layout.createSequentialGroup()
-								.addComponent(galaxyLabel)
-								.addComponent(gcb) 
+								.addComponent(galaxyLabel,javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addComponent(gcb, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE) 
 								.addComponent(rb1)
+								.addGap(10)
 								.addComponent(rb2) 
+								.addGap(10)
 								.addComponent(levelLabel) 
-								.addComponent(jp) 
+								.addGap(10)
+								.addComponent(jp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE) 
+								.addGap(10)
 								.addComponent(inputButton)
 					)
 					
@@ -85,11 +88,11 @@ public class QAPView extends ViewForm {
 				layout.createParallelGroup()
 						.addGroup(
 								layout.createSequentialGroup()
-								.addComponent(galaxyLabel)
+								.addComponent(galaxyLabel,javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
 						)
 						.addGroup(
 								layout.createSequentialGroup()
-								.addComponent(gcb)
+								.addComponent(gcb,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
 						)
 						.addGroup(
 								layout.createSequentialGroup()
@@ -105,14 +108,45 @@ public class QAPView extends ViewForm {
 						)
 						.addGroup(
 								layout.createSequentialGroup()
-								.addComponent(jp)
+								.addComponent(jp,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
 						)
 						.addGroup(
 								layout.createSequentialGroup()
 								.addComponent(inputButton)
 						)
 						
-		);*/
+		);
+	
+	
+	rb1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e){
+			rb2.setSelected(false);
+			
+		}
+	});
+	
+	//Boton de eliminar
+	rb2.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e){
+			rb1.setSelected(false);;
+		}
+	});
+	}
+	
+	protected void create_events() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	public void submit_form() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	protected void create_view() {
+	
 	}
 
 }
