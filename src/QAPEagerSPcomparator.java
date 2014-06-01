@@ -9,8 +9,8 @@ public class QAPEagerSPcomparator implements Comparator<QAPEagerSP>
         // probably be more robust
         // You could also just return x.length() - y.length(),
         // which would be more efficient.
-        
-    	return (int)(-(y.min-x.min));
+ 
+    	return (int)(x.min-y.min);
     	/*if (x.min < y.min)
         {
             return 1;
