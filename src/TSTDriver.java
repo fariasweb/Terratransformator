@@ -175,6 +175,10 @@ public class TSTDriver extends AbstractDriver {
 					}
 					break;
 					
+				case 17:
+						Clt.dump();
+					break;
+					
 				default:
 					_msg_opc_invalid();
 					break;

@@ -1,3 +1,6 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 
 public class GalaxyPlanetsView extends ViewController {
 
@@ -11,7 +14,14 @@ public class GalaxyPlanetsView extends ViewController {
 
 	@Override
 	protected void create_events() {
-		// TODO Auto-generated method stub
+		
+		//Add
+		bCreate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event){
+				//Crear el formulario de add planetaa galaxia
+				((GalaxyControllerView) controller).create_form_planet();
+			}
+		});
 		
 	}
 	
