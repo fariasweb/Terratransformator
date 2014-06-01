@@ -75,6 +75,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 			vError.success("The galaxy " + name + " has been created");
 
 			// Add to table - TODO: CACHE
+
 			((ViewController) view).show(name);
 
 		} else { // ACTUALIZACION
@@ -93,7 +94,8 @@ public class GalaxyControllerView extends AbstractControllerView {
 			vError.success("The galaxy " + name + " has been updated");
 
 			// Table - TODO: Cache TODO: Eliminar esto
-			((ViewController) view).show(name);
+			refresh();
+			((ViewController) view).show(getStringToShow());
 		}
 	}
 
