@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class QAPController {
+public class QAPController extends AbstractController{
 
 	// Referencia a los valores actuales
 	private GalaxyController CG;
@@ -36,7 +37,8 @@ public class QAPController {
 		g = null;
 		p = null;
 	}
-
+	
+	
 	// Read
 	// ---------------------------------------------
 
@@ -457,6 +459,34 @@ public class QAPController {
 		
 		//En caso de haber errores en la carga, lanzamos 
 		if (error.length() > 0) throw new Exception("Fail to load information\n"+error);
+	}
+
+
+	@Override
+	protected void decodeString(String l) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	protected String encodeString() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	protected Iterator getIterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

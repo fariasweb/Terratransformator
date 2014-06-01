@@ -13,8 +13,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 * 
 	 * @param pc
 	 */
-	GalaxyControllerView(PlanetController pc, ViewTabbedPane vs,
-			ViewNotification ve) {
+	GalaxyControllerView(PlanetController pc, ViewTabbedPane vs,ViewNotification ve) {
 		super(vs, ve);
 
 		// -------------------------------------------------------
@@ -145,6 +144,9 @@ public class GalaxyControllerView extends AbstractControllerView {
 		
 	}
 
+	public GalaxyController getGalaxyController(){
+		return (GalaxyController) controller;
+	}
 	// -------------------------------------------------------
 	// TEST - TODO: Revisar
 	// -------------------------------------------------------

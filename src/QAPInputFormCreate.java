@@ -1,6 +1,7 @@
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.GroupLayout;
 import javax.swing.JScrollPane;
@@ -23,18 +24,17 @@ public class QAPInputFormCreate extends ViewForm {
 	
 	protected void create_view() {
 		
-		//Le pasas el tama–o de la matriz
+		//Le pasas el tamano de la matriz
 		sizeMatrix = 200;
 		
 		
 		DistanceMatrix = new DefaultTableModel(sizeMatrix,sizeMatrix);
 		
 		//genera vectores que enumeran las cabeceras
-		DefaultListModel lm = new DefaultListModel();
-		String[] header = new String[sizeMatrix];
+	
+		Vector<String> header = new Vector<String>(sizeMatrix);
 		for(int i = 0; i < sizeMatrix; ++i){
-			header[i] = i+1 + "";
-			lm.addElement(header[i]);
+			header.set(i, i+1+"");
 		}
 		
 		DistanceMatrix.setColumnIdentifiers(header);
@@ -48,10 +48,10 @@ public class QAPInputFormCreate extends ViewForm {
 		
 		js.setViewportView(tDistanceMatrix);
 		
-		JList rowHeader = new JList(lm);
+		JList rowHeader = new JList((Vector<String>) header);
 		js.setRowHeaderView(rowHeader);
 
-		// Ajusta tama–o de la tabla cambiando el numerito al lado del PREFERRED_SIZE
+		// Ajusta tamano de la tabla cambiando el numerito al lado del PREFERRED_SIZE
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setHorizontalGroup(layout
@@ -77,7 +77,7 @@ public class QAPInputFormCreate extends ViewForm {
 					if(tfposx.getValue() == null || tfposy.getValue() == null || tfname.getText() == null)
 						throw new Exception("The values can not be empty");
 					
-					//Creaci—n del objeto por parte del controlador
+					//Creacion del objeto por parte del controlador
 					((GalaxyControllerView)controller).addGalaxy(tfname.getText(), (Integer)tfposx.getValue(), (Integer)tfposy.getValue());
 
 					//Add to table - TODO: Orden alfabetico??
