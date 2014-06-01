@@ -4,18 +4,17 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 
-public class GalaxyDetails extends View3Col {
+public class PlanetDetails extends View3Col {
 
 	private JButton bSubmit;
-	private GalaxyForm fGalaxy;
-	private GalaxyPlanetsView vPlanets;
+	private PlanetForm fPlanet;
 
 	/**
 	 * 
 	 * @param c
 	 */
 
-	GalaxyDetails(AbstractControllerView c, String nameE) {
+	PlanetDetails(AbstractControllerView c, String nameE) {
 
 		super(c);
 		
@@ -28,14 +27,14 @@ public class GalaxyDetails extends View3Col {
 	 */
 	protected void create_view() {
 
-		// Creacion del formuacio de Galaxy
-		fGalaxy = new GalaxyForm(((GalaxyControllerView) controller));
-		add_left(fGalaxy);
+		// Creacion del formuacio de Planet
+		fPlanet = new PlanetForm(((PlanetControllerView) controller));
+		add_left(fPlanet);
 
 		// Tabla de planetas
-		//pRight.add(new GalaxyPlanetsView(((GalaxyControllerView) controller)));
-		GalaxyPlanetsView vPlanets = new GalaxyPlanetsView(((GalaxyControllerView) controller));
-		add_center(vPlanets);
+		//pRight.add(new PlanetPlanetsView(((PlanetControllerView) controller)));
+		//PlanetPlanetsView vPlanets = new PlanetPlanetsView(((PlanetControllerView) controller));
+		//add_center(vPlanets);
 			
 		// Boton de enviar
 		bSubmit = create_button_submit();
@@ -51,7 +50,7 @@ public class GalaxyDetails extends View3Col {
 			public void actionPerformed(ActionEvent event) {
 
 				try {
-					fGalaxy.submit_form();
+					fPlanet.submit_form();
 
 				} catch (Exception e) {
 					controller.show_error(e.getMessage());
@@ -70,27 +69,23 @@ public class GalaxyDetails extends View3Col {
 
 			//Formularuo basico
 			//-----------------
-			String[] l = decode(((GalaxyControllerView) controller)
+			String[] l = decode(((PlanetControllerView) controller)
 					.getByName(name));
 
 			if (l.length == 0)
 				throw new Exception("Error in data");
 				
-			fGalaxy.setNameValue(l[0]);
-			fGalaxy.setXValue(l[1]);
-			fGalaxy.setYValue(l[2]);
+			fPlanet.setNameValue(l[0]);
+			fPlanet.setXValue(l[1]);
+			fPlanet.setYValue(l[2]);
 			
 			//Marcamos el nombre original
-			fGalaxy.setOriginalName(name);
+			fPlanet.setOriginalName(name);
 			
-			//Listao de planetas
-			//------------------
-			String planets = ((GalaxyControllerView) controller).getPlanets(name);
-			String[] list_planets = decode_in_lines(planets);
+			//Galaxya a la q pertence
+			//-----------------
 			
-			for (int i = list_planets.length - 1; i >= 0; i-= 1) {
-				vPlanets.show(list_planets[i]);
-			}
+			//TODO
 
 		} catch (Exception e) {
 			controller.show_error(e.getMessage());

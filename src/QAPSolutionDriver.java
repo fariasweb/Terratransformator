@@ -1,6 +1,6 @@
 import java.util.*;
 public class QAPSolutionDriver extends AbstractDriver{
-	public static void main(String args[]) throws Exception{
+	/*public static void main(String args[]) throws Exception{
 		
 		//Generico del driver
 		Planet planet = new Planet();
@@ -177,6 +177,7 @@ public class QAPSolutionDriver extends AbstractDriver{
 			}
 		}while(opc != 0);
 	}
+	*/
 	
 	/**
 	 * 

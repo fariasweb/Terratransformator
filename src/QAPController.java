@@ -168,19 +168,19 @@ public class QAPController extends AbstractController{
 		QAP alg;
 
 		if (QAPType.equals(QAPTypeList.GilmoreLazy.name())) {
-			alg = new QAPLazyGLB(iqap);
+			//alg = new QAPLazyGLB(iqap);
 		} else if (QAPType.equals(QAPTypeList.GilmoreEager.name())) {
-			alg = new QAPEager(iqap);
+			//alg = new QAPEager(iqap);
 		} else {
 			throw new Exception("QAPType is not defined");
 		}
 
 		// 6.Ejecucion del QAP
-		alg.run();
+		//alg.run();
 
 		// 7.Generar salida
-		oqap = new QAPSolution(alg, g, p);
-		oqap.setQAPSend();
+		//oqap = new QAPSolution(alg, g, p);
+		//oqap.setQAPSend();
 	}
 
 	// ---------------------------------------------
@@ -412,7 +412,7 @@ public class QAPController extends AbstractController{
 						//Creamos el algoritmo
 						QAP alg;
 
-						if (s[1].equals(QAPTypeList.GilmoreLazy.name())) {
+						/*if (s[1].equals(QAPTypeList.GilmoreLazy.name())) {
 							alg = new QAPLazyGLB(iqap);
 						} else if (s[1].equals(QAPTypeList.GilmoreEager.name())) {
 							alg = new QAPEager(iqap);
@@ -423,9 +423,9 @@ public class QAPController extends AbstractController{
 						//Datos basicos
 						alg.setResult(Float.parseFloat(s[2]));
 						//alg.setTime();
-						alg.setRun(true);
+						alg.setRun(true);*/
 						
-						oqap = new QAPSolution(alg ,g, p);
+						//oqap = new QAPSolution(alg ,g, p);
 						
 					} else if (s[0].equals("SS")) { //Envio
 

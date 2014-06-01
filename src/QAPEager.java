@@ -4,59 +4,61 @@ import java.util.*;
  * QAPEager
  *
  */
-public class QAPEager extends QAP{
+public class QAPEager /*extends QAP*/{
 	/**
 	 * 
 	 * @param qap
 	 * @throws Exception
 	 */
+	
+	private QAPGilmoreLawerBound GLB;
+	public QAPBaBTree tree;
+	public int[] solucion;
+	public long time;
+	double cost;
+	
+	public int NombredeBranch;
+	private Comparator<QAPEagerSP> comparator;
+	
+	public QAPEager() {
+		tree = new QAPBaBTree();
+		NombredeBranch = 1;
+		comparator = new QAPEagerSPcomparator();
+        
+	}
+	
+	/*
 	public QAPEager(QAPInput qap) throws Exception {
 		super(qap);
 		QAPType = "GilmoreEager";
-	}
+		
+	}*/
 
-	public static double BranchAndBound(double[][] d, double[][] f, int[] va,int val[]) {
+	public double BranchAndBound(double[][] d, double[][] f, int[] va,int[] val) {
+		
 		int n = d.length;
 		// Redeclaro la cola de vector
 		Queue<QAPEagerSP> q = new LinkedList<QAPEagerSP>();
 
-		// Hago un push de los vectores de nivel 1
-
-		int vaaux[] = new int[n];
-		int valaux[] = new int[n];
-
-		vaaux[0] = 1;
-		valaux[0] = 1;
-
+	
 		QAPEagerSP sp = new QAPEagerSP(); // el minimo
-		sp.level = 1;
-		sp.min = QAPGilmoreLawerBound.QAPGLB(d, f, vaaux, valaux);
+		
+		sp.level = 0;
+		sp.min = 0;
 		sp.va = new int[n];
 		sp.val = new int[n];
-
-		valaux[0] = 0;
-		int mini = 0;
-		for (int i = 1; i < n; i++) {
-			vaaux[0] = i + 1;
-			valaux[i] = 1;
-			double minaux = QAPGilmoreLawerBound.QAPGLB(d, f, vaaux, valaux);
-
-			if (minaux < sp.min) {
-				sp.min = minaux;
-				mini = i;
-			}
-			valaux[i] = 0;
-		}
-
-		sp.va[0] = mini + 1;
-		sp.val[mini] = 1;
-
+		
+		
+		
 		q.offer(sp);
-
+		PriorityQueue<QAPEagerSP> pq = new PriorityQueue<QAPEagerSP>(NombredeBranch, comparator);
+		int levelchange = 0;
 		while (!q.isEmpty()) {
 			QAPEagerSP nodepare = q.element();
 			q.remove();
 			if (nodepare.level == n - 1) {
+				//este paso de autocompleta se hara fuera
+				
 				for (int m = 0; m < n; m++) {
 					if (nodepare.val[m] == 0) {
 						nodepare.va[n - 1] = m + 1;
@@ -70,50 +72,72 @@ public class QAPEager extends QAP{
 				}
 			} else {
 				double minaux;
-				QAPEagerSP nodepeor = new QAPEagerSP();
-				boolean haybuena = false;
+				
 				for (int i = 0; i < n; i++) {
 					if (nodepare.val[i] == 0) {
 						nodepare.va[nodepare.level] = i + 1;
 						nodepare.val[i] = nodepare.level + 1;
 
-						minaux = QAPGilmoreLawerBound.QAPGLB(d, f, nodepare.va,
+						minaux = GLB.QAPGLB(d, f, nodepare.va,
 								nodepare.val);
-
+						
+						long timaux = System.nanoTime();
+						
+						timaux = timaux - time;
+						QAPTNSolucion  spaux = new QAPTNSolucion ();
+						spaux.valor(nodepare.level+1, nodepare.va,
+								timaux, minaux);
+						tree.addNode(spaux);
+							
+						//mejor que padre  esta parte se reserva!!!!!!
+						/*
 						if (minaux < nodepare.min) {
-							haybuena = true;
 							QAPEagerSP nodebuena = new QAPEagerSP();
-
 							nodebuena.valor(nodepare.level + 1, nodepare.va,
 									nodepare.val, minaux);
-
 							q.offer(nodebuena);
-
-						} else if (nodepeor.level == 0 || minaux < nodepeor.min) {
-							nodepeor.valor(nodepare.level + 1, nodepare.va,
-									nodepare.val, minaux);
-
+							 NombredeBranchlevel--;
 						}
+						else {*/
+							QAPEagerSP node = new QAPEagerSP();
+							node.valor(nodepare.level + 1, nodepare.va,
+									nodepare.val, minaux);
+							pq.offer(node);
+						//}
+
 						nodepare.val[i] = 0;
 
 					}
 				}
-				if (!haybuena) {
-					q.offer(nodepeor);
-
+				if(q.isEmpty()) {
+					levelchange = nodepare.level;
+					int NombredeBranchlevel = NombredeBranch;//subirlo
+					
+					while (!pq.isEmpty() && NombredeBranchlevel > 0) {
+						q.offer(pq.poll());
+						NombredeBranchlevel--;
+					}
+					pq.clear();
 				}
+				
 			}
 		}
-
-		for (int b = 0; b < n; b++) {
-			va[b] = sp.va[b];
-			val[b] = sp.val[b];
-		}
+		
+		
+		Util.CopyVectors(sp.va, sp.val, val, va);
+		
 		return sp.min;
 
 	}
+						
+						//se tiene k quitar
+	public double run(double[][] d, double[][] f, int[] va,int[] val)// throws Exception {	
+	{
+		time = System.nanoTime();
 
-	public void run() throws Exception{	
+
+		GLB = new QAPGilmoreLawerBound(d.length);
+		/*
 		//Numero de planetas/paquetes
 		int nPackets = input.getSizePackets();
 		int nPlanets = input.getSizePlanets();
@@ -123,20 +147,24 @@ public class QAPEager extends QAP{
 		//Matrices de entrada
 		int sol1[] = new int[nPackets];
 		int sol2[] = new int[nPlanets];
-		
+		*/
 		//Inicio de tiempo
-		long startTime = System.nanoTime();
+
 		
+		double aux =  BranchAndBound( d, f,va,val);
+
+		time = System.nanoTime() - time; 
+		return aux;
 		//Algoritmo
-		double d = BranchAndBound(input.getDistanceMatrix(), input.getFlowMatrix(), sol1,sol2);
+		//double d = BranchAndBound(input.getDistanceMatrix(), input.getFlowMatrix(), sol1,sol2);
+		/*
+		//Fin de ejecucion
 		
-		//Fin de ejecuci—n
-		long endTime = System.nanoTime();
-		
-		//Guardamos los datos de la ejecuci—n
+		//Guardamos los datos de la ejecucion
 		isRun = true;
-		time = endTime - startTime;
+		time = endTime - time;
 		result = d;
-		solution = sol2;
+		solution = sol2;*/
+
 	}
 }

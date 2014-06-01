@@ -163,6 +163,22 @@ public class TSTDriver extends AbstractDriver {
 					}
 					break;
 
+				case 16:
+					try{
+						Iterator iter = Clt.iterator();
+						while(iter.hasNext())
+							Console.print(iter.next().toString());
+
+					}
+					catch(Exception e){
+						_msg_error(e.getMessage());
+					}
+					break;
+					
+				case 17:
+						Clt.dump();
+					break;
+					
 				default:
 					_msg_opc_invalid();
 					break;
@@ -198,6 +214,7 @@ public class TSTDriver extends AbstractDriver {
 		menu.add("newIterator(): Iterator i");
 		menu.add("i.next() : Entity");
 		menu.add("i.hasNext() : Boolean");
+		menu.add("values()[con Iterator] : Iterable<Entity>");
 
 		print_menu();
 	}

@@ -106,7 +106,14 @@ public class GalaxyController extends AbstractController {
 
 	// Update
 	// ---------------------------------------------
-
+	/**
+	 * Pre: Galaxy name have exist
+	 * Post: Update the information about galaxy
+	 * @param name
+	 * @param x
+	 * @param y
+	 * @throws Exception
+	 */
 	public void updateGalaxy(String name, int x, int y) throws Exception {
 		// Cogemos la galxia
 		Galaxy g = Clt.get(name);
@@ -213,8 +220,7 @@ public class GalaxyController extends AbstractController {
 	 * @param PlanetName
 	 * @throws Exception
 	 */
-	public void addPlanet(String GalaxyName, String PlanetName,
-			PlanetController pc) throws Exception {
+	public void addPlanet(String GalaxyName, String PlanetName) throws Exception {
 
 		// 1. Comprobar la existencia de galaxia
 		Galaxy g = Clt.get(GalaxyName);
@@ -223,8 +229,7 @@ public class GalaxyController extends AbstractController {
 		// Pre: El planeta no debe tener otra galaxia asignaada o estar en esta
 		// ya
 		Planet p = pc.getByName(PlanetName);
-		if (p == null)
-			throw new Exception("The planet " + PlanetName + " does not exist");
+		
 		if (p.getGalaxy() != null)
 			throw new Exception("The planet " + PlanetName + " is in a galaxy");
 
@@ -251,7 +256,7 @@ public class GalaxyController extends AbstractController {
 		// Comprobamos que exista algo en el array
 		if (g.getPlanets().size() > 0) {
 			for (Planet i : g.getPlanets().values()) {
-				result += i.toString() + "\n";
+				result += i.toString() + _SEPARATOR;
 			}
 		}
 

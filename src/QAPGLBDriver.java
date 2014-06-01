@@ -15,8 +15,8 @@ public class QAPGLBDriver {
 				val[va[i] - 1] = i + 1;
 			}
 		}
-		double n = QAPGilmoreLawerBound.QAPGLB(d, f, va, val);
-
+		QAPGilmoreLawerBound GLB = new QAPGilmoreLawerBound(va.length);
+		double n = GLB.QAPGLB(d, f, va, val);
 		System.out.println("coste total");
 		System.out.println(n);
 
