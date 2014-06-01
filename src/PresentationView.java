@@ -39,6 +39,7 @@ public class PresentationView extends JFrame {
 		setSize(900, 600);
 		setMinimumSize(new Dimension(900,600));
 		setVisible(true);
+		setResizable(false);
 		
 		//TapPanel principales
 		tabbedLeft = new ViewTabbedPane();

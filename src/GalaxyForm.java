@@ -47,7 +47,7 @@ public class GalaxyForm extends ViewForm {
 
 		tfposx = new JSpinner(fx);
 		tfposy = new JSpinner(fy);
-		
+
 		// Creamos un Layout para colocar Labels y TextFields del formulario
 
 		GroupLayout layout = new GroupLayout(this);
@@ -55,33 +55,23 @@ public class GalaxyForm extends ViewForm {
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
 
-		layout.setVerticalGroup(layout
-				.createParallelGroup()
-				.addGroup(
-						layout.createSequentialGroup().addGap(8)
-								.addComponent(name).addGap(8)
-								.addComponent(posx).addGap(8)
-								.addComponent(posy)
-
-				)
-				.addGroup(
-						layout.createSequentialGroup().addComponent(tfname)
-								.addComponent(tfposx).addComponent(tfposy))
+		layout.setVerticalGroup(layout.createParallelGroup().addGroup(
+				layout.createSequentialGroup().addComponent(name)
+						.addComponent(tfname).addComponent(posx)
+						.addComponent(tfposx).addComponent(posy)
+						.addComponent(tfposy))
 
 		);
 
 		layout.setHorizontalGroup(layout.createParallelGroup()
-				.addGroup(layout.createSequentialGroup().addComponent(name)
+				.addGroup(layout.createSequentialGroup().addComponent(name))
+				.addGroup(layout.createSequentialGroup().addComponent(tfname))
+				.addGroup(layout.createSequentialGroup().addComponent(posx))
+				.addGroup(layout.createSequentialGroup().addComponent(tfposx))
+				.addGroup(layout.createSequentialGroup().addComponent(posy))
+				.addGroup(layout.createSequentialGroup().addComponent(tfposy))
 
-				.addComponent(tfname)
-
-				).addGroup(layout.createSequentialGroup().addComponent(posx)
-
-				.addComponent(tfposx)
-
-				).addGroup(layout.createSequentialGroup().addComponent(posy)
-
-				.addComponent(tfposy)));
+		);
 	}
 
 	/**

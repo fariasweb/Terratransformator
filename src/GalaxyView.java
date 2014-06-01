@@ -49,10 +49,21 @@ public class GalaxyView extends ViewController {
 			}
 		});
 		
-		//Boton de eliminar - TODO
+		//Boton de eliminar
 		bDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				controller.show_error("Oh! Un error");
+				
+				int selectedRow = table.getSelectedRow();
+				if (selectedRow < 0) controller.show_error("You must select a galaxy before delete");
+				else {
+        			String selectedData = (String) table.getValueAt(selectedRow, 0);
+        			try {
+						((GalaxyControllerView) controller).delete(selectedData);
+					} catch (Exception e1) {
+						controller.show_error(e1.getMessage());
+					}
+
+				}
 			}
 		});
 		
