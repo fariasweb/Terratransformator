@@ -167,10 +167,14 @@ public class GalaxyControllerView extends AbstractControllerView {
 		((GalaxyController) controller).removeGalaxy(name);
 		
 		//Eliminar de la tabla - TODO
-		Console.print("DELETING GALAXY!");
 		refresh();
 		((ViewController) view).show(getStringToShow());
 		
+		// Mensaje de notificacion
+		vError.success("The galaxy " + name + " has been deleted");
+
+
+		vShared.remove_all_tabs();
 	}
 
 	// -------------------------------------------------------
@@ -184,22 +188,5 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 * controller).getByName(name); } catch(Exception e){
 	 * Console.print("Cannot add galaxy"); } return null; }
 	 */
-
-	public String getEntityByName(String name) {
-		try {
-			return controller.getByNameToString(name);
-		} catch (Exception e) {
-			Console.print("Cannot find galaxy");
-		}
-		return null;
-	}
-
-	public void updateEntityNameByName(String oldName, String newName) {
-		try {
-			controller.updateEntityNameByName(oldName, newName);
-		} catch (Exception e) {
-			Console.print("Cannot find galaxy");
-		}
-	}
 
 }

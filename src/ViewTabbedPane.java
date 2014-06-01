@@ -101,4 +101,11 @@ public class ViewTabbedPane extends ViewShared {
 	public void remove_tab(int index) {
 		tabbedOpe.remove(index);
 	}
+	
+	/**
+	 * 
+	 */
+	public void remove_all_tabs() {
+		tabbedOpe.removeAll();
+	}
 }

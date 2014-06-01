@@ -106,7 +106,14 @@ public class GalaxyController extends AbstractController {
 
 	// Update
 	// ---------------------------------------------
-
+	/**
+	 * Pre: Galaxy name have exist
+	 * Post: Update the information about galaxy
+	 * @param name
+	 * @param x
+	 * @param y
+	 * @throws Exception
+	 */
 	public void updateGalaxy(String name, int x, int y) throws Exception {
 		// Cogemos la galxia
 		Galaxy g = Clt.get(name);
