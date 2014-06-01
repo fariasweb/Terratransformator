@@ -192,47 +192,74 @@ public abstract class AbstractController {
 	}
 
 	public String refreshFirstCache(){
+		//Chivato
+		Console.print("Refreshing firstCache");
+
 		String ret = new String();
 		int count = 0;
+		//Esta linea no hace falta luego (it1 ya tiene valor)
 		Iterator it;
+		it1 = getIterator();
 
-		for (it = it1; it.hasNext() && count < _CACHE_NUM; ++count)
-			ret += it.next().toString();
+		for (it = it1; it.hasNext() && count < _CACHE_NUM; ++count){
+			String[] aux = it.next().toString().split(" ");
+			ret += (aux[0]+" ");
+		}
 
 		it2 = it;
 		return ret;
 	}
 
 	public String refreshSecondCache(){
+		//Chivato
+		Console.print("Refreshing secondCache");
+
 		String ret = new String();
 		int count = 0;
 		Iterator it;
 
-		for (it = it2; it.hasNext() && count < _CACHE_NUM; ++count)
-			ret += it.next().toString();
+		for (it = it2; it.hasNext() && count < _CACHE_NUM; ++count){
+			String[] aux = it.next().toString().split(" ");
+			ret += (aux[0]+" ");
+		}
 
 		it3 = it;
 		return ret;
 	}
 
 	public String initFirstCache(){
+		//Chivato
+		Console.print("Init firstCache");
+
 		String ret = new String();
 		int count = 0;
 		Iterator it;
+		it1 = getIterator();
 
-		for (it = it1; it.hasNext() && it != it2 && count < _CACHE_NUM; ++count)
-			ret += it.next().toString();
+		for (it = it1; it.hasNext() && it != it2 && count < _CACHE_NUM; ++count){
+			String[] aux = it.next().toString().split(" ");
+			ret += (aux[0]+" ");
+		}
+
+		it2 = it;
 		return ret;
 
 	}
 
 	public String initSecondCache(){
+		//Chivato
+		Console.print("Init secondCache");
+
 		String ret = new String();
 		int count = 0;
 		Iterator it;
 		
-		for (it = it2; it.hasNext() && it != it3 && count < _CACHE_NUM; ++count)
-			ret += it.next().toString();
+		for (it = it2; it.hasNext() && it != it3 && count < _CACHE_NUM; ++count){
+			String[] aux = it.next().toString().split(" ");
+			ret += (aux[0]+" ");
+		}
+
+		it3 = it;
 		return ret;
 
 	}

@@ -76,7 +76,9 @@ public class GalaxyControllerView extends AbstractControllerView {
 
 			// Add to table - TODO: CACHE
 
-			((ViewController) view).show(name);
+			Console.print("CREATING GALAXY!");
+			refresh();
+			((ViewController) view).show(getStringToShow());
 
 		} else { // ACTUALIZACION
 
@@ -94,6 +96,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 			vError.success("The galaxy " + name + " has been updated");
 
 			// Table - TODO: Cache TODO: Eliminar esto
+			Console.print("UPDATING GALAXY!");
 			refresh();
 			((ViewController) view).show(getStringToShow());
 		}
@@ -141,7 +144,9 @@ public class GalaxyControllerView extends AbstractControllerView {
 		((GalaxyController) controller).removeGalaxy(name);
 		
 		//Eliminar de la tabla - TODO
-		
+		Console.print("DELETING GALAXY!");
+		refresh();
+		((ViewController) view).show(getStringToShow());
 		
 	}
 
