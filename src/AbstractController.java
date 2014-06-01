@@ -191,7 +191,31 @@ public abstract class AbstractController {
 		return ret;
 	}
 
-		public String initFirstCache(){
+	public String refreshFirstCache(){
+		String ret = new String();
+		int count = 0;
+		Iterator it;
+
+		for (it = it1; it.hasNext() && count < _CACHE_NUM; ++count)
+			ret += it.next().toString();
+
+		it2 = it;
+		return ret;
+	}
+
+	public String refreshSecondCache(){
+		String ret = new String();
+		int count = 0;
+		Iterator it;
+
+		for (it = it2; it.hasNext() && count < _CACHE_NUM; ++count)
+			ret += it.next().toString();
+
+		it3 = it;
+		return ret;
+	}
+
+	public String initFirstCache(){
 		String ret = new String();
 		int count = 0;
 		Iterator it;

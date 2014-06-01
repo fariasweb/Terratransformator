@@ -140,6 +140,11 @@ public abstract class AbstractControllerView {
 		firstCache = controller.backwards();
 	}
 	
+	public void refresh(){
+		firstCache = controller.refreshFirstCache();
+		secondCache = controller.refreshSecondCache();
+	}
+
 	public String getStringToShow(){
 		return firstCache+secondCache;
 	}
