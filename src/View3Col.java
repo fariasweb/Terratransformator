@@ -58,8 +58,6 @@ public abstract class View3Col extends ViewLayout {
 								.addComponent(pCenter)
 								.addComponent(pRight))
 		);
-		
-		
 	}
 	
 	//----------------------------------------------------------

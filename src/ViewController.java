@@ -123,8 +123,9 @@ public abstract class ViewController extends ViewPanel {
 
 		String[] ss = decode(s);
 		
-		if (ss.length > 0) 
-			tmodel.addRow(new String[] {ss[0]});
+		tmodel.setRowCount(0);
+		for (String aux : ss)
+			tmodel.addRow(new String[] {aux});
 	}
 
 	//Private stuff
@@ -152,7 +153,7 @@ public abstract class ViewController extends ViewPanel {
     		show(controller.getStringToShow());
     	}*/
 
-	   int orient = source.getOrientation();
+	   /*int orient = source.getOrientation();
 	    if (orient == Adjustable.HORIZONTAL) {
 	      System.out.println("from horizontal scrollbar"); 
 	    } else {
@@ -175,7 +176,7 @@ public abstract class ViewController extends ViewPanel {
 	    case AdjustmentEvent.TRACK:
 	      System.out.println("The knob on the scrollbar was dragged");
 	      break;
-	    }
+	    }*/
 	  }
 	}
 

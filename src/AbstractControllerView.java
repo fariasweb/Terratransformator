@@ -133,14 +133,25 @@ public abstract class AbstractControllerView {
 	public void forwards(){
 		firstCache = secondCache;
 		secondCache = controller.forwards();
+		Console.print("FOR!");
+
 	}
 
 	public void backwards(){
 		secondCache = firstCache;
 		firstCache = controller.backwards();
+		Console.print("BACK!");
 	}
 	
+	public void refresh(){
+		firstCache = controller.refreshFirstCache();
+		secondCache = controller.refreshSecondCache();
+		Console.print("Refreshing: cache1 = "+firstCache+"   cache2 = "+secondCache);
+
+	}
+
 	public String getStringToShow(){
+		Console.print("getStringToShow: "+firstCache+secondCache);
 		return firstCache+secondCache;
 	}
 
