@@ -1,18 +1,19 @@
 import java.util.*;
 
 public class QAPGilmoreLawerBound{
-	
-
-	public static double QAPGLB(double[][] d, double[][] f, int[] va,
+	private QAPHungarian h;
+	 QAPGilmoreLawerBound(int n) {
+		h =  new QAPHungarian(n);
+	 }
+	public double QAPGLB(double[][] d, double[][] f, int[] va,
 			int[] local) {
+		
 		int n = d.length;
 
 		double suma = 0;
-		int noasignados = n;
-		;
+		int noasignados = n;//numero de paquetes que queda para asignar
 
-		// step1
-
+		// step1 calcular el coste de los paquetes ya asignados
 		for (int i = 0; i < n; i++) {
 			if (va[i] != 0) {
 				for (int j = i + 1; j < n; j++) {
@@ -22,23 +23,23 @@ public class QAPGilmoreLawerBound{
 					}
 				}
 
-				noasignados--;
+				noasignados--; 
 			}
 
 		}
 
-		if (noasignados != 0) {
-			// step2
-			double[][] AM1 = new double[noasignados][noasignados];
+		if (noasignados != 0) { //mientra que queda paquetes para asignar
+			// step2 calcular el coste respecto a paquetes no asignados a paquete asignados
+			double[][] AM = new double[noasignados][noasignados];
 			int iam = 0;
 			for (int z = 0; z < n; z++) {
-				if (va[z] == 0) {
+				if (va[z] == 0) { //encuentra un paquete no asignados
 					int jam = 0;
 					for (int l = 0; l < n; l++) {
-						if (local[l] == 0) {
+						if (local[l] == 0) { //encuentra un planeta vacia
 							for (int k = 0; k < n; k++) {
-								if (va[k] > 0) {
-									AM1[iam][jam] += d[l][va[k] - 1] * f[z][k]
+								if (va[k] > 0) { //respecto a paquetes que ya tiene asinacion
+									AM[iam][jam] += d[l][va[k] - 1] * f[z][k]
 											+ d[va[k] - 1][l] * f[k][z];
 								}
 							}
@@ -50,11 +51,9 @@ public class QAPGilmoreLawerBound{
 				}
 			}
 
-			suma += QAPHungarian.Assigment(AM1);
 
 			// step3
-			double[][] AM2 = new double[noasignados][noasignados];
-			double[][] auxd = new double[noasignados][noasignados - 1];
+			double[][] auxd = new double[noasignados][noasignados - 1]; //aqui se guarda 
 
 			int iauxd = 0;
 			for (int k = 0; k < n; k++) {
@@ -117,14 +116,12 @@ public class QAPGilmoreLawerBound{
 
 						}
 						;
-						AM2[iam2][j] = auxAM;
+						AM[iam2][j] += auxAM;
 					}
 					++iam2;
 				}
 			}
-
-			suma += QAPHungarian.Assigment(AM2);
-
+			suma += h.Assigment(AM);
 		}
 
 		return suma;
