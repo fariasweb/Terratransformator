@@ -14,5 +14,7 @@ public class GalaxyPlanetsView extends ViewController {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 
 }

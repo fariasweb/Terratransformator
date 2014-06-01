@@ -198,7 +198,7 @@ class GalaxyControllerDriver extends AbstractDriver {
 			PlanetController pc, String GalaxyName, String PlanetName) {
 		try {
 
-			gc.addPlanet(GalaxyName, PlanetName, pc);
+			gc.addPlanet(GalaxyName, PlanetName);
 
 		} catch (Exception e) {
 
