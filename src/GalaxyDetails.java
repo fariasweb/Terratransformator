@@ -8,6 +8,7 @@ public class GalaxyDetails extends View3Col {
 
 	private JButton bSubmit;
 	private GalaxyForm fGalaxy;
+	private GalaxyPlanetsView vPlanets;
 
 	/**
 	 * 
@@ -33,9 +34,9 @@ public class GalaxyDetails extends View3Col {
 
 		// Tabla de planetas
 		//pRight.add(new GalaxyPlanetsView(((GalaxyControllerView) controller)));
-		GalaxyPlanetsView gpv = new GalaxyPlanetsView(((GalaxyControllerView) controller));
-		add_center(gpv);
-		
+		GalaxyPlanetsView vPlanets = new GalaxyPlanetsView(((GalaxyControllerView) controller));
+		add_center(vPlanets);
+			
 		// Boton de enviar
 		bSubmit = create_button_submit();
 		add_right(bSubmit);
@@ -67,6 +68,8 @@ public class GalaxyDetails extends View3Col {
 		// INFORMACION
 		try {
 
+			//Formularuo basico
+			//-----------------
 			String[] l = decode(((GalaxyControllerView) controller)
 					.getByName(name));
 
@@ -79,6 +82,15 @@ public class GalaxyDetails extends View3Col {
 			
 			//Marcamos el nombre original
 			fGalaxy.setOriginalName(name);
+			
+			//Listao de planetas
+			//------------------
+			String planets = ((GalaxyControllerView) controller).getPlanets(name);
+			String[] list_planets = decode_in_lines(planets);
+			
+			for (int i = list_planets.length - 1; i >= 0; i-= 1) {
+				vPlanets.show(list_planets[i]);
+			}
 
 		} catch (Exception e) {
 			controller.show_error(e.getMessage());

@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GalaxyControllerView extends AbstractControllerView {
 
+	public GalaxyDetails view_detail;
+	
 	/**
 	 * 
 	 * @param pc
@@ -26,6 +28,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 		// Vistas
 		// -------------------------------------------------------
 		view = new GalaxyView(this);
+		view_detail = null;
 
 		// -------------------------------------------------------
 		// CACHE - TODO revisar
@@ -111,11 +114,20 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 * @param name
 	 */
 	public void create_form_view(String name) {
-		vShared.add_once_tab("Galaxy details", new GalaxyDetails(this, name));
+		view_detail = new GalaxyDetails(this, name);
+		vShared.add_once_tab("Galaxy details", view_detail);
+	}
+	
+	/**
+	 * 
+	 */
+	public void create_form_planet() {
+		vShared.add_tab_pos("Add planet", new ViewTest(), 1);
+		vShared.change_tab(1);
 	}
 
 	/**
-	 * 
+	 * TODO: Cache
 	 */
 	public void get() {
 		Console.log(((GalaxyController) controller).getAll());
@@ -129,6 +141,17 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 */
 	public String getByName(String name) throws Exception {
 		return ((GalaxyController) controller).getByNameToString(name);
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getPlanets(String name) throws Exception {
+		return ((GalaxyController) controller).getPlanetsFromGalaxy(name);
+
 	}
 
 	// -------------------------------------------------------

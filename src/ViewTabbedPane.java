@@ -68,5 +68,37 @@ public class ViewTabbedPane extends ViewShared {
 		tabbedOpe.removeAll();
 		add_tab(name, p);
 	}
-
+	
+	/**
+	 * 
+	 * @param name
+	 * @param pm
+	 * @param index
+	 */
+	public void add_tab_pos(String name, JPanel pm, int index) {
+		
+		//Si existe la que piden eliminamos
+		if (tabbedOpe.getTabCount() > index)
+			tabbedOpe.remove(index);
+		
+		//Creamos la nueva
+		tabbedOpe.add(pm, index);
+		tabbedOpe.setTitleAt(index, name);
+	}
+	
+	/**
+	 * 
+	 * @param index
+	 */
+	public void change_tab(int index) {
+		tabbedOpe.setSelectedIndex(index);
+	}
+	
+	/**
+	 * 
+	 * @param index
+	 */
+	public void remove_tab(int index) {
+		tabbedOpe.remove(index);
+	}
 }
