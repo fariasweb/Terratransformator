@@ -76,7 +76,7 @@ public class DataController {
 
 	/**
 	 * Pre: El fichero debe estar abierto
-	 * Post: A–ade al final de archivo la informacion
+	 * Post: Anade al final de archivo la informacion
 	 * @param path
 	 * @param file
 	 * @param data
