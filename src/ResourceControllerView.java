@@ -3,26 +3,26 @@
  * @author farias
  * 
  */
-public class PlanetControllerView extends AbstractControllerView {
+public class ResourceControllerView extends AbstractControllerView {
 
-	public PlanetDetails view_detail;
+	public ResourceDetails view_detail;
 
 	/**
 	 * 
 	 * @param pc
 	 */
-	PlanetControllerView(ViewTabbedPane vs,
+	ResourceControllerView(AbstractController pc, ViewTabbedPane vs,
 			ViewNotification ve) {
 		super(vs, ve);
 
 		// -------------------------------------------------------
 		// CONTROLADOR DE DOMINIO
 		// -------------------------------------------------------
-		controller = new PlanetController();
+		controller = new ResourceController((PacketController) pc);
 		// -------------------------------------------------------
 		// Vistas
 		// -------------------------------------------------------
-		view = new PlanetView(this);
+		view = new ResourceView(this);
 		view_detail = null;
 	}
 
@@ -34,7 +34,7 @@ public class PlanetControllerView extends AbstractControllerView {
 		 * 
 		 */
 	public void create_form_add() {
-		vShared.add_once_tab("Create planet", new PlanetCreate(this));
+		vShared.add_once_tab("Create recourse", new ResourceCreate(this));
 	}
 
 	/**
@@ -44,19 +44,17 @@ public class PlanetControllerView extends AbstractControllerView {
 	 * @param readYForm
 	 * @throws Exception
 	 */
-	public void save(String originalName, String name, int readXForm,
-			int readYForm) throws Exception {
+	public void save(String originalName, String name, String type) throws Exception {
 
 		if (originalName == null) { // CREACION
 			// Creamos en el objeto en la capa de dominio
-			((PlanetController) controller).addPlanet(name, readXForm,
-					readYForm);
+			((ResourceController) controller).addResource(name, type);
 			// Mensaje de notificacion
-			vError.success("The planet " + name + " has been created");
+			vError.success("The recourse " + name + " has been created");
 
 			// Add to table - TODO: CACHE
 
-			Console.print("CREATING Planet!");
+			Console.print("CREATING Resource!");
 			refresh();
 			((ViewController) view).show(getStringToShow());
 
@@ -64,19 +62,18 @@ public class PlanetControllerView extends AbstractControllerView {
 
 			// Comprobamos el nombre
 			if (!originalName.equals(name)) {
-				((PlanetController) controller).updatePlanetName(originalName,
+				((ResourceController) controller).updateResourceName(originalName,
 						name);
 			}
 
-			// Actaulizamos los datos adjuntos
-			((PlanetController) controller).updatePlanetPosition(name, readXForm,
-					readYForm);
-
+			//Actualizar tipo
+			((ResourceController) controller).updateResourceType(name, type);
+			
 			// Mensaje de notificacion
-			vError.success("The planet " + name + " has been updated");
+			vError.success("The recourse " + name + " has been updated");
 
 			// Table - TODO: Cache TODO: Eliminar esto
-			Console.print("UPDATING Planet!");
+			Console.print("UPDATING Resource!");
 			refresh();
 			((ViewController) view).show(getStringToShow());
 		}
@@ -91,15 +88,15 @@ public class PlanetControllerView extends AbstractControllerView {
 	 * @param name
 	 */
 	public void create_form_view(String name) {
-		view_detail = new PlanetDetails(this, name);
-		vShared.add_once_tab("Planet details", view_detail);
+		view_detail = new ResourceDetails(this, name);
+		vShared.add_once_tab("Resource details", view_detail);
 	}
 
 	/**
 	 * TODO: Cache
 	 */
 	public void get() {
-		Console.log(((PlanetController) controller).getAll());
+		Console.log(((ResourceController) controller).getAll());
 	}
 
 	/**
@@ -109,7 +106,7 @@ public class PlanetControllerView extends AbstractControllerView {
 	 * @throws Exception
 	 */
 	public String getByName(String name) throws Exception {
-		return ((PlanetController) controller).getByNameToString(name);
+		return ((ResourceController) controller).getByNameToString(name);
 	}
 
 	// -------------------------------------------------------
@@ -122,15 +119,15 @@ public class PlanetControllerView extends AbstractControllerView {
 	 */
 	public void delete(String name) throws Exception {
 		// Eliminar galaxia
-		((PlanetController) controller).removePlanet(name);
+		((ResourceController) controller).removeResource(name);
 
 		// Eliminar de la tabla - TODO
-		Console.print("DELETING Planet!");
+		Console.print("DELETING Resource!");
 		refresh();
 		((ViewController) view).show(getStringToShow());
 		
 		// Mensaje de notificacion
-		vError.success("The planet " + name + " has been deleted");
+		vError.success("The recourse " + name + " has been deleted");
 
 		vShared.remove_all_tabs();
 

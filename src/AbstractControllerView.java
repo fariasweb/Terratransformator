@@ -45,6 +45,13 @@ public abstract class AbstractControllerView {
 	}
 
 	// -------------------------------------------------------
+	// COMUN
+	// -------------------------------------------------------
+	public AbstractController get_controller() {
+		return controller;
+	}
+
+	// -------------------------------------------------------
 	// VIEWS
 	// -------------------------------------------------------
 	/**
@@ -93,7 +100,7 @@ public abstract class AbstractControllerView {
 			// Arrancamos el thread
 			t1.start();
 		} catch (Exception e) {
-			Console.log("Error saving things!");
+			vError.error("Error saving file! "+e.getMessage());
 		}
 	}
 
@@ -112,7 +119,7 @@ public abstract class AbstractControllerView {
 			// Arrancamos el thread
 			t1.start();
 		} catch (Exception e) {
-			Console.log("Error loading things!");
+			vError.error("Error loading file! "+e.getMessage());
 		}
 	}
 
