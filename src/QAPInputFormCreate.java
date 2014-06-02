@@ -25,9 +25,6 @@ public class QAPInputFormCreate extends ViewForm {
 	protected void create_view() {
 		
 		//Le pasas el tamano de la matriz
-		sizeMatrix = 200;
-		
-		
 		DistanceMatrix = new DefaultTableModel(sizeMatrix,sizeMatrix);
 		
 		//genera vectores que enumeran las cabeceras

@@ -2,7 +2,6 @@ import javax.swing.JButton;
 
 
 public class QAPInputDetail extends View3Col{
-	
 	QAPInputDetail(AbstractControllerView c, int size) {
 		super(c);
 	}

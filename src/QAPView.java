@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -28,7 +29,7 @@ public class QAPView extends ViewForm {
 	private GalaxyController gc;
 	private String[] nameGalaxies;
 	private String[][] ngMatrix;
-	
+	private QAPInputDetail qapinput;
 	QAPView(AbstractControllerView c, GalaxyController gcp) {
 		super(c);	
 		gc = gcp;
@@ -49,12 +50,13 @@ public class QAPView extends ViewForm {
 				nameGalaxies[i] = ngMatrix[i][0];
 			}
 		}
-		galaxyLabel = new JLabel("Select Galaxy for Algorithm :");
+		galaxyLabel = new JLabel("Select Galaxy for Algorithm:");
 		String[] nulo = new String[1];
 		nulo[0] = "None";
 		if(gc.size() > 0) gcb = new JComboBox(nameGalaxies);
 		else gcb = new JComboBox(nulo);
 		
+		galaxyLabel = new JLabel("Select Galaxy for Algorithm:");
 		rb1 = new JRadioButton("QAP Lazy Branch and Bound",false);
 		rb2 = new JRadioButton("QAP Eager Branch and Bound",false);
 		
@@ -131,6 +133,24 @@ public class QAPView extends ViewForm {
 			rb1.setSelected(false);;
 		}
 	});
+	}
+	public void refreshComboBox(){
+		if(gc.size() > 0){
+			ngMatrix = new String[gc.size()][3];
+			ngMatrix = decode_list(gc.getAll());
+			
+			nameGalaxies = new String[gc.size()];
+			for(int i = 0; i < gc.size() ; ++i){
+				nameGalaxies[i] = ngMatrix[i][0];
+			}
+		}
+		String[] nulo = new String[1];
+		nulo[0] = "None";
+		if(gc.size() > 0) gcb.setModel(new DefaultComboBoxModel(nameGalaxies));
+		else {
+			gcb = new JComboBox(nulo);
+			gcb.setModel(new DefaultComboBoxModel(nulo)); 
+		}
 	}
 	
 	protected void create_events() {
