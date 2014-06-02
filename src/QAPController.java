@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class QAPController {
+public class QAPController extends AbstractController{
 
 	// Referencia a los valores actuales
 	private GalaxyController CG;
@@ -31,12 +32,13 @@ public class QAPController {
 		CP = packetc;
 		dCont = new DataController();
 
-		// Soluci—n y objetos copiados
+		// Solucion y objetos copiados
 		oqap = null;
 		g = null;
 		p = null;
 	}
-
+	
+	
 	// Read
 	// ---------------------------------------------
 
@@ -384,7 +386,7 @@ public class QAPController {
 						if (g == null) 
 							throw new Exception("Galaxy is not defined");
 						
-						//A–adimos el planeta
+						//Anadimos el planeta
 						g.addPlanet(new Planet(s[1], Integer.parseInt(s[2]), Integer.parseInt(s[3])));
 						
 					} else if (s[0].equals("K")) { //Paquetes
@@ -457,6 +459,34 @@ public class QAPController {
 		
 		//En caso de haber errores en la carga, lanzamos 
 		if (error.length() > 0) throw new Exception("Fail to load information\n"+error);
+	}
+
+
+	@Override
+	protected void decodeString(String l) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	protected String encodeString() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public int size() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	protected Iterator getIterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

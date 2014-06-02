@@ -396,10 +396,10 @@ public class PacketController extends AbstractController {
 		if (s.length < 2)
 			throw new Exception("The record is not correct");
 
-		// Separaci—n especifica de paquete
+		// Separacion especifica de paquete
 		String name = s[0];
 
-		// A–ade a la colecci—n
+		// Anade a la coleccion
 		addPacket(name);
 
 		// Relacion con recursos
@@ -420,7 +420,7 @@ public class PacketController extends AbstractController {
 					if (p == null)
 						throw new Exception("The resource does not exist");
 
-					// A–adimos a la paquete
+					// Anadimos a la paquete
 					g.addResource(p, Integer.parseInt(s[pos + 1]));
 					
 					
@@ -547,7 +547,7 @@ public class PacketController extends AbstractController {
 		Packet p1 = new Packet();
 		p1.setName(p.getName());
 		
-		//A–adimos los mismmo recursos
+		//Anadimos los mismmo recursos
 		Iterable<RelationPacketResource> rpr = p.getResources().values();
 		for (RelationPacketResource i : rpr) {
 			p1.addResource(i.getResource(), i.getQuantity());
@@ -566,10 +566,10 @@ public class PacketController extends AbstractController {
 	 */
 
 	public TST<Packet> cloneCollection() throws Exception {
-		//Copaimos el paquete
+		//Copiamos el paquete
 		TST<Packet> p1 = new TST<Packet>();
 		
-		//A–adimos los mismmo recursos
+		//Anadimos los mismmo recursos
 		Iterable<Packet> ip = Clt.values();
 		for (Packet i : ip) {
 			p1.put(i.getName(), clonePacket(i));
