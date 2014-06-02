@@ -6,8 +6,9 @@ public abstract class QAP {
 	
 	//Clase con las matrices de entrada del QAP
 	QAPInput input;
-
+	QAPSolution output;
 	//Variables de ejecucion
+	
 	boolean isRun;
 
 	long time; 
@@ -31,7 +32,6 @@ public abstract class QAP {
 	public QAP(QAPInput qap) throws Exception{
 		//Asignamos la entrada del QAP
 		input = qap;
-		
 		//No ha ejecutado nada el algoritmo
 		isRun = false;
 		time = 0;
