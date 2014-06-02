@@ -106,11 +106,18 @@ public class GalaxyController extends AbstractController {
 
 	// Update
 	// ---------------------------------------------
-
+	/**
+	 * Pre: Galaxy name have exist
+	 * Post: Update the information about galaxy
+	 * @param name
+	 * @param x
+	 * @param y
+	 * @throws Exception
+	 */
 	public void updateGalaxy(String name, int x, int y) throws Exception {
 		// Cogemos la galxia
 		Galaxy g = Clt.get(name);
-		//Actualizamos el tama–o
+		//Actualizamos el tamano
 		g.setSize(x, y);
 	}
 	
@@ -310,12 +317,12 @@ public class GalaxyController extends AbstractController {
 		if (s.length < 3)
 			throw new Exception("The record is not correct");
 
-		// Separaci—n especifica de galaxia
+		// Separacion especifica de galaxia
 		String name = s[0];
 		int x = Integer.parseInt(s[1]);
 		int y = Integer.parseInt(s[2]);
 
-		// A–ade a la colecci—n
+		// Anade a la coleccion
 		addGalaxy(name, x, y);
 		
 		//Relacion con planetas
@@ -332,7 +339,7 @@ public class GalaxyController extends AbstractController {
 					p = pc.getByName(s[i]);
 					if (p == null) throw new Exception("The planet does not exist");
 					
-					//A–adimos a la galaxia
+					//Anadimos a la galaxia
 					g.addPlanet(p);
 					
 				} catch (Exception e) {
@@ -446,7 +453,7 @@ public class GalaxyController extends AbstractController {
 		PairInt p = g.getSize();
 		copy.setSize(p.getX(),p.getY());
 		
-		//A–adimos los mismos planetas
+		//Anadimos los mismos planetas
 		Iterable<Planet> planets = g.getPlanets().values();
 		for(Planet i : planets){
 			String name = i.getName();

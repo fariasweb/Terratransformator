@@ -16,7 +16,6 @@ public abstract class AbstractViewer extends JPanel {
 	 * 
 	 */
 	AbstractViewer() {
-
 		controller = null;
 
 	}

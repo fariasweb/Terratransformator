@@ -4,47 +4,46 @@
 
 /**
  * @author farias
- *
+ * 
  */
 public class PresentationController {
-	
-	//Controladores de vista
+
+	// Controladores de vista
 	private GalaxyControllerView gcv;
 	private PlanetControllerView pcv;
 	private PacketControllerView kcv;
-	
+	private ResourceControllerView rcv;
+	private QAPInputControllerView qcv;
 	private PresentationView view;
-	
+
 	/**
 	 * 
 	 */
-	PresentationController(){
-		
-		//Creamos la ventana principal - Crear el FRAME
+	PresentationController() {
+
+		// Creamos la ventana principal - Crear el FRAME
 		view = new PresentationView(this);
-		//Elementos compartidos
+		// Elementos compartidos
 		ViewTabbedPane operationTab = view.get_operation_tab();
 		ViewNotification vError = view.get_error_panel();
-		
-		//Controladores de dominios temporales
-		PlanetController pc = new PlanetController(); //Pasar a GCV
-		
-		try{
-			//Creamos los controladores de vista
-			gcv = new GalaxyControllerView(pc, operationTab, vError);
-			pcv = new PlanetControllerView(pc, operationTab, vError);
-			
-			kcv = new PacketControllerView(operationTab, vError);
-		}
-		catch(Exception e){
-			Console.print(e.getMessage());
-		}
-		//Anadimos a la ventana principal los controladores
+
+		// Creamos los controladores de vista
+		pcv = new PlanetControllerView(operationTab, vError);
+		gcv = new GalaxyControllerView(pcv.get_controller(), operationTab, vError);
+		kcv = new PacketControllerView(operationTab, vError);
+		rcv = new ResourceControllerView(kcv.get_controller(), operationTab,
+				vError);
+
+		qcv = new QAPInputControllerView(kcv, gcv, operationTab, vError);
+
+		// Anadimos a la ventana principal los controladores
 		view.add_left_tab(gcv.get_view(), "Galaxys");
 		view.add_left_tab(pcv.get_view(), "Planets");
-		
+		view.add_left_tab(qcv.get_view(), "QAPInput");
+
 		view.add_right_tab(kcv.get_view(), "Packets");
+		view.add_right_tab(rcv.get_view(), "Resource");
 
 	}
-	
+
 }

@@ -38,7 +38,7 @@ public class PlanetController extends AbstractController {
 		
 		Planet g = new Planet(name, x, y);
 
-		// A–adimos el planeta al TST
+		// Anadimos el planeta al TST
 		Clt.put(g.getName(), g);
 	}
 
@@ -110,6 +110,7 @@ public class PlanetController extends AbstractController {
 
 	// Update
 	// ---------------------------------------------
+	
 	/**
 	 * Pre: El nombre no debe ser nulo y con longitud > 0 El planeta debe
 	 * existir El nombre de a nuevo planeta no debe de existir 
@@ -144,7 +145,7 @@ public class PlanetController extends AbstractController {
 			if (g != null) {
 				//Eliminamos el antiguo
 				g.getPlanets().remove(oldName);
-				//A–adimos el nuevo
+				//Anadimos el nuevo
 				g.getPlanets().put(newName, p);
 			}
 		}
@@ -178,7 +179,7 @@ public class PlanetController extends AbstractController {
 	// ---------------------------------------------
 
 	/**
-	 * Elimina todos los planetas de la colecci—n
+	 * Elimina todos los planetas de la coleccion
 	 * Post: No existe ningun planeta
 	 * 
 	 * @throws Exception
@@ -221,7 +222,7 @@ public class PlanetController extends AbstractController {
 	// ---------------------------------------------
 
 	/**
-	 * Post: Devuelve el tama–o de la coleci—n
+	 * Post: Devuelve el tamano de la colecion
 	 * 
 	 * @return int
 	 */
@@ -252,12 +253,12 @@ public class PlanetController extends AbstractController {
 		if (s.length != 3)
 			throw new Exception("The record is not correct");
 
-		// Separaci—n especifica del planeta
+		// Separacion especifica del planeta
 		String name = s[0];
 		int x = Integer.parseInt(s[1]);
 		int y = Integer.parseInt(s[2]);
 
-		// A–ade a la colecci—n
+		// Anade a la coleccion
 		addPlanet(name, x, y);
 
 	}

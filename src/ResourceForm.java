@@ -2,6 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -11,18 +12,19 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
-public class GalaxyForm extends ViewForm {
+public class ResourceForm extends ViewForm {
 
 	private JTextField tfname;
-	private JSpinner tfposx;
-	private JSpinner tfposy;
+	private JComboBox tselect;
 	private String originaName;
+	
+	//private String[] ltype = {"HUMAN", "TECHNOLOGICAL"};
 
 	/**
 	 * 
 	 * @param gcf
 	 */
-	GalaxyForm(GalaxyControllerView gcf) {
+	ResourceForm(ResourceControllerView gcf) {
 		super(gcf);
 
 		originaName = null;
@@ -38,15 +40,14 @@ public class GalaxyForm extends ViewForm {
 	protected void create_view() {
 
 		JLabel name = new JLabel("Name: ");
-		JLabel posx = new JLabel("Width: ");
-		JLabel posy = new JLabel("Heigth:");
+		JLabel type = new JLabel("Type: ");
 
+		String[] ltype = {"HUMAN", "TECHNOLOGICAL"};
+		
 		tfname = new JTextField(10);
-		SpinnerModel fx = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
-		SpinnerModel fy = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
+		tselect = new JComboBox(ltype);
+		tselect.setSelectedIndex(0);
 
-		tfposx = new JSpinner(fx);
-		tfposy = new JSpinner(fy);
 
 		// Creamos un Layout para colocar Labels y TextFields del formulario
 
@@ -57,19 +58,16 @@ public class GalaxyForm extends ViewForm {
 
 		layout.setVerticalGroup(layout.createParallelGroup().addGroup(
 				layout.createSequentialGroup().addComponent(name)
-						.addComponent(tfname).addComponent(posx)
-						.addComponent(tfposx).addComponent(posy)
-						.addComponent(tfposy))
+						.addComponent(tfname).addComponent(type)
+						.addComponent(tselect))
 
 		);
 
 		layout.setHorizontalGroup(layout.createParallelGroup()
 				.addGroup(layout.createSequentialGroup().addComponent(name))
 				.addGroup(layout.createSequentialGroup().addComponent(tfname))
-				.addGroup(layout.createSequentialGroup().addComponent(posx))
-				.addGroup(layout.createSequentialGroup().addComponent(tfposx))
-				.addGroup(layout.createSequentialGroup().addComponent(posy))
-				.addGroup(layout.createSequentialGroup().addComponent(tfposy))
+				.addGroup(layout.createSequentialGroup().addComponent(type))
+				.addGroup(layout.createSequentialGroup().addComponent(tselect))
 
 		);
 	}
@@ -87,19 +85,17 @@ public class GalaxyForm extends ViewForm {
 
 		// Comprobacion basica
 		if (!validString(tfname.getText()))
-			throw new Exception("The galaxy name can not be empty");
+			throw new Exception("The resource name can not be empty");
 
 		// Creacion del objeto por parte del controlador
-		((GalaxyControllerView) controller).save(originaName, tfname.getText(),
-				(Integer) tfposx.getValue(), (Integer) tfposy.getValue());
+		String[] ltype = {"HUMAN", "TECHNOLOGICAL"};
+		((ResourceControllerView) controller).save(originaName, tfname.getText(), ltype[tselect.getSelectedIndex()]);
 
 		// Add to table - TODO: Orden alfabetico??
 		// jt.addRow(new Object[] { tfname.getText() });
 
 		// Reinicio campos
 		tfname.setText("");
-		tfposx.setValue(1);
-		tfposy.setValue(1);
 	}
 
 	// --------------------------------------------------------
@@ -118,16 +114,12 @@ public class GalaxyForm extends ViewForm {
 	 * 
 	 * @param e
 	 */
-	public void setXValue(String e) {
-		tfposx.setValue(Integer.parseInt(e));
-	}
-
-	/**
-	 * 
-	 * @param e
-	 */
-	public void setYValue(String e) {
-		tfposy.setValue(Integer.parseInt(e));
+	public void setTypeValue(String e) {
+		
+		int anIndex = 1;
+		if (e.equals("HUMAN")) anIndex = 0;
+		
+		tselect.setSelectedIndex(anIndex);
 	}
 
 }

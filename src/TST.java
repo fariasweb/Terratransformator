@@ -12,7 +12,7 @@ import java.util.Stack;
 public class TST<Value> {
 	
 	//Atributos generales
-	private int N; // tama–o
+	private int N; // tamano
 	private Node root; // raiz del TST
 	private int current; // variable auxiliar global para el metodo collectValuesCache
 	
@@ -532,7 +532,7 @@ public class TST<Value> {
 	 * Utilidad exclusiva para debuggar, no tiene otro uso.
 	 * Pre: Cierto
 	 * Post: Vuelca por pantalla el TST para poder ver los nodos 
-	 * y a d—nde apunta cada uno.
+	 * y a donde apunta cada uno.
 	 * @return
 	 */
 	public void dump(){
@@ -584,7 +584,7 @@ public class TST<Value> {
 		 * 
 		 */
 		public boolean hasNext() {
-			return (!stack.isEmpty() || current != null);
+			return (current != null);
 		}
 		
 		/**
@@ -592,7 +592,8 @@ public class TST<Value> {
 		 */
 		public Value next() {
 
-			//Buscamos el siguiente nodo que sea una llave
+		//>>>>>>>>>>>>>>>>NEXT ORIGINAL
+		//Buscamos el siguiente nodo que sea una llave
 			while (current != null && current.getValue() == null) {
 			
 				if (current.right != null)
@@ -629,11 +630,90 @@ public class TST<Value> {
 			 */
 
 			return node.getValue();
+
+
+			//
+		/*	Stack<Node> aux = new Stack<Node>();
+			stack.copyInto(aux);
+			while(!aux.empty()){
+				Node a = aux.pop();
+				String b = a.getValue().getName();
+				Console.print(b);
+			}*/
+			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+			//>>>>>>>>>>>>>>>>>>>NEXT NUEVO EN PROCESO
+
+/*			Value v = current.getValue();
+
+			FinalNode ret = dfsAux(current.mid);
+			stack.push(ret);
+			if (ret != null){ current = ret; return v; }
+			else {
+				
+					ret = dfsAux(current.right);
+					if (ret != null) { current = ret; return v; }
+				
+			}
+			if(ret == null) {
+			stack.pop();
+			Node n = stack.peek();
+			Node rec = current;
+			while(!stack.empty() && n!= null){
+				//Warning!!!
+				if(rec.equals(n.left)){
+					if(n != null && !is_Node(n)){
+						current = stack.pop(); 
+						return v;
+					}
+
+					ret = dfsAux(n.mid);
+					if (ret != null) { current = ret; return v;}
+
+					ret = dfsAux(n.right);
+					if (ret != null) { current = ret; return v;}
+
+				}
+				else if(rec.equals(n.mid)){
+					ret = dfsAux(current.right);
+					if (ret != null) {v = current.getValue(); current = ret; return v;}
+				}
+				else{
+					rec = stack.pop();
+					if(!stack.empty()) n = stack.peek();
+				}
+			}
+		}
+			current = null;
+			return v;*/
+
+			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		}
 		
 		public void remove() {
 			
 		}
+
+		/*private FinalNode dfsAux(Node n){
+
+			if(n != null){
+				stack.push(n);
+				if(n.left != null)
+					return dfsAux(n.left);
+
+				if(!is_Node(n)){
+					stack.pop();
+					return (FinalNode) n;
+				}
+				
+				else if(n.mid != null)
+					return dfsAux(n.mid);
+				else if(n.right != null)
+					return dfsAux(n.right);
+				stack.pop();
+			}
+			return null;
+		}*/
 		
 	}
 
@@ -645,3 +725,5 @@ public class TST<Value> {
 		return new TSTIterator(root);
 	}
 }
+
+

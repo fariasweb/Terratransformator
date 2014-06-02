@@ -11,7 +11,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableModel;
 
-public class GalaxyForm extends ViewForm {
+public class PlanetForm extends ViewForm {
 
 	private JTextField tfname;
 	private JSpinner tfposx;
@@ -22,7 +22,7 @@ public class GalaxyForm extends ViewForm {
 	 * 
 	 * @param gcf
 	 */
-	GalaxyForm(GalaxyControllerView gcf) {
+	PlanetForm(PlanetControllerView gcf) {
 		super(gcf);
 
 		originaName = null;
@@ -38,12 +38,12 @@ public class GalaxyForm extends ViewForm {
 	protected void create_view() {
 
 		JLabel name = new JLabel("Name: ");
-		JLabel posx = new JLabel("Width: ");
-		JLabel posy = new JLabel("Heigth:");
+		JLabel posx = new JLabel("X: ");
+		JLabel posy = new JLabel("Y:");
 
 		tfname = new JTextField(10);
-		SpinnerModel fx = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
-		SpinnerModel fy = new SpinnerNumberModel(1, 1, Integer.MAX_VALUE, 1);
+		SpinnerModel fx = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
+		SpinnerModel fy = new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1);
 
 		tfposx = new JSpinner(fx);
 		tfposy = new JSpinner(fy);
@@ -87,10 +87,10 @@ public class GalaxyForm extends ViewForm {
 
 		// Comprobacion basica
 		if (!validString(tfname.getText()))
-			throw new Exception("The galaxy name can not be empty");
+			throw new Exception("The planet name can not be empty");
 
 		// Creacion del objeto por parte del controlador
-		((GalaxyControllerView) controller).save(originaName, tfname.getText(),
+		((PlanetControllerView) controller).save(originaName, tfname.getText(),
 				(Integer) tfposx.getValue(), (Integer) tfposy.getValue());
 
 		// Add to table - TODO: Orden alfabetico??
@@ -98,8 +98,8 @@ public class GalaxyForm extends ViewForm {
 
 		// Reinicio campos
 		tfname.setText("");
-		tfposx.setValue(1);
-		tfposy.setValue(1);
+		tfposx.setValue(0);
+		tfposy.setValue(0);
 	}
 
 	// --------------------------------------------------------

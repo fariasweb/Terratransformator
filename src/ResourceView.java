@@ -10,13 +10,13 @@ import javax.swing.event.ListSelectionListener;
  * @author farias
  *
  */
-public class PlanetView extends ViewController {
+public class ResourceView extends ViewController {
 
 	/**
 	 * 
 	 * @param c
 	 */
-	PlanetView(AbstractControllerView c) {
+	ResourceView(AbstractControllerView c) {
 		super(c);
 	}
 
@@ -29,7 +29,7 @@ public class PlanetView extends ViewController {
 		bCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// display/center the jdialog when the button is pressed
-				((PlanetControllerView)controller).create_form_add();
+				((ResourceControllerView)controller).create_form_add();
 			}
 		});
 		
@@ -37,7 +37,7 @@ public class PlanetView extends ViewController {
 		bImport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				Console.log("you have pressed the SAVE button!");
-				controller.save("./save/PlanetControler.txt", false);
+				controller.save("./save/ResourceControler.txt", false);
 			}
 		});
 		
@@ -45,7 +45,7 @@ public class PlanetView extends ViewController {
 		bExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				Console.log("you have pressed the LOAD button!");
-				controller.load("./save/PlanetControler.txt");
+				controller.load("./save/ResourceControler.txt");
 			}
 		});
 		
@@ -54,11 +54,11 @@ public class PlanetView extends ViewController {
 			public void actionPerformed(ActionEvent e){
 				
 				int selectedRow = table.getSelectedRow();
-				if (selectedRow < 0) controller.show_error("You must select a planet before delete");
+				if (selectedRow < 0) controller.show_error("You must select a resource before delete");
 				else {
         			String selectedData = (String) table.getValueAt(selectedRow, 0);
         			try {
-						((PlanetControllerView) controller).delete(selectedData);
+						((ResourceControllerView) controller).delete(selectedData);
 					} catch (Exception e1) {
 						controller.show_error(e1.getMessage());
 					}
@@ -82,7 +82,7 @@ public class PlanetView extends ViewController {
         			
         			//Llamada al controlador
         			System.out.println("Selected: " + selectedData);
-        			((PlanetControllerView) controller).create_form_view(selectedData);
+        			((ResourceControllerView) controller).create_form_view(selectedData);
         		}
       		}
       	});
