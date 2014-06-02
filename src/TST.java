@@ -1,4 +1,4 @@
-
+import java.util.*;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.LinkedList;
@@ -46,6 +46,10 @@ public class TST<Value> {
 		public char getC() {
 			return c;
 		}
+
+		/*public boolean equals(Node aThat){
+			return (this.getC() == (aThat.getC()));
+		}*/
 	}
 
 	/**
@@ -577,7 +581,7 @@ public class TST<Value> {
 		 * @param first
 		 */
 		public TSTIterator(Node x) {
-			current = x;
+			current = dfsAux(x);
 		}
 		
 		/**
@@ -594,7 +598,7 @@ public class TST<Value> {
 
 		//>>>>>>>>>>>>>>>>NEXT ORIGINAL
 		//Buscamos el siguiente nodo que sea una llave
-			while (current != null && current.getValue() == null) {
+			/*while (current != null && current.getValue() == null) {
 			
 				if (current.right != null)
 					stack.push(current.right);
@@ -604,35 +608,35 @@ public class TST<Value> {
 					stack.push(current.left);
 
 				current = stack.pop();
-			}
+			}*/
 
 			//Al encontar miramos los hijos por que seran los siguientes en mirarse
-			if (current.right != null)
+			/*if (current.right != null)
 				stack.push(current.right);
 			if (current.mid != null)
 				stack.push(current.mid);
 			if (current.left != null)
-				stack.push(current.left);
+				stack.push(current.left);*/
 
 			//Guardamos el valor actual
-			Node node = current;
+			/*Node node = current;*/
 
 			//EN caso de no estar la pila vacia pasamos al sigueinte
-			if (!stack.empty()) {
+			/*if (!stack.empty()) {
 				current = stack.pop();
 			} else {
 				current = null;
-			}
+			}*/
 
 			/*
 			 * current = current.left; stack.push(current.right);
 			 * stack.push(current.mid);
 			 */
 
-			return node.getValue();
-
+/*			return node.getValue();*/
 
 			//
+			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		/*	Stack<Node> aux = new Stack<Node>();
 			stack.copyInto(aux);
 			while(!aux.empty()){
@@ -640,52 +644,62 @@ public class TST<Value> {
 				String b = a.getValue().getName();
 				Console.print(b);
 			}*/
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			
 
 			//>>>>>>>>>>>>>>>>>>>NEXT NUEVO EN PROCESO
 
-/*			Value v = current.getValue();
-
+			Value v = current.getValue();
+			stack.push(current);
 			FinalNode ret = dfsAux(current.mid);
-			stack.push(ret);
+			
 			if (ret != null){ current = ret; return v; }
-			else {
+			ret = dfsAux(current.right);
+			if (ret != null) { current = ret; return v; }
 				
-					ret = dfsAux(current.right);
-					if (ret != null) { current = ret; return v; }
-				
-			}
+			stack.pop();	
 			if(ret == null) {
-			stack.pop();
 			Node n = stack.peek();
 			Node rec = current;
 			while(!stack.empty() && n!= null){
+					// Console.print("HOLAAAAAA");
 				//Warning!!!
-				if(rec.equals(n.left)){
+				if(n.left != null && rec.equals(n.left)){
+					 // Console.print("Esquerra");
 					if(n != null && !is_Node(n)){
 						current = stack.pop(); 
 						return v;
 					}
 
-					ret = dfsAux(n.mid);
-					if (ret != null) { current = ret; return v;}
+					if(n.mid != null){
+
+						ret = dfsAux(n.mid);
+						if (ret != null) {
+						// Console.print("hyu");
+					 
+							// Console.print(""+n.mid.getC());
+					
+							current = ret; return v;}
+					}
 
 					ret = dfsAux(n.right);
 					if (ret != null) { current = ret; return v;}
 
+				} 
+				
+				if(n.mid != null && rec.equals(n.mid)){
+
+					 // Console.print("Medio");
+					ret = dfsAux(n.right);
+					if (ret != null) { current = ret; return v;}
 				}
-				else if(rec.equals(n.mid)){
-					ret = dfsAux(current.right);
-					if (ret != null) {v = current.getValue(); current = ret; return v;}
-				}
-				else{
-					rec = stack.pop();
-					if(!stack.empty()) n = stack.peek();
-				}
+				// else Console.print("Derecha");
+				rec = stack.pop();
+				if(!stack.empty()) n = stack.peek();
+				
 			}
 		}
 			current = null;
-			return v;*/
+			return v;
 
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		}
@@ -694,7 +708,7 @@ public class TST<Value> {
 			
 		}
 
-		/*private FinalNode dfsAux(Node n){
+		private FinalNode dfsAux(Node n){
 
 			if(n != null){
 				stack.push(n);
@@ -706,14 +720,14 @@ public class TST<Value> {
 					return (FinalNode) n;
 				}
 				
-				else if(n.mid != null)
+				if(n.mid != null)
 					return dfsAux(n.mid);
-				else if(n.right != null)
+				if(n.right != null)
 					return dfsAux(n.right);
 				stack.pop();
 			}
 			return null;
-		}*/
+		}
 		
 	}
 
