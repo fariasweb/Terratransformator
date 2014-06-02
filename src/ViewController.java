@@ -127,6 +127,13 @@ public abstract class ViewController extends ViewPanel {
 		for (String aux : ss)
 			tmodel.addRow(new String[] {aux});
 	}
+	
+	/**
+	 * 
+	 */
+	public void clear() {
+		tmodel.setRowCount(0);
+	}
 
 	//Private stuff
 

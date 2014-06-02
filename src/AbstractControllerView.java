@@ -111,7 +111,7 @@ public abstract class AbstractControllerView {
 	public void load(String path) {
 		try {
 			// Constructor que se le pasa controlador y nombre de Thread
-			LoadThread lt = new LoadThread(controller, path);
+			LoadThread lt = new LoadThread(controller, this ,path);
 
 			// Creamos un Thread que invoque a la funcion de un Loadthread
 			Thread t1 = new Thread(lt, "Load Function");
@@ -135,7 +135,7 @@ public abstract class AbstractControllerView {
 	// -------------------------------------------------------
 
 	// -------------------------------------------------------
-	// CACHE
+	// CACHE & TABLE
 	// -------------------------------------------------------
 
 	public void forwards() {
@@ -162,6 +162,19 @@ public abstract class AbstractControllerView {
 	public String getStringToShow() {
 		Console.print("getStringToShow: " + firstCache + secondCache);
 		return firstCache + secondCache;
+	}
+	
+	
+	public void reload_table() {
+		
+		//Eliminas la tabla actual
+		((ViewController) view).clear();
+		
+		//Cargas cache
+		refresh();
+		
+		//Escribes primerea parte de la cache
+		((ViewController) view).show(getStringToShow());
 	}
 
 }
