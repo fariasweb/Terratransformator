@@ -72,8 +72,13 @@ public class QAPMatchingDriver extends AbstractDriver {
 	 * @param x
 	 * @param y
 	 * @param rel
+<<<<<<< HEAD
+	 *//*
+	private static void addEdgeToList(int x, int y,List<PairInt> rel) {
+=======
 	 */
 	/*private static void addEdgeToList(int x, int y,List<PairInt> rel) {
+>>>>>>> ceb1c976c46886d9eec1fc8f13f388207636d96d
 		try {
 			rel.add(new PairInt(x,y));
 
@@ -88,8 +93,13 @@ public class QAPMatchingDriver extends AbstractDriver {
 	 * @param x
 	 * @param y
 	 * @param rel
+<<<<<<< HEAD
+	 *//*
+	private static void init(QAPmatching q, int x, int y,List<PairInt> rel) {
+=======
 	 */
 	/*private static void init(QAPmatching q, int x, int y,List<PairInt> rel) {
+>>>>>>> ceb1c976c46886d9eec1fc8f13f388207636d96d
 		try {
 			q.init(x,y,rel);
 

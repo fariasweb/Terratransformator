@@ -135,7 +135,6 @@ public class QAPEager /*extends QAP*/{
 	{
 		time = System.nanoTime();
 
-
 		GLB = new QAPGilmoreLawerBound(d.length);
 		/*
 		//Numero de planetas/paquetes

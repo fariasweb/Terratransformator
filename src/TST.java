@@ -592,6 +592,46 @@ public class TST<Value> {
 		 */
 		public Value next() {
 
+		//>>>>>>>>>>>>>>>>NEXT ORIGINAL
+		//Buscamos el siguiente nodo que sea una llave
+			while (current != null && current.getValue() == null) {
+			
+				if (current.right != null)
+					stack.push(current.right);
+				if (current.mid != null)
+					stack.push(current.mid);
+				if (current.left != null)
+					stack.push(current.left);
+
+				current = stack.pop();
+			}
+
+			//Al encontar miramos los hijos por que seran los siguientes en mirarse
+			if (current.right != null)
+				stack.push(current.right);
+			if (current.mid != null)
+				stack.push(current.mid);
+			if (current.left != null)
+				stack.push(current.left);
+
+			//Guardamos el valor actual
+			Node node = current;
+
+			//EN caso de no estar la pila vacia pasamos al sigueinte
+			if (!stack.empty()) {
+				current = stack.pop();
+			} else {
+				current = null;
+			}
+
+			/*
+			 * current = current.left; stack.push(current.right);
+			 * stack.push(current.mid);
+			 */
+
+			return node.getValue();
+
+
 			//
 		/*	Stack<Node> aux = new Stack<Node>();
 			stack.copyInto(aux);
@@ -600,9 +640,11 @@ public class TST<Value> {
 				String b = a.getValue().getName();
 				Console.print(b);
 			}*/
+			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+			//>>>>>>>>>>>>>>>>>>>NEXT NUEVO EN PROCESO
 
-			Value v = current.getValue();
+/*			Value v = current.getValue();
 
 			FinalNode ret = dfsAux(current.mid);
 			stack.push(ret);
@@ -643,14 +685,16 @@ public class TST<Value> {
 			}
 		}
 			current = null;
-			return v;
+			return v;*/
+
+			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		}
 		
 		public void remove() {
 			
 		}
 
-		private FinalNode dfsAux(Node n){
+		/*private FinalNode dfsAux(Node n){
 
 			if(n != null){
 				stack.push(n);
@@ -669,7 +713,7 @@ public class TST<Value> {
 				stack.pop();
 			}
 			return null;
-		}
+		}*/
 		
 	}
 
@@ -683,41 +727,3 @@ public class TST<Value> {
 }
 
 
-//NEXT
-//Buscamos el siguiente nodo que sea una llave
-			/*while (current != null && current.getValue() == null) {
-			
-				if (current.right != null)
-					stack.push(current.right);
-				if (current.mid != null)
-					stack.push(current.mid);
-				if (current.left != null)
-					stack.push(current.left);
-
-				current = stack.pop();
-			}
-*/
-			//Al encontar miramos los hijos por que seran los siguientes en mirarse
-			/*if (current.right != null)
-				stack.push(current.right);
-			if (current.mid != null)
-				stack.push(current.mid);
-			if (current.left != null)
-				stack.push(current.left);*/
-
-			//Guardamos el valor actual
-			/*Node node = current;*/
-
-			//EN caso de no estar la pila vacia pasamos al sigueinte
-			/*if (!stack.empty()) {
-				current = stack.pop();
-			} else {
-				current = null;
-			}*/
-
-			/*
-			 * current = current.left; stack.push(current.right);
-			 * stack.push(current.mid);
-			 */
-
-/*			return node.getValue();*/
