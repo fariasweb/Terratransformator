@@ -164,15 +164,10 @@ public class TSTDriver extends AbstractDriver {
 					break;
 
 				case 16:
-					try{
 						Iterator iter = Clt.iterator();
 						while(iter.hasNext())
 							Console.print(iter.next().toString());
 
-					}
-					catch(Exception e){
-						_msg_error(e.getMessage());
-					}
 					break;
 					
 				case 17:
