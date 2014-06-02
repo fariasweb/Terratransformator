@@ -8,6 +8,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -23,21 +24,26 @@ public class QAPView extends ViewForm {
 	private JRadioButton rb1;
 	private JRadioButton rb2;
 	private JSpinner jp;
-	private JTextField tf;
 	private JLabel levelLabel;
 	private JLabel galaxyLabel;
 	private GalaxyController gc;
 	private String[] nameGalaxies;
 	private String[][] ngMatrix;
 	private QAPInputDetail qapinput;
+	private PacketController pc; 
+	private String nameMatrix;
+	
 	QAPView(AbstractControllerView c, GalaxyController gcp) {
 		super(c);	
 		gc = gcp;
+
+		//pc = pcp;
 		// Button of QAPInputForm
 		crear_vista();
 	}
 	protected void crear_vista(){
 		// Button of QAPInputForm
+		
 		inputButton = new JButton("Create Input Form");
 		levelLabel = new JLabel("Set Level (Value -1: Infinite for Lazy and None for Eager)");
 		
@@ -133,8 +139,24 @@ public class QAPView extends ViewForm {
 			rb1.setSelected(false);;
 		}
 	});
+	
+	inputButton.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e){
+			showQAPInputForm();
+		}
+	});
 	}
-	public void refreshComboBox(){
+	
+	public void showQAPInputForm(){
+		
+		qapinput = new QAPInputDetail((QAPInputControllerView)controller,10);
+		qapinput.setVisible(true);
+		((QAPInputControllerView)controller).create_form_add();	
+
+	}
+	
+	
+	/*public void refreshComboBox(){
 		if(gc.size() > 0){
 			ngMatrix = new String[gc.size()][3];
 			ngMatrix = decode_list(gc.getAll());
@@ -151,7 +173,7 @@ public class QAPView extends ViewForm {
 			gcb = new JComboBox(nulo);
 			gcb.setModel(new DefaultComboBoxModel(nulo)); 
 		}
-	}
+	}*/
 	
 	protected void create_events() {
 		// TODO Auto-generated method stub

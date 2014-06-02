@@ -64,7 +64,7 @@ public class GalaxyView extends ViewController {
 		bImport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				createSaveFrame();
-				controller.save("./save/GalaxyControler.txt",false);
+				controller.save(path,false);
 				
 			}
 		});
