@@ -15,13 +15,13 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 * 
 	 * @param pc
 	 */
-	GalaxyControllerView(PlanetController pc, ViewTabbedPane vs,ViewNotification ve) {
+	GalaxyControllerView(AbstractController pc, ViewTabbedPane vs,ViewNotification ve) {
 		super(vs, ve);
 
 		// -------------------------------------------------------
 		// CONTROLADOR DE DOMINIO
 		// -------------------------------------------------------
-		controller = new GalaxyController(pc);
+		controller = new GalaxyController((PlanetController) pc);
 
 		// -------------------------------------------------------
 		// Vistas
