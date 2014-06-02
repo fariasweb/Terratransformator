@@ -46,10 +46,7 @@ public class PresentationView extends JFrame {
 		tabbedRight = new ViewTabbedPane();
 		tabbedOpe = new ViewTabbedPane();
 		errorPanel = new ViewNotification();
-		
-		//TEST - TODO: ELIMINAR
-		tabbedOpe.add_tab("Test", new ViewTest());
-		
+				
 		// Layout
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);

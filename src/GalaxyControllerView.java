@@ -9,12 +9,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GalaxyControllerView extends AbstractControllerView {
 
+	public GalaxyDetails view_detail;
+	
 	/**
 	 * 
 	 * @param pc
 	 */
-	GalaxyControllerView(PlanetController pc, ViewTabbedPane vs,
-			ViewNotification ve) {
+	GalaxyControllerView(PlanetController pc, ViewTabbedPane vs,ViewNotification ve) {
 		super(vs, ve);
 
 		// -------------------------------------------------------
@@ -26,6 +27,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 		// Vistas
 		// -------------------------------------------------------
 		view = new GalaxyView(this);
+		view_detail = null;
 
 		// -------------------------------------------------------
 		// CACHE - TODO revisar
@@ -111,11 +113,20 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 * @param name
 	 */
 	public void create_form_view(String name) {
-		vShared.add_once_tab("Galaxy details", new GalaxyDetails(this, name));
+		view_detail = new GalaxyDetails(this, name);
+		vShared.add_once_tab("Galaxy details", view_detail);
+	}
+	
+	/**
+	 * 
+	 */
+	public void create_form_planet() {
+		vShared.add_tab_pos("Add planet", new ViewTest(), 1);
+		vShared.change_tab(1);
 	}
 
 	/**
-	 * 
+	 * TODO: Cache
 	 */
 	public void get() {
 		Console.log(((GalaxyController) controller).getAll());
@@ -129,6 +140,17 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 */
 	public String getByName(String name) throws Exception {
 		return ((GalaxyController) controller).getByNameToString(name);
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getPlanets(String name) throws Exception {
+		return ((GalaxyController) controller).getPlanetsFromGalaxy(name);
+
 	}
 
 	// -------------------------------------------------------
@@ -144,12 +166,19 @@ public class GalaxyControllerView extends AbstractControllerView {
 		((GalaxyController) controller).removeGalaxy(name);
 		
 		//Eliminar de la tabla - TODO
-		Console.print("DELETING GALAXY!");
 		refresh();
 		((ViewController) view).show(getStringToShow());
 		
+		// Mensaje de notificacion
+		vError.success("The galaxy " + name + " has been deleted");
+
+
+		vShared.remove_all_tabs();
 	}
 
+	public GalaxyController getGalaxyController(){
+		return (GalaxyController) controller;
+	}
 	// -------------------------------------------------------
 	// TEST - TODO: Revisar
 	// -------------------------------------------------------
@@ -161,22 +190,5 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 * controller).getByName(name); } catch(Exception e){
 	 * Console.print("Cannot add galaxy"); } return null; }
 	 */
-
-	public String getEntityByName(String name) {
-		try {
-			return controller.getByNameToString(name);
-		} catch (Exception e) {
-			Console.print("Cannot find galaxy");
-		}
-		return null;
-	}
-
-	public void updateEntityNameByName(String oldName, String newName) {
-		try {
-			controller.updateEntityNameByName(oldName, newName);
-		} catch (Exception e) {
-			Console.print("Cannot find galaxy");
-		}
-	}
 
 }

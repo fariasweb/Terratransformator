@@ -1,20 +1,45 @@
+import java.util.Stack;
 
-public class QAPInputControllerView extends AbstractControllerView{
+import javax.swing.table.DefaultTableModel;
 
-	QAPInputControllerView(ViewTabbedPane vs, ViewNotification ve) {
+/**
+ * 
+ * @author farias
+ * 
+ */
+public class QAPInputControllerView extends AbstractControllerView {
+
+	/**
+	 * 
+	 * @param pcv
+	 */
+	QAPInputControllerView(PacketControllerView pcv, GalaxyControllerView gc,ViewTabbedPane vs,ViewNotification ve) {
 		super(vs, ve);
-		// TODO Auto-generated constructor stub
+
+		// -------------------------------------------------------
+		// CONTROLADOR DE DOMINIO
+		// -------------------------------------------------------
+		controller = new QAPController(gc.getGalaxyController(),pcv.getPacketController());
+
+		// -------------------------------------------------------
+		// Vistas
+		// -------------------------------------------------------
+		
+		view = new QAPView(this,gc.getGalaxyController());
 	}
 
-	@Override
-	public String getEntityByName(String name) {
-		// TODO Auto-generated method stub
+	// -------------------------------------------------------
+	// CREAR
+	// -------------------------------------------------------
+	public String getEntityByName(String name){
+		try{ return controller.getByNameToString(name);}
+		catch(Exception e){ Console.print("Cannot find packet"); }
 		return null;
 	}
 
-	@Override
-	public void updateEntityNameByName(String oldName, String newName) {
-		// TODO Auto-generated method stub
-		
+	public void updateEntityNameByName(String oldName, String newName){
+		/*try{ return controller.updateEntityNameByName(oldName, newName);}
+		catch(Exception e){ Console.print("Cannot find galaxy"); }*/
 	}
+
 }

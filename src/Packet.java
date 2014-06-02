@@ -37,7 +37,7 @@ public class Packet extends Entity{
 
 	/**
 	 * pre:El nombre no debe ser nulo y qtt > 0 
-	 * post:Se a–ade el recurso y la cantidad en el paquete
+	 * post:Se anade el recurso y la cantidad en el paquete
 	 * 
 	 * @param r
 	 * @param qtt

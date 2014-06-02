@@ -34,7 +34,7 @@ public class ResourceController extends AbstractController {
 	public void addResource(String name, String type) throws Exception {
 		Resource g = new Resource(name, type);
 
-		// A–adimos el Resourcea al TST
+		// Anadimos el Resourcea al TST
 		Clt.put(g.getName(), g);
 	}
 
@@ -167,7 +167,7 @@ public class ResourceController extends AbstractController {
 	// ---------------------------------------------
 
 	/**
-	 * Elimina todos los recursos de la colecci—n Post: No existe ningun recurso
+	 * Elimina todos los recursos de la coleccion Post: No existe ningun recurso
 	 * 
 	 * @throws Exception
 	 */
@@ -204,7 +204,7 @@ public class ResourceController extends AbstractController {
 	// ---------------------------------------------
 
 	/**
-	 * Post: Devuelve el tama–o de la coleci—n
+	 * Post: Devuelve el tamano de la colecion
 	 * 
 	 * @return int
 	 */
@@ -235,11 +235,11 @@ public class ResourceController extends AbstractController {
 		if (s.length != 2)
 			throw new Exception("The record is not correct");
 
-		// Separaci—n especifica del recurso
+		// Separacion especifica del recurso
 		String name = s[0];
 		String type = s[1];
 		
-		// A–ade a la colecci—n
+		// Anade a la coleccin
 		addResource(name, type);
 
 	}

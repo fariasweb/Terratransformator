@@ -12,7 +12,7 @@ import java.util.Stack;
 public class TST<Value> {
 	
 	//Atributos generales
-	private int N; // tama–o
+	private int N; // tamano
 	private Node root; // raiz del TST
 	private int current; // variable auxiliar global para el metodo collectValuesCache
 	
@@ -532,7 +532,7 @@ public class TST<Value> {
 	 * Utilidad exclusiva para debuggar, no tiene otro uso.
 	 * Pre: Cierto
 	 * Post: Vuelca por pantalla el TST para poder ver los nodos 
-	 * y a d—nde apunta cada uno.
+	 * y a donde apunta cada uno.
 	 * @return
 	 */
 	public void dump(){
@@ -681,3 +681,43 @@ public class TST<Value> {
 		return new TSTIterator(root);
 	}
 }
+
+
+//NEXT
+//Buscamos el siguiente nodo que sea una llave
+			/*while (current != null && current.getValue() == null) {
+			
+				if (current.right != null)
+					stack.push(current.right);
+				if (current.mid != null)
+					stack.push(current.mid);
+				if (current.left != null)
+					stack.push(current.left);
+
+				current = stack.pop();
+			}
+*/
+			//Al encontar miramos los hijos por que seran los siguientes en mirarse
+			/*if (current.right != null)
+				stack.push(current.right);
+			if (current.mid != null)
+				stack.push(current.mid);
+			if (current.left != null)
+				stack.push(current.left);*/
+
+			//Guardamos el valor actual
+			/*Node node = current;*/
+
+			//EN caso de no estar la pila vacia pasamos al sigueinte
+			/*if (!stack.empty()) {
+				current = stack.pop();
+			} else {
+				current = null;
+			}*/
+
+			/*
+			 * current = current.left; stack.push(current.right);
+			 * stack.push(current.mid);
+			 */
+
+/*			return node.getValue();*/

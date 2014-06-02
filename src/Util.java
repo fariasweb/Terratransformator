@@ -89,4 +89,27 @@ public class Util {
 		}
 		return m2;
 	}
+	
+	public static void CopyVector(int[] m1,int[] m2) {
+		int n = m1.length;
+
+		for (int y = 0; y < m1.length; y++) {
+			m2[y] = m1[y];
+		}
+	}
+	public static void CopyVector(double[] m1,double[] m2) {
+		int n = m1.length;
+
+		for (int y = 0; y < m1.length; y++) {
+			m2[y] = m1[y];
+		}
+	}
+	public static void CopyVectors(int[] m1,int[] n1,int[] n2,int[] m2) {
+		int n = m1.length;
+
+		for (int y = 0; y < m1.length; y++) {
+			m2[y] = m1[y];
+			n2[y] = n1[y];
+		}
+	}
 }

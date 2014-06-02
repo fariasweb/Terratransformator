@@ -1,100 +1,132 @@
-public class QAPLazyGLB extends QAP{
+import java.util.LinkedList;
+import java.util.Queue;
 
-	public QAPLazyGLB(QAPInput qap) throws Exception {
+public class QAPLazyGLB /*extends QAP*/{
+	public QAPBaBTree tree;
+	/*
+	public QAPLazyGLB(QAPInput qap) throws Exception{
 		super(qap);
 		QAPType = "GilmoreLazy";
 	}
+	*/
+	private QAPGilmoreLawerBound GLB;
+	int[] asignacionP;
+	int[] asignacionL;
+	double costs[];
+	public long time;
+	int nombrenivel; //editable
+	int n;
+	double[][] d; 
+	double[][] f; 
+	public QAPLazyGLB(int nivel,double[][] flui, double[][] dist) {
+		tree = new QAPBaBTree();
+		nombrenivel = nivel;
+		d = dist;
+		f = flui;
+	}
+	
+	
+	
+	public void BranchAndBound(int[] va,int[] val, double[] costlevel, int level){
 
-	public static double BranchAndBound(double[][] d, double[][] f, int[] va,int val[], int level) {
+		for(int i = 0; i < n;i++) {
+			if(val[i] == 0) {
+				va[level] = i+1;
+				val[i] = level+1;
 
-		int n = d.length;
-		double min = 0;
-		// caso base
-		if (level >= n - 1) {
-
-			for (int i = 0; i < n; i++) {
-				if (val[i] == 0) {
-					va[level] = i + 1;
-					val[i] = level + 1;
-				}
-			}
-			min = QAPGilmoreLawerBound.QAPGLB(d, f, va, val);
-		}
-		// caso recursivo
-		else {
-
-			// Step 1: hace primero Branch y coge el resulta de Branch como el
-			// minimo resultado
-			int[] vaaux = new int[n];
-			int[] valaux = new int[n];
-			int i = 0;
-
-			for (; i < n; i++) {
-				if (val[i] == 0) {
-
-					vaaux = Util.CopyVector(va);
-					vaaux[level] = i + 1;
-					valaux = Util.CopyVector(val);
-					valaux[i] = level + 1;
-					min = BranchAndBound(d, f, vaaux, valaux, level + 1);
-					i++;
-					break;
-				}
-			}
-
-			// Step 2: Miro los restos de los bounds del mismo nivel para saber
-			// si hay algun resultado mas pequeno
-			boolean masBranch = false;
-			int[] valaux2 = new int[n];
-			int[] vaaux2 = new int[n];
-			vaaux2 = Util.CopyVector(va);
-			valaux2 = Util.CopyVector(val);
-
-			for (; i < n; i++) {
-				if (val[i] == 0) {
-
-					vaaux2[level] = i + 1;
-
-					valaux2[i] = level + 1;
-
-					double minaux = QAPGilmoreLawerBound.QAPGLB(d, f, vaaux2,
-							valaux2);
-					if (minaux < min) {
-						min = minaux;
-						vaaux = Util.CopyVector(vaaux2);
-						valaux = Util.CopyVector(valaux2);
-						masBranch = true;
+			
+				
+				double minaux = GLB.QAPGLB(d, f, va, val);
+				
+			
+				/*
+				QAPTNSolucion  spaux = new QAPTNSolucion ();
+				spaux.valor(level+1, va, System.nanoTime()-time, minaux);
+				tree.addNode(spaux);
+				spaux.show();
+				*/
+				costlevel[level] = minaux;
+				
+				//caso de respuesta valida
+				if(level == n-2){
+					if(costs[n-2] == -1 || minaux < costs[n-2]) {
+							Util.CopyVector(costlevel,costs);
+							Util.CopyVectors(va,val,asignacionL,asignacionP);
 					}
-					vaaux2[level] = 0;
-					valaux2[i] = 0;
+				}
+				
+				else {
+					boolean poda = false;
+					if(costs[n-2] == -1) poda = true; 
+					else {
+						if(minaux < costs[level]) poda = true;
+						else {
+							int aux = 1;
+							while(aux <= nombrenivel && level+aux < n-2) {
+								if(minaux < costs[level+aux]) {
+									poda = true;
+								}
+								aux++;
+							}
+							if(poda == false) {
+								aux = 1;
+								while(aux <= nombrenivel && level-aux >= 0) {
+									if(minaux < costs[level-aux]) {
+										poda = true;
+									}
+									aux++;
+								}
+							}
+						 }
+					}
+					
+					if(poda == true){
+						BranchAndBound(va, val, costlevel, level+1);
+					}
+				}
+				costlevel[level] = 0;
+				va[level] = 0;
+				val[i] = 0;
+			}
+			
+		}
+	}
+	
+	public void run() {
+	
+		time = System.nanoTime();
+
+		GLB = new QAPGilmoreLawerBound(d.length);
+		
+		n = d.length;
+		int[] va = new int[n];
+		int[] val = new int[n];
+		double[] costlevel = new double[n];
+		costs = new double[n];
+		asignacionP = new int[n];
+		asignacionL = new int[n];
+		if(n > 1) {
+			costs[n-2] = -1;
+			BranchAndBound(va, val, costlevel, 0);
+			
+		
+			//completamos el nodo;
+			for (int m = 0; m < n; m++) {
+				if (asignacionL[m] == 0) {
+					asignacionP[n - 1] = m + 1;
+					asignacionL[m] = n;
 				}
 			}
-
-			// Step 3: si existe una rama que da resultado mas pequeno hace mas
-			// branch
-			if (masBranch) {
-				if (level == n - 2) {
-					for (int m = 0; m < n; m++) {
-						if (valaux[m] == 0) {
-							vaaux[level + 1] = m + 1;
-
-							valaux[m] = level + 2;
-						}
-					}
-
-				} else
-					min = BranchAndBound(d, f, vaaux, valaux, level + 1);
-			}
-			for (int b = 0; b < n; b++) {
-				va[b] = vaaux[b];
-				val[b] = valaux[b];
-			}
 		}
-
-		return min;
+		
+		time = System.nanoTime() - time;
 
 	}
 	
+	
+	
+	
+	/*
 	public void run() throws Exception {
 		int nPackets = input.getSizePackets();
 		int nPlanets = input.getSizePlanets();
@@ -102,12 +134,12 @@ public class QAPLazyGLB extends QAP{
 		int sol1[] = new int[nPackets];
 		int sol2[] = new int[nPlanets];
 		long startTime = System.nanoTime();
-		double d = BranchAndBound(input.getDistanceMatrix(), input.getFlowMatrix(), sol1,sol2,0); //Se le a–ade parametro adicional al Eager
+		double d = BranchAndBound(input.getDistanceMatrix(), input.getFlowMatrix(), sol1,sol2,0); //Se le anade parametro adicional al Eager
 		long endTime = System.nanoTime();
 		
 		time = endTime - startTime;
 		result = d;
 		solution = sol2;
 		isRun = true;
-	}
+	}*/
 }

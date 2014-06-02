@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.*;/*
 public class QAPMatchingDriver extends AbstractDriver {
 
 	public static void main(String[] args){
@@ -73,7 +73,7 @@ public class QAPMatchingDriver extends AbstractDriver {
 	 * @param y
 	 * @param rel
 	 */
-	private static void addEdgeToList(int x, int y,List<PairInt> rel) {
+	/*private static void addEdgeToList(int x, int y,List<PairInt> rel) {
 		try {
 			rel.add(new PairInt(x,y));
 
@@ -89,7 +89,7 @@ public class QAPMatchingDriver extends AbstractDriver {
 	 * @param y
 	 * @param rel
 	 */
-	private static void init(QAPmatching q, int x, int y,List<PairInt> rel) {
+	/*private static void init(QAPmatching q, int x, int y,List<PairInt> rel) {
 		try {
 			q.init(x,y,rel);
 
@@ -97,4 +97,4 @@ public class QAPMatchingDriver extends AbstractDriver {
 			_msg_error(e.getMessage());
 		}
 	}
-};
+};*/

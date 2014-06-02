@@ -10,11 +10,19 @@ public class QAPEagerDriver {
 		int[] va = new int[f.length];
 		int[] val = new int[f.length];
 		
-		System.out.println(QAPEager.BranchAndBound(d,f,va,val));
+		int nb = sc.nextInt();
+		QAPEager alg = new QAPEager();
+		alg.NombredeBranch = nb;
+		double aux1 = alg.run(d,f,va,val);
+		
+		long aux2 = alg.time;
+		alg.tree. WriteBFS ();
+		
+		System.out.println(aux1);
 
-		 Console.WriteVector(va);
-		
-		
+		System.out.println(aux2);
+
+		Console.WriteVector(va);
 	}
 
 }

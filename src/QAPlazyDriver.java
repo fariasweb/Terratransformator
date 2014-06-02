@@ -1,6 +1,6 @@
 import java.util.*;
 public class QAPlazyDriver {
-
+	
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
@@ -10,10 +10,19 @@ public class QAPlazyDriver {
 		
 		int[] va = new int[f.length];
 		int[] val = new int[f.length];
+		int nivel = sc.nextInt();
 		
-		System.out.println(QAPLazyGLB.BranchAndBound(d,f,va,val,0));
+		QAPLazyGLB alg = new QAPLazyGLB(nivel,f,d);
+		alg.run();
+		
+		
+		//alg.tree.WriteBFS();
 
-		Console.WriteVector(va);
+		if(va.length > 1)System.out.println(alg.costs[n-2]); //el resultado final
+		else System.out.println(alg.costs[0]);
+		Console.WriteVector(alg.asignacionP);
+		System.out.println(alg.time); //el resultado final
+		
 		
 	}
 }

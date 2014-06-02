@@ -169,7 +169,11 @@ public class TSTDriver extends AbstractDriver {
 							Console.print(iter.next().toString());
 
 					break;
-
+					
+				case 17:
+						Clt.dump();
+					break;
+					
 				default:
 					_msg_opc_invalid();
 					break;

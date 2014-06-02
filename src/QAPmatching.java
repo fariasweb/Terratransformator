@@ -8,13 +8,13 @@ public class QAPmatching {
 	private int n1, n2, last[], prev[], head[];
 	private int matching[], dist[], Q[];
 	private boolean used[], vis[];
-
-	public void init(int _n1, int _n2, List<PairInt> rel) {
-		n1 = _n1;
-		n2 = _n2;
-		maxN1 = rel.size();
-		maxN2 = rel.size();
-		maxM = maxN1 + maxN2;
+	
+	QAPmatching(int n) {
+		n1 = n;
+		n2 = n;
+		maxN1 = n*n;
+		maxN2 = n*n;
+		maxM = maxN1+maxN2;
 
 		last = new int[maxN1];
 		prev = new int[maxM];
@@ -24,15 +24,26 @@ public class QAPmatching {
 		Q = new int[maxN1];
 		vis = new boolean[maxN1];
 		used = new boolean[maxN1];
-
-		edges = 0;
-		int i;
-		for (i = 0; i < n1; ++i)
+	}
+	public void init() {
+		
+		for(int i = 0; i < n1; i++) {
 			last[i] = -1;
-
-		for (PairInt p : rel) {
-			addEdge(p.getX(), p.getY());
+			matching[i] = 0;
+			dist[i] = 0;
+			Q[i] = 0;
+			vis[i] = false;
+			used[i] = false;
+			prev[i] = 0;
+			head[i] = 0;
 		}
+		for(int i = n1; i < maxM; i++) {
+			prev[i] = 0;
+			head[i] = 0;
+		}
+		edges = 0;
+		
+		
 	}
 
 	public void addEdge(int u, int v) {
@@ -98,11 +109,6 @@ public class QAPmatching {
 		}
 	}
 
-	public int runMatching(int numV1, int numV2, List<PairInt> rel) {
-		init(numV1, numV2, rel);
-		int i = maxMatching();
-		return i;
-	}
 
 	public int[] getMatchingList() {
 		return matching;
