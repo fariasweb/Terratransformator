@@ -1,9 +1,13 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * 
@@ -11,7 +15,10 @@ import javax.swing.event.ListSelectionListener;
  * 
  */
 public class GalaxyView extends ViewController {
-
+	private JFrame jframe;
+	private boolean frameOpenened;
+	private JFileChooser jfile;
+	private String path; 
 	/**
 	 * 
 	 * @param c
@@ -19,7 +26,27 @@ public class GalaxyView extends ViewController {
 	GalaxyView(GalaxyControllerView c) { //He cambiado por esto en vez de AbstractControllerView
 		super(c);
 	}
-
+	
+	public void createSaveFrame(){
+		jframe = new JFrame();
+		jframe.setBounds(10, 10, 600, 450);
+		jframe.setVisible(true);
+		jfile = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+		jfile.setFileFilter(filter);
+		JPanel jpanel1 = new JPanel();
+		jpanel1.add(jfile);
+		jframe.add(jpanel1);
+		int result = jfile.showSaveDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+		    System.out.println("Accept was selected");
+		    path = jfile.getSelectedFile().getAbsolutePath();
+		} else if (result == JFileChooser.CANCEL_OPTION) {
+		    System.out.println("Cancel was selected");
+		}
+		
+	}
+	
 	/**
 	 * 
 	 */
@@ -36,10 +63,12 @@ public class GalaxyView extends ViewController {
 		// Boton de guardar
 		bImport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				Console.log("you have pressed the SAVE button!");
-				controller.save("./save/GalaxyControler.txt", false);
+				createSaveFrame();
+				controller.save(path,false);
+				
 			}
 		});
+		
 		
 		//Boton de cargar
 		bExport.addActionListener(new ActionListener() {
