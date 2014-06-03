@@ -5,6 +5,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,7 +17,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class GalaxyView extends ViewController {
 	private JFrame jframe;
-	private boolean frameOpenened;
 	private JFileChooser jfile;
 	private String path; 
 	/**
@@ -27,26 +27,27 @@ public class GalaxyView extends ViewController {
 		super(c);
 	}
 	
-	public void createSaveFrame(){
-		jframe = new JFrame();
-		jframe.setBounds(10, 10, 600, 450);
-		jframe.setVisible(true);
-		jfile = new JFileChooser();
+	public void createFrame(String name){
+		
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+		jfile = new JFileChooser();
 		jfile.setFileFilter(filter);
+		jfile.setDialogTitle(name);
 		JPanel jpanel1 = new JPanel();
 		jpanel1.add(jfile);
-		jframe.add(jpanel1);
+		jfile.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		int result = jfile.showSaveDialog(this);
 		if (result == JFileChooser.APPROVE_OPTION) {
 		    System.out.println("Accept was selected");
 		    path = jfile.getSelectedFile().getAbsolutePath();
+		    if(name == "Load")controller.load(path);
+		    else controller.save(path,false);
 		} else if (result == JFileChooser.CANCEL_OPTION) {
 		    System.out.println("Cancel was selected");
 		}
 		
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -63,9 +64,7 @@ public class GalaxyView extends ViewController {
 		// Boton de guardar
 		bImport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				createSaveFrame();
-				controller.save(path,false);
-				
+				createFrame("Save");
 			}
 		});
 		
@@ -73,10 +72,11 @@ public class GalaxyView extends ViewController {
 		//Boton de cargar
 		bExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				Console.log("you have pressed the LOAD button!");
-				controller.load("./save/GalaxyControler.txt");
+				createFrame("Load");
 			}
 		});
+		
+		//Help hereda de ViewForm
 		
 		//Boton de eliminar
 		bDelete.addActionListener(new ActionListener() {

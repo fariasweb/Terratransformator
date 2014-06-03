@@ -37,7 +37,7 @@ public class PresentationController {
 		qcv = new QAPInputControllerView(kcv, gcv, operationTab, vError);
 
 		// Anadimos a la ventana principal los controladores
-		view.add_left_tab(gcv.get_view(), "Galaxys");
+		view.add_left_tab(gcv.get_view(), "Galaxies");
 		view.add_left_tab(pcv.get_view(), "Planets");
 		view.add_left_tab(qcv.get_view(), "QAPInput");
 
