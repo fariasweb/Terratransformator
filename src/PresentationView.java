@@ -14,6 +14,7 @@ public class PresentationView extends JFrame {
 	PresentationController controller;
 	private ViewTabbedPane tabbedOpe, tabbedLeft, tabbedRight;
 	private ViewNotification errorPanel;
+	private JMenuBar menuBar;
 
 	/**
 	 * 

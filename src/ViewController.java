@@ -121,6 +121,12 @@ public abstract class ViewController extends ViewPanel {
 	 */
 	public void show(String s){
 
+		if(s.equals(" ") || s.equals("")){
+			Console.print("s es vacio");
+			tmodel.setRowCount(0);
+			return;
+		}
+
 		String[] ss = decode(s);
 		
 		tmodel.setRowCount(0);
