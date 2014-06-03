@@ -4,6 +4,8 @@
 import java.awt.*;
 import java.awt.event.WindowEvent;
 
+import javax.swing.event.MenuListener;
+import javax.swing.event.MenuEvent;
 import javax.swing.*;
 
 public class PresentationView extends JFrame {
@@ -14,7 +16,7 @@ public class PresentationView extends JFrame {
 	PresentationController controller;
 	private ViewTabbedPane tabbedOpe, tabbedLeft, tabbedRight;
 	private ViewNotification errorPanel;
-	private JMenuBar menuBar;
+	private OurMenu menu;
 
 	/**
 	 * 
@@ -47,6 +49,7 @@ public class PresentationView extends JFrame {
 		tabbedRight = new ViewTabbedPane();
 		tabbedOpe = new ViewTabbedPane();
 		errorPanel = new ViewNotification();
+		menu = new OurMenu();
 				
 		// Layout
 		GroupLayout layout = new GroupLayout(getContentPane());
@@ -89,6 +92,9 @@ public class PresentationView extends JFrame {
 		);
 		
 		
+		menu.setOurMenu(this);
+
+
 		pack();
 
 	}
