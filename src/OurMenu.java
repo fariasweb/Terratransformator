@@ -5,7 +5,7 @@ import javax.swing.event.*;
 
 public class OurMenu implements ActionListener, MenuKeyListener {
   
-   private JMenuBar menuBar;
+   public JMenuBar menuBar;
    private JMenu svld, exit;
    private JMenuItem save, load;
 
@@ -94,9 +94,6 @@ public class OurMenu implements ActionListener, MenuKeyListener {
 
    }
 
-   public void setOurMenu(PresentationView pv){
-      pv.setJMenuBar(menuBar);
-   }
 
    public void actionPerformed(ActionEvent e) {
       System.out.println("Item clicked: "+e.getActionCommand());
