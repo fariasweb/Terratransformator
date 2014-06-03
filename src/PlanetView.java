@@ -31,10 +31,10 @@ public class PlanetView extends ViewController {
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
 		jfile = new JFileChooser();
 		jfile.setFileFilter(filter);
-		
+		jfile.setDialogTitle(name);
 		JPanel jpanel1 = new JPanel();
 		jpanel1.add(jfile);
-		jfile.setDialogTitle(name);
+	
 		jfile.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		int result = jfile.showSaveDialog(this);
 		if (result == JFileChooser.APPROVE_OPTION) {

@@ -18,6 +18,7 @@ public class PresentationView extends JFrame {
 	private ViewNotification errorPanel;
 	private OurMenu menu;
 
+
 	/**
 	 * 
 	 * @param c
@@ -39,8 +40,8 @@ public class PresentationView extends JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		// Size y visibilidad
-		setSize(900, 600);
-		setMinimumSize(new Dimension(900,600));
+		setSize(900, 640);
+		setMinimumSize(new Dimension(900,640));
 		setVisible(true);
 		setResizable(false);
 		
@@ -50,7 +51,12 @@ public class PresentationView extends JFrame {
 		tabbedOpe = new ViewTabbedPane();
 		errorPanel = new ViewNotification();
 		menu = new OurMenu();
-				
+		
+		
+		JMenuBar jm = new JMenuBar();
+		jm = menu.menuBar;
+		this.setJMenuBar(jm);
+		
 		// Layout
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
@@ -90,10 +96,6 @@ public class PresentationView extends JFrame {
 				)
 				
 		);
-		
-		
-		menu.setOurMenu(this);
-
 
 		pack();
 
