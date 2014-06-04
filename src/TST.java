@@ -675,8 +675,8 @@ public class TST<Value> {
 
 				}
 				else if(rec.equals(n.mid)){
-					ret = dfsAux(current.right);
-					if (ret != null) {v = current.getValue(); current = ret; return v;}
+					ret = dfsAux(n.right); //n.right
+					if (ret != null) { current = ret; return v;}
 				}
 				else{
 					rec = stack.pop();
