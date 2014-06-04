@@ -25,12 +25,14 @@ public class QAPInputControllerView extends AbstractControllerView {
 		// Vistas
 		// -------------------------------------------------------
 		
-		view = new QAPView(this,gc.getGalaxyController());
+		view = new QAPView(this,gc.getGalaxyController(),pcv.getPacketController());
 	}
 	
 	public void create_form_add() {
-		vShared.add_once_tab("Create QAPInput Detail", new QAPInputDetail(this,10));
+		vShared.add_once_tab("Create QAPInput Detail", new QAPInputDetail(this,controller.size()));
 	}
+	
+	
 	
 	// -------------------------------------------------------
 	// CREAR

@@ -114,6 +114,9 @@ public class QAPInput {
 	public double[][] getFlowMatrix() {
 		return flowMatrix;
 	}
+	public int getMatrixSize() {
+		return flowMatrix.length;
+	}
 	
 
 	public double getElementDistanceMatrixAtIndex(int i, int j ){

@@ -14,7 +14,6 @@ public class LoadThread implements Runnable{
 			
 			//Cargar datos en controlador de dominio
 			ac.load(path);
-			
 			//Mostrar datos en tabla
 			acv.reload_table();
 		}
