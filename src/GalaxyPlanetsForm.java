@@ -16,6 +16,8 @@ public class GalaxyPlanetsForm extends ViewForm {
 
 	private JComboBox tplanets;
 	private String[] list;
+	private String originaName;
+
 
 	/**
 	 * 
@@ -24,6 +26,14 @@ public class GalaxyPlanetsForm extends ViewForm {
 	GalaxyPlanetsForm(GalaxyControllerView gcf) {
 		super(gcf);
 
+	}
+	
+	/**
+	 * 
+	 * @param n
+	 */
+	public void setOriginalName(String n) {
+		originaName = n;
 	}
 
 	/**
@@ -65,7 +75,7 @@ public class GalaxyPlanetsForm extends ViewForm {
 	public void submit_form() throws Exception {
 
 		// Creacion del objeto por parte del controlador
-		((GalaxyControllerView) controller).addPlanet(tplanets.getSelectedIndex());
+		((GalaxyControllerView) controller).addPlanet(originaName, list[tplanets.getSelectedIndex()]);
 	}
 
 	// --------------------------------------------------------
@@ -79,7 +89,10 @@ public class GalaxyPlanetsForm extends ViewForm {
 	public void append(String[] e) {
 		//tfname.setText(e);
 		list = e;
-		tplanets.addItem(list);
+		
+		for (int i = 0; i < e.length; i++) 
+			tplanets.addItem(list[i]);
+		
 	}
 
 }
