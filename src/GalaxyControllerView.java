@@ -103,6 +103,14 @@ public class GalaxyControllerView extends AbstractControllerView {
 			((ViewController) view).show(getStringToShow());
 		}
 	}
+	
+	/**
+	 * 
+	 * @param num
+	 */
+	public void addPlanet(int num) {
+		
+	}
 
 	// -------------------------------------------------------
 	// LISTAR/EDITAR
@@ -121,7 +129,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 	 * 
 	 */
 	public void create_form_planet() {
-		vShared.add_tab_pos("Add planet", new ViewTest(), 1);
+		vShared.add_tab_pos("Add planet", new GalaxyPlanetsDetails(this), 1);
 		vShared.change_tab(1);
 	}
 
@@ -152,6 +160,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 		return ((GalaxyController) controller).getPlanetsFromGalaxy(name);
 
 	}
+	
 
 	// -------------------------------------------------------
 	// ELIMINAR
