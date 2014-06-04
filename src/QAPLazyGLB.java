@@ -88,13 +88,13 @@ public class QAPLazyGLB extends QAP{
 		}
 	}
 	
-	public void run(int nivel) throws Exception {
+	public void run() throws Exception {
 	
 		setTime(System.nanoTime());
 		
 		tree = new QAPBaBTree();
-		nombrenivel = nivel;
-
+		nombrenivel = input.getnivelparametro();
+		
 		n = input.getMatrixSize();
 		GLB = new QAPGilmoreLawerBound(n);
 		
@@ -111,12 +111,19 @@ public class QAPLazyGLB extends QAP{
 		
 			//completamos el nodo;
 			for (int m = 0; m < n; m++) {
-				if (asignacionL[m] == 0) {
-					asignacionP[n - 1] = m + 1;
-					asignacionL[m] = n;
-				}
+					if(m < n-1) {
+						solution[m] = va[m];
+					}
+					
+					if (val[m] == 0) {
+						solution[n - 1] = m + 1;
+						
+					}
+				
 			}
 		}
+		setResult(costs[n-2]);
+		output = new QAPSolution(this, input.getgalaxy(), input.getpackets());
 		
 		setTime(System.nanoTime() - getTime());
 

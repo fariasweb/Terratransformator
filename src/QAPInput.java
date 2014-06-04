@@ -13,18 +13,28 @@ public class QAPInput {
 	//Listado con los planetas y paquetes
 	private String[] CltPlanet;
 	private String[] CltPacket;
+	
+	private Galaxy galaxy;
+	private TST<Packet> packets;
+	
+	private int nivelparametro;
 
 	/**
 	 * 
 	 * @param galaxy
 	 * @param packets
 	 */
-	public QAPInput(Galaxy galaxy, TST<Packet> packets) {
+	public QAPInput(Galaxy gal, TST<Packet> pack, int parametro) {
+		galaxy = gal;
+		packets = pack;
+		nivelparametro = parametro;
 		setDistanceMatrix(galaxy);
 		setFlowMatrix(packets);
 		
 		setVectorPlanets(galaxy);
 		setVectorPackets(packets);
+		
+		
 	}
 
 	/**
@@ -140,5 +150,17 @@ public class QAPInput {
 
 	public String[] getPackets(){
 		return CltPacket;
+	}
+	
+	public Galaxy getgalaxy() {
+		return galaxy;
+	}
+	
+	public TST<Packet> getpackets() {
+		return packets;
+	}
+	
+	public int getnivelparametro() {
+		return nivelparametro;
 	}
 }
