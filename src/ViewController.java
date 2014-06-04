@@ -60,13 +60,13 @@ public abstract class ViewController extends ViewPanel {
     	scrollPane.getVerticalScrollBar().addAdjustmentListener(listener);
 
 		// Buttons
-		bCreate = new JButton("Crear");
-		bDelete = new JButton("Eliminar");
+		bCreate = new JButton("Create");
+		bDelete = new JButton("Delete");
 		// bDelete.setBackground(Color.BLUE);
 		// bDelete.setForeground(Color.GRAY);
 
-		bImport = new JButton("Guardar");
-		bExport = new JButton("Cargar");
+		bImport = new JButton("Save");
+		bExport = new JButton("Load");
 
 		// Create in Panel
 		GroupLayout layout = new GroupLayout(this);
@@ -121,11 +121,24 @@ public abstract class ViewController extends ViewPanel {
 	 */
 	public void show(String s){
 
+		if(s.equals(" ") || s.equals("")){
+			Console.print("s es vacio");
+			tmodel.setRowCount(0);
+			return;
+		}
+
 		String[] ss = decode(s);
 		
 		tmodel.setRowCount(0);
 		for (String aux : ss)
 			tmodel.addRow(new String[] {aux});
+	}
+	
+	/**
+	 * 
+	 */
+	public void clear() {
+		tmodel.setRowCount(0);
 	}
 
 	//Private stuff

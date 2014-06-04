@@ -1,9 +1,14 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * 
@@ -11,13 +16,36 @@ import javax.swing.event.ListSelectionListener;
  * 
  */
 public class GalaxyView extends ViewController {
-
+	private JFrame jframe;
+	private JFileChooser jfile;
+	private String path; 
 	/**
 	 * 
 	 * @param c
 	 */
 	GalaxyView(GalaxyControllerView c) { //He cambiado por esto en vez de AbstractControllerView
 		super(c);
+	}
+	
+	public void createFrame(String name){
+		
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+		jfile = new JFileChooser();
+		jfile.setFileFilter(filter);
+		jfile.setDialogTitle(name);
+		JPanel jpanel1 = new JPanel();
+		jpanel1.add(jfile);
+		jfile.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		int result = jfile.showSaveDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+		    System.out.println("Accept was selected");
+		    path = jfile.getSelectedFile().getAbsolutePath();
+		    if(name == "Load")controller.load(path);
+		    else controller.save(path,false);
+		} else if (result == JFileChooser.CANCEL_OPTION) {
+		    System.out.println("Cancel was selected");
+		}
+		
 	}
 
 	/**
@@ -36,18 +64,19 @@ public class GalaxyView extends ViewController {
 		// Boton de guardar
 		bImport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				Console.log("you have pressed the SAVE button!");
-				controller.save("./save/GalaxyControler.txt", false);
+				createFrame("Save");
 			}
 		});
+		
 		
 		//Boton de cargar
 		bExport.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
-				Console.log("you have pressed the LOAD button!");
-				controller.load("./save/GalaxyControler.txt");
+				createFrame("Load");
 			}
 		});
+		
+		//Help hereda de ViewForm
 		
 		//Boton de eliminar
 		bDelete.addActionListener(new ActionListener() {
