@@ -430,6 +430,8 @@ public class TST<Value> {
 		// Remove
 		if (!remove(root, null, key.toLowerCase(), 0))
 			throw new Exception("The key " + key + " doesn't exist");
+
+		if(N == 0) clear();
 	}
 
 	/**
@@ -498,32 +500,31 @@ public class TST<Value> {
 			if(x.left == null && x.mid == null && x.right == null 
 				&& aux != null && is_Node(x)) 
 				{ 
-					if(aux.left == x) aux.left = null;
-					else if(aux.mid == x) aux.mid = null;
-					else if(aux.right == x) aux.right = null;
+					if(x.equals(aux.left)) aux.left = null;
+					else if(x.equals(aux.mid)) aux.mid = null;
+					else if(x.equals(aux.right)) aux.right = null;
 					else throw new Exception("remove: Debugging Exception");
 				}
 
 		}
 		else {
-			if(!x.getClass().getSimpleName().equals("FinalNode"))
-				return false;
+			if(is_Node(x)) return false;
 			//Debug
 			//Console.print("Delete");
 
 			del = true;
 			
 			if(x.left == null && x.mid == null && x.right == null){
-				if(aux.left == x) aux.left = null;
-				else if(aux.mid == x) aux.mid = null;
-				else if(aux.right == x) aux.right = null;
+				if(x.equals(aux.left)) aux.left = null;
+				else if(x.equals(aux.mid)) aux.mid = null;
+				else if(x.equals(aux.right)) aux.right = null;
 				else throw new Exception("remove: Debugging Exception");
 			}
 			else{ 
 				Node y = new Node(x.c, x.left, x.mid, x.right);
-				if(aux.left == x) aux.left = y;
-				else if(aux.mid == x) aux.mid = y;
-				else if(aux.right == x) aux.right = y;
+				if(x.equals(aux.left)) aux.left = y;
+				else if(x.equals(aux.mid)) aux.mid = y;
+				else if(x.equals(aux.right)) aux.right = y;
 				else throw new Exception("remove: Debugging Exception");
 			}
 			--N;
@@ -736,6 +737,7 @@ public class TST<Value> {
 	 * @return
 	 */
 	public Iterator<Value> iterator() {
+		if(root == null) Console.print("TU PUTA MADREEEEEEEEE");
 		return new TSTIterator(root);
 	}
 }

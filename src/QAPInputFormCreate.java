@@ -25,7 +25,7 @@ public class QAPInputFormCreate extends ViewForm {
 		super(c);
 		crear_vista(size, namep);
 	}
-	
+
 	private void crear_vista(int size, String namep){
 		sizeMatrix = size;
 		label = new JLabel(namep);
@@ -36,11 +36,11 @@ public class QAPInputFormCreate extends ViewForm {
 			header[i] = i+1 + "";
 			lm.addElement(header[i]);
 		}
-		
+
 		DistanceMatrix.setColumnIdentifiers(header);
 		tDistanceMatrix = new JTable(DistanceMatrix);
 		tDistanceMatrix.setRowHeight(17);
-		
+
 		// Scroll
 		js = new JScrollPane(tDistanceMatrix, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		tDistanceMatrix.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -52,18 +52,18 @@ public class QAPInputFormCreate extends ViewForm {
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING) //,javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALU
-				
+
 						.addComponent(label)
 						.addComponent(js,javax.swing.GroupLayout.PREFERRED_SIZE,300, Short.MAX_VALUE)
 		);
 		layout.setVerticalGroup(layout.createSequentialGroup()
 				.addComponent(label)
 				.addComponent(js, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-				
+
 		);
 	}
-	
-	
+
+
 	protected void create_view() {}
 	protected void create_events() {}
 
@@ -71,7 +71,6 @@ public class QAPInputFormCreate extends ViewForm {
 	@Override
 	public void submit_form() throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
-

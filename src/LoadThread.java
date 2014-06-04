@@ -15,7 +15,7 @@ public class LoadThread implements Runnable{
 			//Cargar datos en controlador de dominio
 			ac.load(path);
 			//Mostrar datos en tabla
-			acv.reload_table();
+			acv.reloadTable();
 		}
 		catch(Exception e){
 			acv.show_error("Error loading file! "+e.getMessage());
