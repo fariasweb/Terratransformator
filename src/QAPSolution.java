@@ -4,8 +4,6 @@ import java.util.List;
 public class QAPSolution {
 
 	private String QAPType;
-	private long executionTime;
-	private double efficiency;
 	//FALTA ATRIBUTO ARBOL
 	private List<QAPSend> CltSend;
 	private Galaxy g;
@@ -74,7 +72,7 @@ public class QAPSolution {
 	public String getQAPType() {
 		return QAPType;
 	}
-
+	/*
 	public double getEfficiency() {
 		return efficiency;
 	}
@@ -82,7 +80,7 @@ public class QAPSolution {
 	public long getExecutionTime() {
 		return executionTime;
 	}
-
+	*/
 	public List<QAPSend> getCltSend() {
 		return CltSend;
 	}

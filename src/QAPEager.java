@@ -114,11 +114,12 @@ public class QAPEager extends QAP{
 
 	}
 						
-	public void run(int Branch) throws Exception {	
+	public void run() throws Exception {	
 	
 		setTime(System.nanoTime());
+		//output = new  QAPSolution();
 		tree = new QAPBaBTree();
-		NombredeBranch = Branch;
+		NombredeBranch = input.getnivelparametro();
 
 		n = input.getMatrixSize();
 		GLB = new QAPGilmoreLawerBound(n);
@@ -138,14 +139,21 @@ public class QAPEager extends QAP{
 		int[] va = new int[n];
 		int[] val = new int[n];
 		
-		double aux =  BranchAndBound(va,val);
+		setResult(BranchAndBound(va,val));
 
 		for (int m = 0; m < n; m++) {
+			if(m < n-1) {
+				solution[m] = va[m];
+			}
+			
 			if (val[m] == 0) {
-				va[n - 1] = m + 1;
-				val[m] = n;
+				solution[n - 1] = m + 1;
+				
 			}
 		}
+		
+		output(this, input.getgalaxy(), input.getpackets())
+		
 		setTime(System.nanoTime() - getTime());
 		
 		//Algoritmo
