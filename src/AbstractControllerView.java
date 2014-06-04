@@ -165,7 +165,7 @@ public abstract class AbstractControllerView {
 	}
 	
 	
-	public void reload_table() {
+	public void reloadTable() {
 		
 		//Eliminas la tabla actual
 		((ViewController) view).clear();
