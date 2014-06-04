@@ -62,7 +62,7 @@ public class QAPView extends ViewForm {
 		else gcb = new JComboBox(nulo);
 		
 		galaxyLabel = new JLabel("Select Galaxy for Algorithm:");
-		rb1 = new JRadioButton("QAP Lazy Branch and Bound",false);
+		rb1 = new JRadioButton("QAP Lazy Branch and Bound",true);
 		rb2 = new JRadioButton("QAP Eager Branch and Bound",false);
 		
 		
