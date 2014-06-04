@@ -506,8 +506,7 @@ public class TST<Value> {
 
 		}
 		else {
-			if(!x.getClass().getSimpleName().equals("FinalNode"))
-				return false;
+			if(x.is_Node()) return false;
 			//Debug
 			//Console.print("Delete");
 
