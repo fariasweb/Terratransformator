@@ -39,8 +39,14 @@ public abstract class ViewController extends ViewPanel {
 	 */
 	protected void create_view() {
 		// Table
-		tmodel = new DefaultTableModel(new Object[][] {},
-				new String[] { "Name" });
+		tmodel = new DefaultTableModel(new Object[][] {}, new String[] { "Name" })
+		{
+		    public boolean isCellEditable(int row, int column)
+		    {
+		      return false;//This causes all cells to be not editable
+		    }
+		};
+		 
 		table = new JTable(tmodel);
 		
 		table.setCellSelectionEnabled(true);

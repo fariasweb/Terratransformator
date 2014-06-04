@@ -4,4 +4,4 @@
 .classpath
 *.class
 bin/*
-src/save/*
+src/save/*.txt
