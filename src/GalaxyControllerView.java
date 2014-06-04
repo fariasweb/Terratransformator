@@ -164,8 +164,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 		((GalaxyController) controller).removeGalaxy(name);
 		
 		//Eliminar de la tabla - TODO
-		refresh();
-		((ViewController) view).show(getStringToShow());
+		reloadTable();
 		
 		// Mensaje de notificacion
 		vError.success("The galaxy " + name + " has been deleted");
