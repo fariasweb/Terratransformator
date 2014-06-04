@@ -16,7 +16,7 @@ public class Util {
 			return false;
 
 		// Que no este vacio
-		if (namep.length() == 0)
+		if (namep.length() <= 1)
 			return false;
 
 		// La primera debe de ser una letra
