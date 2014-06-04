@@ -506,7 +506,7 @@ public class TST<Value> {
 
 		}
 		else {
-			if(x.is_Node()) return false;
+			if(is_Node(x)) return false;
 			//Debug
 			//Console.print("Delete");
 

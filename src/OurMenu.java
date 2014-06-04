@@ -3,7 +3,7 @@ import java.awt.Image;
 import javax.swing.*;
 import javax.swing.event.*;
 
-public class OurMenu extends AbstractViewer implements ActionListener, MenuKeyListener{
+public class OurMenu implements ActionListener, MenuKeyListener {
   
    public JMenuBar menuBar;
    private JMenu svld, exit;
@@ -12,7 +12,7 @@ public class OurMenu extends AbstractViewer implements ActionListener, MenuKeyLi
    OurMenu(){
       menuBar = new JMenuBar();
       svld = new JMenu("Save/Load");
-     /* svld.setMnemonic(KeyEvent.VK_I);
+      svld.setMnemonic(KeyEvent.VK_S);
       svld.addMenuKeyListener(this);
       svld.addMenuListener(new MenuListener(){
          @Override
@@ -23,15 +23,51 @@ public class OurMenu extends AbstractViewer implements ActionListener, MenuKeyLi
          }
          @Override
          public void menuSelected(MenuEvent event) {
-            /*if(event.getSource().equals("exit"))
-               System.exit(0);*/
-         // }
-      // });
+            System.out.println("S/L selected");
+         }
+      });
       menuBar.add(svld);
 
       exit = new JMenu("Exit");
       exit.setMnemonic(KeyEvent.VK_X);
-      exit.addMenuListener(new MenuListener(){
+      exit.addMouseListener(new MouseListener() {  
+              
+            @Override  
+            public void mouseReleased(MouseEvent e) {  
+                // TODO Auto-generated method stub  
+                  
+            }  
+              
+            @Override  
+            public void mousePressed(MouseEvent e) {  
+                // TODO Auto-generated method stub  
+                  
+            }  
+              
+            @Override  
+            public void mouseExited(MouseEvent e) {  
+                // TODO Auto-generated method stub  
+                  
+            }  
+              
+            @Override  
+            public void mouseEntered(MouseEvent e) {  
+                // TODO Auto-generated method stub  
+                  
+            }  
+              
+            @Override  
+            public void mouseClicked(MouseEvent e) {  
+                if(e.getSource() != null)  
+                {  
+                    System.out.print("ffs"); 
+                    System.exit(0);
+                }  
+                  
+            }  
+        });  
+
+     /* exit.addMenuListener(new MenuListener(){
          @Override
          public void menuCanceled(MenuEvent event) {
          }
@@ -39,11 +75,10 @@ public class OurMenu extends AbstractViewer implements ActionListener, MenuKeyLi
          public void menuDeselected(MenuEvent event) {
          }
          @Override
-         public void menuSelected(MenuEvent event) {
+         public void menuSelected(MenuEvent event) {*/
             //if(event.getSource().equals("exit"))
-               System.exit(0);
-         }
-      });
+               // System.exit(0);
+         // }
       menuBar.add(exit);
 
       save = new JMenuItem("Save", new ImageIcon(new ImageIcon("images/save_icon.gif")
@@ -58,8 +93,6 @@ public class OurMenu extends AbstractViewer implements ActionListener, MenuKeyLi
 
    }
 
-   public void create_events(){}
-   public void create_view(){}
 
    public void actionPerformed(ActionEvent e) {
       System.out.println("Item clicked: "+e.getActionCommand());
