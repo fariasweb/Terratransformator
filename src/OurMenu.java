@@ -12,7 +12,7 @@ public class OurMenu implements ActionListener, MenuKeyListener {
    OurMenu(){
       menuBar = new JMenuBar();
       svld = new JMenu("Save/Load");
-      svld.setMnemonic(KeyEvent.VK_S);
+     /* svld.setMnemonic(KeyEvent.VK_I);
       svld.addMenuKeyListener(this);
       svld.addMenuListener(new MenuListener(){
          @Override
@@ -23,51 +23,15 @@ public class OurMenu implements ActionListener, MenuKeyListener {
          }
          @Override
          public void menuSelected(MenuEvent event) {
-            System.out.println("S/L selected");
-         }
-      });
+            /*if(event.getSource().equals("exit"))
+               System.exit(0);*/
+         // }
+      // });
       menuBar.add(svld);
 
       exit = new JMenu("Exit");
       exit.setMnemonic(KeyEvent.VK_X);
-      exit.addMouseListener(new MouseListener() {  
-              
-            @Override  
-            public void mouseReleased(MouseEvent e) {  
-                // TODO Auto-generated method stub  
-                  
-            }  
-              
-            @Override  
-            public void mousePressed(MouseEvent e) {  
-                // TODO Auto-generated method stub  
-                  
-            }  
-              
-            @Override  
-            public void mouseExited(MouseEvent e) {  
-                // TODO Auto-generated method stub  
-                  
-            }  
-              
-            @Override  
-            public void mouseEntered(MouseEvent e) {  
-                // TODO Auto-generated method stub  
-                  
-            }  
-              
-            @Override  
-            public void mouseClicked(MouseEvent e) {  
-                if(e.getSource() != null)  
-                {  
-                    System.out.print("ffs"); 
-                    System.exit(0);
-                }  
-                  
-            }  
-        });  
-
-     /* exit.addMenuListener(new MenuListener(){
+      exit.addMenuListener(new MenuListener(){
          @Override
          public void menuCanceled(MenuEvent event) {
          }
@@ -75,10 +39,11 @@ public class OurMenu implements ActionListener, MenuKeyListener {
          public void menuDeselected(MenuEvent event) {
          }
          @Override
-         public void menuSelected(MenuEvent event) {*/
+         public void menuSelected(MenuEvent event) {
             //if(event.getSource().equals("exit"))
-               // System.exit(0);
-         // }
+               System.exit(0);
+         }
+      });
       menuBar.add(exit);
 
       save = new JMenuItem("Save", new ImageIcon(new ImageIcon("images/save_icon.gif")
