@@ -12,7 +12,7 @@ public class OurMenu implements ActionListener, MenuKeyListener {
    OurMenu(){
       menuBar = new JMenuBar();
       svld = new JMenu("Save/Load");
-     /* svld.setMnemonic(KeyEvent.VK_I);
+      svld.setMnemonic(KeyEvent.VK_S);
       svld.addMenuKeyListener(this);
       svld.addMenuListener(new MenuListener(){
          @Override
@@ -23,10 +23,9 @@ public class OurMenu implements ActionListener, MenuKeyListener {
          }
          @Override
          public void menuSelected(MenuEvent event) {
-            /*if(event.getSource().equals("exit"))
-               System.exit(0);*/
-         // }
-      // });
+            System.out.println("S/L selected");
+         }
+      });
       menuBar.add(svld);
 
       exit = new JMenu("Exit");
