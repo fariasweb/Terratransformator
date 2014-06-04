@@ -42,7 +42,6 @@ public abstract class AbstractController {
 			dCont.open(path, append);
 			
 			//Reinicimos para que encodeString empieze desde el incio
-			_last_key = ""; 
 
 			Iterator it = getIterator();
 			String cache;
