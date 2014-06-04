@@ -62,8 +62,8 @@ public abstract class ViewController extends ViewPanel {
 		// Buttons
 		bCreate = new JButton("Create");
 		bDelete = new JButton("Delete");
-		// bDelete.setBackground(Color.BLUE);
-		// bDelete.setForeground(Color.GRAY);
+		bDelete.setBackground(Color.RED);
+		bDelete.setForeground(Color.WHITE);
 
 		bImport = new JButton("Save");
 		bExport = new JButton("Load");
