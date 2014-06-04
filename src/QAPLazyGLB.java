@@ -1,30 +1,22 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class QAPLazyGLB /*extends QAP*/{
-	public QAPBaBTree tree;
-	/*
+public class QAPLazyGLB extends QAP{
+	
+	
+	
+	private QAPGilmoreLawerBound GLB;
+	private int[] asignacionP;
+	private int[] asignacionL;
+	private double costs[];
+	private int nombrenivel; //editable
+	private int n;
+	
 	public QAPLazyGLB(QAPInput qap) throws Exception{
+		
 		super(qap);
 		QAPType = "GilmoreLazy";
 	}
-	*/
-	private QAPGilmoreLawerBound GLB;
-	int[] asignacionP;
-	int[] asignacionL;
-	double costs[];
-	public long time;
-	int nombrenivel; //editable
-	int n;
-	double[][] d; 
-	double[][] f; 
-	public QAPLazyGLB(int nivel,double[][] flui, double[][] dist) {
-		tree = new QAPBaBTree();
-		nombrenivel = nivel;
-		d = dist;
-		f = flui;
-	}
-	
 	
 	
 	public void BranchAndBound(int[] va,int[] val, double[] costlevel, int level){
@@ -36,15 +28,15 @@ public class QAPLazyGLB /*extends QAP*/{
 
 			
 				
-				double minaux = GLB.QAPGLB(d, f, va, val);
+				double minaux = GLB.QAPGLB(input,va, val);
 				
 			
-				/*
+				
 				QAPTNSolucion  spaux = new QAPTNSolucion ();
-				spaux.valor(level+1, va, System.nanoTime()-time, minaux);
+				spaux.valor(level+1, va, System.nanoTime()-getTime(), minaux);
 				tree.addNode(spaux);
 				spaux.show();
-				*/
+				
 				costlevel[level] = minaux;
 				
 				//caso de respuesta valida
@@ -59,7 +51,11 @@ public class QAPLazyGLB /*extends QAP*/{
 					boolean poda = false;
 					if(costs[n-2] == -1) poda = true; 
 					else {
-						if(minaux < costs[level]) poda = true;
+						if (nombrenivel == -1 && minaux < costs[n-2]){
+							poda = true;
+							
+						}
+						else if(minaux < costs[level]) poda = true;
 						else {
 							int aux = 1;
 							while(aux <= nombrenivel && level+aux < n-2) {
@@ -92,13 +88,16 @@ public class QAPLazyGLB /*extends QAP*/{
 		}
 	}
 	
-	public void run() {
+	public void run(int nivel) throws Exception {
 	
-		time = System.nanoTime();
-
-		GLB = new QAPGilmoreLawerBound(d.length);
+		setTime(System.nanoTime());
 		
-		n = d.length;
+		tree = new QAPBaBTree();
+		nombrenivel = nivel;
+
+		n = input.getMatrixSize();
+		GLB = new QAPGilmoreLawerBound(n);
+		
 		int[] va = new int[n];
 		int[] val = new int[n];
 		double[] costlevel = new double[n];
@@ -119,7 +118,7 @@ public class QAPLazyGLB /*extends QAP*/{
 			}
 		}
 		
-		time = System.nanoTime() - time;
+		setTime(System.nanoTime() - getTime());
 
 	}
 	

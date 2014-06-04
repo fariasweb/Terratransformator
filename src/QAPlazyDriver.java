@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.*;/*
 public class QAPlazyDriver {
 	
 	public static void main(String[] args) {
@@ -25,4 +25,4 @@ public class QAPlazyDriver {
 		
 		
 	}
-}
+}*/

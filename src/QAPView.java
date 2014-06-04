@@ -33,11 +33,10 @@ public class QAPView extends ViewForm {
 	private PacketController pc; 
 	private String nameMatrix;
 	
-	QAPView(AbstractControllerView c, GalaxyController gcp) {
+	QAPView(AbstractControllerView c, GalaxyController gcp, PacketController pcp) {
 		super(c);	
 		gc = gcp;
-
-		//pc = pcp;
+		pc = pcp;
 		// Button of QAPInputForm
 		crear_vista();
 	}

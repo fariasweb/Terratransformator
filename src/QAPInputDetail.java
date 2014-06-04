@@ -1,25 +1,40 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 
 
 public class QAPInputDetail extends View3Col{
+	private JButton jb; 
+	private QAPInput input;
+	private int sizeMatrix;
+	
 	QAPInputDetail(AbstractControllerView c, int size) {
 		super((QAPInputControllerView)c);
+		crear_vista(size);
 	}
 
-	
-	protected void create_view() {
-		QAPInputFormCreate matrixDistance = new QAPInputFormCreate(controller,80,"Distance Matrix:");
+	private void crear_vista(int size){
+		
+		sizeMatrix = size;
+		QAPInputFormCreate matrixDistance = new QAPInputFormCreate(controller,sizeMatrix,"Distance Matrix:");
 		add_left(matrixDistance);
-		QAPInputFormCreate matrixFlow = new QAPInputFormCreate(controller,80, "Flow Matrix");
+		QAPInputFormCreate matrixFlow = new QAPInputFormCreate(controller,sizeMatrix, "Flow Matrix");
 		add_center(matrixFlow);
 		
-		JButton jb = new JButton("Run Algorithm!");
+		jb = new JButton("Run Algorithm!");
 		add_right(jb);
-		
+	
 	}
-
+	
+	protected void create_view() {}
 
 	protected void create_events() {
+		/*jb.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				
+			}
+		});*/
 		
 	}
 
