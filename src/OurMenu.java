@@ -3,7 +3,7 @@ import java.awt.Image;
 import javax.swing.*;
 import javax.swing.event.*;
 
-public class OurMenu implements ActionListener, MenuKeyListener {
+public class OurMenu extends AbstractViewer implements ActionListener, MenuKeyListener{
   
    public JMenuBar menuBar;
    private JMenu svld, exit;
@@ -93,6 +93,8 @@ public class OurMenu implements ActionListener, MenuKeyListener {
 
    }
 
+   public void create_events(){}
+   public void create_view(){}
 
    public void actionPerformed(ActionEvent e) {
       System.out.println("Item clicked: "+e.getActionCommand());
