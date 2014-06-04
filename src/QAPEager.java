@@ -152,7 +152,7 @@ public class QAPEager extends QAP{
 			}
 		}
 		
-		output(this, input.getgalaxy(), input.getpackets())
+		output = new QAPSolution(this, input.getgalaxy(), input.getpackets());
 		
 		setTime(System.nanoTime() - getTime());
 		

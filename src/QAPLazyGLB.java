@@ -111,7 +111,6 @@ public class QAPLazyGLB extends QAP{
 		
 			//completamos el nodo;
 			for (int m = 0; m < n; m++) {
-				for (int m = 0; m < n; m++) {
 					if(m < n-1) {
 						solution[m] = va[m];
 					}
@@ -120,11 +119,11 @@ public class QAPLazyGLB extends QAP{
 						solution[n - 1] = m + 1;
 						
 					}
-				}
+				
 			}
 		}
 		setResult(costs[n-2]);
-		output(this, input.getgalaxy(), input.getpackets())
+		output = new QAPSolution(this, input.getgalaxy(), input.getpackets());
 		
 		setTime(System.nanoTime() - getTime());
 

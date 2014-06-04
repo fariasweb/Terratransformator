@@ -15,7 +15,7 @@ public abstract class QAP {
 	private double result; 
 	
 	//Solucion generada
-	private int[] solution;
+	protected int[] solution;
 	//Tipo de algoritmo
 	protected String QAPType = "QAP";
 	
@@ -107,6 +107,6 @@ public abstract class QAP {
 	 * 
 	 * @throws Exception
 	 */
-	public abstract void run(int Parametro) throws Exception;
+	public abstract void run() throws Exception;
 	
 }

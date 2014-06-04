@@ -4,12 +4,13 @@ import java.util.List;
 public class QAPSolution {
 
 	private String QAPType;
-	//FALTA ATRIBUTO ARBOL
+	
 	private List<QAPSend> CltSend;
 	private Galaxy g;
 	private QAP qap;
 	private TST<Packet> p;
-
+	
+	
 	/**
 	 * Constructora
 	 * 
@@ -27,10 +28,9 @@ public class QAPSolution {
 	public void setQAPInfo(QAP qap) {
 		// Informacion como tiempo, typo y eficiencia
 		QAPType = qap.getQAPType();
-		executionTime = qap.getTime();
-		efficiency = qap.getResult();
 	}
-
+	
+	
 	public void setQAPSend() throws Exception {
 		// 1.Recoger el vector solucion de QAP
 		if (!qap.isRun())
@@ -131,7 +131,7 @@ public class QAPSolution {
 	public String toString() {
 
 		// Informacion basica
-		String r = QAPType + " " + executionTime + " " + efficiency;
+		String r = QAPType + " " + qap.getTime() + " " + qap.getResult();
 
 		return r;
 	}
