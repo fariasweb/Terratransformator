@@ -25,12 +25,13 @@ public abstract class View3Col extends ViewLayout {
 		pLeft = new JPanel();
 		pRight = new JPanel();
 		pCenter = new JPanel();
-
+		
 		// Layout
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
+		
 
 		// Horizontal
 		layout.setHorizontalGroup(layout
@@ -69,7 +70,7 @@ public abstract class View3Col extends ViewLayout {
 	 * @param c
 	 */
 	private void _add(JPanel p, Component c) {
-		GroupLayout layout = new GroupLayout(p);          
+		GroupLayout layout = new GroupLayout(p);   
 		p.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);

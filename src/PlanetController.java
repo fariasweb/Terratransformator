@@ -12,8 +12,7 @@ public class PlanetController extends AbstractController {
 	protected TST<Planet> Clt;
 
 	/**
-	 * Constructora 
-	 * Post: Inicializa el contructor padre y el TST
+	 * Constructora Post: Inicializa el contructor padre y el TST
 	 */
 	public PlanetController() {
 		super();
@@ -24,8 +23,7 @@ public class PlanetController extends AbstractController {
 	// ---------------------------------------------
 
 	/**
-	 * Crea un planeta en el sistema 
-	 * Pre: El nombre del planeta no debe existir
+	 * Crea un planeta en el sistema Pre: El nombre del planeta no debe existir
 	 * en el sistema Las posiciones del planeta no deben de estar ocupadas +
 	 * Post: Se crea un planeta con el nombre y pos indicado
 	 * 
@@ -35,7 +33,7 @@ public class PlanetController extends AbstractController {
 	 * @return boolean
 	 */
 	public void addPlanet(String name, int x, int y) throws Exception {
-		
+
 		Planet g = new Planet(name, x, y);
 
 		// Anadimos el planeta al TST
@@ -58,41 +56,42 @@ public class PlanetController extends AbstractController {
 		// Comprobamos que exista algo en el array
 		if (Clt.size() > 0) {
 			for (Planet i : Clt.values()) {
-				result += i.toString() + "\n";
+				result += i.toString() + _SEPARATOR;
 			}
 		}
 		return result;
 	}
 
-	
 	/**
-	 * Pre: El nombre no debe ser nulo y con longitud > 0 
-	 * El planeta debe existir
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 El planeta debe
+	 * existir
 	 * 
-	 * @param name String
+	 * @param name
+	 *            String
 	 * @return
 	 * @throws Exception
 	 */
 	public String getByNameToString(String name) throws Exception {
 
 		Planet g = Clt.get(name);
-		//if (g == null)throw new Exception("This planet doesn't exist");
+		// if (g == null)throw new Exception("This planet doesn't exist");
 
 		return g.toString();
 	}
 
 	/**
-	 * Pre: El nombre no debe ser nulo y con longitud > 0 
-	 * El planeta debe existir
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 El planeta debe
+	 * existir
 	 * 
-	 * @param name String
+	 * @param name
+	 *            String
 	 * @return
 	 * @throws Exception
 	 */
 	public Planet getByName(String name) throws Exception {
 
 		Planet g = Clt.get(name);
-		//if (g == null) throw new Exception("This planet doesn't exist");
+		// if (g == null) throw new Exception("This planet doesn't exist");
 
 		return g;
 	}
@@ -108,23 +107,67 @@ public class PlanetController extends AbstractController {
 		return Clt.contains(name);
 	}
 
-	// Update
-	// ---------------------------------------------
+	/**
+	 * Pre: x e y validas 
+	 * Post: Devuelve un listado de planetas sin galaxia que
+	 * estan en la posicon
+	 * 
+	 * @return
+	 */
+	public String getWithoutGalaxy(int x, int y) {
+
+		String result = "";
+		
+		// Comprobamos que exista algo en el array
+		if (Clt.size() > 0) {
+			
+			PairInt p;
+			
+			for (Planet i : Clt.values()) {
+				p = i.getPosition();
+				if (!i.haveGalaxy() && p.getX() <= x && p.getY() <= y)
+					result += i.toString() + _SEPARATOR;
+			}
+		}
+		
+		return result;
+
+	}
 	
 	/**
+	 * Pre: El planeta debe exisitir
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getGalaxyFromPlanet(String name) throws Exception {
+		//Cogemos el planeta
+		Planet g = Clt.get(name);
+		
+		//Devolvemos la galaxia o null si no dispone de ella
+		if (!g.haveGalaxy()) return "";
+		return g.getGalaxy().toString();
+		
+	}
+
+	// Update
+	// ---------------------------------------------
+
+	/**
 	 * Pre: El nombre no debe ser nulo y con longitud > 0 El planeta debe
-	 * existir El nombre de a nuevo planeta no debe de existir 
-	 * Post: Modifica los datos del planeta con newName
+	 * existir El nombre de a nuevo planeta no debe de existir Post: Modifica
+	 * los datos del planeta con newName
 	 * 
 	 * @param oldName
 	 * @param newName
 	 * @throws Exception
 	 */
 
-	public void updatePlanetName(String oldName, String newName) throws Exception {
+	public void updatePlanetName(String oldName, String newName)
+			throws Exception {
 		// Cogemos el planeta
 		Planet p = Clt.get(oldName);
-		//if (p == null) throw new Exception("This planet doesn't exist");
+		// if (p == null) throw new Exception("This planet doesn't exist");
 
 		// Cimprobamos qu eno sea las misma galaxi
 
@@ -134,53 +177,51 @@ public class PlanetController extends AbstractController {
 
 			if (Clt.contains(newName))
 				throw new Exception(newName + " is using in other planet");
-			
+
 			Clt.remove(oldName);
 			p.setName(newName);
 			Clt.put(newName, p);
-			
-			//En caso de estar en una galaxia
-			//Cambier en el conjunto de la galaxia
+
+			// En caso de estar en una galaxia
+			// Cambier en el conjunto de la galaxia
 			Galaxy g = p.getGalaxy();
 			if (g != null) {
-				//Eliminamos el antiguo
+				// Eliminamos el antiguo
 				g.getPlanets().remove(oldName);
-				//Anadimos el nuevo
+				// Anadimos el nuevo
 				g.getPlanets().put(newName, p);
 			}
 		}
 	}
 
 	/**
-	 * Actualiza la posicon de un planeta
-	 * Pre: El planeta debe exisitr
-	 * 		Las cordenadas deben ser validas
-	 * 		En caso de estar en una galaxia, las cordenadas deben estar
-	 * 		dentro de la galaxia y que no exista otro planeta en su interior
-	 * Post: El planeta tiene nuevas cordenadas
+	 * Actualiza la posicon de un planeta Pre: El planeta debe exisitr Las
+	 * cordenadas deben ser validas En caso de estar en una galaxia, las
+	 * cordenadas deben estar dentro de la galaxia y que no exista otro planeta
+	 * en su interior Post: El planeta tiene nuevas cordenadas
+	 * 
 	 * @param namep
 	 * @param x
 	 * @param y
 	 * @throws Exception
 	 */
-	public void updatePlanetPosition(String namep, int x, int y) throws Exception {
+	public void updatePlanetPosition(String namep, int x, int y)
+			throws Exception {
 
 		// Cogemos el planeta
 		Planet p = Clt.get(namep);
-		//if (p == null) throw new Exception("This planet doesn't exist");
+		// if (p == null) throw new Exception("This planet doesn't exist");
 
 		// Cambiamos la posicoon
 		p.setPosition(x, y);
 
-		
 	}
 
 	// Delete
 	// ---------------------------------------------
 
 	/**
-	 * Elimina todos los planetas de la coleccion
-	 * Post: No existe ningun planeta
+	 * Elimina todos los planetas de la coleccion Post: No existe ningun planeta
 	 * 
 	 * @throws Exception
 	 */
@@ -199,16 +240,15 @@ public class PlanetController extends AbstractController {
 	}
 
 	/**
-	 * Pre: El nombre no debe ser nulo y con longitud > 0
-	 * 		El planeta debe existir 
-	 * Post: Eliminada el planeta con nombre "name"
+	 * Pre: El nombre no debe ser nulo y con longitud > 0 El planeta debe
+	 * existir Post: Eliminada el planeta con nombre "name"
 	 * 
 	 * @param name
 	 * @throws Exception
 	 */
 	public void removePlanet(String name) throws Exception {
 		Planet p = Clt.get(name);
-		//if (p == null) throw new Exception("This planet doesn't exist");
+		// if (p == null) throw new Exception("This planet doesn't exist");
 
 		// Eliminos del conjunto
 		Clt.remove(name);
@@ -229,7 +269,7 @@ public class PlanetController extends AbstractController {
 	public int size() {
 		return Clt.size();
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -293,6 +333,5 @@ public class PlanetController extends AbstractController {
 		}
 
 		return encodeS;
-	} 
+	}
 }
-

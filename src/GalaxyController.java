@@ -256,11 +256,26 @@ public class GalaxyController extends AbstractController {
 		// Comprobamos que exista algo en el array
 		if (g.getPlanets().size() > 0) {
 			for (Planet i : g.getPlanets().values()) {
-				result += i.toString() + _SEPARATOR;
+				result += i.getName() + _SEPARATOR;
 			}
 		}
 
 		return result;
+	}
+	
+	/**
+	 * Pre: La galaxia debe existir
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getPlanetsToGalaxy(String name) throws Exception {
+		// Cogemos la galxia
+		Galaxy g = Clt.get(name);
+		PairInt p = g.getSize();
+
+		return pc.getWithoutGalaxy(p.getX(), p.getY());
 	}
 
 	// Delete

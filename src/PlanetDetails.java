@@ -8,6 +8,7 @@ public class PlanetDetails extends View3Col {
 
 	private JButton bSubmit;
 	private PlanetForm fPlanet;
+	private GalaxyInfo fGalaxy;
 
 	/**
 	 * 
@@ -32,9 +33,8 @@ public class PlanetDetails extends View3Col {
 		add_left(fPlanet);
 
 		// Tabla de planetas
-		//pRight.add(new PlanetPlanetsView(((PlanetControllerView) controller)));
-		//PlanetPlanetsView vPlanets = new PlanetPlanetsView(((PlanetControllerView) controller));
-		//add_center(vPlanets);
+		fGalaxy = new GalaxyInfo(controller);
+		add_center(fGalaxy);
 			
 		// Boton de enviar
 		bSubmit = create_button_submit();
@@ -69,8 +69,7 @@ public class PlanetDetails extends View3Col {
 
 			//Formularuo basico
 			//-----------------
-			String[] l = decode(((PlanetControllerView) controller)
-					.getByName(name));
+			String[] l = decode(((PlanetControllerView) controller).getByName(name));
 
 			if (l.length == 0)
 				throw new Exception("Error in data");
@@ -85,8 +84,21 @@ public class PlanetDetails extends View3Col {
 			//Galaxya a la q pertence
 			//-----------------
 			
-			//TODO
-
+			String[] g = decode(((PlanetControllerView) controller).getGalaxy(name));
+			if (g.length == 0) {
+				//No dispone de galaxia
+				fGalaxy.setNameValue("-");
+				fGalaxy.setXValue("-");
+				fGalaxy.setYValue("-");
+				
+			} else {
+				//Dispone de galaxia
+				fGalaxy.setNameValue(g[0]);
+				fGalaxy.setXValue(g[1]);
+				fGalaxy.setYValue(g[2]);
+			}
+			
+			
 		} catch (Exception e) {
 			controller.show_error(e.getMessage());
 		}
