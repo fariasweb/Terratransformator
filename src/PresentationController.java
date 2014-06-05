@@ -44,8 +44,6 @@ public class PresentationController {
 		view.add_right_tab(kcv.get_view(), "Packets");
 		view.add_right_tab(rcv.get_view(), "Resource");
 		
-		
-
 	}
 
 }
