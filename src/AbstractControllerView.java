@@ -50,7 +50,7 @@ public abstract class AbstractControllerView {
 	public AbstractController get_controller() {
 		return controller;
 	}
-
+	
 	// -------------------------------------------------------
 	// VIEWS
 	// -------------------------------------------------------

@@ -11,7 +11,6 @@ public class SaveThread implements Runnable{
 	}
 	public void run() {
 		try{
-			Console.log("You are in the thread SAVE method!:D");
 			ac.save(path,append);
 		}
 		catch(Exception e){

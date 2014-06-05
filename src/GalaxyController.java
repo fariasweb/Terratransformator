@@ -57,7 +57,7 @@ public class GalaxyController extends AbstractController {
 		// Comprobamos que exista algo en el array
 		if (Clt.size() > 0) {
 			for (Galaxy i : Clt.values()) {
-				result += i.toString() + "\n";
+				result += i.toString() + _SEPARATOR;
 			}
 		}
 		return result;

@@ -48,6 +48,15 @@ public class PacketControllerView extends AbstractControllerView {
 		// view.show(firstCache);
 	}
 
+	
+	/**
+	 * 
+	 * @param rc
+	 */
+	public void setResourceController(ResourceController rc) {
+		((PacketController) controller).setResourceController(rc);
+	}
+	
 	// -------------------------------------------------------
 	// CREAR
 	// -------------------------------------------------------
@@ -116,8 +125,8 @@ public class PacketControllerView extends AbstractControllerView {
 	/**
 	 * 
 	 */
-	public void create_form_resource() {
-		vShared.add_tab_pos("Add resource", new ViewTest(), 1);
+	public void create_form_resource(String name) {
+		vShared.add_tab_pos("Add resource", new PacketResourceDetails(this, name), 1);
 		vShared.change_tab(1);
 	}
 
@@ -144,10 +153,39 @@ public class PacketControllerView extends AbstractControllerView {
 	 * @return
 	 * @throws Exception
 	 */
-	/*public String getPlanets(String name) throws Exception {
-		return ((PacketController) controller).getPlanetsFromPacket(name);
-
-	}*/
+	public String getResourceToPacket(String name) throws Exception {
+		return ((PacketController) controller).getResourceToPacket(name);
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getResources(String name) throws Exception {
+		return ((PacketController) controller).getResourcesFromPacket(name);
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @param resource
+	 * @param q
+	 * @throws Exception 
+	 */
+	public void addResource(String name, String resource, int q) throws Exception {
+		//Asignamos el planeta a la galxia
+		((PacketController) controller).addResource(name,resource, q);
+		
+		Console.log(((PacketController) controller).getResourcesFromPacket(name));
+				
+		//Refrescamos tabla
+		view_detail.update_resource_list(name);
+				
+		//Cerramos pestana
+		vShared.remove_tab(1);
+	}
 
 	// -------------------------------------------------------
 	// ELIMINAR
@@ -171,20 +209,32 @@ public class PacketControllerView extends AbstractControllerView {
 
 		vShared.remove_all_tabs();
 	}
+	
+	/**
+	 * 
+	 * @param galaxy
+	 * @param planet
+	 * @throws Exception 
+	 */
+	public void delete_resource(String packet, String resource) throws Exception {
+		
+		//Eliminar el planeta
+		((PacketController) controller).removeResourceFromPacket(packet, resource);
+	
+		//Refrescamos tabla
+		view_detail.update_resource_list(packet);
+				
+		//Cerramos pestana
+		vShared.remove_tab(1);
+	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public PacketController getPacketController(){
 		return (PacketController) controller;
 	}
-	// -------------------------------------------------------
-	// TEST - TODO: Revisar
-	// -------------------------------------------------------
-
-	// ESTO ESTA PROHIBIDO!!! ENTRE CAPAS NO COMPARTES OBJETOS - SOLO DATOS
-	// BASICOS
-	/*
-	 * public Packet getByName(String name){ try{ return ((PacketController)
-	 * controller).getByName(name); } catch(Exception e){
-	 * Console.print("Cannot add Packet"); } return null; }
-	 */
+	
 
 }

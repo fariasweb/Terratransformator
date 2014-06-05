@@ -94,7 +94,7 @@ public class GalaxyDetails extends View3Col {
 	 * 
 	 */
 	public void update_planet_list(String name) throws Exception {
-		vPlanets.setGalaxyName(name);
+		vPlanets.setName(name);
 		
 		String planets = ((GalaxyControllerView) controller).getPlanets(name);
 		String[][] list_planets = decode_list(planets);

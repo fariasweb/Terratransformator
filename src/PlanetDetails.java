@@ -83,15 +83,18 @@ public class PlanetDetails extends View3Col {
 			
 			//Galaxya a la q pertence
 			//-----------------
+			String galaxy = ((PlanetControllerView) controller).getGalaxy(name);
 			
-			String[] g = decode(((PlanetControllerView) controller).getGalaxy(name));
-			if (g.length == 0) {
+			if (galaxy.equals("")) {
 				//No dispone de galaxia
 				fGalaxy.setNameValue("-");
 				fGalaxy.setXValue("-");
 				fGalaxy.setYValue("-");
 				
 			} else {
+				
+				String[] g = decode(galaxy);
+				
 				//Dispone de galaxia
 				fGalaxy.setNameValue(g[0]);
 				fGalaxy.setXValue(g[1]);
