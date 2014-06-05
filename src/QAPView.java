@@ -54,8 +54,8 @@ public class QAPView extends ViewForm {
 		
 
 		galaxyLabel = new JLabel("Select Galaxy for Algorithm:");
-		rb1 = new JRadioButton("QAP Lazy Branch and Bound",true);
-		rb2 = new JRadioButton("QAP Eager Branch and Bound",false);
+		rb1 = new JRadioButton("GilmoreLazy",true);
+		rb2 = new JRadioButton("GilmoreEager",false);
 
 
 
@@ -153,7 +153,12 @@ public class QAPView extends ViewForm {
 
 	inputButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e){
-			showQAPInputForm();
+			try{
+				showQAPInputForm((String)gcb.getSelectedItem(), rb1.getName(), (Integer)jp.getValue());
+			}
+			catch(Exception mm){
+				Console.print("QAP");
+			}
 		}
 	});
 	}
@@ -163,9 +168,7 @@ public class QAPView extends ViewForm {
 		if(sizeGalaxy > 0){
 			String[][] ngMatrix = new String[sizeGalaxy][3];
 			String[] nameGalaxies = new String[sizeGalaxy];
-			
-	
-			 
+
 			ngMatrix = decode_list(qc.getAllGalaxies());
 
 			for(int i = 0; i < ngMatrix.length; ++i){
@@ -186,15 +189,19 @@ public class QAPView extends ViewForm {
 			nulo[0] = "None";
 			gcb.setModel(new DefaultComboBoxModel(nulo)); 
 		}
-
 	}
 	
-	public void showQAPInputForm(){
-		qapinput = new QAPInputDetail((QAPInputControllerView)controller,10);
-		qapinput.setVisible(true);
-		((QAPInputControllerView)controller).create_form_add();	
+	public void showQAPInputForm(String nameGalaxy, String QAPType, int nivel){
+		try{
+			qc.QAP(nameGalaxy, QAPType, nivel);
+		}
+		catch(Exception e) {
+			Console.print("QAP");
+		}
 		
-
+		qapinput = new QAPInputDetail((QAPInputControllerView)controller);
+		qapinput.setVisible(true);
+		((QAPInputControllerView)controller).create_form_add();
 	}
 
 	protected void create_events() {

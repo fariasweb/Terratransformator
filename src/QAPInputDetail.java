@@ -8,18 +8,34 @@ public class QAPInputDetail extends View3Col{
 	private JButton jb; 
 	private QAPInput input;
 	private int sizeMatrix;
+	private String[][] distanceM;
+	private String[][] flowM;
+	
 
-	QAPInputDetail(AbstractControllerView c, int size) {
+	QAPInputDetail(QAPInputControllerView c) {
 		super((QAPInputControllerView)c);
-		crear_vista(size);
+		
+		distanceM = transformMatrix(c.getDistanceMatrix());
+		flowM = transformMatrix(c.getFlowMatrix());
+		crear_vista();
 	}
 
-	private void crear_vista(int size){
+	private String[][] transformMatrix(double[][] distanceMatrix){
+		String[][] aux = new String[distanceMatrix.length][distanceMatrix[0].length];
+		for(int i = 0; i < distanceMatrix.length; ++i){
+			for(int j = 0; j < distanceMatrix[0].length; ++j){
+				aux[i][j] = distanceMatrix + "";
+			}
+		}
+		return aux;
+	}
+	
+	private void crear_vista(){
 
-		sizeMatrix = size;
-		QAPInputFormCreate matrixDistance = new QAPInputFormCreate(controller,sizeMatrix,"Distance Matrix:");
+		
+		QAPInputFormCreate matrixDistance = new QAPInputFormCreate(controller,"Distance Matrix:", distanceM);
 		add_left(matrixDistance);
-		QAPInputFormCreate matrixFlow = new QAPInputFormCreate(controller,sizeMatrix, "Flow Matrix");
+		QAPInputFormCreate matrixFlow = new QAPInputFormCreate(controller, "Flow Matrix", flowM);
 		add_center(matrixFlow);
 
 		jb = new JButton("Run Algorithm!");

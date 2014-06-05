@@ -8,7 +8,7 @@ public class QAPController extends AbstractController{
 	private PacketController CP;
 	// Private and general
 	protected DataController dCont;
-
+	private QAPInput qapinput;
 	// Copias de los valores en el momento de ejecutar la solucion
 	private Galaxy g;
 	private TST<Packet> p;
@@ -170,15 +170,15 @@ public class QAPController extends AbstractController{
 		p = CP.cloneCollection();
 
 		// 4.Entrada
-		QAPInput iqap = new QAPInput(g, p,nivel);
+		qapinput = new QAPInput(g, p,nivel);
 
 		// 5.Seleccion de algoritmo y ejecucion
 		QAP alg;
 
 		if (QAPType.equals(QAPTypeList.GilmoreLazy.name())) {
-			alg = new QAPLazyGLB(iqap);
+			alg = new QAPLazyGLB(qapinput);
 		} else if (QAPType.equals(QAPTypeList.GilmoreEager.name())) {
-			alg = new QAPEager(iqap);
+			alg = new QAPEager(qapinput);
 		} else {
 			throw new Exception("QAPType is not defined");
 		}
@@ -191,6 +191,14 @@ public class QAPController extends AbstractController{
 		oqap.setQAPSend();
 	}
 
+	public double[][] getDistanceMatrix(){
+		return qapinput.getDistanceMatrix();
+	}
+	
+	public double[][] getFlowMatrix(){
+		return qapinput.getFlowMatrix();
+	}
+	
 	// ---------------------------------------------
 	// QAP Solution
 	// ---------------------------------------------

@@ -29,11 +29,17 @@ public class QAPInputControllerView extends AbstractControllerView {
 	}
 
 	public void create_form_add() {
-		vShared.add_once_tab("Create QAPInput Detail", new QAPInputDetail(this,controller.size()));
+		vShared.add_once_tab("Create QAPInput Detail", new QAPInputDetail(this));
 	}
 
 
-
+	public double[][] getDistanceMatrix(){
+		return ((QAPController) controller).getDistanceMatrix();
+	}
+	
+	public double[][] getFlowMatrix(){
+		return ((QAPController) controller).getFlowMatrix();
+	}
 	// -------------------------------------------------------
 	// CREAR
 	// -------------------------------------------------------
