@@ -16,9 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * 
  */
 public class GalaxyView extends ViewController {
-	private JFrame jframe;
-	private JFileChooser jfile;
-	private String path; 
+	
 	/**
 	 * 
 	 * @param c
@@ -26,27 +24,7 @@ public class GalaxyView extends ViewController {
 	GalaxyView(GalaxyControllerView c) { //He cambiado por esto en vez de AbstractControllerView
 		super(c);
 	}
-	
-	public void createFrame(String name){
-		
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
-		jfile = new JFileChooser();
-		jfile.setFileFilter(filter);
-		jfile.setDialogTitle(name);
-		JPanel jpanel1 = new JPanel();
-		jpanel1.add(jfile);
-		jfile.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		int result = jfile.showSaveDialog(this);
-		if (result == JFileChooser.APPROVE_OPTION) {
-		    System.out.println("Accept was selected");
-		    path = jfile.getSelectedFile().getAbsolutePath();
-		    if(name == "Load")controller.load(path);
-		    else controller.save(path,false);
-		} else if (result == JFileChooser.CANCEL_OPTION) {
-		    System.out.println("Cancel was selected");
-		}
-		
-	}
+
 
 	/**
 	 * 

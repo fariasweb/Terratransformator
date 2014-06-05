@@ -16,11 +16,11 @@ public class GalaxyPlanetsDetails extends View2Col {
 	 * @param c
 	 */
 
-	GalaxyPlanetsDetails(AbstractControllerView c) {
+	GalaxyPlanetsDetails(AbstractControllerView c, String name) {
 
 		super(c);
 		
-		//GalaxyName = name;
+		GalaxyName = name;
 		
 		//Completamos el form
 		complete_form();
@@ -68,34 +68,16 @@ public class GalaxyPlanetsDetails extends View2Col {
 
 			//Formularuo basico
 			//-----------------
-			String[][] l = decode_list(((GalaxyControllerView) controller).getPlanetWithoutGalaxy(Galaxyname));
+			String[][] l = decode_list(((GalaxyControllerView) controller).getPlanetWithoutGalaxy(GalaxyName));
 			String[] g = new String[l.length];
 			
 			for (int i = l.length - 1; i >= 0; i-= 1) {
 				g[i] = l[i][0];
 			}
 			
+			fGalaxy.setOriginalName(GalaxyName);
 			fGalaxy.append(g);
 			
-			/*if (l.length == 0)
-				throw new Exception("Error in data");
-				
-			fGalaxy.setNameValue(l[0]);
-			fGalaxy.setXValue(l[1]);
-			fGalaxy.setYValue(l[2]);
-			
-			//Marcamos el nombre original
-			//fGalaxy.setOriginalName(name);
-			
-			//Listao de planetas
-			//------------------
-			String planets = ((GalaxyControllerView) controller).getPlanets(name);
-			String[] list_planets = decode_in_lines(planets);
-			
-			for (int i = list_planets.length - 1; i >= 0; i-= 1) {
-				vPlanets.show(list_planets[i]);
-			}*/
-
 		} catch (Exception e) {
 			controller.show_error(e.getMessage());
 		}

@@ -125,7 +125,7 @@ public class PlanetController extends AbstractController {
 			
 			for (Planet i : Clt.values()) {
 				p = i.getPosition();
-				if (p.getX() <= x && p.getY() <= y)
+				if (!i.haveGalaxy() && p.getX() <= x && p.getY() <= y)
 					result += i.toString() + _SEPARATOR;
 			}
 		}

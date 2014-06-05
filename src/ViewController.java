@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * 
@@ -25,6 +26,10 @@ public abstract class ViewController extends ViewPanel {
 	protected JScrollPane scrollPane;
 
 	protected JButton bCreate, bDelete, bImport, bExport;
+	
+	protected JFrame jframe;
+	protected JFileChooser jfile;
+	protected String path; 
 
 	/**
 	 * 
@@ -128,11 +133,11 @@ public abstract class ViewController extends ViewPanel {
 	public void show(String s){
 
 		if(s.equals(" ") || s.equals("")){
-			Console.print("s es vacio");
 			tmodel.setRowCount(0);
 			return;
 		}
 
+		Console.log(s);
 		String[] ss = decode(s);
 		
 		tmodel.setRowCount(0);
@@ -142,9 +147,52 @@ public abstract class ViewController extends ViewPanel {
 	
 	/**
 	 * 
+	 * @param s
+	 */
+	public void show(String[][] ss){
+
+		if(ss.length == 0){
+			tmodel.setRowCount(0);
+			return;
+		}
+
+		tmodel.setRowCount(0);
+		String[] aux = null;
+		
+		for (String[] s : ss)
+			tmodel.addRow(new String[] {s[0]});
+	}
+	
+	/**
+	 * 
 	 */
 	public void clear() {
 		tmodel.setRowCount(0);
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 */
+	public void createFrame(String name){
+		
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+		jfile = new JFileChooser();
+		jfile.setFileFilter(filter);
+		jfile.setDialogTitle(name);
+		JPanel jpanel1 = new JPanel();
+		jpanel1.add(jfile);
+		jfile.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		int result = jfile.showSaveDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+		    System.out.println("Accept was selected");
+		    path = jfile.getSelectedFile().getAbsolutePath();
+		    if(name == "Load")controller.load(path);
+		    else controller.save(path,false);
+		} else if (result == JFileChooser.CANCEL_OPTION) {
+		    System.out.println("Cancel was selected");
+		}
+		
 	}
 
 	//Private stuff

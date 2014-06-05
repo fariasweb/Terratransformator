@@ -100,7 +100,8 @@ public class ViewTabbedPane extends ViewShared {
 	 * @param index
 	 */
 	public void remove_tab(int index) {
-		tabbedOpe.remove(index);
+		if (index < tabbedOpe.getTabCount())
+			tabbedOpe.remove(index);
 	}
 	
 	/**
