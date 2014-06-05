@@ -127,6 +127,17 @@ public class Planet extends Entity {
 			g.removePlanet(g.getName());
 		}
 	}
+	
+	// Exist
+	// -----------------------------------------------
+
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean haveGalaxy() {
+		return galaxy != null;
+	}
 
 	// toString
 	// -----------------------------------------------

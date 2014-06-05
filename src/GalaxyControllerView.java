@@ -101,6 +101,23 @@ public class GalaxyControllerView extends AbstractControllerView {
 		}
 		reloadTable();
 	}
+	
+	/**
+	 * 
+	 * @param num
+	 * @throws Exception 
+	 */
+	public void addPlanet(String galaxy, String planet) throws Exception {
+		//Asignamos el planeta a la galxia
+		((GalaxyController) controller).addPlanet(galaxy,planet);
+		
+		//Refrescamos tabla
+		view_detail.update_planet_list(galaxy);
+		
+		//Cerramos pestana
+		vShared.remove_tab(1);
+		
+	}
 
 	// -------------------------------------------------------
 	// LISTAR/EDITAR
@@ -118,8 +135,8 @@ public class GalaxyControllerView extends AbstractControllerView {
 	/**
 	 * 
 	 */
-	public void create_form_planet() {
-		vShared.add_tab_pos("Add planet", new ViewTest(), 1);
+	public void create_form_planet(String name) {
+		vShared.add_tab_pos("Add planet", new GalaxyPlanetsDetails(this, name), 1);
 		vShared.change_tab(1);
 	}
 
@@ -150,6 +167,16 @@ public class GalaxyControllerView extends AbstractControllerView {
 		return ((GalaxyController) controller).getPlanetsFromGalaxy(name);
 
 	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getPlanetWithoutGalaxy(String name) throws Exception {
+		return ((GalaxyController) controller).getPlanetsToGalaxy(name);
+	}
 
 	// -------------------------------------------------------
 	// ELIMINAR
@@ -171,6 +198,24 @@ public class GalaxyControllerView extends AbstractControllerView {
 
 
 		vShared.remove_all_tabs();
+	}
+	
+	/**
+	 * 
+	 * @param galaxy
+	 * @param planet
+	 * @throws Exception 
+	 */
+	public void delete_planet(String galaxy, String planet) throws Exception {
+		
+		//Eliminar el planeta
+		((GalaxyController) controller).removePlanetFromGalaxy(galaxy, planet);
+	
+		//Refrescamos tabla
+		view_detail.update_planet_list(galaxy);
+				
+		//Cerramos pestana
+		vShared.remove_tab(1);
 	}
 
 	public GalaxyController getGalaxyController(){
