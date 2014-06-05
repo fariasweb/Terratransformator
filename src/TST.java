@@ -47,9 +47,6 @@ public class TST<Value> {
 			return c;
 		}
 
-		/*public boolean equals(Node aThat){
-			return (this.getC() == (aThat.getC()));
-		}*/
 	}
 
 	/**
@@ -320,31 +317,12 @@ public class TST<Value> {
 	private void collectValuesCache(Node x, String prefix, String key, ArrayList<Value> queue, int max) {
 
 		if (x == null || current > max) return;
-		
-		//Chivato debug
-		// Console.print("Key: " + key + "  Prefix: " + prefix + x.c);
 
 		collectValuesCache(x.left, prefix, key, queue, max);
 
-		//Chivato debug
-		/*Console.echo("x.getClass().getSimpleName().equals("+"FinalNode"+"): ");
-		if(x.getClass().getSimpleName().equals("FinalNode")) Console.print("TRUE");
-		else Console.print("FALSE");
-		Console.echo("current <= max: ");
-		if(current <= max) Console.print("TRUE");
-		else Console.print("FALSE");
-		Console.echo("key.compareTo(" + prefix + x.c + ") < 0: ");
-		if(key.compareTo(prefix+x.c) < 0) Console.print("TRUE");
-		else Console.print("FALSE");*/
-
 		if (!is_Node(x) && current <= max && key.compareTo(prefix+x.c) < 0){
 			queue.add(((FinalNode)x).val);
-			
-			//Chivato debug
-			// Console.print("--->"+((FinalNode)x).val.toString());
 			++current;
-			//Chivato debug
-			// Console.print("--->Current: " + Integer.valueOf(current).toString());
 		}
 		
 		collectValuesCache(x.mid, prefix + x.c, key, queue, max);
@@ -452,32 +430,12 @@ public class TST<Value> {
 		if (c < x.c){
 			del = remove(x.left, x, key, d);
 
-			//Ayuda para debuggar
-			/*Console.echo("Letra: "+x.c+" ");
-			if(x.left == null) Console.echo("left ");
-			if(x.mid == null) Console.echo("mid ");
-			if(x.right == null) Console.echo("right ");
-			if(aux != null) Console.echo("aux ");
-			if(x.getClass().getSimpleName().equals("Node")) Console.echo("Node");
-			Console.print("");*/
-			//Fin ayuda para debuggar
-
 			if(x.left == null && x.mid == null && x.right == null 
 				&& aux != null && is_Node(x)) 
 				aux.left = null;
 		}
 		else if (c > x.c){
 			del = remove(x.right, x, key, d);
-
-			//Ayuda para debuggar
-			/*Console.echo("Letra: "+x.c+" ");
-			if(x.left == null) Console.echo("left ");
-			if(x.mid == null) Console.echo("mid ");
-			if(x.right == null) Console.echo("right ");
-			if(aux != null) Console.echo("aux ");
-			if(x.getClass().getSimpleName().equals("Node")) Console.echo("Node");
-			Console.print("");*/
-			//Fin ayuda para debuggar
 
 			if(x.left == null && x.mid == null && x.right == null 
 				&& aux != null && is_Node(x)) 
@@ -486,16 +444,6 @@ public class TST<Value> {
 		}
 		else if (d < key.length() - 1){
 			del = remove(x.mid, x, key, d + 1);
-
-			//Ayuda para debuggar
-			/*Console.echo("Letra: "+x.c+" ");
-			if(x.left == null) Console.echo("left ");
-			if(x.mid == null) Console.echo("mid ");
-			if(x.right == null) Console.echo("right ");
-			if(aux != null) Console.echo("aux ");
-			if(x.getClass().getSimpleName().equals("Node")) Console.echo("Node");
-			Console.print("");*/
-			//Fin ayuda para debuggar
 
 			if(x.left == null && x.mid == null && x.right == null 
 				&& aux != null && is_Node(x)) 
@@ -509,9 +457,6 @@ public class TST<Value> {
 		}
 		else {
 			if(is_Node(x)) return false;
-			//Debug
-			//Console.print("Delete");
-
 			del = true;
 			
 			if(x.left == null && x.mid == null && x.right == null){
@@ -597,58 +542,6 @@ public class TST<Value> {
 		 */
 		public Value next() {
 
-		//>>>>>>>>>>>>>>>>NEXT ORIGINAL
-		//Buscamos el siguiente nodo que sea una llave
-			/*while (current != null && current.getValue() == null) {
-			
-				if (current.right != null)
-					stack.push(current.right);
-				if (current.mid != null)
-					stack.push(current.mid);
-				if (current.left != null)
-					stack.push(current.left);
-
-				current = stack.pop();
-			}*/
-
-			//Al encontar miramos los hijos por que seran los siguientes en mirarse
-			/*if (current.right != null)
-				stack.push(current.right);
-			if (current.mid != null)
-				stack.push(current.mid);
-			if (current.left != null)
-				stack.push(current.left);*/
-
-			//Guardamos el valor actual
-			/*Node node = current;*/
-
-			//EN caso de no estar la pila vacia pasamos al sigueinte
-			/*if (!stack.empty()) {
-				current = stack.pop();
-			} else {
-				current = null;
-			}*/
-
-			/*
-			 * current = current.left; stack.push(current.right);
-			 * stack.push(current.mid);
-			 */
-
-/*			return node.getValue();*/
-
-			//
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-		/*	Stack<Node> aux = new Stack<Node>();
-			stack.copyInto(aux);
-			while(!aux.empty()){
-				Node a = aux.pop();
-				String b = a.getValue().getName();
-				Console.print(b);
-			}*/
-			
-
-			//>>>>>>>>>>>>>>>>>>>NEXT NUEVO EN PROCESO
-
 			Value v = current.getValue();
 			stack.push(current);
 			FinalNode ret = dfsAux(current.mid);
@@ -659,72 +552,65 @@ public class TST<Value> {
 				
 			stack.pop();	
 			if(ret == null) {
-			Node n = stack.peek();
-			Node rec = current;
-			while(!stack.empty() && n!= null){
-					// Console.print("HOLAAAAAA");
-				//Warning!!!
-				if(n.left != null && rec.equals(n.left)){
-					 // Console.print("Esquerra");
-					if(n != null && !is_Node(n)){
-						current = stack.pop(); 
-						return v;
-					}
+				Node n = stack.peek();
+				Node rec = current;
+				while(!stack.empty() && n!= null){
+					if(n.left != null && rec.equals(n.left)){
+						if(n != null && !is_Node(n)){
+							current = stack.pop(); 
+							return v;
+						}
 
-					if(n.mid != null){
+						if(n.mid != null){
+							ret = dfsAux(n.mid);
+							if (ret != null){
+								current = ret; 
+								return v;
+							}
+						}
 
-						ret = dfsAux(n.mid);
-						if (ret != null) {
-						// Console.print("hyu");
-					 
-							// Console.print(""+n.mid.getC());
+						ret = dfsAux(n.right);
+						if (ret != null) { current = ret; return v;}
+
+					} 
 					
-							current = ret; return v;}
+					if(n.mid != null && rec.equals(n.mid)){
+						ret = dfsAux(n.right);
+						if (ret != null) { current = ret; return v;}
 					}
-
-					ret = dfsAux(n.right);
-					if (ret != null) { current = ret; return v;}
-
-				} 
-				
-				if(n.mid != null && rec.equals(n.mid)){
-
-					 // Console.print("Medio");
-					ret = dfsAux(n.right);
-					if (ret != null) { current = ret; return v;}
+					rec = stack.pop();
+					if(!stack.empty()) n = stack.peek();
+					
 				}
-				// else Console.print("Derecha");
-				rec = stack.pop();
-				if(!stack.empty()) n = stack.peek();
-				
 			}
-		}
 			current = null;
 			return v;
-
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		}
 		
-		public void remove() {
-			
-		}
+		public void remove(){}
 
 		private FinalNode dfsAux(Node n){
 
 			if(n != null){
 				stack.push(n);
-				if(n.left != null)
-					return dfsAux(n.left);
+				if(n.left != null){
+					FinalNode aux = dfsAux(n.left);
+					if(aux != null) return aux;
+				}
 
 				if(!is_Node(n)){
 					stack.pop();
 					return (FinalNode) n;
 				}
 				
-				if(n.mid != null)
-					return dfsAux(n.mid);
-				if(n.right != null)
-					return dfsAux(n.right);
+				if(n.mid != null){
+					FinalNode aux = dfsAux(n.mid);
+					if(aux != null) return aux;
+				}
+				if(n.right != null){
+					FinalNode aux = dfsAux(n.right);
+					if(aux != null) return aux;
+				}
 				stack.pop();
 			}
 			return null;
@@ -737,7 +623,6 @@ public class TST<Value> {
 	 * @return
 	 */
 	public Iterator<Value> iterator() {
-		if(root == null) Console.print("TU PUTA MADREEEEEEEEE");
 		return new TSTIterator(root);
 	}
 }

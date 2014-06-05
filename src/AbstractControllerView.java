@@ -169,12 +169,14 @@ public abstract class AbstractControllerView {
 		
 		//Eliminas la tabla actual
 		((ViewController) view).clear();
-		
 		//Cargas cache
 		refresh();
-		
 		//Escribes primerea parte de la cache
 		((ViewController) view).show(getStringToShow());
+	}
+
+	public boolean needsRefreshing(String s){
+		return controller.needsRefreshing(s);
 	}
 
 }

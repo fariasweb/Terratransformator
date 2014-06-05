@@ -97,7 +97,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 
 			// Table - TODO: Cache TODO: Eliminar esto
 			Console.print("UPDATING GALAXY!");
-			refresh();
+			if(needsRefreshing(name)) refresh();
 		}
 		reloadTable();
 	}
