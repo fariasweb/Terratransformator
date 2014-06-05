@@ -31,8 +31,7 @@ public class PresentationController {
 		pcv = new PlanetControllerView(operationTab, vError);
 		gcv = new GalaxyControllerView(pcv.get_controller(), operationTab, vError);
 		kcv = new PacketControllerView(operationTab, vError);
-		rcv = new ResourceControllerView(kcv.get_controller(), operationTab,
-				vError);
+		rcv = new ResourceControllerView(kcv.get_controller(), operationTab,vError);
 
 		qcv = new QAPInputControllerView(kcv, gcv, operationTab, vError);
 
