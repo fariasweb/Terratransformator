@@ -42,7 +42,6 @@ public abstract class AbstractController {
 			dCont.open(path, append);
 			
 			//Reinicimos para que encodeString empieze desde el incio
-			_last_key = ""; 
 
 			Iterator it = getIterator();
 			String cache;
@@ -227,8 +226,8 @@ public abstract class AbstractController {
 		return ret;
 	}
 
-	public String initFirstCache(){
-		//Chivato
+	//Parece que no servira para nada al final
+	/*public String initFirstCache(){
 		Console.print("Init firstCache");
 
 		String ret = new String();
@@ -244,10 +243,9 @@ public abstract class AbstractController {
 		it2 = it;
 		return ret;
 
-	}
-
+	}*/
+/*
 	public String initSecondCache(){
-		//Chivato
 		Console.print("Init secondCache");
 
 		String ret = new String();
@@ -263,5 +261,5 @@ public abstract class AbstractController {
 		return ret;
 
 	}
-
+*/
 }

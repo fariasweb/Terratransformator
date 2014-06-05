@@ -4,7 +4,7 @@ import java.util.*;
  * QAPEager
  *
  */
-public class QAPEager /*extends QAP*/{
+public class QAPEager extends QAP{
 	/**
 	 * 
 	 * @param qap
@@ -12,31 +12,23 @@ public class QAPEager /*extends QAP*/{
 	 */
 	
 	private QAPGilmoreLawerBound GLB;
-	public QAPBaBTree tree;
-	public int[] solucion;
-	public long time;
-	double cost;
 	
+	int n;
 	public int NombredeBranch;
 	private Comparator<QAPEagerSP> comparator;
 	
-	public QAPEager() {
-		tree = new QAPBaBTree();
-		NombredeBranch = 1;
-		comparator = new QAPEagerSPcomparator();
-        
-	}
 	
-	/*
+	
 	public QAPEager(QAPInput qap) throws Exception {
 		super(qap);
 		QAPType = "GilmoreEager";
-		
-	}*/
 
-	public double BranchAndBound(double[][] d, double[][] f, int[] va,int[] val) {
+		comparator = new QAPEagerSPcomparator();
 		
-		int n = d.length;
+	}
+
+	public double BranchAndBound(int[] va,int[] val) {
+		
 		// Redeclaro la cola de vector
 		Queue<QAPEagerSP> q = new LinkedList<QAPEagerSP>();
 
@@ -45,9 +37,13 @@ public class QAPEager /*extends QAP*/{
 		
 		sp.level = 0;
 		sp.min = 0;
+		sp.va = va;
+		sp.val = val;
+		
+		/*
 		sp.va = new int[n];
 		sp.val = new int[n];
-		
+		*/
 		
 		
 		q.offer(sp);
@@ -57,15 +53,6 @@ public class QAPEager /*extends QAP*/{
 			QAPEagerSP nodepare = q.element();
 			q.remove();
 			if (nodepare.level == n - 1) {
-				//este paso de autocompleta se hara fuera
-				
-				for (int m = 0; m < n; m++) {
-					if (nodepare.val[m] == 0) {
-						nodepare.va[n - 1] = m + 1;
-						nodepare.val[m] = n;
-					}
-				}
-
 				if (sp.level < n - 1 || nodepare.min < sp.min) {
 					sp.valor(nodepare.level + 1, nodepare.va, nodepare.val,
 							nodepare.min);
@@ -78,15 +65,12 @@ public class QAPEager /*extends QAP*/{
 						nodepare.va[nodepare.level] = i + 1;
 						nodepare.val[i] = nodepare.level + 1;
 
-						minaux = GLB.QAPGLB(d, f, nodepare.va,
+						minaux = GLB.QAPGLB(input,  nodepare.va,
 								nodepare.val);
 						
-						long timaux = System.nanoTime();
 						
-						timaux = timaux - time;
 						QAPTNSolucion  spaux = new QAPTNSolucion ();
-						spaux.valor(nodepare.level+1, nodepare.va,
-								timaux, minaux);
+						spaux.valor(nodepare.level+1, nodepare.va, System.nanoTime()-getTime(), minaux);
 						tree.addNode(spaux);
 							
 						//mejor que padre  esta parte se reserva!!!!!!
@@ -113,7 +97,7 @@ public class QAPEager /*extends QAP*/{
 					levelchange = nodepare.level;
 					int NombredeBranchlevel = NombredeBranch;//subirlo
 					
-					while (!pq.isEmpty() && NombredeBranchlevel > 0) {
+					while (!pq.isEmpty() && (NombredeBranchlevel > 0 || NombredeBranchlevel == -1)) {
 						q.offer(pq.poll());
 						NombredeBranchlevel--;
 					}
@@ -124,18 +108,21 @@ public class QAPEager /*extends QAP*/{
 		}
 		
 		
-		Util.CopyVectors(sp.va, sp.val, val, va);
+		//Util.CopyVectors(sp.va, sp.val, val, va);
 		
 		return sp.min;
 
 	}
 						
-						//se tiene k quitar
-	public double run(double[][] d, double[][] f, int[] va,int[] val)// throws Exception {	
-	{
-		time = System.nanoTime();
+	public void run() throws Exception {	
+	
+		setTime(System.nanoTime());
+		//output = new  QAPSolution();
+		tree = new QAPBaBTree();
+		NombredeBranch = input.getnivelparametro();
 
-		GLB = new QAPGilmoreLawerBound(d.length);
+		n = input.getMatrixSize();
+		GLB = new QAPGilmoreLawerBound(n);
 		/*
 		//Numero de planetas/paquetes
 		int nPackets = input.getSizePackets();
@@ -149,11 +136,26 @@ public class QAPEager /*extends QAP*/{
 		*/
 		//Inicio de tiempo
 
+		int[] va = new int[n];
+		int[] val = new int[n];
 		
-		double aux =  BranchAndBound( d, f,va,val);
+		setResult(BranchAndBound(va,val));
 
-		time = System.nanoTime() - time; 
-		return aux;
+		for (int m = 0; m < n; m++) {
+			if(m < n-1) {
+				solution[m] = va[m];
+			}
+			
+			if (val[m] == 0) {
+				solution[n - 1] = m + 1;
+				
+			}
+		}
+		
+		output = new QAPSolution(this, input.getgalaxy(), input.getpackets());
+		
+		setTime(System.nanoTime() - getTime());
+		
 		//Algoritmo
 		//double d = BranchAndBound(input.getDistanceMatrix(), input.getFlowMatrix(), sol1,sol2);
 		/*

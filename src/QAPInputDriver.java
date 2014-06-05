@@ -10,7 +10,7 @@ class QAPInputDriver extends AbstractDriver{
 		Galaxy galaxy = new Galaxy();
 		Resource resource = new Resource();
 		TST<Packet> packets = new TST<Packet>(); 
-		QAPInput q = new QAPInput(galaxy,packets);
+		QAPInput q = new QAPInput(galaxy,packets,0);
 		//Generico del menu
 		Scanner in = new Scanner(System.in);
 		int opc = 0;
@@ -29,10 +29,10 @@ class QAPInputDriver extends AbstractDriver{
 				case 0:
 					break;
 				case 1:
-					if (argv.length < 1)
+					if (argv.length < 2)
 						_msg_error_param_insuf();
 					else {
-						q = new QAPInput(galaxy,packets);
+						q = new QAPInput(galaxy,packets,Integer.parseInt(argv[1]));
 					}
 					break;
 				case 2:
@@ -271,7 +271,7 @@ class QAPInputDriver extends AbstractDriver{
 	private static void _menu(){
 		title = "QAPInput Driver";
 		
-		menu.add("QAPInput(Galaxy galaxy, TST<Packet> packets) : QAPInput"); //1
+		menu.add("QAPInput(Galaxy galaxy, TST<Packet> packets,int nivel) : QAPInput"); //1
 		menu.add("PlanetDriver.create_planet(String name, int x, int y) : Planet");   // 2
 		menu.add("PacketDriver.create_packet(String name) : Packet");	
 		menu.add("GalaxyDriver.create_galaxy_full(String name, int x, int y) : Galaxy");

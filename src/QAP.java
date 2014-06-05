@@ -9,17 +9,19 @@ public abstract class QAP {
 	QAPSolution output;
 	//Variables de ejecucion
 	
-	boolean isRun;
+	private boolean isRun;
 
-	long time; 
-	double result; 
+	private long time; 
+	private double result; 
 	
 	//Solucion generada
-	int[] solution;
-	
+	protected int[] solution;
 	//Tipo de algoritmo
 	protected String QAPType = "QAP";
-
+	
+	
+	protected QAPBaBTree tree;
+	
 
 	// Constructor
 	// ---------------------------------------------

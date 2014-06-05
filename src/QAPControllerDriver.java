@@ -188,7 +188,7 @@ public class QAPControllerDriver extends AbstractDriver {
 					if (argv.length < 3)
 						_msg_error_param_insuf();
 					else {
-						runQAP(qapc, argv[1], argv[2]);
+						runQAP(qapc, argv[1], argv[2],Integer.parseInt(argv[3]));
 					}
 					break;
 				case 20:
@@ -275,10 +275,10 @@ public class QAPControllerDriver extends AbstractDriver {
 	}
 
 	public static void runQAP(QAPController qapc, String GalaxyName,
-			String QAPType) {
+			String QAPType,int nivel) {
 		try {
 
-			qapc.QAP(GalaxyName, QAPType);
+			qapc.QAP(GalaxyName, QAPType,nivel);
 
 		} catch (Exception e) {
 

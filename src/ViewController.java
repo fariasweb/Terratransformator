@@ -39,8 +39,14 @@ public abstract class ViewController extends ViewPanel {
 	 */
 	protected void create_view() {
 		// Table
-		tmodel = new DefaultTableModel(new Object[][] {},
-				new String[] { "Name" });
+		tmodel = new DefaultTableModel(new Object[][] {}, new String[] { "Name" })
+		{
+		    public boolean isCellEditable(int row, int column)
+		    {
+		      return false;//This causes all cells to be not editable
+		    }
+		};
+		 
 		table = new JTable(tmodel);
 		
 		table.setCellSelectionEnabled(true);
@@ -60,13 +66,13 @@ public abstract class ViewController extends ViewPanel {
     	scrollPane.getVerticalScrollBar().addAdjustmentListener(listener);
 
 		// Buttons
-		bCreate = new JButton("Crear");
-		bDelete = new JButton("Eliminar");
-		// bDelete.setBackground(Color.BLUE);
-		// bDelete.setForeground(Color.GRAY);
+		bCreate = new JButton("Create");
+		bDelete = new JButton("Delete");
+		bDelete.setBackground(Color.RED);
+		bDelete.setForeground(Color.WHITE);
 
-		bImport = new JButton("Guardar");
-		bExport = new JButton("Cargar");
+		bImport = new JButton("Save");
+		bExport = new JButton("Load");
 
 		// Create in Panel
 		GroupLayout layout = new GroupLayout(this);
@@ -120,6 +126,12 @@ public abstract class ViewController extends ViewPanel {
 	 * @param s
 	 */
 	public void show(String s){
+
+		if(s.equals(" ") || s.equals("")){
+			Console.print("s es vacio");
+			tmodel.setRowCount(0);
+			return;
+		}
 
 		String[] ss = decode(s);
 		

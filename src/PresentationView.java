@@ -4,6 +4,8 @@
 import java.awt.*;
 import java.awt.event.WindowEvent;
 
+import javax.swing.event.MenuListener;
+import javax.swing.event.MenuEvent;
 import javax.swing.*;
 
 public class PresentationView extends JFrame {
@@ -14,6 +16,8 @@ public class PresentationView extends JFrame {
 	PresentationController controller;
 	private ViewTabbedPane tabbedOpe, tabbedLeft, tabbedRight;
 	private ViewNotification errorPanel;
+	private OurMenu menu;
+
 
 	/**
 	 * 
@@ -22,7 +26,7 @@ public class PresentationView extends JFrame {
 	PresentationView(PresentationController c) {
 		super("Terratransformator");
 		controller = c;
-		
+
 		create_view();
 	}
 
@@ -36,17 +40,23 @@ public class PresentationView extends JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		// Size y visibilidad
-		setSize(900, 600);
-		setMinimumSize(new Dimension(900,600));
+		setSize(900, 640);
+		setMinimumSize(new Dimension(900,640));
 		setVisible(true);
 		setResizable(false);
-		
+
 		//TapPanel principales
 		tabbedLeft = new ViewTabbedPane();
 		tabbedRight = new ViewTabbedPane();
 		tabbedOpe = new ViewTabbedPane();
 		errorPanel = new ViewNotification();
-				
+		menu = new OurMenu();
+
+
+		JMenuBar jm = new JMenuBar();
+		jm = menu.menuBar;
+		this.setJMenuBar(jm);
+
 		// Layout
 		GroupLayout layout = new GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
@@ -84,10 +94,9 @@ public class PresentationView extends JFrame {
 						.createParallelGroup(GroupLayout.Alignment.BASELINE)
 						.addComponent(tabbedOpe)
 				)
-				
+
 		);
-		
-		
+
 		pack();
 
 	}
@@ -100,7 +109,7 @@ public class PresentationView extends JFrame {
 	public void add_left_tab(JPanel p, String name) {
 		tabbedLeft.add_tab(name, p);
 	}
-	
+
 	/**
 	 * Anade un panel al TabPanel derecho
 	 * @param p
@@ -118,7 +127,7 @@ public class PresentationView extends JFrame {
 	public ViewTabbedPane get_operation_tab() {
 		return tabbedOpe;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -126,5 +135,5 @@ public class PresentationView extends JFrame {
 	public ViewNotification get_error_panel() {
 		return errorPanel;
 	}
-	
+
 }

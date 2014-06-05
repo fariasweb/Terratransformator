@@ -5,10 +5,10 @@ public class QAPGilmoreLawerBound{
 	 QAPGilmoreLawerBound(int n) {
 		h =  new QAPHungarian(n);
 	 }
-	public double QAPGLB(double[][] d, double[][] f, int[] va,
+	public double QAPGLB(QAPInput qapin,int[] va,
 			int[] local) {
 		
-		int n = d.length;
+		int n = qapin.getMatrixSize();
 
 		double suma = 0;
 		int noasignados = n;//numero de paquetes que queda para asignar
@@ -18,8 +18,11 @@ public class QAPGilmoreLawerBound{
 			if (va[i] != 0) {
 				for (int j = i + 1; j < n; j++) {
 					if (va[j] != 0) {
-						suma += d[va[i] - 1][va[j] - 1] * f[i][j]
-								+ d[va[j] - 1][va[i] - 1] * f[j][i];
+						suma +=  qapin.getElementDistanceMatrixAtIndex(va[i] - 1,va[j] - 1) * 
+								qapin.getElementFlowMatrixAtIndex(i,j)
+								
+								+  qapin.getElementDistanceMatrixAtIndex(va[j] - 1,va[i] - 1) * 
+								qapin.getElementFlowMatrixAtIndex(j,i);
 					}
 				}
 
@@ -39,8 +42,10 @@ public class QAPGilmoreLawerBound{
 						if (local[l] == 0) { //encuentra un planeta vacia
 							for (int k = 0; k < n; k++) {
 								if (va[k] > 0) { //respecto a paquetes que ya tiene asinacion
-									AM[iam][jam] += d[l][va[k] - 1] * f[z][k]
-											+ d[va[k] - 1][l] * f[k][z];
+									AM[iam][jam] +=  qapin.getElementDistanceMatrixAtIndex(l,va[k] - 1) * 
+											qapin.getElementFlowMatrixAtIndex(z,k)
+											+  qapin.getElementDistanceMatrixAtIndex(va[k] - 1,l) * 
+											qapin.getElementFlowMatrixAtIndex(k,z);
 								}
 							}
 							++jam;
@@ -62,14 +67,14 @@ public class QAPGilmoreLawerBound{
 					int jauxd = 0;
 					for (int l = 0; l < k; l++) {
 						if (local[l] == 0) {
-							auxdv[jauxd] = d[k][l];
+							auxdv[jauxd] =  qapin.getElementDistanceMatrixAtIndex(k,l);
 							jauxd++;
 						}
 					}
 
 					for (int l = k + 1; l < n; l++) {
 						if (local[l] == 0) {
-							auxdv[jauxd] = d[k][l];
+							auxdv[jauxd] =  qapin.getElementDistanceMatrixAtIndex(k,l);
 							jauxd++;
 						}
 					}
@@ -94,14 +99,14 @@ public class QAPGilmoreLawerBound{
 					for (int j = 0; j < i; j++) {
 
 						if (va[j] == 0) {
-							auxf[jam2] = f[i][j];
+							auxf[jam2] = qapin.getElementFlowMatrixAtIndex(i,j);
 							jam2++;
 						}
 					}
 
 					for (int j = i + 1; j < n; j++) {
 						if (va[j] == 0) {
-							auxf[jam2] = f[i][j];
+							auxf[jam2] = qapin.getElementFlowMatrixAtIndex(i,j);
 							jam2++;
 						}
 					}

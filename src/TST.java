@@ -1,4 +1,4 @@
-
+import java.util.*;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.LinkedList;
@@ -46,6 +46,10 @@ public class TST<Value> {
 		public char getC() {
 			return c;
 		}
+
+		/*public boolean equals(Node aThat){
+			return (this.getC() == (aThat.getC()));
+		}*/
 	}
 
 	/**
@@ -426,6 +430,8 @@ public class TST<Value> {
 		// Remove
 		if (!remove(root, null, key.toLowerCase(), 0))
 			throw new Exception("The key " + key + " doesn't exist");
+
+		if(N == 0) clear();
 	}
 
 	/**
@@ -494,32 +500,31 @@ public class TST<Value> {
 			if(x.left == null && x.mid == null && x.right == null 
 				&& aux != null && is_Node(x)) 
 				{ 
-					if(aux.left == x) aux.left = null;
-					else if(aux.mid == x) aux.mid = null;
-					else if(aux.right == x) aux.right = null;
+					if(x.equals(aux.left)) aux.left = null;
+					else if(x.equals(aux.mid)) aux.mid = null;
+					else if(x.equals(aux.right)) aux.right = null;
 					else throw new Exception("remove: Debugging Exception");
 				}
 
 		}
 		else {
-			if(!x.getClass().getSimpleName().equals("FinalNode"))
-				return false;
+			if(is_Node(x)) return false;
 			//Debug
 			//Console.print("Delete");
 
 			del = true;
 			
 			if(x.left == null && x.mid == null && x.right == null){
-				if(aux.left == x) aux.left = null;
-				else if(aux.mid == x) aux.mid = null;
-				else if(aux.right == x) aux.right = null;
+				if(x.equals(aux.left)) aux.left = null;
+				else if(x.equals(aux.mid)) aux.mid = null;
+				else if(x.equals(aux.right)) aux.right = null;
 				else throw new Exception("remove: Debugging Exception");
 			}
 			else{ 
 				Node y = new Node(x.c, x.left, x.mid, x.right);
-				if(aux.left == x) aux.left = y;
-				else if(aux.mid == x) aux.mid = y;
-				else if(aux.right == x) aux.right = y;
+				if(x.equals(aux.left)) aux.left = y;
+				else if(x.equals(aux.mid)) aux.mid = y;
+				else if(x.equals(aux.right)) aux.right = y;
 				else throw new Exception("remove: Debugging Exception");
 			}
 			--N;
@@ -577,7 +582,7 @@ public class TST<Value> {
 		 * @param first
 		 */
 		public TSTIterator(Node x) {
-			current = x;
+			current = dfsAux(x);
 		}
 		
 		/**
@@ -594,7 +599,7 @@ public class TST<Value> {
 
 		//>>>>>>>>>>>>>>>>NEXT ORIGINAL
 		//Buscamos el siguiente nodo que sea una llave
-			while (current != null && current.getValue() == null) {
+			/*while (current != null && current.getValue() == null) {
 			
 				if (current.right != null)
 					stack.push(current.right);
@@ -604,35 +609,35 @@ public class TST<Value> {
 					stack.push(current.left);
 
 				current = stack.pop();
-			}
+			}*/
 
 			//Al encontar miramos los hijos por que seran los siguientes en mirarse
-			if (current.right != null)
+			/*if (current.right != null)
 				stack.push(current.right);
 			if (current.mid != null)
 				stack.push(current.mid);
 			if (current.left != null)
-				stack.push(current.left);
+				stack.push(current.left);*/
 
 			//Guardamos el valor actual
-			Node node = current;
+			/*Node node = current;*/
 
 			//EN caso de no estar la pila vacia pasamos al sigueinte
-			if (!stack.empty()) {
+			/*if (!stack.empty()) {
 				current = stack.pop();
 			} else {
 				current = null;
-			}
+			}*/
 
 			/*
 			 * current = current.left; stack.push(current.right);
 			 * stack.push(current.mid);
 			 */
 
-			return node.getValue();
-
+/*			return node.getValue();*/
 
 			//
+			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		/*	Stack<Node> aux = new Stack<Node>();
 			stack.copyInto(aux);
 			while(!aux.empty()){
@@ -640,52 +645,62 @@ public class TST<Value> {
 				String b = a.getValue().getName();
 				Console.print(b);
 			}*/
-			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+			
 
 			//>>>>>>>>>>>>>>>>>>>NEXT NUEVO EN PROCESO
 
-/*			Value v = current.getValue();
-
+			Value v = current.getValue();
+			stack.push(current);
 			FinalNode ret = dfsAux(current.mid);
-			stack.push(ret);
+			
 			if (ret != null){ current = ret; return v; }
-			else {
+			ret = dfsAux(current.right);
+			if (ret != null) { current = ret; return v; }
 				
-					ret = dfsAux(current.right);
-					if (ret != null) { current = ret; return v; }
-				
-			}
+			stack.pop();	
 			if(ret == null) {
-			stack.pop();
 			Node n = stack.peek();
 			Node rec = current;
 			while(!stack.empty() && n!= null){
+					// Console.print("HOLAAAAAA");
 				//Warning!!!
-				if(rec.equals(n.left)){
+				if(n.left != null && rec.equals(n.left)){
+					 // Console.print("Esquerra");
 					if(n != null && !is_Node(n)){
 						current = stack.pop(); 
 						return v;
 					}
 
-					ret = dfsAux(n.mid);
-					if (ret != null) { current = ret; return v;}
+					if(n.mid != null){
+
+						ret = dfsAux(n.mid);
+						if (ret != null) {
+						// Console.print("hyu");
+					 
+							// Console.print(""+n.mid.getC());
+					
+							current = ret; return v;}
+					}
 
 					ret = dfsAux(n.right);
 					if (ret != null) { current = ret; return v;}
 
+				} 
+				
+				if(n.mid != null && rec.equals(n.mid)){
+
+					 // Console.print("Medio");
+					ret = dfsAux(n.right);
+					if (ret != null) { current = ret; return v;}
 				}
-				else if(rec.equals(n.mid)){
-					ret = dfsAux(current.right);
-					if (ret != null) {v = current.getValue(); current = ret; return v;}
-				}
-				else{
-					rec = stack.pop();
-					if(!stack.empty()) n = stack.peek();
-				}
+				// else Console.print("Derecha");
+				rec = stack.pop();
+				if(!stack.empty()) n = stack.peek();
+				
 			}
 		}
 			current = null;
-			return v;*/
+			return v;
 
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		}
@@ -694,7 +709,7 @@ public class TST<Value> {
 			
 		}
 
-		/*private FinalNode dfsAux(Node n){
+		private FinalNode dfsAux(Node n){
 
 			if(n != null){
 				stack.push(n);
@@ -706,14 +721,14 @@ public class TST<Value> {
 					return (FinalNode) n;
 				}
 				
-				else if(n.mid != null)
+				if(n.mid != null)
 					return dfsAux(n.mid);
-				else if(n.right != null)
+				if(n.right != null)
 					return dfsAux(n.right);
 				stack.pop();
 			}
 			return null;
-		}*/
+		}
 		
 	}
 
@@ -722,6 +737,7 @@ public class TST<Value> {
 	 * @return
 	 */
 	public Iterator<Value> iterator() {
+		if(root == null) Console.print("TU PUTA MADREEEEEEEEE");
 		return new TSTIterator(root);
 	}
 }

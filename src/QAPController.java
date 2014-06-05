@@ -12,7 +12,7 @@ public class QAPController extends AbstractController{
 	// Copias de los valores en el momento de ejecutar la solucion
 	private Galaxy g;
 	private TST<Packet> p;
-
+	private int nivel;
 	// Solucion dada para galaxua g y paquetes p
 	private QAPSolution oqap;
 
@@ -141,7 +141,7 @@ public class QAPController extends AbstractController{
 	// Create
 	// ---------------------------------------------
 
-	public void QAP(String GalaxyName, String QAPType) throws Exception {
+	public void QAP(String GalaxyName, String QAPType,int nivel) throws Exception {
 
 		// 1.Comprobar que la galaxia exista , comprobar que existe numPaquetes
 		// > 0
@@ -162,7 +162,7 @@ public class QAPController extends AbstractController{
 		p = CP.cloneCollection();
 
 		// 4.Entrada
-		QAPInput iqap = new QAPInput(g, p);
+		QAPInput iqap = new QAPInput(g, p,nivel);
 
 		// 5.Seleccion de algoritmo y ejecucion
 		QAP alg;
@@ -403,11 +403,11 @@ public class QAPController extends AbstractController{
 
 					} else if (s[0].equals("S")) { //Solucion
 						
-						if (s.length != 4)
+						if (s.length != 5) //HE AUMENTADO EL NUMERO POR EL INT NIVEL
 							throw new Exception("The record to QAPsolution is not correct");
 						
 						//Creamos el input
-						QAPInput iqap = new QAPInput(g, p);
+						QAPInput iqap = new QAPInput(g, p,nivel);
 						
 						//Creamos el algoritmo
 						QAP alg;
@@ -478,7 +478,6 @@ public class QAPController extends AbstractController{
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
