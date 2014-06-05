@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 /**
  * Packet
  *
@@ -120,8 +122,20 @@ public class Packet extends Entity{
 	 * post: Convierte a String los atributos de un paquete
 	 * @return String 
 	 */
-	public String toString(){
-		return name + " " +qttResources;
+	public String toString() {
+		// Datos basicos
+		String r = name + " " + qttResources;
+
+		// Planetas asociados
+		Iterator<RelationPacketResource> iterator = rel.values().iterator();
+
+		while (iterator.hasNext()) {
+			// Cogemos el siguiente planeta
+			RelationPacketResource p = (RelationPacketResource) iterator.next();
+			r += " " + p.getResource().getName()+" "+p.getQuantity();
+		}
+
+		return r;
 	}
 	
 	

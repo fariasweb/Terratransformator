@@ -15,6 +15,8 @@ public class PacketForm extends ViewForm {
 
 	private JTextField tfname;
 	private String originaName;
+	private JLabel resource;
+	private JLabel resource_num;
 
 	/**
 	 * 
@@ -28,6 +30,10 @@ public class PacketForm extends ViewForm {
 
 	public void setOriginalName(String n) {
 		originaName = n;
+		
+		//Al ser edicion, mostrar el numero
+		resource.setVisible(true);
+		resource_num.setVisible(true);
 	}
 
 	/**
@@ -37,6 +43,12 @@ public class PacketForm extends ViewForm {
 
 		JLabel name = new JLabel("Name: ");
 		tfname = new JTextField(10);
+		
+		resource = new JLabel("Resources: ");
+		resource_num = new JLabel("-");
+		
+		resource.setVisible(false);
+		resource_num.setVisible(false);
 
 		// Creamos un Layout para colocar Labels y TextFields del formulario
 
@@ -46,14 +58,18 @@ public class PacketForm extends ViewForm {
 		layout.setAutoCreateContainerGaps(true);
 
 		layout.setVerticalGroup(layout.createParallelGroup().addGroup(
-				layout.createSequentialGroup().addComponent(name)
-						.addComponent(tfname))
+				layout.createSequentialGroup()
+						.addComponent(name).addComponent(tfname)
+						.addComponent(resource).addComponent(resource_num)
+				)
 
 		);
 
 		layout.setHorizontalGroup(layout.createParallelGroup()
 				.addGroup(layout.createSequentialGroup().addComponent(name))
 				.addGroup(layout.createSequentialGroup().addComponent(tfname))
+				.addGroup(layout.createSequentialGroup().addComponent(resource))
+				.addGroup(layout.createSequentialGroup().addComponent(resource_num))
 
 		);
 	}
@@ -95,4 +111,11 @@ public class PacketForm extends ViewForm {
 		tfname.setText(e);
 	}
 
+	/**
+	 * 
+	 * @param e
+	 */
+	public void setResourceNum(String e) {
+		resource_num.setText(e);
+	}
 }

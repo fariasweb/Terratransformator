@@ -61,7 +61,7 @@ public class PacketController extends AbstractController {
 		// Comprobamos que exista algo en el array
 		if (Clt.size() > 0) {
 			for (Packet i : Clt.values()) {
-				result += i.toString() + "\n";
+				result += i.toString() + _SEPARATOR;
 			}
 		}
 		return result;
@@ -259,11 +259,21 @@ public class PacketController extends AbstractController {
 		// Comprobamos que exista algo en el array
 		if (g.getResources().size() > 0) {
 			for (RelationPacketResource i : g.getResources().values()) {
-				result += i.toString() + "\n";
+				result += i.toString() + _SEPARATOR;
 			}
 		}
 
 		return result;
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getResourceToPacket(String name) throws Exception {
+		return rc.getAll();
 	}
 
 	// Update
@@ -423,9 +433,6 @@ public class PacketController extends AbstractController {
 					// Anadimos a la paquete
 					g.addResource(p, Integer.parseInt(s[pos + 1]));
 					
-					
-					
-
 				} catch (Exception e) {
 					error += "Relation with resource " + s[pos] + " can not do: "
 							+ e.getMessage() + "\n";
@@ -456,7 +463,6 @@ public class PacketController extends AbstractController {
 
 		String encodeS = "";
 		ArrayList<Packet> list;
-
 		// Diferenciamos si es la primera vez
 		if (_last_key == "") {
 			// En caso de ser la primera vez como no tenemos indicado

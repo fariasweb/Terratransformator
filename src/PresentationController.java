@@ -32,7 +32,8 @@ public class PresentationController {
 		gcv = new GalaxyControllerView(pcv.get_controller(), operationTab, vError);
 		kcv = new PacketControllerView(operationTab, vError);
 		rcv = new ResourceControllerView(kcv.get_controller(), operationTab,vError);
-
+		kcv.setResourceController((ResourceController) rcv.get_controller());
+		
 		qcv = new QAPInputControllerView(kcv, gcv, operationTab, vError);
 
 		// Anadimos a la ventana principal los controladores
@@ -42,7 +43,7 @@ public class PresentationController {
 
 		view.add_right_tab(kcv.get_view(), "Packets");
 		view.add_right_tab(rcv.get_view(), "Resource");
-
+		
 	}
 
 }

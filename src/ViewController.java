@@ -151,7 +151,7 @@ public abstract class ViewController extends ViewPanel {
 	 */
 	public void show(String[][] ss){
 
-		if(ss.length == 0){
+		if(ss == null || ss.length == 0){
 			tmodel.setRowCount(0);
 			return;
 		}
