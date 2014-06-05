@@ -15,6 +15,7 @@ public class PresentationController {
 	private ResourceControllerView rcv;
 	private QAPInputControllerView qcv;
 	private PresentationView view;
+	private MenuControllerView menu;
 
 	/**
 	 * 
@@ -35,8 +36,12 @@ public class PresentationController {
 		kcv.setResourceController((ResourceController) rcv.get_controller());
 		
 		qcv = new QAPInputControllerView(kcv, gcv, operationTab, vError);
+		
+		menu = new MenuControllerView(operationTab, vError);
 
 		// Anadimos a la ventana principal los controladores
+		view.setMenu(menu.get_menu());
+		
 		view.add_left_tab(gcv.get_view(), "Galaxies");
 		view.add_left_tab(pcv.get_view(), "Planets");
 		view.add_left_tab(qcv.get_view(), "QAPInput");
