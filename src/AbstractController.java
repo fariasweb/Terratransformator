@@ -200,6 +200,9 @@ public abstract class AbstractController {
 		Iterator it;
 		it1 = getIterator();
 
+		//Chivato
+		// if(!it1.hasNext()) Console.print("HHHHHHHHHHHHHHHHHHHH");
+
 		for (it = it1; it.hasNext() && count < _CACHE_NUM; ++count){
 			String[] aux = it.next().toString().split(" ");
 			ret += (aux[0]+" ");
