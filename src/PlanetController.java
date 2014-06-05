@@ -133,6 +133,22 @@ public class PlanetController extends AbstractController {
 		return result;
 
 	}
+	
+	/**
+	 * Pre: El planeta debe exisitir
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getGalaxyFromPlanet(String name) throws Exception {
+		//Cogemos el planeta
+		Planet g = Clt.get(name);
+		
+		//Devolvemos la galaxia o null si no dispone de ella
+		if (!g.haveGalaxy()) return "";
+		return g.getGalaxy().toString();
+		
+	}
 
 	// Update
 	// ---------------------------------------------

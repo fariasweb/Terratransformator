@@ -111,6 +111,16 @@ public class PlanetControllerView extends AbstractControllerView {
 	public String getByName(String name) throws Exception {
 		return ((PlanetController) controller).getByNameToString(name);
 	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 * @throws Exception
+	 */
+	public String getGalaxy(String name) throws Exception {
+		return ((PlanetController) controller).getGalaxyFromPlanet(name);
+	}
 
 	// -------------------------------------------------------
 	// ELIMINAR
