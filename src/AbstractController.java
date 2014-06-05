@@ -1,5 +1,6 @@
 import java.util.Iterator;
 import java.util.Stack;
+import java.lang.String;
 
 /**
  * AbstractController
@@ -8,7 +9,8 @@ import java.util.Stack;
 public abstract class AbstractController {
 
 	//Constants
-	protected final int _CACHE_NUM = 100;
+	// protected final int _CACHE_NUM = 100;
+	protected final int _CACHE_NUM = 2;
 	protected final String _SEPARATOR = ";";
 	
 	//Private and general
@@ -200,9 +202,6 @@ public abstract class AbstractController {
 		Iterator it;
 		it1 = getIterator();
 
-		//Chivato
-		// if(!it1.hasNext()) Console.print("HHHHHHHHHHHHHHHHHHHH");
-
 		for (it = it1; it.hasNext() && count < _CACHE_NUM; ++count){
 			String[] aux = it.next().toString().split(" ");
 			ret += (aux[0]+" ");
@@ -265,4 +264,13 @@ public abstract class AbstractController {
 
 	}
 */
+	public boolean needsRefreshing(String s){
+		Iterator it_1 = it1;
+		Iterator it_2 = it2;
+		Iterator it_3 = it3;
+		if(it_1.next().toString().compareToIgnoreCase(s) <= 0 && it_2.next().toString().compareToIgnoreCase(s) >= 0) return true;
+		if(it_2.next().toString().compareToIgnoreCase(s) <= 0 && it_3.next().toString().compareToIgnoreCase(s)>= 0) return true;
+		return false;
+
+	}
 }
