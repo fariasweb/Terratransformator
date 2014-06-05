@@ -38,6 +38,7 @@ public class QAPController extends AbstractController{
 		p = null;
 	}
 	
+
 	
 	// Read
 	// ---------------------------------------------
@@ -76,6 +77,13 @@ public class QAPController extends AbstractController{
 		return false;
 	}
 
+	public int getNumberGalaxies(){
+		return CG.size();
+	}
+
+	public String getAllGalaxies(){
+		return CG.getAll();
+	}
 	/**
 	 * Pre: Debe exisitir una solucion
 	 * 
@@ -168,19 +176,19 @@ public class QAPController extends AbstractController{
 		QAP alg;
 
 		if (QAPType.equals(QAPTypeList.GilmoreLazy.name())) {
-			//alg = new QAPLazyGLB(iqap);
+			alg = new QAPLazyGLB(iqap);
 		} else if (QAPType.equals(QAPTypeList.GilmoreEager.name())) {
-			//alg = new QAPEager(iqap);
+			alg = new QAPEager(iqap);
 		} else {
 			throw new Exception("QAPType is not defined");
 		}
 
-		// 6.Ejecucion del QAP
-		//alg.run();
+		 //6.Ejecucion del QAP
+		alg.run();
 
 		// 7.Generar salida
-		//oqap = new QAPSolution(alg, g, p);
-		//oqap.setQAPSend();
+		oqap = new QAPSolution(alg, g, p);
+		oqap.setQAPSend();
 	}
 
 	// ---------------------------------------------

@@ -25,7 +25,7 @@ public class QAPInputControllerView extends AbstractControllerView {
 		// Vistas
 		// -------------------------------------------------------
 
-		view = new QAPView(this,gc.getGalaxyController(),pcv.getPacketController());
+		view = new QAPView(this,(QAPController)controller);
 	}
 
 	public void create_form_add() {

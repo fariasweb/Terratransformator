@@ -158,7 +158,14 @@ class QAPInputDriver extends AbstractDriver{
 				case 20:
 					Console.print(q.getSizePackets() +  "");
 					break;
+				case 21:
+					Console.WriteMatrix(q.getDistanceMatrix());
+					break;
+				case 22:
+					Console.WriteMatrix(q.getFlowMatrix());
+					break;
 				}
+				
 			}
 		}while(opc != 0);
 	}
