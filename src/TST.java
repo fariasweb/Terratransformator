@@ -713,18 +713,24 @@ public class TST<Value> {
 
 			if(n != null){
 				stack.push(n);
-				if(n.left != null)
-					return dfsAux(n.left);
+				if(n.left != null){
+					FinalNode aux = dfsAux(n.left);
+					if(aux != null) return aux;
+				}
 
 				if(!is_Node(n)){
 					stack.pop();
 					return (FinalNode) n;
 				}
 				
-				if(n.mid != null)
-					return dfsAux(n.mid);
-				if(n.right != null)
-					return dfsAux(n.right);
+				if(n.mid != null){
+					FinalNode aux = dfsAux(n.mid);
+					if(aux != null) return aux;
+				}
+				if(n.right != null){
+					FinalNode aux = dfsAux(n.right);
+					if(aux != null) return aux;
+				}
 				stack.pop();
 			}
 			return null;
