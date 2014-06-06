@@ -20,75 +20,44 @@ import javax.swing.JScrollPane;
  * @author farias
  * 
  */
-public class TreeView extends ViewForm {
+public class TreeView extends View2Row {
 	
-	JTree tree;
-	JButton viewTree;
-	QAPBaBTreeNode node = new QAPBaBTreeNode();
-	JScrollPane scrollPane;
+	private JButton viewTree;
+	private TreeForm fTree;
+	
 	/**
 	 * 
 	 * @param c
 	 */
 	TreeView(TreeControllerView c) { //He cambiado por esto en vez de AbstractControllerView
 		super(c);
-		viewTree = new JButton("VIEW TREE");
-		viewTree.setVisible(true);
 	}
-
+	
+	/**
+	 * 
+	 */
+	protected void create_view() {
+		// Boton de enviar
+		viewTree = new JButton("See tree");
+		add_top(viewTree);
+		
+		//Tree
+		fTree = new TreeForm(((TreeControllerView)controller));
+		add_bottom(fTree);
+		
+	}
 
 	/**
 	 * 
 	 */
-	protected void create_events() {}
-
-	public void setTree(QAPBaBTreeNode n){
-		node = n;
-	}
-	
-	public void pintameElArbol(){
-		DefaultMutableTreeNode root = new DefaultMutableTreeNode("B&B Tree");
-		DefaultTreeModel model = new DefaultTreeModel(root);
-		tree = new JTree(model);
-		scrollPane = new JScrollPane(tree);
-		pintameElArbolAuxiliar(model, root, node);
-		scrollPane.repaint();
-	}
-
-	private void pintameElArbolAuxiliar(DefaultTreeModel model, DefaultMutableTreeNode act, QAPBaBTreeNode node){
-		for(int i = 0; i < node.getSons().size(); ++i){
-			QAPBaBTreeNode next = node.getSons().get(i);
-			String s = next.toString();
-			DefaultMutableTreeNode n = new DefaultMutableTreeNode(s);
-			model.insertNodeInto(n, act, i);
-			pintameElArbolAuxiliar(model, n, next);
-		}
-	}
-	/*protected void create_events(){
-		
-
-	}*/
-
-
-	@Override
-	public void submit_form() throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	protected void create_view() {
-		// TODO Auto-generated method stub
-		viewTree = new JButton("VIEW TREE");
-		viewTree.setVisible(true);
+	protected void create_events() {
 		
 		viewTree.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// display/center the jdialog when the button is pressed
-				viewTree.setVisible(false);
+				//viewTree.setVisible(false);
 				try {
-					((TreeControllerView)controller).pintameElArbol();
+					fTree.submit_form();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					Console.print("Falla el Tree");
@@ -96,5 +65,19 @@ public class TreeView extends ViewForm {
 			}
 		});
 	}
+	
+	// -------------------------------------------------------
+	// PUBLIC UPDATE
+	// -------------------------------------------------------
+	
+	/**
+	 * 
+	 * @param n
+	 */
+	public void setTree(QAPBaBTreeNode n){
+		fTree.drawTree(n);
+	}
+
+	
 
 }
