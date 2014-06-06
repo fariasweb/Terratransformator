@@ -119,7 +119,12 @@ public abstract class AbstractControllerView {
 			// Arrancamos el thread
 			t1.start();
 		} catch (Exception e) {
-			vError.error("Error loading file! "+e.getMessage());
+			ViewHelp p = new ViewHelp();
+			p.create_view(e.getMessage());
+			
+			vShared.add_once_tab("Error load", p);
+			
+			//vError.error("Error loading file! "+e.getMessage());
 		}
 	}
 
