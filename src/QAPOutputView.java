@@ -50,7 +50,9 @@ public class QAPOutputView extends ViewForm {
 	 * 
 	 */
 	public void submit_form() throws Exception {
-		// TODO Auto-generated method stub
+		
+		
+		
 		double result = ((QAPOutputControllerView)controller).getResult();
 		int[] n  = ((QAPOutputControllerView)controller).getSolution();
 		long time = ((QAPOutputControllerView)controller).getTime();
@@ -165,13 +167,15 @@ public class QAPOutputView extends ViewForm {
 								.addComponent(writeLabelPlanet)
 						)
 		);
+		
+		
 		viewSolution.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				try{
 					submit_form();
 				}
 				catch(Exception t){
-					((QAPOutputControllerView)controller).getResult();
+					((QAPOutputControllerView)controller).show_error("It is not possible show QAP Solution");
 				}
 			}
 		});
