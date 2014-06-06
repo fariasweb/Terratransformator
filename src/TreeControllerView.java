@@ -31,7 +31,6 @@ public class TreeControllerView extends AbstractControllerView {
 	
 	public void drawTree() throws Exception{
 		try{
-			Console.print("Pintando el arbol");
 			((TreeView)view).setTree(((QAPController)controller).getTree());
 			
 		}catch(Exception e){ 

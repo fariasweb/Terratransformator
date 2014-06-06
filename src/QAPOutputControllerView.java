@@ -37,7 +37,6 @@ public class QAPOutputControllerView extends AbstractControllerView {
 	}
 	
 	public long getTime(){
-		Console.print("CHIVATP -> " + ((QAPController)controller).getTime());
 		return ((QAPController)controller).getTime();
 	}
 	

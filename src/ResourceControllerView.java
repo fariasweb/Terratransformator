@@ -54,7 +54,6 @@ public class ResourceControllerView extends AbstractControllerView {
 
 			// Add to table - TODO: CACHE
 
-			Console.print("CREATING Resource!");
 			refresh();
 			((ViewController) view).show(getStringToShow());
 
@@ -73,7 +72,6 @@ public class ResourceControllerView extends AbstractControllerView {
 			vError.success("The recourse " + name + " has been updated");
 
 			// Table - TODO: Cache TODO: Eliminar esto
-			Console.print("UPDATING Resource!");
 			refresh();
 			((ViewController) view).show(getStringToShow());
 		}

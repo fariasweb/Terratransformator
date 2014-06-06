@@ -77,7 +77,6 @@ public abstract class QAP {
 	 * @return the solution
 	 */
 	public int[] getSolution() {
-		Console.print("CONSULTO SOLUCION");
 		return solution;
 	}
 	

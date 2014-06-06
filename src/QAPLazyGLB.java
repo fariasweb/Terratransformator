@@ -211,8 +211,6 @@ public class QAPLazyGLB extends QAP{
 						}
 					
 				}
-			Console.print("GENERATE SOLUTION!!");
-			Console.WriteVector(solution);
 		setResult(costs);
 	
 	}

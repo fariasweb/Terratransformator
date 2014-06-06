@@ -63,7 +63,6 @@ public class PacketResourceDetails extends View2Col {
 
 	private void complete_form() {
 		// INFORMACION
-		Console.log("Complete form");
 		try {
 
 			//Formularuo basico
@@ -71,9 +70,7 @@ public class PacketResourceDetails extends View2Col {
 			String[][] l = decode_list(((PacketControllerView) controller).getResourceToPacket(Name));
 			String[] g = new String[l.length];
 			
-			Console.log(">"+l.length);
 			for (int i = l.length - 1; i >= 0; i-= 1) {
-				Console.log(">"+l[i][0]);
 				g[i] = l[i][0];
 			}
 			

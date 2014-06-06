@@ -12,7 +12,8 @@ public class QAPInputDetail extends View3Col{
 	private double[][] flowM;
 	private QAPInputFormCreate formDistance;
 	private QAPInputFormCreate formFlow;
-
+	private boolean control = false;
+	
 	QAPInputDetail(AbstractControllerView c) {
 		super((QAPInputControllerView)c);
 	
@@ -46,12 +47,21 @@ public class QAPInputDetail extends View3Col{
 		jb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				try{
-		
-					formDistance.checkSetMatrix();
-					formFlow.checkSetMatrix();
-					AlgorithmThread tAlg = new AlgorithmThread((QAPInputControllerView)controller);
-					Thread t1 = new Thread(tAlg,"Algorithm THREAD1");
-					t1.start();
+					if(!((QAPInputControllerView)controller).is_running()){
+
+						//Activamos el control de thread
+						((QAPInputControllerView)controller).set_run();
+						
+						//Generamot el thread
+						formDistance.checkSetMatrix();
+						formFlow.checkSetMatrix();
+						AlgorithmThread tAlg = new AlgorithmThread((QAPInputControllerView)controller);
+						Thread t1 = new Thread(tAlg,"Algorithm THREAD1");
+						t1.start();
+						
+					} else {
+						controller.vError.error("The algorithm is running. Wait a moment!");
+					}
 				}
 				catch(Exception ee){
 					controller.vError.error("Introduce Numbers in the Tables!");
