@@ -10,6 +10,5 @@ public class QAPHungarianDriver {
 		 
 		QAPHungarian h = new  QAPHungarian(d.length);
 		double n = h.Assigment(d);
-		System.out.println(n);
 	}
 }

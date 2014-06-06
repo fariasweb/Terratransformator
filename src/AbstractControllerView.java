@@ -76,6 +76,14 @@ public abstract class AbstractControllerView {
 	
 	/**
 	 * 
+	 * @param e
+	 */
+	public void show_success(String e) {
+		vError.success(e);
+	}
+	
+	/**
+	 * 
 	 * @param n
 	 * @param p
 	 */
@@ -103,7 +111,7 @@ public abstract class AbstractControllerView {
 	public void save(String path, boolean append) {
 		try {
 			// Constructor que se le pasa controlador y nombre de Thread
-			SaveThread st = new SaveThread(controller, path, append);
+			SaveThread st = new SaveThread(controller, this, path, append);
 
 			// Creamos un Thread que invoque a la funcion de un Savethread
 			Thread t1 = new Thread(st, "Saving Function");
@@ -151,33 +159,28 @@ public abstract class AbstractControllerView {
 
 	public void forwards() {
 		String aux = controller.forwards();
-		if(aux == ""){ Console.print("FOR ABORT!"); return; }
+		if(aux == ""){ Console.print(" "); return; }
 		firstCache = secondCache;
 		secondCache = aux;
-		Console.print("FOR COMMIT!");
 
 	}
 
 	public void backwards() {
 		String aux = controller.backwards();
-		if(aux == ""){ Console.print("BACK ABORT!"); return; }
-		if(aux == "_EMPTY_STACK"){ Console.print("$$$$\nBACK ABORT!\n\n_EMPTY_STACK\n$$$$"); return; }
+		if(aux == ""){ Console.print(" "); return; }
+		if(aux == "_EMPTY_STACK"){ Console.print("Doing.."); return; }
 
 		secondCache = firstCache;
 		firstCache = aux;
-		Console.print("BACK COMMIT!");
 	}
 
 	public void refresh() {
 		firstCache = controller.refreshFirstCache();
 		secondCache = controller.refreshSecondCache();
-		Console.print("Refreshing: cache1 = " + firstCache + "   cache2 = "
-				+ secondCache);
 
 	}
 
 	public String getStringToShow() {
-		Console.print("getStringToShow: " + firstCache + secondCache);
 		return firstCache + secondCache;
 	}
 	

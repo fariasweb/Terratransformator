@@ -147,10 +147,7 @@ public class QAPEager extends QAP{
 				
 			}
 		}
-		Console.print("GENE"+ n);
-		Console.WriteVector(val);
 		setTime(System.nanoTime() - getTime());
-		Console.print("HASTA AQUI BIENNNNNNNNNN");
 		
 
 		//Algoritmo

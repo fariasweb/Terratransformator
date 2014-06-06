@@ -139,7 +139,6 @@ public abstract class ViewController extends ViewPanel {
 			return;
 		}
 
-		Console.log(s);
 		String[] ss = decode(s);
 		
 		tmodel.setRowCount(0);
@@ -211,12 +210,11 @@ public abstract class ViewController extends ViewPanel {
 	    	int max = scrollPane.getVerticalScrollBar().getMaximum();
 	    	int value = scrollPane.getVerticalScrollBar().getValue()+extent;
 
-			System.out.println("\n\n"+evt.getSource().toString());
-		    Console.print("$$$$$$$$$$$$$$__MIN:      "+(new Integer(min)).toString());
+		    Console.print("__MIN:      "+(new Integer(min)).toString());
 		    // Console.print("MINADJ_$$$$$$$$$$$$$$      "+(new Integer(minAdj)).toString());
-		    Console.print("$$$$$$$$$$$$$$__MAX:      "+(new Integer(max)).toString());
+		    Console.print("__MAX:      "+(new Integer(max)).toString());
 		    // Console.print("MAXADJ_$$$$$$$$$$$$$$      "+(new Integer(maxAdj)).toString());
-		    Console.print("$$$$$$$$$$$$$$__VAL:      "+(new Integer(value)).toString());
+		    Console.print("__VAL:      "+(new Integer(value)).toString());
 		    Console.print("$$$$$$$$$$$$$$__EXT:      "+(new Integer(extent)).toString());
 
 	    	if(evt.getValueIsAdjusting()) return;

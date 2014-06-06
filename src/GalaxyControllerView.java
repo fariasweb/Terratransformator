@@ -44,7 +44,6 @@ public class GalaxyControllerView extends AbstractControllerView {
 		}
 
 		// Chivato
-		Console.print(firstCache);
 		// view.show(firstCache);
 	}
 
@@ -78,7 +77,6 @@ public class GalaxyControllerView extends AbstractControllerView {
 
 			// Add to table - TODO: CACHE
 
-			Console.print("CREATING GALAXY!");
 
 		} else { // ACTUALIZACION
 
@@ -96,7 +94,6 @@ public class GalaxyControllerView extends AbstractControllerView {
 			vError.success("The galaxy " + name + " has been updated");
 
 			// Table - TODO: Cache TODO: Eliminar esto
-			Console.print("UPDATING GALAXY!");
 			if(needsRefreshing(name)) refresh();
 		}
 		reloadTable();

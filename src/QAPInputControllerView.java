@@ -10,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 public class QAPInputControllerView extends AbstractControllerView {
 
 	private QAPInputDetail view_detail;
+	private boolean _running = false;
 	
 	/**
 	 * 
@@ -33,6 +34,27 @@ public class QAPInputControllerView extends AbstractControllerView {
 	}
 
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean is_running() {
+		return _running;
+	}
+	
+	/**
+	 * 
+	 */
+	public void set_run() {
+		_running = true;
+	}
+	
+	/**
+	 * 
+	 */
+	public void set_stop() {
+		_running = false;
+	}
 
 	// -------------------------------------------------------
 	// CREAR
@@ -60,7 +82,6 @@ public class QAPInputControllerView extends AbstractControllerView {
 	public void create_form_view(String nameGalaxy, String QAPType, int nivel) throws Exception{
 		//Generar el QAPINput
 		((QAPController)controller).generateQAPInput(nameGalaxy, QAPType, nivel);
-		Console.log("CREATE FORM VIEW");
 		view_detail = new QAPInputDetail(this);
 		vShared.add_once_tab("QAP input details", view_detail);
 	}
