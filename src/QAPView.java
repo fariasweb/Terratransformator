@@ -33,9 +33,8 @@ public class QAPView extends ViewForm {
 	private QAPInputDetail qapinput;
 	private JButton refreshButton; 
 
-	private QAPController qc;
 
-	QAPView(AbstractControllerView c , QAPController qcp) {
+	QAPView(AbstractControllerView c) {
 		super(c);	
 		// Button of QAPInputForm
 		crear_vista();
@@ -154,24 +153,29 @@ public class QAPView extends ViewForm {
 	inputButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e){
 			try{
+				if((String)gcb.getSelectedItem() != "None" || ((QAPController)controller.get_controller()).getByNameToString((String)gcb.getSelectedItem()).length() > 1){
 				
 				if(rb1.isSelected())showQAPInputForm((String)gcb.getSelectedItem(), rb1.getName(), (Integer)jp.getValue());
 				else showQAPInputForm((String)gcb.getSelectedItem(), rb2.getName(), (Integer)jp.getValue());
+				}
+				else {
+					//if((QAPIn)((QAPInputControllerView)controller).vError.error("Enter Galaxy to continue!");
+				}
 			}
-			catch(Exception mm){
-				mm.printStackTrace();
+			catch(Exception e3){
+				e3.printStackTrace();
 			}
 		}
 	});
 	}
 	public void refreshComboBox(){
 
-		int sizeGalaxy = qc.getNumberGalaxies();
+		int sizeGalaxy = ((QAPController)controller.get_controller()).getNumberGalaxies();
 		if(sizeGalaxy > 0){
 			String[][] ngMatrix = new String[sizeGalaxy][3];
 			String[] nameGalaxies = new String[sizeGalaxy];
 
-			ngMatrix = decode_list(qc.getAllGalaxies());
+			ngMatrix = decode_list(((QAPController)controller.get_controller()).getAllGalaxies());
 
 			/*for(int i = 0; i < ngMatrix.length; ++i){
 				for(int j =0 ; j < ngMatrix[0].length; ++j){
@@ -193,18 +197,11 @@ public class QAPView extends ViewForm {
 		}
 	}
 	
-	public void showQAPInputForm(String nameGalaxy, String QAPType, int nivel){
-		try{
-			qc.generateQAPInput(nameGalaxy, QAPType, nivel);
-		}
-		catch(Exception e) {
-			Console.print(e.getMessage());
-		}
+	public void showQAPInputForm(String nameGalaxy, String QAPType, int nivel) throws Exception{
 
-		qapinput = new QAPInputDetail((QAPInputControllerView)controller);
-		Console.print("QAPINPUT DETAIL GENERADO!"); 
-		qapinput.setVisible(true);
-		((QAPInputControllerView)controller).create_form_add();
+			((QAPController)controller.get_controller()).generateQAPInput(nameGalaxy, QAPType, nivel);
+			qapinput = new QAPInputDetail((QAPInputControllerView)controller);
+			qapinput.setVisible(true);
 	}
 
 	protected void create_events() {

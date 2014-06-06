@@ -132,10 +132,10 @@ public class QAPSolution {
 	 * @return String 
 	 */
 	public String toString() {
-
-		// Informacion basica
-		String r = QAPType + " " + qap.getTime() + " " + qap.getResult();
-
+		String r = null;
+		for(int i = 0; i < CltSend.size(); ++i){
+			r += CltSend.get(i).getPlanet().getName().toString() + " " + CltSend.get(i).getPacket().toString();
+		}
 		return r;
 	}
 	

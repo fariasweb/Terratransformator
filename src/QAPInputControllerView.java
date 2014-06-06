@@ -25,7 +25,7 @@ public class QAPInputControllerView extends AbstractControllerView {
 		// Vistas
 		// -------------------------------------------------------
 
-		view = new QAPView(this,(QAPController)controller);
+		view = new QAPView(this);
 	}
 
 	public void create_form_add() {
