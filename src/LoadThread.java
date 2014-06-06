@@ -18,7 +18,7 @@ public class LoadThread implements Runnable{
 			acv.reloadTable();
 		}
 		catch(Exception e){
-			acv.show_error("Error loading file! "+e.getMessage());
+			acv.show_general_error("Error load", e.getMessage());
 		}
 	}
 }
