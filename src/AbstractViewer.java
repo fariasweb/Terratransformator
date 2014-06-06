@@ -107,4 +107,7 @@ public abstract class AbstractViewer extends JPanel {
 	protected String[] decode_in_lines(String l) {
 		return l.split(";");
 	}
+
+	public void set_scroll(){}
+
 }

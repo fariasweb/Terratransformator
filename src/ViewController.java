@@ -1,3 +1,4 @@
+import java.awt.Component;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.Adjustable;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import javax.swing.BoundedRangeModel;
+import javax.swing.ScrollPaneConstants;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -30,6 +33,7 @@ public abstract class ViewController extends ViewPanel {
 	protected JFrame jframe;
 	protected JFileChooser jfile;
 	protected String path; 
+	protected boolean is_init = false;
 
 	/**
 	 * 
@@ -64,11 +68,8 @@ public abstract class ViewController extends ViewPanel {
 		scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
 		scrollPane.setViewportView(table);
-
-		// Listen for value changes in the scroll pane's scrollbars
-    	AdjustmentListener listener = new MyAdjustmentListener();
-    	scrollPane.getHorizontalScrollBar().addAdjustmentListener(listener);
-    	scrollPane.getVerticalScrollBar().addAdjustmentListener(listener);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.getVerticalScrollBar().setMaximum(50);
 
 		// Buttons
 		bCreate = new JButton("Create");
@@ -124,6 +125,7 @@ public abstract class ViewController extends ViewPanel {
 										)));
 
 		//show(controller.getStringToShow());
+		
 	}
 	
 	/**
@@ -195,56 +197,70 @@ public abstract class ViewController extends ViewPanel {
 		
 	}
 
-	//Private stuff
+	public void set_scroll(){
+		
+		// Listen for value changes in the scroll pane's scrollbars
+    	scrollPane.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener(){
 
-	private class MyAdjustmentListener implements AdjustmentListener {
-		public void adjustmentValueChanged(AdjustmentEvent evt) {
+    		public void adjustmentValueChanged(AdjustmentEvent evt) {
 
-    	Adjustable source = evt.getAdjustable();
-    	int minAdj = (int) Math.floor(0.25 * (source.getMaximum() - source.getMinimum()) + source.getMinimum());
-    	int maxAdj = (int) Math.floor(0.75 * (source.getMaximum() - source.getMinimum()) + source.getMinimum());
-	    int value = evt.getValue();
+	    	Adjustable source = evt.getAdjustable();
 
-	    //WARNING!!!!!
-	    //NO DESCOMENTAR PQ PETA!!!
-	    //MANISH, TE HE DICHO QUE NOOOO!!!!
+	    	int extent = scrollPane.getVerticalScrollBar().getModel().getExtent();
+	    	int min = scrollPane.getVerticalScrollBar().getMinimum(); 
+	    	int max = scrollPane.getVerticalScrollBar().getMaximum();
+	    	int value = scrollPane.getVerticalScrollBar().getValue()+extent;
 
-    	/*if (evt.getValueIsAdjusting()) return;
+			System.out.println("\n\n"+evt.getSource().toString());
+		    Console.print("$$$$$$$$$$$$$$__MIN:      "+(new Integer(min)).toString());
+		    // Console.print("MINADJ_$$$$$$$$$$$$$$      "+(new Integer(minAdj)).toString());
+		    Console.print("$$$$$$$$$$$$$$__MAX:      "+(new Integer(max)).toString());
+		    // Console.print("MAXADJ_$$$$$$$$$$$$$$      "+(new Integer(maxAdj)).toString());
+		    Console.print("$$$$$$$$$$$$$$__VAL:      "+(new Integer(value)).toString());
+		    Console.print("$$$$$$$$$$$$$$__EXT:      "+(new Integer(extent)).toString());
 
-    	if(value < minAdj){
-    		controller.backwards();
-    		show(controller.getStringToShow());
-    	}
-    	else if(value < minAdj){
-    		controller.forwards();
-    		show(controller.getStringToShow());
-    	}*/
+	    	if(evt.getValueIsAdjusting()) return;
+	    	if(extent == 145){ controller.reloadTable(); is_init = true; }
+	    	if(!is_init) return;
+	    	if(extent != 141) return;
 
-	   /*int orient = source.getOrientation();
-	    if (orient == Adjustable.HORIZONTAL) {
-	      System.out.println("from horizontal scrollbar"); 
-	    } else {
-	      System.out.println("from vertical scrollbar");
-	    }
-	    int type = evt.getAdjustmentType();
-	    switch (type) {
-	    case AdjustmentEvent.UNIT_INCREMENT:
-	      System.out.println("Scrollbar was increased by one unit");
-	      break;
-	    case AdjustmentEvent.UNIT_DECREMENT:
-	      System.out.println("Scrollbar was decreased by one unit");
-	      break;
-	    case AdjustmentEvent.BLOCK_INCREMENT:
-	      System.out.println("Scrollbar was increased by one block");
-	      break;
-	    case AdjustmentEvent.BLOCK_DECREMENT:
-	      System.out.println("Scrollbar was decreased by one block");
-	      break;
-	    case AdjustmentEvent.TRACK:
-	      System.out.println("The knob on the scrollbar was dragged");
-	      break;
-	    }*/
-	  }
+		    //WARNING!!!!!
+		    //NO DESCOMENTAR PQ PETA!!!
+		    //MANISH, TE HE DICHO QUE NOOOO!!!!
+
+	    	if(value == extent){
+	    		controller.backwards();
+	    		show(controller.getStringToShow());
+	    	}
+	    	else if(value == max){
+	    		controller.forwards();
+	    		show(controller.getStringToShow());
+	    	}
+
+		   int orient = source.getOrientation();
+		    if (orient == Adjustable.VERTICAL) {
+		      System.out.println("from vertical scrollbar");
+		    }
+		    int type = evt.getAdjustmentType();
+		    switch (type) {
+		    case AdjustmentEvent.UNIT_INCREMENT:
+		      System.out.println("Scrollbar was increased by one unit");
+		      break;
+		    case AdjustmentEvent.UNIT_DECREMENT:
+		      System.out.println("Scrollbar was decreased by one unit");
+		      break;
+		    case AdjustmentEvent.BLOCK_INCREMENT:
+		      System.out.println("Scrollbar was increased by one block");
+		      break;
+		    case AdjustmentEvent.BLOCK_DECREMENT:
+		      System.out.println("Scrollbar was decreased by one block");
+		      break;
+		    case AdjustmentEvent.TRACK:
+		      System.out.println("The knob on the scrollbar was dragged");
+		      break;
+		    }
+		  }
+    	});
 	}
 
 }

@@ -14,6 +14,7 @@ public class PresentationController {
 	private PacketControllerView kcv;
 	private ResourceControllerView rcv;
 	private QAPInputControllerView qcv;
+	private TreeControllerView tcv;
 	private PresentationView view;
 
 	/**
@@ -35,6 +36,7 @@ public class PresentationController {
 				vError);
 
 		qcv = new QAPInputControllerView(kcv, gcv, operationTab, vError);
+		tcv = new TreeControllerView(operationTab, vError);
 
 		// Anadimos a la ventana principal los controladores
 		view.add_left_tab(gcv.get_view(), "Galaxies");
@@ -43,6 +45,12 @@ public class PresentationController {
 
 		view.add_right_tab(kcv.get_view(), "Packets");
 		view.add_right_tab(rcv.get_view(), "Resource");
+
+		gcv.set_scroll();
+		pcv.set_scroll();
+		kcv.set_scroll();
+		rcv.set_scroll();
+		qcv.set_scroll();
 
 	}
 

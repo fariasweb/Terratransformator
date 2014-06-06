@@ -136,4 +136,8 @@ public class PresentationView extends JFrame {
 		return errorPanel;
 	}
 
+	public void setScrolls(){
+
+	}
+
 }

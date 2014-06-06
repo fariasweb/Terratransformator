@@ -42,6 +42,7 @@ public abstract class AbstractControllerView {
 		// Elementos compartidos de todos los controladores
 		vShared = vs;
 		vError = ve;
+		// init_view();
 	}
 
 	// -------------------------------------------------------
@@ -139,16 +140,22 @@ public abstract class AbstractControllerView {
 	// -------------------------------------------------------
 
 	public void forwards() {
+		String aux = controller.forwards();
+		if(aux == ""){ Console.print("FOR ABORT!"); return; }
 		firstCache = secondCache;
-		secondCache = controller.forwards();
-		Console.print("FOR!");
+		secondCache = aux;
+		Console.print("FOR COMMIT!");
 
 	}
 
 	public void backwards() {
+		String aux = controller.backwards();
+		if(aux == ""){ Console.print("BACK ABORT!"); return; }
+		if(aux == "_EMPTY_STACK"){ Console.print("$$$$\nBACK ABORT!\n\n_EMPTY_STACK\n$$$$"); return; }
+
 		secondCache = firstCache;
-		firstCache = controller.backwards();
-		Console.print("BACK!");
+		firstCache = aux;
+		Console.print("BACK COMMIT!");
 	}
 
 	public void refresh() {
@@ -178,5 +185,21 @@ public abstract class AbstractControllerView {
 	public boolean needsRefreshing(String s){
 		return controller.needsRefreshing(s);
 	}
+
+	public void set_scroll(){
+		view.set_scroll();
+	}
+
+	/*private void init_view(){
+		reloadTable();
+		int a;
+		for(int i = 0; i < 1000000; ++i)
+			for(int j = 0; j < 1000000; ++j)
+				a = 1;
+		is_init = true;
+	}
+
+	public boolean is_init(){ return is_init;}*/
+
 
 }
