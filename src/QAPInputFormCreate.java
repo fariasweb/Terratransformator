@@ -28,6 +28,26 @@ public class QAPInputFormCreate extends ViewForm {
 		crear_vista(namep);
 	}
 
+	public void checkSetMatrix() throws Exception{
+		int n = tDistanceMatrix.getRowCount();
+		String[][] auxMatrix = new String[n][n];
+		for(int i = 0; i < n; ++i){
+			for(int j = 0; j < n; ++j){
+				Console.print("Error 1");
+				auxMatrix[i][j] = tDistanceMatrix.getValueAt(i,j).toString();
+				
+			}
+		}
+		
+		for(int i = 0; i < n; ++i){
+			for(int j = 0; j < n; ++j){
+				Console.print("Error 2");
+				Matrix[i][j] = Double.parseDouble(auxMatrix[i][j]);
+			}
+		}
+		
+	}
+	
 	private void crear_vista( String namep){
 		
 		
