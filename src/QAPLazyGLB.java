@@ -96,6 +96,9 @@ public class QAPLazyGLB extends QAP{
 		nombrenivel = input.getnivelparametro();
 		
 		n = input.getMatrixSize();
+		solution = new int[n];			// -> esto
+		Console.WriteMatrix(input.getDistanceMatrix());
+		Console.WriteMatrix(input.getFlowMatrix());
 		GLB = new QAPGilmoreLawerBound(n);
 		
 		int[] va = new int[n];
@@ -108,21 +111,27 @@ public class QAPLazyGLB extends QAP{
 			costs[n-2] = -1;
 			BranchAndBound(va, val, costlevel, 0);
 			
-		
+			Console.print("ERROR in OUTPUT 1");
+
 			//completamos el nodo;
 			for (int m = 0; m < n; m++) {
 					if(m < n-1) {
+						Console.print("ERROR in OUTPUT 1.1");
 						solution[m] = va[m];
 					}
 					
 					if (val[m] == 0) {
+						Console.print("ERROR in OUTPUT 1.2");
 						solution[n - 1] = m + 1;
 						
 					}
 				
 			}
 		}
+		Console.print("ERROR in OUTPUT 2");
+
 		setResult(costs[n-2]);
+		Console.print("ERROR in OUTPUT 3");
 		output = new QAPSolution(this, input.getgalaxy(), input.getpackets());
 		
 		setTime(System.nanoTime() - getTime());

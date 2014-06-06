@@ -274,11 +274,11 @@ public class QAPControllerDriver extends AbstractDriver {
 
 	}
 
-	public static void runQAP(QAPController qapc, String GalaxyName,
+	public static void runQAP(QAPController qapc, String GalaxyName, //CAMBIADO
 			String QAPType,int nivel) {
 		try {
 
-			qapc.QAP(GalaxyName, QAPType,nivel);
+			qapc.generateQAPInput(GalaxyName, QAPType,nivel);
 
 		} catch (Exception e) {
 

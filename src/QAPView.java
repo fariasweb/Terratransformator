@@ -155,12 +155,12 @@ public class QAPView extends ViewForm {
 	inputButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e){
 			try{
-				Console.print((String)gcb.getSelectedItem() + " " + rb1.getName() + " " + (Integer)jp.getValue());
+				
 				if(rb1.isSelected())showQAPInputForm((String)gcb.getSelectedItem(), rb1.getName(), (Integer)jp.getValue());
 				else showQAPInputForm((String)gcb.getSelectedItem(), rb2.getName(), (Integer)jp.getValue());
 			}
 			catch(Exception mm){
-				Console.print("QAP Error");
+				mm.printStackTrace();
 			}
 		}
 	});
@@ -196,13 +196,14 @@ public class QAPView extends ViewForm {
 	
 	public void showQAPInputForm(String nameGalaxy, String QAPType, int nivel){
 		try{
-			qc.QAP(nameGalaxy, QAPType, nivel);
+			qc.generateQAPInput(nameGalaxy, QAPType, nivel);
 		}
 		catch(Exception e) {
-			Console.print("QAP");
+			Console.print(e.getMessage());
 		}
-		
+		Console.print("QAPINPUT GENERADO!"); //HASTA AQUI BIEN!
 		qapinput = new QAPInputDetail((QAPInputControllerView)controller);
+		Console.print("QAPINPUT DETAIL GENERADO!"); 
 		qapinput.setVisible(true);
 		((QAPInputControllerView)controller).create_form_add();
 	}

@@ -13,6 +13,7 @@ public class QAPController extends AbstractController{
 	private Galaxy g;
 	private TST<Packet> p;
 	private int nivel;
+	private String QAPType;
 	// Solucion dada para galaxua g y paquetes p
 	private QAPSolution oqap;
 
@@ -67,13 +68,8 @@ public class QAPController extends AbstractController{
 	 * @return
 	 */
 	private boolean containsQAPType(String n) {
-
-		for (QAPTypeList c : QAPTypeList.values()) {
-			if (c.name().equals(n)) {
-				return true;
-			}
-		}
-
+		
+		if(QAPTypeList.GilmoreEager.name().equals(n)  || QAPTypeList.GilmoreLazy.name().equals(n)) return true;
 		return false;
 	}
 
@@ -149,10 +145,12 @@ public class QAPController extends AbstractController{
 	// Create
 	// ---------------------------------------------
 
-	public void QAP(String GalaxyName, String QAPType,int nivel) throws Exception {
+	public void generateQAPInput(String GalaxyName, String QAPTypep,int nivel) throws Exception {
 
 		// 1.Comprobar que la galaxia exista , comprobar que existe numPaquetes
 		// > 0
+		Console.print("ESTOY AQUIII" + GalaxyName +  "  " + QAPTypep +  " " + nivel);
+		QAPType = QAPTypep;
 		Galaxy gOriginal = CG.getByName(GalaxyName);
 		if (gOriginal == null)
 			throw new Exception("Galaxy does not exist");
@@ -168,15 +166,23 @@ public class QAPController extends AbstractController{
 		// 3. Clonamamos el planeta y TST<Paquete>
 		g = CG.cloneGalaxy(gOriginal);
 		p = CP.cloneCollection();
-
+		QAPType = QAPTypep;
 		// 4.Entrada
-		Console.print(g.getName() + " " + QAPType + nivel);
+		Console.print(g.getName() + " " + QAPTypep + nivel);
 		qapinput = new QAPInput(g, p,nivel);
 
-		//SEPARAR DE AQUI PARA ABAJO
-		// 5.Seleccion de algoritmo y ejecucion
-		QAP alg;
+		 //6.Ejecucion del QAP
+		//alg.run();
 
+		// 7.Generar salida
+		//oqap = new QAPSolution(alg, g, p);
+		//oqap.setQAPSend();
+	}
+	
+	public void runQAP() throws Exception{
+		Console.print("EJECUTANDO ALGORITMO " + QAPType);
+		QAP alg;
+		Console.print("EJECUTANDO ALGORITMO " + QAPType);
 		if (QAPType.equals(QAPTypeList.GilmoreLazy.name())) {
 			alg = new QAPLazyGLB(qapinput);
 		} else if (QAPType.equals(QAPTypeList.GilmoreEager.name())) {
@@ -184,10 +190,7 @@ public class QAPController extends AbstractController{
 		} else {
 			throw new Exception("QAPType is not defined");
 		}
-
-		 //6.Ejecucion del QAP
-		//alg.run();
-
+		alg.run();
 		// 7.Generar salida
 		//oqap = new QAPSolution(alg, g, p);
 		//oqap.setQAPSend();
