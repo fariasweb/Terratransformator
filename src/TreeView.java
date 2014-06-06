@@ -1,6 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,94 +20,32 @@ import javax.swing.JScrollPane;
  * @author farias
  * 
  */
-public class TreeView extends ViewController {
+public class TreeView extends ViewForm {
 	
 	JTree tree;
+	JButton viewTree;
 	QAPBaBTreeNode node = new QAPBaBTreeNode();
-
+	JScrollPane scrollPane;
 	/**
 	 * 
 	 * @param c
 	 */
 	TreeView(TreeControllerView c) { //He cambiado por esto en vez de AbstractControllerView
 		super(c);
+		viewTree = new JButton("VIEW TREE");
+		viewTree.setVisible(true);
 	}
 
 
 	/**
 	 * 
 	 */
-	protected void create_events() {
-		// Eventos
-		//Boton de crear
-		bCreate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// display/center the jdialog when the button is pressed
-				// ((TreeControllerView)controller).create_form_add();
-			}
-		});
-		
-		// Boton de guardar
-		bImport.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				createFrame("Save");
-			}
-		});
-		
-		
-		//Boton de cargar
-		bExport.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				createFrame("Load");
-			}
-		});
-		
-		//Help hereda de ViewForm
-		
-		//Boton de eliminar
-		bDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-				
-				int selectedRow = table.getSelectedRow();
-				if (selectedRow < 0) controller.show_error("You must select a galaxy before delete");
-				else {
-        			String selectedData = (String) table.getValueAt(selectedRow, 0);
-        			try {
-						// ((TreeControllerView) controller).delete(selectedData);
-					} catch (Exception e1) {
-						controller.show_error(e1.getMessage());
-					}
-
-				}
-			}
-		});
-		
-		//Tabla
-		final ListSelectionModel cellSelectionModel = table.getSelectionModel();
-    	cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		cellSelectionModel.addListSelectionListener(new ListSelectionListener() {
-      		public void valueChanged(ListSelectionEvent e) {
-
-      			//Sin este if se activan dos eventos (al clickar y soltar click)
-      			if (!e.getValueIsAdjusting() && !cellSelectionModel.isSelectionEmpty()){
-	        		int selectedRow = table.getSelectedRow();
-        			String selectedData = (String) table.getValueAt(selectedRow, 0);
-        			//String info = controller.getEntityByName(selectedData);
-        			//controller.showOp(info);
-        			
-        			//Llamada al controlador
-        			System.out.println("Selected: " + selectedData);
-        			// ((TreeControllerView) controller).create_form_view(selectedData);
-        		}
-      		}
-      	});
-		
-	}
+	protected void create_events() {}
 
 	public void setTree(QAPBaBTreeNode n){
 		node = n;
 	}
-
+	
 	public void pintameElArbol(){
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode("B&B Tree");
 		DefaultTreeModel model = new DefaultTreeModel(root);
@@ -129,5 +68,33 @@ public class TreeView extends ViewController {
 		
 
 	}*/
+
+
+	@Override
+	public void submit_form() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	protected void create_view() {
+		// TODO Auto-generated method stub
+		viewTree = new JButton("VIEW TREE");
+		viewTree.setVisible(true);
+		
+		viewTree.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// display/center the jdialog when the button is pressed
+				viewTree.setVisible(false);
+				try {
+					((TreeControllerView)controller).pintameElArbol();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					Console.print("Falla el Tree");
+				}
+			}
+		});
+	}
 
 }

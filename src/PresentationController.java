@@ -61,6 +61,8 @@ public class PresentationController {
 		kcv.set_scroll();
 		rcv.set_scroll();
 		qcv.set_scroll();
+		ocv.set_scroll();
+		tcv.set_scroll();
 
 	}
 

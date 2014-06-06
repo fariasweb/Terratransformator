@@ -16,23 +16,22 @@ public class QAPEager extends QAP{
 	int n;
 	public int NombredeBranch;
 	private Comparator<QAPEagerSP> comparator;
-	
-	
+	private int[] va;
+	private int[] val;
 	
 	public QAPEager(QAPInput qap) throws Exception {
 		super(qap);
+		n = input.getMatrixSize();
 		QAPType = "GilmoreEager";
 		tree = new QAPBaBTree();
 		NombredeBranch = input.getnivelparametro();
-
-		n = input.getMatrixSize();
-		solution = new int[n];
 		GLB = new QAPGilmoreLawerBound(n);
 		comparator = new QAPEagerSPcomparator();
-		
+		va = new int[n];
+		val = new int[n];
 	}
 
-	public double BranchAndBound(int[] va,int[] val) {
+	public double BranchAndBound() {
 		
 		// Redeclaro la cola de vector
 		Queue<QAPEagerSP> q = new LinkedList<QAPEagerSP>();
@@ -42,13 +41,13 @@ public class QAPEager extends QAP{
 		
 		sp.level = 0;
 		sp.min = 0;
-		sp.va = va;
-		sp.val = val;
+		//sp.va = va;
+		//sp.val = val;
 		
-		/*
+		
 		sp.va = new int[n];
 		sp.val = new int[n];
-		*/
+		
 		
 		
 		q.offer(sp);
@@ -113,14 +112,14 @@ public class QAPEager extends QAP{
 		}
 		
 		
-		//Util.CopyVectors(sp.va, sp.val, val, va);
+		Util.CopyVectors(sp.va, sp.val, val, va);
 		
 		return sp.min;
 
 	}
 						
 	public void run() throws Exception {	
-	
+		isRun = true;
 		setTime(System.nanoTime());
 		//output = new  QAPSolution();
 		/*
@@ -136,10 +135,7 @@ public class QAPEager extends QAP{
 		*/
 		//Inicio de tiempo
 
-		int[] va = new int[n];
-		int[] val = new int[n];
-		
-		setResult(BranchAndBound(va,val));
+		setResult(BranchAndBound());
 
 		for (int m = 0; m < n; m++) {
 			if(m < n-1) {
@@ -151,11 +147,12 @@ public class QAPEager extends QAP{
 				
 			}
 		}
-		Console.print("HASTA AQUI BIENNNNNNNNNN");
-		output = new QAPSolution(this, input.getgalaxy(), input.getpackets());
-		
+		Console.print("GENE"+ n);
+		Console.WriteVector(val);
 		setTime(System.nanoTime() - getTime());
 		Console.print("HASTA AQUI BIENNNNNNNNNN");
+		
+
 		//Algoritmo
 		//double d = BranchAndBound(input.getDistanceMatrix(), input.getFlowMatrix(), sol1,sol2);
 		/*
@@ -168,4 +165,5 @@ public class QAPEager extends QAP{
 		solution = sol2;*/
 
 	}
+
 }

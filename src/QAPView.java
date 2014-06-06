@@ -29,15 +29,14 @@ public class QAPView extends ViewForm {
 	private JLabel levelLabel;
 	private JLabel galaxyLabel;
 
-	private QAPInput input;
+
 	private QAPInputDetail qapinput;
 	private JButton refreshButton; 
-	private PacketController pc; 
+
 	private QAPController qc;
 
 	QAPView(AbstractControllerView c , QAPController qcp) {
 		super(c);	
-		qc = qcp;
 		// Button of QAPInputForm
 		crear_vista();
 	}

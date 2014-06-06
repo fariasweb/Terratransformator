@@ -14,6 +14,8 @@ public class QAPController extends AbstractController{
 	private TST<Packet> p;
 	private int nivel;
 	private String QAPType;
+
+	private QAP alg;
 	// Solucion dada para galaxua g y paquetes p
 	private QAPSolution oqap;
 	private QAPBaBTree tree = new QAPBaBTree();
@@ -176,7 +178,7 @@ public class QAPController extends AbstractController{
 	
 	public void runQAP() throws Exception{
 		Console.print("EJECUTANDO ALGORITMO " + QAPType);
-		QAP alg;
+		
 		Console.print("EJECUTANDO ALGORITMO " + QAPType);
 		if (QAPType.equals(QAPTypeList.GilmoreLazy.name())) {
 			alg = new QAPLazyGLB(qapinput);
@@ -185,11 +187,13 @@ public class QAPController extends AbstractController{
 		} else {
 			throw new Exception("QAPType is not defined");
 		}
+
 		alg.run();
-		// 7.Generar salida
-		//oqap = new QAPSolution(alg, g, p);
-		//oqap.setQAPSend();
+
+		oqap = new QAPSolution(alg,g,p);
+		oqap.setQAPSend();
 		tree = alg.getQAPNode();
+
 	}
 
 	public QAPBaBTreeNode getTree(){
@@ -242,6 +246,21 @@ public class QAPController extends AbstractController{
 
 	}
 
+	public int[] getSolution(){
+		return alg.getSolution();
+	}
+	
+	public long getTime() {
+		return alg.getTime();
+	}
+
+	/**
+	 * @return the result
+	 */
+	public double getResult() {
+		return alg.getResult();
+	}
+	
 	// Save&Load
 	// ---------------------------------------------
 
@@ -354,6 +373,7 @@ public class QAPController extends AbstractController{
 		} else
 			throw new Exception("Is necessary a solution to save");
 	}
+	
 	
 	/**
 	 * Pre: El archivo path debe exisitir
