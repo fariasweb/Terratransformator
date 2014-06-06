@@ -20,9 +20,9 @@ public class QAPInputFormCreate extends ViewForm {
 	private DefaultTableModel DistanceMatrix;
 	private DefaultListModel lm;
 	private JLabel label; 
-	private String[][] Matrix;
+	private double[][] Matrix;
 
-	QAPInputFormCreate(AbstractControllerView c, String namep, String[][] matrix){
+	QAPInputFormCreate(AbstractControllerView c, String namep, double[][] matrix){
 		super(c);
 		Matrix = matrix;	
 		crear_vista(namep);
@@ -45,6 +45,7 @@ public class QAPInputFormCreate extends ViewForm {
 		tDistanceMatrix.setRowHeight(17);
 		for(int i = 0; i < tDistanceMatrix.getRowCount(); ++i){
 			for(int j = 0; j < tDistanceMatrix.getColumnCount(); ++j){
+				
 				tDistanceMatrix.setValueAt(Matrix[i][j], i, j);
 			}
 		}

@@ -8,15 +8,15 @@ public class QAPInputDetail extends View3Col{
 	private JButton jb; 
 	private QAPInput input;
 	private int sizeMatrix;
-	private String[][] distanceM;
-	private String[][] flowM;
+	private double[][] distanceM;
+	private double[][] flowM;
 	
 
 	QAPInputDetail(QAPInputControllerView c) {
 		super((QAPInputControllerView)c);
 		
-		distanceM = transformMatrix(c.getDistanceMatrix());
-		flowM = transformMatrix(c.getFlowMatrix());
+		distanceM = c.getDistanceMatrix();
+		flowM = c.getFlowMatrix();
 		crear_vista();
 	}
 

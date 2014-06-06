@@ -56,7 +56,8 @@ public class QAPView extends ViewForm {
 		galaxyLabel = new JLabel("Select Galaxy for Algorithm:");
 		rb1 = new JRadioButton("GilmoreLazy",true);
 		rb2 = new JRadioButton("GilmoreEager",false);
-
+		rb1.setName("GilmoreLazy");
+		rb2.setName("GilmoreLazy");
 
 
 		SpinnerNumberModel jspin = new SpinnerNumberModel(-1, -1, Integer.MAX_VALUE, 1);
@@ -154,10 +155,12 @@ public class QAPView extends ViewForm {
 	inputButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e){
 			try{
-				showQAPInputForm((String)gcb.getSelectedItem(), rb1.getName(), (Integer)jp.getValue());
+				Console.print((String)gcb.getSelectedItem() + " " + rb1.getName() + " " + (Integer)jp.getValue());
+				if(rb1.isSelected())showQAPInputForm((String)gcb.getSelectedItem(), rb1.getName(), (Integer)jp.getValue());
+				else showQAPInputForm((String)gcb.getSelectedItem(), rb2.getName(), (Integer)jp.getValue());
 			}
 			catch(Exception mm){
-				Console.print("QAP");
+				Console.print("QAP Error");
 			}
 		}
 	});
@@ -171,13 +174,13 @@ public class QAPView extends ViewForm {
 
 			ngMatrix = decode_list(qc.getAllGalaxies());
 
-			for(int i = 0; i < ngMatrix.length; ++i){
+			/*for(int i = 0; i < ngMatrix.length; ++i){
 				for(int j =0 ; j < ngMatrix[0].length; ++j){
 					Console.print(ngMatrix[i][j] + i+ " " + j);
 				}
 				
 			}
-			
+			*/
 			for(int i = 0; i < sizeGalaxy; ++i){
 				nameGalaxies[i] = ngMatrix[i][0];
 			}

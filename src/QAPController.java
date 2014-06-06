@@ -170,8 +170,10 @@ public class QAPController extends AbstractController{
 		p = CP.cloneCollection();
 
 		// 4.Entrada
+		Console.print(g.getName() + " " + QAPType + nivel);
 		qapinput = new QAPInput(g, p,nivel);
 
+		//SEPARAR DE AQUI PARA ABAJO
 		// 5.Seleccion de algoritmo y ejecucion
 		QAP alg;
 
@@ -184,11 +186,11 @@ public class QAPController extends AbstractController{
 		}
 
 		 //6.Ejecucion del QAP
-		alg.run();
+		//alg.run();
 
 		// 7.Generar salida
-		oqap = new QAPSolution(alg, g, p);
-		oqap.setQAPSend();
+		//oqap = new QAPSolution(alg, g, p);
+		//oqap.setQAPSend();
 	}
 
 	public double[][] getDistanceMatrix(){
