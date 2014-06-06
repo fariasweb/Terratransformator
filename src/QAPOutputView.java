@@ -41,7 +41,7 @@ public class QAPOutputView extends ViewForm {
 	 * 
 	 */
 	public void showQAPInputForm(){
-		qapinput = new QAPInputDetail((QAPInputControllerView)controller,10);
+		qapinput = new QAPInputDetail((QAPInputControllerView)controller);
 		qapinput.setVisible(true);
 		((QAPInputControllerView)controller).create_form_add();	
 	}

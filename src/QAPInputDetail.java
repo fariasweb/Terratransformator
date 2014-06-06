@@ -13,13 +13,13 @@ public class QAPInputDetail extends View3Col{
 	private QAPInputFormCreate formDistance;
 	private QAPInputFormCreate formFlow;
 
-	QAPInputDetail(QAPInputControllerView c) {
+	QAPInputDetail(AbstractControllerView c) {
 		super((QAPInputControllerView)c);
-		Console.print("PASO 1");
-		distanceM = c.getDistanceMatrix();
-		flowM = c.getFlowMatrix();
+	
+		distanceM = ((QAPInputControllerView)c).getDistanceMatrix();
+		flowM = ((QAPInputControllerView)c).getFlowMatrix();
 		crear_vista();
-		Console.print("PASO Final");
+	
 	}
 
 	/*private String[][] transformMatrix(double[][] distanceMatrix){
@@ -36,13 +36,10 @@ public class QAPInputDetail extends View3Col{
 	
 	private void crear_vista(){
 		
-		Console.print("PASO 2");
 		formDistance = new QAPInputFormCreate(controller,"Distance Matrix:", distanceM);
 		add_left(formDistance);
-		Console.print("PASO 3");
 		formFlow = new QAPInputFormCreate(controller, "Flow Matrix", flowM);
 		add_center(formFlow);
-		Console.print("PASO 4");
 		jb = new JButton("Run Algorithm!");
 		add_right(jb);
 		
@@ -52,13 +49,12 @@ public class QAPInputDetail extends View3Col{
 		
 					formDistance.checkSetMatrix();
 					formFlow.checkSetMatrix();
-					Console.print("Holaaaaa");
 					AlgorithmThread tAlg = new AlgorithmThread((QAPInputControllerView)controller);
 					Thread t1 = new Thread(tAlg,"Algorithm THREAD1");
 					t1.start();
 				}
 				catch(Exception ee){
-					Console.print("E: Running QAP");
+					controller.vError.error("Introduce Numbers in the Tables!");
 				}
 				
 				

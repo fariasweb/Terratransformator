@@ -57,7 +57,7 @@ public class QAPView extends ViewForm {
 		rb1 = new JRadioButton("GilmoreLazy",true);
 		rb2 = new JRadioButton("GilmoreEager",false);
 		rb1.setName("GilmoreLazy");
-		rb2.setName("GilmoreLazy");
+		rb2.setName("GilmoreEager");
 
 
 		SpinnerNumberModel jspin = new SpinnerNumberModel(-1, -1, Integer.MAX_VALUE, 1);
@@ -137,7 +137,7 @@ public class QAPView extends ViewForm {
 
 	rb1.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e){
-			Console.print("LAA 1!");
+			
 			rb1.setSelected(true);
 			rb2.setSelected(false);
 
@@ -201,7 +201,7 @@ public class QAPView extends ViewForm {
 		catch(Exception e) {
 			Console.print(e.getMessage());
 		}
-		Console.print("QAPINPUT GENERADO!"); //HASTA AQUI BIEN!
+
 		qapinput = new QAPInputDetail((QAPInputControllerView)controller);
 		Console.print("QAPINPUT DETAIL GENERADO!"); 
 		qapinput.setVisible(true);

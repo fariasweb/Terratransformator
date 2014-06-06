@@ -22,7 +22,12 @@ public class QAPEager extends QAP{
 	public QAPEager(QAPInput qap) throws Exception {
 		super(qap);
 		QAPType = "GilmoreEager";
+		tree = new QAPBaBTree();
+		NombredeBranch = input.getnivelparametro();
 
+		n = input.getMatrixSize();
+		solution = new int[n];
+		GLB = new QAPGilmoreLawerBound(n);
 		comparator = new QAPEagerSPcomparator();
 		
 	}
@@ -47,7 +52,7 @@ public class QAPEager extends QAP{
 		
 		
 		q.offer(sp);
-		PriorityQueue<QAPEagerSP> pq = new PriorityQueue<QAPEagerSP>(NombredeBranch, comparator);
+		PriorityQueue<QAPEagerSP> pq = new PriorityQueue<QAPEagerSP>(10, comparator);
 		int levelchange = 0;
 		while (!q.isEmpty()) {
 			QAPEagerSP nodepare = q.element();
@@ -118,11 +123,6 @@ public class QAPEager extends QAP{
 	
 		setTime(System.nanoTime());
 		//output = new  QAPSolution();
-		tree = new QAPBaBTree();
-		NombredeBranch = input.getnivelparametro();
-
-		n = input.getMatrixSize();
-		GLB = new QAPGilmoreLawerBound(n);
 		/*
 		//Numero de planetas/paquetes
 		int nPackets = input.getSizePackets();
@@ -155,7 +155,7 @@ public class QAPEager extends QAP{
 		output = new QAPSolution(this, input.getgalaxy(), input.getpackets());
 		
 		setTime(System.nanoTime() - getTime());
-		
+		Console.print("HASTA AQUI BIENNNNNNNNNN");
 		//Algoritmo
 		//double d = BranchAndBound(input.getDistanceMatrix(), input.getFlowMatrix(), sol1,sol2);
 		/*

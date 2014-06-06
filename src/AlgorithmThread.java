@@ -10,7 +10,7 @@ public class AlgorithmThread implements Runnable{
 			((QAPController)aux.get_controller()).runQAP();
 		}
 		catch(Exception t){
-			Console.print("E: Executing Thread");
+			t.printStackTrace();
 		}
 	}
 }

@@ -166,17 +166,11 @@ public class QAPController extends AbstractController{
 		// 3. Clonamamos el planeta y TST<Paquete>
 		g = CG.cloneGalaxy(gOriginal);
 		p = CP.cloneCollection();
-		QAPType = QAPTypep;
 		// 4.Entrada
-		Console.print(g.getName() + " " + QAPTypep + nivel);
+		Console.print(g.getName() + " " + QAPType + nivel);
 		qapinput = new QAPInput(g, p,nivel);
 
-		 //6.Ejecucion del QAP
-		//alg.run();
-
-		// 7.Generar salida
-		//oqap = new QAPSolution(alg, g, p);
-		//oqap.setQAPSend();
+		
 	}
 	
 	public void runQAP() throws Exception{

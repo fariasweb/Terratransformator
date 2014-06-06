@@ -29,22 +29,23 @@ public class QAPInputFormCreate extends ViewForm {
 	}
 
 	public void checkSetMatrix() throws Exception{
-		int n = tDistanceMatrix.getRowCount();
-		String[][] auxMatrix = new String[n][n];
-		for(int i = 0; i < n; ++i){
-			for(int j = 0; j < n; ++j){
-				Console.print("Error 1");
-				auxMatrix[i][j] = tDistanceMatrix.getValueAt(i,j).toString();
-				
-			}
-		}
 		
-		for(int i = 0; i < n; ++i){
-			for(int j = 0; j < n; ++j){
-				Console.print("Error 2");
-				Matrix[i][j] = Double.parseDouble(auxMatrix[i][j]);
+			int n = tDistanceMatrix.getRowCount();
+			String[][] auxMatrix = new String[n][n];
+			for(int i = 0; i < n; ++i){
+				for(int j = 0; j < n; ++j){
+					auxMatrix[i][j] = tDistanceMatrix.getValueAt(i,j).toString();
+				}
 			}
-		}
+		
+			for(int i = 0; i < n; ++i){
+				for(int j = 0; j < n; ++j){
+						
+						Matrix[i][j] = Double.parseDouble(auxMatrix[i][j]);
+						if(Double.isNaN(Matrix[i][j])) throw new Exception();
+				}
+			}
+		
 		
 	}
 	

@@ -8,79 +8,165 @@ public class QAPLazyGLB extends QAP{
 	private QAPGilmoreLawerBound GLB;
 	private int[] asignacionP;
 	private int[] asignacionL;
-	private double costs[];
+	
+	private double[] coststotal;
+	private int[] coststotalnumber;
+	private double costs;
+	
 	private int nombrenivel; //editable
 	private int n;
 	
+	private	 double[] costsparcial;
+	private int[] costsparcialnumber;
+	private int nivelSparcial;
+
+	//int qwe;
+	//int ewq;
+	//int q;
+	
 	public QAPLazyGLB(QAPInput qap) throws Exception{
-		
+
 		super(qap);
+		tree = new QAPBaBTree();
+		nombrenivel = input.getnivelparametro();
+		
+		n = input.getMatrixSize();
+		GLB = new QAPGilmoreLawerBound(n);
+		nivelSparcial = 0;
+		
+		costs = -1;
+		asignacionP = new int[n];
+		asignacionL = new int[n];
+		
+
+		coststotal = new double[n];
+		coststotalnumber = new int[n];
+		costsparcial = new double[n];
+		costsparcialnumber = new int[n];
+		
 		QAPType = "GilmoreLazy";
 	}
 	
 	
-	public void BranchAndBound(int[] va,int[] val, double[] costlevel, int level){
-
+	public void BranchAndBound(int[] va,int[] val, double[] costlevel,int[] costlevelnumber ,int level){
 		for(int i = 0; i < n;i++) {
 			if(val[i] == 0) {
 				va[level] = i+1;
 				val[i] = level+1;
-
-			
 				
+			
+				//qwe++;
 				double minaux = GLB.QAPGLB(input,va, val);
 				
 			
 				
+				//System.out.print(qwe + " ");
+				
 				QAPTNSolucion  spaux = new QAPTNSolucion ();
 				spaux.valor(level+1, va, System.nanoTime()-getTime(), minaux);
 				tree.addNode(spaux);
-				spaux.show();
+				//spaux.show();
 				
-				costlevel[level] = minaux;
 				
+				//anadir la media
+				costlevel[level] += minaux;
+				costlevelnumber[level]++;
+				int aux = 1;
+				while(aux <= nombrenivel && level+aux < n-2) {
+					
+					costlevel[level+aux]+= minaux;
+					costlevelnumber[level+aux]++;
+						
+				
+					aux++;
+				}
+				
+				aux = 1;
+				while(aux <= nombrenivel && level-aux >= 0) {
+						costlevel[level-aux]+= minaux;
+						costlevelnumber[level-aux]++;
+						
+						aux++;
+				}
+				
+				
+				//Decide con media calculado
 				//caso de respuesta valida
 				if(level == n-2){
-					if(costs[n-2] == -1 || minaux < costs[n-2]) {
-							Util.CopyVector(costlevel,costs);
+					
+					if(costs == -1 || minaux < costs) {
+						
+						//System.out.println(costs);
+							costs = minaux;
 							Util.CopyVectors(va,val,asignacionL,asignacionP);
+							Util.CopyVectors( costlevel, costlevelnumber, coststotalnumber , coststotal);
+							
+							//fewfwef
+						//	if(n < 0)	Console.WriteVector(coststotal);
+						//	if(n < 0)	Console.WriteVector(coststotalnumber);
+							//dwfewe
+					}
+				}
+				//caso de repuesta parcial
+				else {
+					boolean poda = false;
+					if(costs == -1) poda = true; 
+					else if (nombrenivel == -1 && minaux < costs) poda = true;
+					else {
+						int nivelaux = level;
+						//if(nombrenivel < level)  nivelaux -= nombrenivel;
+						if(nivelaux < nivelSparcial) { 
+							
+								if(costlevel[nivelaux]/costlevelnumber[nivelaux]
+										< costsparcial[nivelaux]/costsparcialnumber[nivelaux])
+								{
+								//	ewq++;
+									poda = true;
+								}
+								
+						}
+						else if (costlevel[nivelaux]/costlevelnumber[nivelaux] < coststotal[nivelaux]/coststotalnumber[nivelaux]) {
+						//	q++;
+							poda = true;
+						}
+					}
+					if(poda == true){
+					
+						BranchAndBound(va, val, costlevel,costlevelnumber, level+1);
+					}
+					else if(level >= nivelSparcial){
+						nivelSparcial = level;
+						Util.CopyVectors( costlevel, costlevelnumber ,costsparcialnumber,costsparcial);
+						
+						//cafaff
+					//	if(n < 1)Console.WriteVector(costsparcial);
+					//	if(n < 3)Console.WriteVector(costsparcialnumber);
+						//fesfef
+						
 					}
 				}
 				
-				else {
-					boolean poda = false;
-					if(costs[n-2] == -1) poda = true; 
-					else {
-						if (nombrenivel == -1 && minaux < costs[n-2]){
-							poda = true;
-							
-						}
-						else if(minaux < costs[level]) poda = true;
-						else {
-							int aux = 1;
-							while(aux <= nombrenivel && level+aux < n-2) {
-								if(minaux < costs[level+aux]) {
-									poda = true;
-								}
-								aux++;
-							}
-							if(poda == false) {
-								aux = 1;
-								while(aux <= nombrenivel && level-aux >= 0) {
-									if(minaux < costs[level-aux]) {
-										poda = true;
-									}
-									aux++;
-								}
-							}
-						 }
-					}
+				//quita la media
+				costlevel[level] -= minaux;
+				costlevelnumber[level]--;
+				aux = 1;
+				while(aux <= nombrenivel && level+aux < n-2) {
 					
-					if(poda == true){
-						BranchAndBound(va, val, costlevel, level+1);
-					}
+					costlevel[level+aux] -= minaux;
+					costlevelnumber[level+aux]--;
+						
+				
+					aux++;
 				}
-				costlevel[level] = 0;
+				
+				aux = 1;
+				while(aux <= nombrenivel && level-aux >= 0) {
+						costlevel[level-aux] -= minaux;
+						costlevelnumber[level-aux]--;
+						
+						aux++;
+				}
+				
 				va[level] = 0;
 				val[i] = 0;
 			}
@@ -92,53 +178,43 @@ public class QAPLazyGLB extends QAP{
 	
 		setTime(System.nanoTime());
 		
-		tree = new QAPBaBTree();
-		nombrenivel = input.getnivelparametro();
 		
-		n = input.getMatrixSize();
-		solution = new int[n];			// -> esto
-		Console.WriteMatrix(input.getDistanceMatrix());
-		Console.WriteMatrix(input.getFlowMatrix());
-		GLB = new QAPGilmoreLawerBound(n);
-		
-		int[] va = new int[n];
-		int[] val = new int[n];
-		double[] costlevel = new double[n];
-		costs = new double[n];
-		asignacionP = new int[n];
-		asignacionL = new int[n];
 		if(n > 1) {
-			costs[n-2] = -1;
-			BranchAndBound(va, val, costlevel, 0);
+			int[] va = new int[n];
+			int[] val = new int[n];
+			double[] costlevel = new double[n];
+			int[] costlevelnumber = new int[n];
 			
-			Console.print("ERROR in OUTPUT 1");
-
-			//completamos el nodo;
-			for (int m = 0; m < n; m++) {
-					if(m < n-1) {
-						Console.print("ERROR in OUTPUT 1.1");
-						solution[m] = va[m];
-					}
-					
-					if (val[m] == 0) {
-						Console.print("ERROR in OUTPUT 1.2");
-						solution[n - 1] = m + 1;
-						
-					}
-				
-			}
+			BranchAndBound(va, val, costlevel, costlevelnumber, 0);
 		}
-		Console.print("ERROR in OUTPUT 2");
+		
 
-		setResult(costs[n-2]);
-		Console.print("ERROR in OUTPUT 3");
-		output = new QAPSolution(this, input.getgalaxy(), input.getpackets());
 		
 		setTime(System.nanoTime() - getTime());
 
 	}
 	
 	
+	public void gerateSolucion() throws Exception {
+
+		//completamos el nodo;		
+			for (int m = 0; m < n; m++) {
+						
+						if(m < n-1) {
+							solution[m] = asignacionP[m];
+						}
+						
+						if (asignacionL[m] == 0) {
+							solution[n - 1] = m + 1;
+							
+						}
+					
+				}
+			
+		setResult(costs);
+		//output = new QAPSolution(this, input.getgalaxy(), input.getpackets());
+		//output.setQAPSend();
+	}
 	
 	
 	/*
