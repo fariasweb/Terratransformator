@@ -19,7 +19,10 @@ public class QAPLazyGLB extends QAP{
 	private	 double[] costsparcial;
 	private int[] costsparcialnumber;
 	private int nivelSparcial;
-
+	int[] va;
+	int[] val;
+	double[] costlevel;
+	int[] costlevelnumber;
 	//int qwe;
 	//int ewq;
 	//int q;
@@ -38,7 +41,10 @@ public class QAPLazyGLB extends QAP{
 		asignacionP = new int[n];
 		asignacionL = new int[n];
 	
-
+		va = new int[n];
+		val = new int[n];
+		costlevel = new double[n];
+		costlevelnumber = new int[n];
 		coststotal = new double[n];
 		coststotalnumber = new int[n];
 		costsparcial = new double[n];
@@ -48,7 +54,7 @@ public class QAPLazyGLB extends QAP{
 	}
 	
 	
-	public void BranchAndBound(int[] va,int[] val, double[] costlevel,int[] costlevelnumber ,int level){
+	public void BranchAndBound(int level){
 		for(int i = 0; i < n;i++) {
 			if(val[i] == 0) {
 				va[level] = i+1;
@@ -132,7 +138,7 @@ public class QAPLazyGLB extends QAP{
 					}
 					if(poda == true){
 					
-						BranchAndBound(va, val, costlevel,costlevelnumber, level+1);
+						BranchAndBound(level+1);
 					}
 					else if(level >= nivelSparcial){
 						nivelSparcial = level;
@@ -180,12 +186,8 @@ public class QAPLazyGLB extends QAP{
 		
 		
 		if(n > 1) {
-			int[] va = new int[n];
-			int[] val = new int[n];
-			double[] costlevel = new double[n];
-			int[] costlevelnumber = new int[n];
 			
-			BranchAndBound(va, val, costlevel, costlevelnumber, 0);
+			this.BranchAndBound(0);
 		}
 		
 		gerateSolucion();

@@ -16,8 +16,8 @@ public class QAPEager extends QAP{
 	int n;
 	public int NombredeBranch;
 	private Comparator<QAPEagerSP> comparator;
-	
-	
+	private int[] va;
+	private int[] val;
 	
 	public QAPEager(QAPInput qap) throws Exception {
 		super(qap);
@@ -27,10 +27,11 @@ public class QAPEager extends QAP{
 		NombredeBranch = input.getnivelparametro();
 		GLB = new QAPGilmoreLawerBound(n);
 		comparator = new QAPEagerSPcomparator();
-		
+		va = new int[n];
+		val = new int[n];
 	}
 
-	public double BranchAndBound(int[] va,int[] val) {
+	public double BranchAndBound() {
 		
 		// Redeclaro la cola de vector
 		Queue<QAPEagerSP> q = new LinkedList<QAPEagerSP>();
@@ -134,10 +135,7 @@ public class QAPEager extends QAP{
 		*/
 		//Inicio de tiempo
 
-		int[] va = new int[n];
-		int[] val = new int[n];
-		
-		setResult(BranchAndBound(va,val));
+		setResult(BranchAndBound());
 
 		for (int m = 0; m < n; m++) {
 			if(m < n-1) {

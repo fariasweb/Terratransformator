@@ -14,7 +14,7 @@ public class QAPController extends AbstractController{
 	private TST<Packet> p;
 	private int nivel;
 	private String QAPType;
-	private QAPBaBTree tree;
+
 	private QAP alg;
 	// Solucion dada para galaxua g y paquetes p
 	private QAPSolution oqap;

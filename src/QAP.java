@@ -27,9 +27,6 @@ public abstract class QAP {
 	// ---------------------------------------------
 		
 	
-	public QAPBaBTree getQAPNode(){
-		return tree;
-	}
 	
 	/**
 	 * Constructora
