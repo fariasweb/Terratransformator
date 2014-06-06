@@ -84,6 +84,9 @@ public abstract class QAP {
 		return solution;
 	}
 	
+	public QAPBaBTree getQAPNode(){
+		return tree;
+	}
 	// Setters
 	// ---------------------------------------------
 	/**

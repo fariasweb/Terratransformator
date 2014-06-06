@@ -504,7 +504,7 @@ public class TST<Value> {
 		dump(x.right, prefix);
 	}
 	
-	
+
 	/**
 	 * Iterator TST
 	 *
@@ -529,6 +529,11 @@ public class TST<Value> {
 		public TSTIterator(Node x) {
 			current = dfsAux(x);
 		}
+
+		/*public void copy(TSTIterator it){
+			current = it.current;
+			stack = it.stack.clone();
+		}*/
 		
 		/**
 		 * 

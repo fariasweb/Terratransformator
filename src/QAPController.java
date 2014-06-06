@@ -18,6 +18,7 @@ public class QAPController extends AbstractController{
 	private QAP alg;
 	// Solucion dada para galaxua g y paquetes p
 	private QAPSolution oqap;
+	private QAPBaBTree tree = new QAPBaBTree();
 
 	// Enum QAPType
 	public enum QAPTypeList {
@@ -188,9 +189,15 @@ public class QAPController extends AbstractController{
 		}
 
 		alg.run();
+
 		oqap = new QAPSolution(alg,g,p);
 		oqap.setQAPSend();
 		tree = alg.getQAPNode();
+
+	}
+
+	public QAPBaBTreeNode getTree(){
+		return tree.getRoot();
 	}
 
 	public double[][] getDistanceMatrix(){

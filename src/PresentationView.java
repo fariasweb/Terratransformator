@@ -138,4 +138,8 @@ public class PresentationView extends JFrame {
 		setJMenuBar(menu);
 	}
 
+	public void setScrolls(){
+
+	}
+
 }

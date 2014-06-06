@@ -10,13 +10,13 @@ public abstract class AbstractController {
 
 	//Constants
 	// protected final int _CACHE_NUM = 100;
-	protected final int _CACHE_NUM = 2;
+	protected final int _CACHE_NUM = 1000;
 	protected final String _SEPARATOR = ";";
 	
 	//Private and general
 	protected TST<Entity> Clt;
 	protected Iterator it1, it2, it3;
-	protected Stack<Iterator> stackIte;
+	protected Stack<Iterator> stackIte = new Stack<Iterator>();
 	protected DataController dCont;
 	protected String _last_key = "";
 
@@ -166,23 +166,30 @@ public abstract class AbstractController {
 	// ---------------------------------------------
 
 	public String forwards(){
-		String ret = new String();
+		String ret = "";
 		int count = 0;
 		Iterator it;
-
-		for (it = it3; it.hasNext() && count < _CACHE_NUM; ++count)
-			ret += it.next().toString();
-
 		stackIte.push(it1);
-		it1 = it2;	it2 = it3; it3 = it;
 
+		for (; it3.hasNext() && count < _CACHE_NUM; ++count){
+			// if(it.next().toString() != "1")
+				ret += it3.next().toString();	
+				it1.next();
+				it2.next();
+		}
+
+		if(ret == "") return ret;
+
+		
+		// it1 = it2;	it2 = it3;	it3 = it;
 		return ret;
 	}
 
 	public String backwards(){
-		String ret = new String();
+		String ret = "";
 		int count = 0;
 		Iterator it;
+		if(stackIte.empty()) return "_EMPTY_STACK";
 
 		for (it = stackIte.pop(); it.hasNext() && count < _CACHE_NUM; ++count)
 			ret = (ret + it.next().toString());
@@ -198,8 +205,8 @@ public abstract class AbstractController {
 
 		String ret = new String();
 		int count = 0;
-		//Esta linea no hace falta luego (it1 ya tiene valor)
 		Iterator it;
+		//Esta linea no hace falta luego (it1 ya tiene valor)
 		it1 = getIterator();
 
 		for (it = it1; it.hasNext() && count < _CACHE_NUM; ++count){
