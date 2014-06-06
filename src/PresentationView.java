@@ -17,7 +17,6 @@ public class PresentationView extends JFrame {
 	private ViewTabbedPane tabbedOpe, tabbedLeft, tabbedRight;
 	private ViewNotification errorPanel;
 
-
 	/**
 	 * 
 	 * @param c
@@ -39,9 +38,12 @@ public class PresentationView extends JFrame {
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		// Size y visibilidad
-		setSize(900, 640);
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		setMinimumSize(new Dimension(900,640));
+		//setSize(900, 640);
+		int w = Toolkit.getDefaultToolkit().getScreenSize().width;
+		int h = Toolkit.getDefaultToolkit().getScreenSize().height;
+		
+	    setMinimumSize(new Dimension(w,h));
+		
 		setVisible(true);
 		setResizable(false);
 
@@ -97,6 +99,7 @@ public class PresentationView extends JFrame {
 
 	/**
 	 * Anade un panel al TabPanel izquierdo
+	 * 
 	 * @param p
 	 * @param name
 	 */
@@ -106,12 +109,13 @@ public class PresentationView extends JFrame {
 
 	/**
 	 * Anade un panel al TabPanel derecho
+	 * 
 	 * @param p
 	 * @param name
 	 */
 	public void add_right_tab(JPanel p, String name) {
 		tabbedRight.add_tab(name, p);
-	}	
+	}
 
 	/**
 	 * 
@@ -129,17 +133,17 @@ public class PresentationView extends JFrame {
 	public ViewNotification get_error_panel() {
 		return errorPanel;
 	}
-	
+
 	/**
 	 * 
 	 * @param menu
 	 */
 	public void setMenu(JMenuBar menu) {
-		//MenuBar
+		// MenuBar
 		setJMenuBar(menu);
 	}
 
-	public void setScrolls(){
+	public void setScrolls() {
 
 	}
 
