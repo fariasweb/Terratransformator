@@ -20,204 +20,57 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 
-public class QAPView extends ViewForm {
+public class QAPView extends View2Row {
 	private JButton inputButton;
-	private JComboBox gcb;
-	private JRadioButton rb1;
-	private JRadioButton rb2;
-	private JSpinner jp;
-	private JLabel levelLabel;
-	private JLabel galaxyLabel;
-
-
+	private QAPInputForm fInput;
+	
+	
 	private QAPInputDetail qapinput;
-	private JButton refreshButton; 
-
 
 	QAPView(AbstractControllerView c) {
 		super(c);	
-		// Button of QAPInputForm
-		crear_vista();
-	}
-	protected void crear_vista(){
-		// Button of QAPInputForm
-	
-		galaxyLabel = new JLabel("Select Galaxy for Algorithm:");
-		String[] nulo = new String[1];
-		nulo[0] = "None";
-		gcb = new JComboBox(nulo);
-		inputButton = new JButton("Create Input Form");
-		levelLabel = new JLabel("Set Level (Value -1: Infinite for Lazy and None for Eager)");
-		refreshButton = new JButton("Refresh Galaxies");
-		
-
-		galaxyLabel = new JLabel("Select Galaxy for Algorithm:");
-		rb1 = new JRadioButton("GilmoreLazy",true);
-		rb2 = new JRadioButton("GilmoreEager",false);
-		rb1.setName("GilmoreLazy");
-		rb2.setName("GilmoreEager");
-
-
-		SpinnerNumberModel jspin = new SpinnerNumberModel(-1, -1, Integer.MAX_VALUE, 1);
-		jp = new JSpinner(jspin);
-
-		GroupLayout layout = new GroupLayout(this);
-		this.setLayout(layout);
-		layout.setVerticalGroup(
-				layout.createParallelGroup()
-					.addGroup(
-							layout.createSequentialGroup()
-								.addComponent(galaxyLabel,javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGroup(
-										layout.createSequentialGroup()
-										.addComponent(refreshButton)
-										.addComponent(gcb, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-								)
-								.addComponent(rb1)
-								.addGap(10)
-								.addComponent(rb2) 
-								.addGap(10)
-								.addComponent(levelLabel) 
-								.addGap(10)
-								.addComponent(jp, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE) 
-								.addGap(10)
-								.addComponent(inputButton)
-					)
-
-		);
-
-		layout.setHorizontalGroup(
-				layout.createParallelGroup()
-						.addGroup(
-								layout.createSequentialGroup()
-								.addComponent(galaxyLabel,javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-						)
-						.addGroup(
-								layout.createSequentialGroup()
-								.addComponent(refreshButton)
-
-						)
-						.addGroup(
-								layout.createSequentialGroup()
-								.addComponent(gcb,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-						
-						)
-						.addGroup(
-								layout.createSequentialGroup()
-								.addComponent(rb1)
-						)
-						.addGroup(
-								layout.createSequentialGroup()
-								.addComponent(rb2)
-						)
-						.addGroup(
-								layout.createSequentialGroup()
-								.addComponent(levelLabel)
-						)
-						.addGroup(
-								layout.createSequentialGroup()
-								.addComponent(jp,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-						)
-						.addGroup(
-								layout.createSequentialGroup()
-								.addComponent(inputButton)
-						)
-
-		);
-
-	
-	refreshButton.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e){
-			refreshComboBox();
-			
-		}
-	});
-
-	rb1.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e){
-			
-			rb1.setSelected(true);
-			rb2.setSelected(false);
-
-		}
-	});
-
-	//Boton de eliminar
-	rb2.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e){
-			rb1.setSelected(false);
-			rb2.setSelected(true);
-		}
-	});
-
-	inputButton.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e){
-			try{
-				if((String)gcb.getSelectedItem() != "None" || ((QAPController)controller.get_controller()).getByNameToString((String)gcb.getSelectedItem()).length() > 1){
-				
-				if(rb1.isSelected())showQAPInputForm((String)gcb.getSelectedItem(), rb1.getName(), (Integer)jp.getValue());
-				else showQAPInputForm((String)gcb.getSelectedItem(), rb2.getName(), (Integer)jp.getValue());
-				}
-				else {
-					//if((QAPIn)((QAPInputControllerView)controller).vError.error("Enter Galaxy to continue!");
-				}
-			}
-			catch(Exception e3){
-				e3.printStackTrace();
-			}
-		}
-	});
-	}
-	public void refreshComboBox(){
-
-		int sizeGalaxy = ((QAPController)controller.get_controller()).getNumberGalaxies();
-		if(sizeGalaxy > 0){
-			String[][] ngMatrix = new String[sizeGalaxy][3];
-			String[] nameGalaxies = new String[sizeGalaxy];
-
-			ngMatrix = decode_list(((QAPController)controller.get_controller()).getAllGalaxies());
-
-			/*for(int i = 0; i < ngMatrix.length; ++i){
-				for(int j =0 ; j < ngMatrix[0].length; ++j){
-					Console.print(ngMatrix[i][j] + i+ " " + j);
-				}
-				
-			}
-			*/
-			for(int i = 0; i < sizeGalaxy; ++i){
-				nameGalaxies[i] = ngMatrix[i][0];
-			}
-			
-			gcb.setModel(new DefaultComboBoxModel(nameGalaxies));
-		}
-		else{
-			String[] nulo = new String[1];
-			nulo[0] = "None";
-			gcb.setModel(new DefaultComboBoxModel(nulo)); 
-		}
 	}
 	
-	public void showQAPInputForm(String nameGalaxy, String QAPType, int nivel) throws Exception{
+	/*public void showQAPInputForm(String nameGalaxy, String QAPType, int nivel) throws Exception{
 
 			((QAPController)controller.get_controller()).generateQAPInput(nameGalaxy, QAPType, nivel);
 			qapinput = new QAPInputDetail((QAPInputControllerView)controller);
 			qapinput.setVisible(true);
-	}
+	}*/
 
 	protected void create_events() {
-		// TODO Auto-generated method stub
-
-	}
-
-
-	public void submit_form() throws Exception {
-		// TODO Auto-generated method stub
+		inputButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				try{
+					/*if((String)gcb.getSelectedItem() != "None" || ((QAPController)controller.get_controller()).getByNameToString((String)gcb.getSelectedItem()).length() > 1){
+					
+					if(rb1.isSelected())showQAPInputForm((String)gcb.getSelectedItem(), rb1.getName(), (Integer)jp.getValue());
+					else showQAPInputForm((String)gcb.getSelectedItem(), rb2.getName(), (Integer)jp.getValue());
+					}
+					else {
+						//if((QAPIn)((QAPInputControllerView)controller).vError.error("Enter Galaxy to continue!");
+					}*/
+					
+					fInput.submit_form();
+				}
+				catch(Exception e3){
+					controller.show_error(e3.getMessage());
+				}
+			}
+		});
 
 	}
 
 
 	protected void create_view() {
-
+		
+		//Formulario
+		fInput = new QAPInputForm(((QAPInputControllerView)controller));
+		add_top(fInput);
+		
+		//Boton inferior
+		inputButton = new JButton("Create Input Form");
+		add_bottom(inputButton);
 	}
 
 }
