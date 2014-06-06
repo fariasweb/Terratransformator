@@ -40,6 +40,7 @@ public class PresentationView extends JFrame {
 
 		// Size y visibilidad
 		setSize(900, 640);
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setMinimumSize(new Dimension(900,640));
 		setVisible(true);
 		setResizable(false);

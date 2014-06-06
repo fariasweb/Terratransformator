@@ -20,12 +20,13 @@ import javax.swing.JScrollPane;
  * @author farias
  * 
  */
+
 public class TreeView extends ViewForm {
 	
 	private JTree tree;
-	
 	private QAPBaBTreeNode node = new QAPBaBTreeNode();
 	private JScrollPane scrollPane;
+	
 	/**
 	 * 
 	 * @param c

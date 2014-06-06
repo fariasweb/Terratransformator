@@ -35,6 +35,8 @@ public class ViewText extends ViewShared {
 	protected void create_view() {
 		// Creamos un Label a rojo y add to este
 		Message = new JTextArea();
+		Message.setRows(50);
+		Message.setEditable(false);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(Message);
