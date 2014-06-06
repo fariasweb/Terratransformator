@@ -10,7 +10,7 @@ public abstract class AbstractController {
 
 	//Constants
 	// protected final int _CACHE_NUM = 100;
-	protected final int _CACHE_NUM = 6;
+	protected final int _CACHE_NUM = 1000;
 	protected final String _SEPARATOR = ";";
 	
 	//Private and general
