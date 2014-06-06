@@ -26,7 +26,7 @@ public class MenuControllerView extends AbstractControllerView {
 	 * 
 	 */
 	public void show_help() {
-		vShared.add_once_tab("Help", new ViewHelp());
+		vShared.add_once_tab("Help", new ViewText());
 	}
 	
 	/**
