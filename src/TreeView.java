@@ -22,18 +22,17 @@ import javax.swing.JScrollPane;
  */
 public class TreeView extends ViewForm {
 	
-	JTree tree;
-	JButton viewTree;
-	QAPBaBTreeNode node = new QAPBaBTreeNode();
-	JScrollPane scrollPane;
+	private JTree tree;
+	
+	private QAPBaBTreeNode node = new QAPBaBTreeNode();
+	private JScrollPane scrollPane;
 	/**
 	 * 
 	 * @param c
 	 */
 	TreeView(TreeControllerView c) { //He cambiado por esto en vez de AbstractControllerView
 		super(c);
-		viewTree = new JButton("VIEW TREE");
-		viewTree.setVisible(true);
+
 	}
 
 
@@ -80,13 +79,13 @@ public class TreeView extends ViewForm {
 	@Override
 	protected void create_view() {
 		// TODO Auto-generated method stub
-		viewTree = new JButton("VIEW TREE");
+
+		JButton viewTree = new JButton("VIEW TREE");
 		viewTree.setVisible(true);
+		
 		
 		viewTree.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// display/center the jdialog when the button is pressed
-				viewTree.setVisible(false);
 				try {
 					((TreeControllerView)controller).pintameElArbol();
 				} catch (Exception e1) {

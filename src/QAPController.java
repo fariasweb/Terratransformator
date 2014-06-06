@@ -91,7 +91,6 @@ public class QAPController extends AbstractController{
 	public String getQAPSolution() {
 		if (oqap != null)
 			return oqap.toString();
-
 		return "";
 	}
 
@@ -172,7 +171,7 @@ public class QAPController extends AbstractController{
 		// 4.Entrada
 		Console.print(g.getName() + " " + QAPType + nivel);
 		qapinput = new QAPInput(g, p,nivel);
-
+		
 		
 	}
 	
@@ -374,6 +373,9 @@ public class QAPController extends AbstractController{
 			throw new Exception("Is necessary a solution to save");
 	}
 	
+	public int getNumberPackets(){
+		return CP.size();
+	}
 	
 	/**
 	 * Pre: El archivo path debe exisitir
