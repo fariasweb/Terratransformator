@@ -48,7 +48,15 @@ public class Packet extends Entity{
 	public void addResource(Resource r, int qtt) throws Exception {
 		if (r == null) return;
 		
+		//Paquete de relaciones
 		RelationPacketResource rpr = new RelationPacketResource(this, r, qtt);
+		
+		if (rel.contains(r.getName())) {
+			RelationPacketResource rr = rel.get(r.getName());
+			qttResources -= rr.getQuantity();
+			if (qttResources < 0) qttResources = 0;
+		}
+		
 		rel.put(r.getName(), rpr);
 		qttResources += qtt;
 	}
