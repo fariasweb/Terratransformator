@@ -32,6 +32,19 @@ public class QAPOutputControllerView extends AbstractControllerView {
 		vShared.add_once_tab("Create QAPInput Detail", new QAPInputDetail(this));
 	}
 
+	public int[] getSolution(){
+		return ((QAPController)controller).getSolution();
+	}
+	
+	public long getTime(){
+		Console.print("CHIVATP -> " + ((QAPController)controller).getTime());
+		return ((QAPController)controller).getTime();
+	}
+	
+	public double getResult(){
+		return ((QAPController)controller).getResult();
+	}
+	
 	// -------------------------------------------------------
 	// TODO
 	// -------------------------------------------------------

@@ -37,7 +37,7 @@ public class QAPLazyGLB extends QAP{
 		costs = -1;
 		asignacionP = new int[n];
 		asignacionL = new int[n];
-		
+	
 
 		coststotal = new double[n];
 		coststotalnumber = new int[n];
@@ -175,7 +175,7 @@ public class QAPLazyGLB extends QAP{
 	}
 	
 	public void run() throws Exception {
-	
+		isRun = true;
 		setTime(System.nanoTime());
 		
 		
@@ -188,10 +188,9 @@ public class QAPLazyGLB extends QAP{
 			BranchAndBound(va, val, costlevel, costlevelnumber, 0);
 		}
 		
-
-		
+		gerateSolucion();
 		setTime(System.nanoTime() - getTime());
-
+	
 	}
 	
 	
@@ -210,10 +209,10 @@ public class QAPLazyGLB extends QAP{
 						}
 					
 				}
-			
+			Console.print("GENERATE SOLUTION!!");
+			Console.WriteVector(solution);
 		setResult(costs);
-		//output = new QAPSolution(this, input.getgalaxy(), input.getpackets());
-		//output.setQAPSend();
+	
 	}
 	
 	

@@ -21,12 +21,10 @@ public class QAPEager extends QAP{
 	
 	public QAPEager(QAPInput qap) throws Exception {
 		super(qap);
+		n = input.getMatrixSize();
 		QAPType = "GilmoreEager";
 		tree = new QAPBaBTree();
 		NombredeBranch = input.getnivelparametro();
-
-		n = input.getMatrixSize();
-		solution = new int[n];
 		GLB = new QAPGilmoreLawerBound(n);
 		comparator = new QAPEagerSPcomparator();
 		
@@ -42,13 +40,13 @@ public class QAPEager extends QAP{
 		
 		sp.level = 0;
 		sp.min = 0;
-		sp.va = va;
-		sp.val = val;
+		//sp.va = va;
+		//sp.val = val;
 		
-		/*
+		
 		sp.va = new int[n];
 		sp.val = new int[n];
-		*/
+		
 		
 		
 		q.offer(sp);
@@ -113,14 +111,14 @@ public class QAPEager extends QAP{
 		}
 		
 		
-		//Util.CopyVectors(sp.va, sp.val, val, va);
+		Util.CopyVectors(sp.va, sp.val, val, va);
 		
 		return sp.min;
 
 	}
 						
 	public void run() throws Exception {	
-	
+		isRun = true;
 		setTime(System.nanoTime());
 		//output = new  QAPSolution();
 		/*
@@ -151,11 +149,12 @@ public class QAPEager extends QAP{
 				
 			}
 		}
-		Console.print("HASTA AQUI BIENNNNNNNNNN");
-		output = new QAPSolution(this, input.getgalaxy(), input.getpackets());
-		
+		Console.print("GENE"+ n);
+		Console.WriteVector(val);
 		setTime(System.nanoTime() - getTime());
 		Console.print("HASTA AQUI BIENNNNNNNNNN");
+		
+
 		//Algoritmo
 		//double d = BranchAndBound(input.getDistanceMatrix(), input.getFlowMatrix(), sol1,sol2);
 		/*
@@ -168,4 +167,5 @@ public class QAPEager extends QAP{
 		solution = sol2;*/
 
 	}
+
 }

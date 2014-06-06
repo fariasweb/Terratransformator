@@ -9,7 +9,7 @@ public abstract class QAP {
 	QAPSolution output;
 	//Variables de ejecucion
 	
-	private boolean isRun;
+	protected boolean isRun;
 
 	private long time; 
 	private double result; 
@@ -26,6 +26,11 @@ public abstract class QAP {
 	// Constructor
 	// ---------------------------------------------
 		
+	
+	public QAPBaBTree getQAPNode(){
+		return tree;
+	}
+	
 	/**
 	 * Constructora
 	 * @param qap
@@ -34,6 +39,7 @@ public abstract class QAP {
 	public QAP(QAPInput qap) throws Exception{
 		//Asignamos la entrada del QAP
 		input = qap;
+		solution = new int[input.getMatrixSize()];
 		//No ha ejecutado nada el algoritmo
 		isRun = false;
 		time = 0;
@@ -74,6 +80,7 @@ public abstract class QAP {
 	 * @return the solution
 	 */
 	public int[] getSolution() {
+		Console.print("CONSULTO SOLUCION");
 		return solution;
 	}
 	

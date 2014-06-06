@@ -8,6 +8,7 @@ public class AlgorithmThread implements Runnable{
 		try{
 			Console.print("You are in Algorithm thread: ");
 			((QAPController)aux.get_controller()).runQAP();
+			
 		}
 		catch(Exception t){
 			t.printStackTrace();

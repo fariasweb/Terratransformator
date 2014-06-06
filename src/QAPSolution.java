@@ -43,13 +43,16 @@ public class QAPSolution {
 		// 3. Generar los QAPSend y guardamos en CltSend
 		// Priemro inicializar CltSeend por si acaso
 		CltSend = new ArrayList<QAPSend>();
-		for (int i = 0; i < solution.length; ++i) {
-			Planet auxPlanet = g.getPlanets().get(namePlanets[i]); // Al planeta
-																	// i se le
-																	// asigna el
-																	// paquete
-																	// solution[i]
-			Packet auxPacket = p.get(namePackets[solution[i] - 1]);
+		Console.print("" + namePackets.length);
+		Packet auxPacket = new Packet();
+		
+		for (int i = 0; i < namePackets.length; ++i) {
+			Planet auxPlanet = new Planet();
+			if(solution[i] <= namePlanets.length){
+				auxPlanet = g.getPlanets().get(namePlanets[solution[i] - 1]); 
+			}				
+																	
+			auxPacket = p.get(namePackets[i]);
 
 			// Creamos y asignamos el envio
 			QAPSend j = new QAPSend(auxPlanet, auxPacket);
@@ -135,5 +138,5 @@ public class QAPSolution {
 
 		return r;
 	}
-
+	
 }
