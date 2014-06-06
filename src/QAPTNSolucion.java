@@ -20,4 +20,14 @@ public class QAPTNSolucion extends QAPSolucionParcial{
 		System.out.println();
 		
 	}
+	
+	public String toString() {
+		String r;
+		r = min + " " + executionTime + " "+ level;
+		for(int i = 0; i < va.length; ++i){
+			r += " " + va[i];
+		}
+		return r;
+		
+	}
 }

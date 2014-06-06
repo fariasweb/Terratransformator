@@ -42,17 +42,16 @@ public class QAPBaBTree {
     	return posicion(va, level).sp.min;
     }
     
-    /*
-   public ArrayList<QAPTNSolucion> getson(int[] va,int level) {
-    	focusNode = posicion(va, level).FirstSon;
-    	ArrayList[] aux = new ArrayList[];
+    
+   public static ArrayList<QAPBaBTreeNode> getson(QAPBaBTreeNode Nod) {
+	   QAPBaBTreeNode focusNode = Nod.FirstSon;
+    	ArrayList<QAPBaBTreeNode> aux = new ArrayList<QAPBaBTreeNode>();
     	while(focusNode != null) {	
-			//
 			aux.add(focusNode);
-			
 			focusNode = focusNode.RightBro;
 		}
-    }*/
+    	return aux;
+    }
     
     public void WriteBFS () {
     	

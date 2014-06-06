@@ -21,10 +21,15 @@ public class QAPBaBTreeNode {
 		   	FirstSon = null;
 		   	RightBro = null;
 	 }
-
+	 
+	 
 
 	  public void show() {
 		  sp.show();
+	  }
+	  
+	  public String toString() {
+		  return sp.toString();
 	  }
 	 
 }
