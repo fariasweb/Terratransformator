@@ -78,7 +78,7 @@ public class QAPOutputView extends ViewForm {
 		labelSolution = new JLabel("Vector of Solution:");
 		writeSolution = new JLabel();
 		
-		labelTime = new JLabel("Time:");
+		labelTime = new JLabel("Time (ns):");
 		writeTime = new JLabel();
 		
 		labelSend = new JLabel("Vector of QAPSend:");

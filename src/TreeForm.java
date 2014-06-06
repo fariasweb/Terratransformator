@@ -41,6 +41,19 @@ public class TreeForm extends ViewForm {
 		tree = new JTree(model);
 		scrollPane = new JScrollPane(tree);
 		
+		//Layout
+		GroupLayout layout = new GroupLayout(this);
+		setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+
+		layout.setHorizontalGroup(layout.createSequentialGroup().addGroup(
+				layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+						.addComponent(scrollPane)));
+		layout.setVerticalGroup(layout.createSequentialGroup().addGroup(
+				layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addComponent(scrollPane)));
+		
 	}
 
 	/**
@@ -60,17 +73,34 @@ public class TreeForm extends ViewForm {
 	// TREE FORM FUNCTION
 	// -------------------------------------------------------
 	
+	/**
+	 * 
+	 * @param n
+	 */
 	public void drawTree(QAPBaBTreeNode n){
 		
 		node = n;
+		
+		//RESET
+		root.removeAllChildren(); //this removes all nodes
+	    model.reload();
+	    
 		drawAuxTree(model, root, node);
 		scrollPane.repaint();
 	}
 
+	/**
+	 * 
+	 * @param model
+	 * @param act
+	 * @param node
+	 */
 	private void drawAuxTree(DefaultTreeModel model, DefaultMutableTreeNode act, QAPBaBTreeNode node){
+		
 		for(int i = 0; i < node.getSons().size(); ++i){
 			QAPBaBTreeNode next = node.getSons().get(i);
 			String s = next.toString();
+			
 			DefaultMutableTreeNode n = new DefaultMutableTreeNode(s);
 			model.insertNodeInto(n, act, i);
 			drawAuxTree(model, n, next);

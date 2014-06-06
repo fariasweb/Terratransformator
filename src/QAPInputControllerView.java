@@ -60,7 +60,6 @@ public class QAPInputControllerView extends AbstractControllerView {
 	public void create_form_view(String nameGalaxy, String QAPType, int nivel) throws Exception{
 		//Generar el QAPINput
 		((QAPController)controller).generateQAPInput(nameGalaxy, QAPType, nivel);
-		Console.log("CREATE FORM VIEW");
 		view_detail = new QAPInputDetail(this);
 		vShared.add_once_tab("QAP input details", view_detail);
 	}
