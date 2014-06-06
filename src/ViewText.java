@@ -2,6 +2,7 @@ import java.awt.Color;
 
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class ViewText extends ViewShared {
@@ -34,6 +35,9 @@ public class ViewText extends ViewShared {
 	protected void create_view() {
 		// Creamos un Label a rojo y add to este
 		Message = new JTextArea();
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(Message);
 
 		// Layout
 		GroupLayout layout = new GroupLayout(this);
@@ -47,12 +51,12 @@ public class ViewText extends ViewShared {
 						.addGroup(
 								layout.createParallelGroup(
 										GroupLayout.Alignment.LEADING)
-										.addComponent(Message))));
+										.addComponent(scrollPane))));
 
 		// Vertical
 		layout.setVerticalGroup(layout.createSequentialGroup().addGroup(
 				layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-						.addComponent(Message)));
+						.addComponent(scrollPane)));
 
 	}
 
