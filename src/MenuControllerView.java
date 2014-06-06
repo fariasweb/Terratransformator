@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 public class MenuControllerView extends AbstractControllerView {
 
 	private MenuView menu;
+	private String help;
 	
 	/**
 	 * 
@@ -20,13 +21,40 @@ public class MenuControllerView extends AbstractControllerView {
 		super(vs, ve);
 		
 		menu = new MenuView(this);
+		
+		help = "Terratransformator - Guia\n"
+				+ "============================================\n"
+				+ "1. Planetas\n"
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ "2. Galaxia\n"
+				+ "Las galaxias son el principal elemente del sistema y se definen por un nombre que debe ser unico\n"
+				+ "Ademas cada galaxia tiene asignado una anchura y altura para poder contener planetas."
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ ""
+				+ "";
 	}
 
 	/**
 	 * 
 	 */
 	public void show_help() {
-		vShared.add_once_tab("Help", new ViewText());
+		vShared.add_once_tab("Help", new ViewText(help));
 	}
 	
 	/**
