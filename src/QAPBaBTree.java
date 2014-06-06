@@ -42,6 +42,9 @@ public class QAPBaBTree {
     	return posicion(va, level).sp.min;
     }
     
+    public QAPBaBTreeNode getRoot(){
+        return Node;
+    }
     
    public static ArrayList<QAPBaBTreeNode> getson(QAPBaBTreeNode Nod) {
 	   QAPBaBTreeNode focusNode = Nod.FirstSon;
@@ -52,7 +55,7 @@ public class QAPBaBTree {
 		}
     	return aux;
     }
-    
+
     public void WriteBFS () {
     	
     	

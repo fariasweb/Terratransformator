@@ -9,34 +9,31 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TreeControllerView extends AbstractControllerView {
 
-	public TreeDetails view_detail;
-	
 	/**
 	 * 
 	 * @param pc
 	 */
-	TreeControllerView(QAPSolution qaps, ViewTabbedPane vs,ViewNotification ve) {
+	TreeControllerView(QAPController qapsol, ViewTabbedPane vs,ViewNotification ve) {
 		super(vs, ve);
 
 		// -------------------------------------------------------
 		// CONTROLADOR DE DOMINIO
 		// -------------------------------------------------------
 		
-		controller = qaps;
+		controller = qapsol;
 
 		// -------------------------------------------------------
 		// Vistas
 		// -------------------------------------------------------
 		view = new TreeView(this);
-		view_detail = null;
 
-
-		try {
+	/*	try {
 			// Tomamos los primeros de dominio y los mostramos
-			QAPBaBTreeNode node = controller.getTree();
+			((TreeView)view).setTree(((QAPController)controller).getTree());
+
 		} catch (Exception e) {
 			Console.print(e.getMessage());
-		}
+		}*/
 
 	}
 
@@ -52,7 +49,7 @@ public class TreeControllerView extends AbstractControllerView {
 	 * @param readYForm
 	 * @throws Exception
 	 */
-	public void save(String originalName, String name, int readXForm,
+	/*public void save(String originalName, String name, int readXForm,
 			int readYForm) throws Exception {
 
 		if (originalName == null) { // CREACION
@@ -86,8 +83,16 @@ public class TreeControllerView extends AbstractControllerView {
 			if(needsRefreshing(name)) refresh();
 		}
 		reloadTable();
-	}
+	}*/
 	
+	public void pintameElArbol() throws Exception{
+		try{
+			((TreeView)view).setTree(((QAPController)controller).getTree());
+			((TreeView)view).pintameElArbol();
+		}
+		catch(Exception e){ Console.print(e.getMessage()); }
+
+	}
 
 	// -------------------------------------------------------
 	// LISTAR/EDITAR
@@ -97,18 +102,18 @@ public class TreeControllerView extends AbstractControllerView {
 	 * 
 	 * @param name
 	 */
-	public void create_form_view(String name) {
+	/*public void create_form_view(String name) {
 		view_detail = new TreeDetails(this, name);
 		vShared.add_once_tab("Tree details", view_detail);
-	}
+	}*/
 	
 
 	/**
 	 * TODO: Cache
 	 */
-	public void get() {
+	/*public void get() {
 		Console.log(((TreeController) controller).getAll());
-	}
+	}*/
 
 	/**
 	 * 
@@ -116,9 +121,9 @@ public class TreeControllerView extends AbstractControllerView {
 	 * @return
 	 * @throws Exception
 	 */
-	public String getByName(String name) throws Exception {
+	/*public String getByName(String name) throws Exception {
 		return ((TreeController) controller).getByNameToString(name);
-	}
+	}*/
 	
 	/**
 	 * 
@@ -126,10 +131,10 @@ public class TreeControllerView extends AbstractControllerView {
 	 * @return
 	 * @throws Exception
 	 */
-	public String getPlanets(String name) throws Exception {
+	/*public String getPlanets(String name) throws Exception {
 		return ((TreeController) controller).getPlanetsFromTree(name);
 
-	}
+	}*/
 	
 	/**
 	 * 
@@ -137,9 +142,9 @@ public class TreeControllerView extends AbstractControllerView {
 	 * @return
 	 * @throws Exception
 	 */
-	public String getPlanetWithoutTree(String name) throws Exception {
+	/*public String getPlanetWithoutTree(String name) throws Exception {
 		return ((TreeController) controller).getPlanetsToTree(name);
-	}
+	}*/
 
 	// -------------------------------------------------------
 	// ELIMINAR
@@ -149,7 +154,7 @@ public class TreeControllerView extends AbstractControllerView {
 	 * @param name
 	 * @throws Exception 
 	 */
-	public void delete(String name) throws Exception {
+	/*public void delete(String name) throws Exception {
 		//Eliminar galaxia
 		((TreeController) controller).removeTree(name);
 		
@@ -161,7 +166,7 @@ public class TreeControllerView extends AbstractControllerView {
 
 
 		vShared.remove_all_tabs();
-	}
+	}*/
 	
 	/**
 	 * 
@@ -169,7 +174,7 @@ public class TreeControllerView extends AbstractControllerView {
 	 * @param planet
 	 * @throws Exception 
 	 */
-	public void delete_planet(String Tree, String planet) throws Exception {
+	/*public void delete_planet(String Tree, String planet) throws Exception {
 		
 		//Eliminar el planeta
 		((TreeController) controller).removePlanetFromTree(Tree, planet);
@@ -179,11 +184,11 @@ public class TreeControllerView extends AbstractControllerView {
 				
 		//Cerramos pestana
 		vShared.remove_tab(1);
-	}
+	}*/
 
-	public TreeController getTreeController(){
+	/*public TreeController getTreeController(){
 		return (TreeController) controller;
-	}
+	}*/
 	// -------------------------------------------------------
 	// TEST - TODO: Revisar
 	// -------------------------------------------------------

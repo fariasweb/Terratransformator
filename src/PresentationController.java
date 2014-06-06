@@ -40,7 +40,7 @@ public class PresentationController {
 		// Controladores de QAP
 		qcv = new QAPInputControllerView(kcv, gcv, operationTab, vError);
 		ocv = new QAPOutputControllerView(((QAPController)qcv.get_controller()), operationTab, vError);
-		tcv = new TreeControllerView(operationTab, vError);
+		tcv = new TreeControllerView(((QAPController)qcv.get_controller()), operationTab, vError);
 		
 		//MENU
 		menu = new MenuControllerView(operationTab, vError);
@@ -54,6 +54,7 @@ public class PresentationController {
 		view.add_right_tab(kcv.get_view(), "Packets");
 		view.add_right_tab(rcv.get_view(), "Resource");
 		view.add_right_tab(ocv.get_view(), "QAPOutput");
+		view.add_right_tab(tcv.get_view(), "Tree");
 
 		gcv.set_scroll();
 		pcv.set_scroll();

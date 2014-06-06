@@ -9,6 +9,10 @@ import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.JTree;
+import javax.swing.JScrollPane;
 
 /**
  * 
@@ -17,6 +21,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class TreeView extends ViewController {
 	
+	JTree tree;
+	QAPBaBTreeNode node = new QAPBaBTreeNode();
+
 	/**
 	 * 
 	 * @param c
@@ -35,7 +42,7 @@ public class TreeView extends ViewController {
 		bCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// display/center the jdialog when the button is pressed
-				((TreeControllerView)controller).create_form_add();
+				// ((TreeControllerView)controller).create_form_add();
 			}
 		});
 		
@@ -65,7 +72,7 @@ public class TreeView extends ViewController {
 				else {
         			String selectedData = (String) table.getValueAt(selectedRow, 0);
         			try {
-						((TreeControllerView) controller).delete(selectedData);
+						// ((TreeControllerView) controller).delete(selectedData);
 					} catch (Exception e1) {
 						controller.show_error(e1.getMessage());
 					}
@@ -89,13 +96,35 @@ public class TreeView extends ViewController {
         			
         			//Llamada al controlador
         			System.out.println("Selected: " + selectedData);
-        			((TreeControllerView) controller).create_form_view(selectedData);
+        			// ((TreeControllerView) controller).create_form_view(selectedData);
         		}
       		}
       	});
 		
 	}
 
+	public void setTree(QAPBaBTreeNode n){
+		node = n;
+	}
+
+	public void pintameElArbol(){
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode("B&B Tree");
+		DefaultTreeModel model = new DefaultTreeModel(root);
+		tree = new JTree(model);
+		scrollPane = new JScrollPane(tree);
+		pintameElArbolAuxiliar(model, root, node);
+		scrollPane.repaint();
+	}
+
+	private void pintameElArbolAuxiliar(DefaultTreeModel model, DefaultMutableTreeNode act, QAPBaBTreeNode node){
+		for(int i = 0; i < node.getSons().size(); ++i){
+			QAPBaBTreeNode next = node.getSons().get(i);
+			String s = next.toString();
+			DefaultMutableTreeNode n = new DefaultMutableTreeNode(s);
+			model.insertNodeInto(n, act, i);
+			pintameElArbolAuxiliar(model, n, next);
+		}
+	}
 	/*protected void create_events(){
 		
 

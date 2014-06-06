@@ -530,10 +530,10 @@ public class TST<Value> {
 			current = dfsAux(x);
 		}
 
-		public void copy(TSTIterator<Value> it){
+		/*public void copy(TSTIterator it){
 			current = it.current;
 			stack = it.stack.clone();
-		}
+		}*/
 		
 		/**
 		 * 

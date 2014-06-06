@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 
 public class QAPBaBTreeNode {
 	
@@ -32,4 +32,14 @@ public class QAPBaBTreeNode {
 		  return sp.toString();
 	  }
 	 
+	 public ArrayList<QAPBaBTreeNode> getSons() {
+       QAPBaBTreeNode focusNode = FirstSon;
+        ArrayList<QAPBaBTreeNode> aux = new ArrayList<QAPBaBTreeNode>();
+        while(focusNode != null) {  
+            aux.add(focusNode);
+            focusNode = focusNode.RightBro;
+        }
+        return aux;
+    }
+
 }
