@@ -96,9 +96,4 @@ public class GalaxyView extends ViewController {
 		
 	}
 
-	/*protected void create_events(){
-		
-
-	}*/
-
 }

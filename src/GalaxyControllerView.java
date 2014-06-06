@@ -218,19 +218,11 @@ public class GalaxyControllerView extends AbstractControllerView {
 		vShared.remove_tab(1);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public GalaxyController getGalaxyController(){
 		return (GalaxyController) controller;
 	}
-	// -------------------------------------------------------
-	// TEST - TODO: Revisar
-	// -------------------------------------------------------
-
-	// ESTO ESTA PROHIBIDO!!! ENTRE CAPAS NO COMPARTES OBJETOS - SOLO DATOS
-	// BASICOS
-	/*
-	 * public Galaxy getByName(String name){ try{ return ((GalaxyController)
-	 * controller).getByName(name); } catch(Exception e){
-	 * Console.print("Cannot add galaxy"); } return null; }
-	 */
-
 }

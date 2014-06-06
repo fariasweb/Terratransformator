@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 public class GalaxyPlanetsView extends ViewController {
 
-	private String GalaxyName;
+	private String Name;
 	
 	GalaxyPlanetsView(AbstractControllerView c) {
 		super(c);
@@ -21,11 +21,11 @@ public class GalaxyPlanetsView extends ViewController {
 		bCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event){
 				//Crear el formulario de add planetaa galaxia
-				((GalaxyControllerView) controller).create_form_planet(GalaxyName);
+				((GalaxyControllerView) controller).create_form_planet(Name);
 			}
 		});
 		
-		//remove
+		//Remove
 		bDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event){
 				//Crear el formulario de add planetaa galaxia
@@ -34,7 +34,7 @@ public class GalaxyPlanetsView extends ViewController {
 				else {
         			String selectedData = (String) table.getValueAt(selectedRow, 0);
         			try {
-						((GalaxyControllerView) controller).delete_planet(GalaxyName, selectedData);
+						((GalaxyControllerView) controller).delete_planet(Name, selectedData);
 					} catch (Exception e1) {
 						controller.show_error(e1.getMessage());
 					}
@@ -49,10 +49,7 @@ public class GalaxyPlanetsView extends ViewController {
 	 * Asigna el nombre de la galaxia que gestionra los planetas
 	 * @param e
 	 */
-	public void setGalaxyName(String e) {
-		GalaxyName = e;
+	public void setName(String e) {
+		Name = e;
 	}
-	
-	
-
 }

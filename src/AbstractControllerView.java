@@ -51,7 +51,7 @@ public abstract class AbstractControllerView {
 	public AbstractController get_controller() {
 		return controller;
 	}
-
+	
 	// -------------------------------------------------------
 	// VIEWS
 	// -------------------------------------------------------
@@ -72,6 +72,16 @@ public abstract class AbstractControllerView {
 	 */
 	public void show_error(String e) {
 		vError.error(e);
+	}
+	
+	/**
+	 * 
+	 * @param n
+	 * @param p
+	 */
+	public void show_general_error(String error_title, String error) {
+		ViewText p = new ViewText(error);
+		vShared.add_once_tab(error_title, p);
 	}
 
 	/**
@@ -101,7 +111,7 @@ public abstract class AbstractControllerView {
 			// Arrancamos el thread
 			t1.start();
 		} catch (Exception e) {
-			vError.error("Error saving file! "+e.getMessage());
+			show_general_error("Error saving", "Error saving file! "+e.getMessage());
 		}
 	}
 
@@ -120,7 +130,7 @@ public abstract class AbstractControllerView {
 			// Arrancamos el thread
 			t1.start();
 		} catch (Exception e) {
-			vError.error("Error loading file! "+e.getMessage());
+			show_general_error("Error load", "Error loading file! "+e.getMessage());
 		}
 	}
 

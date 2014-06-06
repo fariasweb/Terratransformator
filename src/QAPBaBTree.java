@@ -1,5 +1,6 @@
 
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -41,6 +42,17 @@ public class QAPBaBTree {
     	return posicion(va, level).sp.min;
     }
     
+    /*
+   public ArrayList<QAPTNSolucion> getson(int[] va,int level) {
+    	focusNode = posicion(va, level).FirstSon;
+    	ArrayList[] aux = new ArrayList[];
+    	while(focusNode != null) {	
+			//
+			aux.add(focusNode);
+			
+			focusNode = focusNode.RightBro;
+		}
+    }*/
     
     public void WriteBFS () {
     	
@@ -51,6 +63,7 @@ public class QAPBaBTree {
 		
 		Queue<QAPBaBTreeNode> q = new LinkedList<QAPBaBTreeNode>();
 		q.offer(focusNode);
+		
 		while(!q.isEmpty()) {
 			focusNode = q.poll();
 
@@ -58,7 +71,14 @@ public class QAPBaBTree {
 				if(focusNode.FirstSon != null) {
 					q.offer(focusNode.FirstSon);
 				}
+				
+				//
 				focusNode.sp.show();
+				
+				
+				//
+				
+				
 				
 				focusNode = focusNode.RightBro;
 			}

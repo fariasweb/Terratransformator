@@ -30,13 +30,49 @@ public class QAPInput {
 		nivelparametro = parametro;
 		setDistanceMatrix(galaxy);
 		setFlowMatrix(packets);
-		
+		setEqualMatrix();
 		setVectorPlanets(galaxy);
 		setVectorPackets(packets);
 		
-		
 	}
 
+	private void setEqualMatrix(){
+		double auxd[][];
+		int nflow = flowMatrix.length;
+		int dflow = distanceMatrix.length;
+
+		if(nflow > dflow){
+			auxd = new double[nflow][nflow];
+			int maxElement = Util.getMaxElement(distanceMatrix);
+
+			for(int i = 0; i < nflow; ++i){
+				for(int j = 0; j < nflow; ++j){
+					if(i < dflow && j < dflow) auxd[i][j] = distanceMatrix[i][j];
+					else {
+						if(i == j) auxd[i][j] = 0;
+						else auxd[i][j] = maxElement;
+					}
+				}
+			}
+			distanceMatrix = auxd;
+		}
+		else if(nflow < dflow){
+			auxd = new double[dflow][dflow];
+			int maxElement = Util.getMaxElement(flowMatrix);
+
+			for(int i = 0; i < dflow; ++i){
+				for(int j = 0; j < dflow; ++j){
+					if(i < nflow && j < nflow) auxd[i][j] = flowMatrix[i][j];
+					else {
+						if(i == j) auxd[i][j] = 0;
+						else auxd[i][j] = maxElement;
+					}
+				}
+			}
+			flowMatrix = auxd;
+			
+		}
+	}
 	/**
 	 * 
 	 * @param g
@@ -60,7 +96,7 @@ public class QAPInput {
 				d[j][i] = d[i][j];
 			}
 		}
-		//Console.WriteMatrix(d);
+
 		distanceMatrix = d;
 	}
 
@@ -89,6 +125,7 @@ public class QAPInput {
 
 		//Console.WriteMatrix(flow);
 		flowMatrix = flow;
+
 	}
 
 	public void setVectorPackets(TST<Packet> p){

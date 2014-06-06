@@ -112,4 +112,22 @@ public class Util {
 			n2[y] = n1[y];
 		}
 	}
+	
+	public static void CopyVectors(double[] m1,int[] n1,int[] n2,double[] m2) {
+		int n = m1.length;
+
+		for (int y = 0; y < m1.length; y++) {
+			m2[y] = m1[y];
+			n2[y] = n1[y];
+		}
+	}
+	public static int getMaxElement(double Matrix[][]){
+		double aux = 0; 
+		for(int i = 0; i < Matrix.length; ++i){
+			for(int j = 0; j < Matrix.length; ++j){
+				if( Matrix[i][j] > aux) aux = Matrix[i][j];
+			}
+		}
+		return (int)aux;
+	}
 }

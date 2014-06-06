@@ -1,6 +1,8 @@
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -26,45 +28,36 @@ public class QAPView extends ViewForm {
 	private JSpinner jp;
 	private JLabel levelLabel;
 	private JLabel galaxyLabel;
-	private GalaxyController gc;
-	private String[] nameGalaxies;
-	private String[][] ngMatrix;
-	private QAPInputDetail qapinput;
-	private PacketController pc; 
-	private String nameMatrix;
 
-	QAPView(AbstractControllerView c, GalaxyController gcp, PacketController pcp) {
+	private QAPInput input;
+	private QAPInputDetail qapinput;
+	private JButton refreshButton; 
+	private PacketController pc; 
+	private QAPController qc;
+
+	QAPView(AbstractControllerView c , QAPController qcp) {
 		super(c);	
-		gc = gcp;
-		pc = pcp;
+		qc = qcp;
 		// Button of QAPInputForm
 		crear_vista();
 	}
 	protected void crear_vista(){
 		// Button of QAPInputForm
-
-		inputButton = new JButton("Create Input Form");
-		levelLabel = new JLabel("Set Level (Value -1: Infinite for Lazy and None for Eager)");
-
-		if(gc.size() > 0){
-			ngMatrix = new String[gc.size()][3];
-			ngMatrix = decode_list(gc.getAll());
-
-			nameGalaxies = new String[gc.size()];
-			for(int i = 0; i < gc.size() ; ++i){
-				nameGalaxies[i] = ngMatrix[i][0];
-			}
-		}
+	
 		galaxyLabel = new JLabel("Select Galaxy for Algorithm:");
 		String[] nulo = new String[1];
 		nulo[0] = "None";
-		if(gc.size() > 0) gcb = new JComboBox(nameGalaxies);
-		else gcb = new JComboBox(nulo);
+		gcb = new JComboBox(nulo);
+		inputButton = new JButton("Create Input Form");
+		levelLabel = new JLabel("Set Level (Value -1: Infinite for Lazy and None for Eager)");
+		refreshButton = new JButton("Refresh Galaxies");
+		
 
 		galaxyLabel = new JLabel("Select Galaxy for Algorithm:");
-		rb1 = new JRadioButton("QAP Lazy Branch and Bound",true);
-		rb2 = new JRadioButton("QAP Eager Branch and Bound",false);
-
+		rb1 = new JRadioButton("GilmoreLazy",true);
+		rb2 = new JRadioButton("GilmoreEager",false);
+		rb1.setName("GilmoreLazy");
+		rb2.setName("GilmoreEager");
 
 
 		SpinnerNumberModel jspin = new SpinnerNumberModel(-1, -1, Integer.MAX_VALUE, 1);
@@ -77,7 +70,11 @@ public class QAPView extends ViewForm {
 					.addGroup(
 							layout.createSequentialGroup()
 								.addComponent(galaxyLabel,javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addComponent(gcb, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE) 
+								.addGroup(
+										layout.createSequentialGroup()
+										.addComponent(refreshButton)
+										.addComponent(gcb, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+								)
 								.addComponent(rb1)
 								.addGap(10)
 								.addComponent(rb2) 
@@ -99,7 +96,13 @@ public class QAPView extends ViewForm {
 						)
 						.addGroup(
 								layout.createSequentialGroup()
+								.addComponent(refreshButton)
+
+						)
+						.addGroup(
+								layout.createSequentialGroup()
 								.addComponent(gcb,javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+						
 						)
 						.addGroup(
 								layout.createSequentialGroup()
@@ -124,9 +127,18 @@ public class QAPView extends ViewForm {
 
 		);
 
+	
+	refreshButton.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e){
+			refreshComboBox();
+			
+		}
+	});
 
 	rb1.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e){
+			
+			rb1.setSelected(true);
 			rb2.setSelected(false);
 
 		}
@@ -135,44 +147,66 @@ public class QAPView extends ViewForm {
 	//Boton de eliminar
 	rb2.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e){
-			rb1.setSelected(false);;
+			rb1.setSelected(false);
+			rb2.setSelected(true);
 		}
 	});
 
 	inputButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e){
-			showQAPInputForm();
+			try{
+				
+				if(rb1.isSelected())showQAPInputForm((String)gcb.getSelectedItem(), rb1.getName(), (Integer)jp.getValue());
+				else showQAPInputForm((String)gcb.getSelectedItem(), rb2.getName(), (Integer)jp.getValue());
+			}
+			catch(Exception mm){
+				mm.printStackTrace();
+			}
 		}
 	});
 	}
+	public void refreshComboBox(){
 
-	public void showQAPInputForm(){
+		int sizeGalaxy = qc.getNumberGalaxies();
+		if(sizeGalaxy > 0){
+			String[][] ngMatrix = new String[sizeGalaxy][3];
+			String[] nameGalaxies = new String[sizeGalaxy];
 
-		qapinput = new QAPInputDetail((QAPInputControllerView)controller,10);
-		qapinput.setVisible(true);
-		((QAPInputControllerView)controller).create_form_add();	
+			ngMatrix = decode_list(qc.getAllGalaxies());
 
-	}
-
-
-	/*public void refreshComboBox(){
-		if(gc.size() > 0){
-			ngMatrix = new String[gc.size()][3];
-			ngMatrix = decode_list(gc.getAll());
-			
-			nameGalaxies = new String[gc.size()];
-			for(int i = 0; i < gc.size() ; ++i){
+			/*for(int i = 0; i < ngMatrix.length; ++i){
+				for(int j =0 ; j < ngMatrix[0].length; ++j){
+					Console.print(ngMatrix[i][j] + i+ " " + j);
+				}
+				
+			}
+			*/
+			for(int i = 0; i < sizeGalaxy; ++i){
 				nameGalaxies[i] = ngMatrix[i][0];
 			}
+			
+			gcb.setModel(new DefaultComboBoxModel(nameGalaxies));
 		}
-		String[] nulo = new String[1];
-		nulo[0] = "None";
-		if(gc.size() > 0) gcb.setModel(new DefaultComboBoxModel(nameGalaxies));
-		else {
-			gcb = new JComboBox(nulo);
+		else{
+			String[] nulo = new String[1];
+			nulo[0] = "None";
 			gcb.setModel(new DefaultComboBoxModel(nulo)); 
 		}
-	}*/
+	}
+	
+	public void showQAPInputForm(String nameGalaxy, String QAPType, int nivel){
+		try{
+			qc.generateQAPInput(nameGalaxy, QAPType, nivel);
+		}
+		catch(Exception e) {
+			Console.print(e.getMessage());
+		}
+
+		qapinput = new QAPInputDetail((QAPInputControllerView)controller);
+		Console.print("QAPINPUT DETAIL GENERADO!"); 
+		qapinput.setVisible(true);
+		((QAPInputControllerView)controller).create_form_add();
+	}
 
 	protected void create_events() {
 		// TODO Auto-generated method stub

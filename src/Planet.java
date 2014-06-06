@@ -124,7 +124,7 @@ public class Planet extends Entity {
 			Galaxy g = galaxy;
 			galaxy = null;
 			//Eliminamos de la galaxia el planeta
-			g.removePlanet(g.getName());
+			g.removePlanet(name);
 		}
 	}
 	

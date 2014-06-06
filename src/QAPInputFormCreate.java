@@ -16,23 +16,47 @@ public class QAPInputFormCreate extends ViewForm {
 
 	private JTable tDistanceMatrix;
 	private JScrollPane js;	
-	private int sizeMatrix;
+
 	private DefaultTableModel DistanceMatrix;
 	private DefaultListModel lm;
 	private JLabel label; 
+	private double[][] Matrix;
 
-	QAPInputFormCreate(AbstractControllerView c ,int size, String namep){
+	QAPInputFormCreate(AbstractControllerView c, String namep, double[][] matrix){
 		super(c);
-		crear_vista(size, namep);
+		Matrix = matrix;	
+		crear_vista(namep);
 	}
 
-	private void crear_vista(int size, String namep){
-		sizeMatrix = size;
+	public void checkSetMatrix() throws Exception{
+		
+			int n = tDistanceMatrix.getRowCount();
+			String[][] auxMatrix = new String[n][n];
+			for(int i = 0; i < n; ++i){
+				for(int j = 0; j < n; ++j){
+					auxMatrix[i][j] = tDistanceMatrix.getValueAt(i,j).toString();
+				}
+			}
+		
+			for(int i = 0; i < n; ++i){
+				for(int j = 0; j < n; ++j){
+						
+						Matrix[i][j] = Double.parseDouble(auxMatrix[i][j]);
+						if(Double.isNaN(Matrix[i][j])) throw new Exception();
+				}
+			}
+		
+		
+	}
+	
+	private void crear_vista( String namep){
+		
+		
 		label = new JLabel(namep);
-		DistanceMatrix = new DefaultTableModel(sizeMatrix,sizeMatrix);
+		DistanceMatrix = new DefaultTableModel(Matrix.length,Matrix.length);
 		lm = new DefaultListModel();
-		String[] header = new String[sizeMatrix];
-		for(int i = 0; i < sizeMatrix; ++i){
+		String[] header = new String[Matrix.length];
+		for(int i = 0; i < Matrix.length; ++i){
 			header[i] = i+1 + "";
 			lm.addElement(header[i]);
 		}
@@ -40,7 +64,12 @@ public class QAPInputFormCreate extends ViewForm {
 		DistanceMatrix.setColumnIdentifiers(header);
 		tDistanceMatrix = new JTable(DistanceMatrix);
 		tDistanceMatrix.setRowHeight(17);
-
+		for(int i = 0; i < tDistanceMatrix.getRowCount(); ++i){
+			for(int j = 0; j < tDistanceMatrix.getColumnCount(); ++j){
+				
+				tDistanceMatrix.setValueAt(Matrix[i][j], i, j);
+			}
+		}
 		// Scroll
 		js = new JScrollPane(tDistanceMatrix, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		tDistanceMatrix.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -61,6 +90,8 @@ public class QAPInputFormCreate extends ViewForm {
 				.addComponent(js, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
 
 		);
+		
+		
 	}
 
 

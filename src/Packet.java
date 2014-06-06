@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 /**
  * Packet
  *
@@ -46,7 +48,15 @@ public class Packet extends Entity{
 	public void addResource(Resource r, int qtt) throws Exception {
 		if (r == null) return;
 		
+		//Paquete de relaciones
 		RelationPacketResource rpr = new RelationPacketResource(this, r, qtt);
+		
+		if (rel.contains(r.getName())) {
+			RelationPacketResource rr = rel.get(r.getName());
+			qttResources -= rr.getQuantity();
+			if (qttResources < 0) qttResources = 0;
+		}
+		
 		rel.put(r.getName(), rpr);
 		qttResources += qtt;
 	}
@@ -120,8 +130,20 @@ public class Packet extends Entity{
 	 * post: Convierte a String los atributos de un paquete
 	 * @return String 
 	 */
-	public String toString(){
-		return name + " " +qttResources;
+	public String toString() {
+		// Datos basicos
+		String r = name + " " + qttResources;
+
+		// Planetas asociados
+		Iterator<RelationPacketResource> iterator = rel.values().iterator();
+
+		while (iterator.hasNext()) {
+			// Cogemos el siguiente planeta
+			RelationPacketResource p = (RelationPacketResource) iterator.next();
+			r += " " + p.getResource().getName()+" "+p.getQuantity();
+		}
+
+		return r;
 	}
 	
 	

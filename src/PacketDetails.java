@@ -8,6 +8,7 @@ public class PacketDetails extends View3Col {
 
 	private JButton bSubmit;
 	private PacketForm fPacket;
+	private PacketResourceView vPackets;
 
 	/**
 	 * 
@@ -17,8 +18,8 @@ public class PacketDetails extends View3Col {
 	PacketDetails(AbstractControllerView c, String nameE) {
 
 		super(c);
-		
-		//Completamos el form
+
+		// Completamos el form
 		complete_form(nameE);
 	}
 
@@ -32,10 +33,9 @@ public class PacketDetails extends View3Col {
 		add_left(fPacket);
 
 		// Tabla de Rrecursos - TODO
-		//pRight.add(new PacketPacketsView(((PacketControllerView) controller)));
-		//PacketPacketsView vPackets = new PacketPacketsView(((PacketControllerView) controller));
-		//add_center(vPackets);
-			
+		vPackets = new PacketResourceView(((PacketControllerView) controller));
+		add_center(vPackets);
+
 		// Boton de enviar
 		bSubmit = create_button_submit();
 		add_right(bSubmit);
@@ -67,27 +67,46 @@ public class PacketDetails extends View3Col {
 		// INFORMACION
 		try {
 
-			//Formularuo basico
-			//-----------------
+			// Formularuo basico
+			// -----------------
 			String[] l = decode(((PacketControllerView) controller)
 					.getByName(name));
 
 			if (l.length == 0)
 				throw new Exception("Error in data");
-				
+
 			fPacket.setNameValue(l[0]);
-			
-			//Marcamos el nombre original
+
+			// Marcamos el nombre original
 			fPacket.setOriginalName(name);
-			
-			//Recursos que tiene
-			//-----------------
-			
-			//TODO
+
+			// Recursos que tiene
+			// -----------------
+			update_resource_list(name);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			controller.show_error(e.getMessage());
 		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @param name
+	 */
+	public void update_resource_list(String name) throws Exception {
+		
+		//Total recursos
+		String[] l = decode(((PacketControllerView) controller).getByName(name));
+		fPacket.setResourceNum(l[1]);
+		
+		//Listado de recursos
+		vPackets.setName(name);
+
+		String resource = ((PacketControllerView) controller).getResources(name);
+		String[][] list_resources = decode_list(resource);
+		vPackets.show(list_resources);
 	}
 
 }
