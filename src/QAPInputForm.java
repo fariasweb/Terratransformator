@@ -159,9 +159,13 @@ public class QAPInputForm extends ViewForm {
 			
 			if(rb1.isSelected())
 				((QAPInputControllerView)controller).create_form_view((String)gcb.getSelectedItem(), rb1.getName(), (Integer)jp.getValue());
-			else 
+			else {
+				//Eager && 0 is not valid
+				if ((Integer)jp.getValue() == 0) throw new Exception("Level 0 is not valid for Eager");
+				
 				((QAPInputControllerView)controller).create_form_view((String)gcb.getSelectedItem(), rb2.getName(), (Integer)jp.getValue());
-		
+				
+			}	
 		} else {
 			throw new Exception ("Select galaxy to continue");
 		}

@@ -151,7 +151,6 @@ public class QAPController extends AbstractController{
 
 		// 1.Comprobar que la galaxia exista , comprobar que existe numPaquetes
 		// > 0
-		Console.print("ESTOY AQUIII" + GalaxyName +  "  " + QAPTypep +  " " + nivel);
 		QAPType = QAPTypep;
 		Galaxy gOriginal = CG.getByName(GalaxyName);
 		if (gOriginal == null)
@@ -169,16 +168,13 @@ public class QAPController extends AbstractController{
 		g = CG.cloneGalaxy(gOriginal);
 		p = CP.cloneCollection();
 		// 4.Entrada
-		Console.print(g.getName() + " " + QAPType + nivel);
 		qapinput = new QAPInput(g, p,nivel);
 		
 		
 	}
 	
 	public void runQAP() throws Exception{
-		Console.print("EJECUTANDO ALGORITMO " + QAPType);
 		
-		Console.print("EJECUTANDO ALGORITMO " + QAPType);
 		if (QAPType.equals(QAPTypeList.GilmoreLazy.name())) {
 			alg = new QAPLazyGLB(qapinput);
 		} else if (QAPType.equals(QAPTypeList.GilmoreEager.name())) {
