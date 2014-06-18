@@ -1,19 +1,21 @@
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 
 public class QAPInputDetail extends View3Col{
 	private JButton jb; 
-	private QAPInput input;
-	private int sizeMatrix;
+	private JButton stopButton;
 	private double[][] distanceM;
 	private double[][] flowM;
+	private static Thread t1;
 	private QAPInputFormCreate formDistance;
 	private QAPInputFormCreate formFlow;
-	private boolean control = false;
-	
+	private AlgorithmThread tAlg = null;
+
 	QAPInputDetail(AbstractControllerView c) {
 		super((QAPInputControllerView)c);
 	
@@ -23,16 +25,16 @@ public class QAPInputDetail extends View3Col{
 	
 	}
 
-	/*private String[][] transformMatrix(double[][] distanceMatrix){
-		String[][] aux = new String[distanceMatrix.length][distanceMatrix[0].length];
-		for(int i = 0; i < distanceMatrix.length; ++i){
-			for(int j = 0; j < distanceMatrix[0].length; ++j){
-				aux[i][j] = distanceMatrix + "";
-			}
+
+	public void check(){
+		try{
+			formDistance.checkSetMatrix();
+			formFlow.checkSetMatrix();
 		}
-		return aux;
-	}*/
-	
+		catch(Exception e){
+			controller.vError.error("Introduce Numbers in the Tables!");
+		}
+	}
 	
 	
 	private void crear_vista(){
@@ -42,33 +44,43 @@ public class QAPInputDetail extends View3Col{
 		formFlow = new QAPInputFormCreate(controller, "Flow Matrix", flowM);
 		add_center(formFlow);
 		jb = new JButton("Run Algorithm!");
-		add_right(jb);
+		stopButton = new JButton("Stop Execution!");
+		JPanel jp = new JPanel(new GridLayout(0,1));
+		jp.add(jb);
+		jp.add(stopButton);
+		add_right(jp);
+
+		
+		stopButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){
+				t1.stop();
+				((QAPInputControllerView)controller).set_stop();
+			}
+		});
 		
 		jb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e){
 				try{
 					if(!((QAPInputControllerView)controller).is_running()){
-
-						//Activamos el control de thread
-						((QAPInputControllerView)controller).set_run();
-						
-						//Generamot el thread
-						formDistance.checkSetMatrix();
-						formFlow.checkSetMatrix();
-						AlgorithmThread tAlg = new AlgorithmThread((QAPInputControllerView)controller);
-						Thread t1 = new Thread(tAlg,"Algorithm THREAD1");
-						t1.start();
-						
-					} else {
-						controller.vError.error("The algorithm is running. Wait a moment!");
-					}
+							tAlg = new AlgorithmThread((QAPInputControllerView)controller);
+							t1 = new Thread(tAlg,"Algorithm");
+							check();
+							//Activamos el control de thread
+							((QAPInputControllerView)controller).set_run();
+							
+							//Generamos el thread
+							t1.start();
+						}
+						else {
+							controller.vError.error("The algorithm is running. Wait a moment!");
+						}
+				
 				}
 				catch(Exception ee){
-					controller.vError.error("Introduce Numbers in the Tables!");
+					Console.print("SIGNAL RECEIVED");
 				}
-				
-				
 			}
+			
 		});
 
 	}

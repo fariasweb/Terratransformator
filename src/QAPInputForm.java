@@ -1,22 +1,13 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.JTree;
-import javax.swing.LayoutStyle;
 import javax.swing.JButton;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 
 public class QAPInputForm extends ViewForm {
 
@@ -46,7 +37,7 @@ public class QAPInputForm extends ViewForm {
 		nulo[0] = "None";
 		gcb = new JComboBox(nulo);
 		
-		levelLabel = new JLabel("Set Level (Value -1: Infinite for Lazy and None for Eager)");
+		levelLabel = new JLabel("Set Level (Value -1: None for Lazy and Infinite for Eager)");
 		refreshButton = new JButton("Refresh Galaxies");
 		
 

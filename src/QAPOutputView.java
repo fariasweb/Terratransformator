@@ -61,10 +61,18 @@ public class QAPOutputView extends ViewForm {
 			Console.print(n[i] + " ");
 			text += n[i] + " ";
 		}
+		Console.print("ENTERING LOOP");
 		
+		String packet =  ((QAPOutputControllerView)controller).getVectorSendsPackets();
+		String planet =  ((QAPOutputControllerView)controller).getVectorSendsPlanets();
+		
+		Console.print(planet);
+		Console.print(packet);
 		writeCost.setText(result + "");
 		writeSolution.setText(text);
 		writeTime.setText(time + "");
+		writeLabelPacket.setText("Packets: " + packet);
+		writeLabelPlanet.setText("Planets: " + planet);
 	}
 
 

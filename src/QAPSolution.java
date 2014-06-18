@@ -44,20 +44,55 @@ public class QAPSolution {
 		// Priemro inicializar CltSeend por si acaso
 		CltSend = new ArrayList<QAPSend>();
 		Console.print("" + namePackets.length);
-		Packet auxPacket = new Packet();
 		
-		for (int i = 0; i < namePackets.length; ++i) {
+		if(namePackets.length == namePlanets.length){
+			for (int i = 0; i < namePackets.length; ++i) {
+				Planet auxPlanet = new Planet();
+				Packet auxPacket = new Packet();
+				auxPlanet = g.getPlanets().get(namePlanets[i]);
+				auxPacket = p.get(namePackets[solution[i]-1]);
+			
+				QAPSend j = new QAPSend(auxPlanet, auxPacket);
+				CltSend.add(j);
+			}
+		}
+		else if(namePackets.length > namePlanets.length){
+			for (int i = 0; i < namePackets.length; ++i) {
+				Planet auxPlanet = new Planet();
+				Packet auxPacket = new Packet();
+				if(solution[i] <= namePlanets.length) auxPlanet = g.getPlanets().get(namePlanets[solution[i]-1]);
+				auxPacket = p.get(namePackets[i]);
+			
+				QAPSend j = new QAPSend(auxPlanet, auxPacket);
+				CltSend.add(j);
+			}
+		}
+		else{
+			for (int i = 0; i < namePlanets.length; ++i) {
+				Planet auxPlanet = new Planet();
+				Packet auxPacket = new Packet();
+				if(solution[i] <= namePackets.length) auxPacket = p.get(namePackets[solution[i]-1]);
+				auxPlanet = g.getPlanets().get(namePlanets[i]);
+	
+				QAPSend j = new QAPSend(auxPlanet, auxPacket);
+				CltSend.add(j);
+			}
+		}
+		
+		/*for (int i = 0; i < namePackets.length; ++i) {
 			Planet auxPlanet = new Planet();
 			if(solution[i] <= namePlanets.length){
-				auxPlanet = g.getPlanets().get(namePlanets[solution[i] - 1]); 
-			}				
-																	
-			auxPacket = p.get(namePackets[i]);
+				Console.print( g.getPlanets().get(namePlanets[i]) + " <- QAPSEnd");
+				
+				auxPlanet = g.getPlanets().get(namePlanets[i]); 								
+			}
+			Console.print( p.get(namePackets[i]) + " <- QAPSEnd");
+			Packet auxPacket = p.get(namePackets[solution[i]-1]);
 
 			// Creamos y asignamos el envio
 			QAPSend j = new QAPSend(auxPlanet, auxPacket);
 			CltSend.add(j);
-		}
+		}*/
 	}
 
 	/**

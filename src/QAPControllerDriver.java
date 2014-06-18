@@ -201,7 +201,7 @@ public class QAPControllerDriver extends AbstractDriver {
 					Console.print(qapc.getQAPSolution());
 					break;
 				case 23:
-					Console.print(qapc.getQAPSolutionSend());
+					//Console.print(qapc.getQAPSolutionSend());
 					break;
 				case 24:
 					if (argv.length < 3)

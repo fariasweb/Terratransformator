@@ -99,15 +99,29 @@ public class QAPController extends AbstractController{
 	 * 
 	 * @return
 	 */
-	public String getQAPSolutionSend() {
+	public String getQAPSolutionSendPlanet() {
 		if (oqap != null) {
 			String r = "";
 
 			// Envios
 			for (QAPSend i : oqap.getCltSend()) {
-				r += i.getPlanet().getName() + " " + i.getPacket().getName()+ "\n";
+				if(i.getPlanet().getName() != "") r += i.getPlanet().getName() + " ";
+				else  r += "None ";
 			}
 
+			return r;
+		}
+		return "";
+	}
+	
+	public String getQAPSolutionSendPacket() {
+		if (oqap != null) {
+			String r = "";
+			// Envios
+			for (QAPSend i : oqap.getCltSend()) {
+				if(i.getPacket().getName() != "") r += i.getPacket().getName() + " ";
+				else  r += "None ";
+			}
 			return r;
 		}
 		return "";
