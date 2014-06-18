@@ -44,6 +44,13 @@ public class QAPOutputControllerView extends AbstractControllerView {
 		return ((QAPController)controller).getResult();
 	}
 	
+	public String getVectorSendsPackets(){
+		return ((QAPController)controller).getQAPSolutionSendPacket();
+	}
+	
+	public String getVectorSendsPlanets(){
+		return ((QAPController)controller).getQAPSolutionSendPlanet();
+	}
 	// -------------------------------------------------------
 	// TODO
 	// -------------------------------------------------------

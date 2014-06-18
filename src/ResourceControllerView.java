@@ -50,7 +50,7 @@ public class ResourceControllerView extends AbstractControllerView {
 			// Creamos en el objeto en la capa de dominio
 			((ResourceController) controller).addResource(name, type);
 			// Mensaje de notificacion
-			vError.success("The recourse " + name + " has been created");
+			//vError.success("The recourse " + name + " has been created");
 
 			// Add to table - TODO: CACHE
 
@@ -69,7 +69,7 @@ public class ResourceControllerView extends AbstractControllerView {
 			((ResourceController) controller).updateResourceType(name, type);
 			
 			// Mensaje de notificacion
-			vError.success("The recourse " + name + " has been updated");
+			//vError.success("The recourse " + name + " has been updated");
 
 			// Table - TODO: Cache TODO: Eliminar esto
 			refresh();
@@ -125,7 +125,7 @@ public class ResourceControllerView extends AbstractControllerView {
 		((ViewController) view).show(getStringToShow());
 		
 		// Mensaje de notificacion
-		vError.success("The recourse " + name + " has been deleted");
+		//vError.success("The recourse " + name + " has been deleted");
 
 		vShared.remove_all_tabs();
 

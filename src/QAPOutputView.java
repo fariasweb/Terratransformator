@@ -58,13 +58,19 @@ public class QAPOutputView extends ViewForm {
 		long time = ((QAPOutputControllerView)controller).getTime();
 		String text = ""; 
 		for(int i = 0; i < n.length; ++i ){
-			Console.print(n[i] + " ");
 			text += n[i] + " ";
 		}
 		
+		
+		String packet =  ((QAPOutputControllerView)controller).getVectorSendsPackets();
+		String planet =  ((QAPOutputControllerView)controller).getVectorSendsPlanets();
+		
+		if(n.length == 1) result = 0;
 		writeCost.setText(result + "");
 		writeSolution.setText(text);
 		writeTime.setText(time + "");
+		writeLabelPacket.setText("Packets: " + packet);
+		writeLabelPlanet.setText("Planets: " + planet);
 	}
 
 

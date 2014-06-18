@@ -73,7 +73,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 			((GalaxyController) controller).addGalaxy(name, readXForm,
 					readYForm);
 			// Mensaje de notificacion
-			vError.success("The galaxy " + name + " has been created");
+			//vError.success("The galaxy " + name + " has been created");
 
 			// Add to table - TODO: CACHE
 
@@ -91,7 +91,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 					readYForm);
 
 			// Mensaje de notificacion
-			vError.success("The galaxy " + name + " has been updated");
+			//vError.success("The galaxy " + name + " has been updated");
 
 			// Table - TODO: Cache TODO: Eliminar esto
 			if(needsRefreshing(name)) refresh();
@@ -191,7 +191,7 @@ public class GalaxyControllerView extends AbstractControllerView {
 		reloadTable();
 		
 		// Mensaje de notificacion
-		vError.success("The galaxy " + name + " has been deleted");
+		//vError.success("The galaxy " + name + " has been deleted");
 
 
 		vShared.remove_all_tabs();

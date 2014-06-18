@@ -2,16 +2,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  * 
  * @author farias
  * 
  */
-public class TreeView extends View2Row {
+public class TreeView extends View3Row {
 	
 	private JButton viewTree;
 	private TreeForm fTree;
+	private JLabel NodeInfo;
 	
 	/**
 	 * 
@@ -28,7 +30,9 @@ public class TreeView extends View2Row {
 		// Boton de enviar
 		viewTree = new JButton("See tree");
 		add_top(viewTree);
-		
+		//Label que muestra info del nodo
+		NodeInfo = new JLabel("Campos de los nodos del Arbol:   Coste   Tiempo (ns)   Nivel   Asignaciones");
+		add_middle(NodeInfo);
 		//Tree
 		fTree = new TreeForm(((TreeControllerView)controller));
 		add_bottom(fTree);

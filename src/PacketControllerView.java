@@ -81,7 +81,7 @@ public class PacketControllerView extends AbstractControllerView {
 			// Creamos en el objeto en la capa de dominio
 			((PacketController) controller).addPacket(name);
 			// Mensaje de notificacion
-			vError.success("The packet " + name + " has been created");
+			//vError.success("The packet " + name + " has been created");
 
 			// Add to table - TODO: CACHE
 			refresh();
@@ -100,7 +100,7 @@ public class PacketControllerView extends AbstractControllerView {
 			//		readYForm);
 
 			// Mensaje de notificacion
-			vError.success("The packet " + name + " has been updated");
+			//vError.success("The packet " + name + " has been updated");
 
 			// Table - TODO: Cache TODO: Eliminar esto
 			Console.print("UPDATING Packet!");
@@ -204,7 +204,7 @@ public class PacketControllerView extends AbstractControllerView {
 		((ViewController) view).show(getStringToShow());
 		
 		// Mensaje de notificacion
-		vError.success("The packet " + name + " has been deleted");
+		//vError.success("The packet " + name + " has been deleted");
 
 
 		vShared.remove_all_tabs();

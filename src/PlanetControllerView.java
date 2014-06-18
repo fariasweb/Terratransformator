@@ -52,7 +52,7 @@ public class PlanetControllerView extends AbstractControllerView {
 			((PlanetController) controller).addPlanet(name, readXForm,
 					readYForm);
 			// Mensaje de notificacion
-			vError.success("The planet " + name + " has been created");
+			//vError.success("The planet " + name + " has been created");
 
 			// Add to table - TODO: CACHE
 
@@ -73,7 +73,7 @@ public class PlanetControllerView extends AbstractControllerView {
 					readYForm);
 
 			// Mensaje de notificacion
-			vError.success("The planet " + name + " has been updated");
+			//vError.success("The planet " + name + " has been updated");
 
 			// Table - TODO: Cache TODO: Eliminar esto
 			Console.print("UPDATING Planet!");
@@ -140,7 +140,7 @@ public class PlanetControllerView extends AbstractControllerView {
 		((ViewController) view).show(getStringToShow());
 		
 		// Mensaje de notificacion
-		vError.success("The planet " + name + " has been deleted");
+		//vError.success("The planet " + name + " has been deleted");
 
 		vShared.remove_all_tabs();
 
