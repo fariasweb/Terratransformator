@@ -121,13 +121,13 @@ public class Util {
 			n2[y] = n1[y];
 		}
 	}
-	public static int getMaxElement(double Matrix[][]){
+	public static double getMaxElement(double Matrix[][]){
 		double aux = 0; 
 		for(int i = 0; i < Matrix.length; ++i){
 			for(int j = 0; j < Matrix.length; ++j){
 				if( Matrix[i][j] > aux) aux = Matrix[i][j];
 			}
 		}
-		return (int)aux;
+		return aux;
 	}
 }

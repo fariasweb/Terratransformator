@@ -43,7 +43,7 @@ public class QAPInput {
 
 		if(nflow > dflow){
 			auxd = new double[nflow][nflow];
-			int maxElement = Util.getMaxElement(distanceMatrix);
+			double maxElement = Util.getMaxElement(distanceMatrix);
 
 			for(int i = 0; i < nflow; ++i){
 				for(int j = 0; j < nflow; ++j){
@@ -58,7 +58,7 @@ public class QAPInput {
 		}
 		else if(nflow < dflow){
 			auxd = new double[dflow][dflow];
-			int maxElement = Util.getMaxElement(flowMatrix);
+			double maxElement = Util.getMaxElement(flowMatrix);
 
 			for(int i = 0; i < dflow; ++i){
 				for(int j = 0; j < dflow; ++j){
