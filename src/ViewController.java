@@ -210,21 +210,12 @@ public abstract class ViewController extends ViewPanel {
 	    	int max = scrollPane.getVerticalScrollBar().getMaximum();
 	    	int value = scrollPane.getVerticalScrollBar().getValue()+extent;
 
-		    Console.print("__MIN:      "+(new Integer(min)).toString());
-		    // Console.print("MINADJ_$$$$$$$$$$$$$$      "+(new Integer(minAdj)).toString());
-		    Console.print("__MAX:      "+(new Integer(max)).toString());
-		    // Console.print("MAXADJ_$$$$$$$$$$$$$$      "+(new Integer(maxAdj)).toString());
-		    Console.print("__VAL:      "+(new Integer(value)).toString());
-		    Console.print("$$$$$$$$$$$$$$__EXT:      "+(new Integer(extent)).toString());
 
 	    	if(evt.getValueIsAdjusting()) return;
 	    	if(extent == 145){ controller.reloadTable(); is_init = true; }
 	    	if(!is_init) return;
 	    	if(extent != 141) return;
 
-		    //WARNING!!!!!
-		    //NO DESCOMENTAR PQ PETA!!!
-		    //MANISH, TE HE DICHO QUE NOOOO!!!!
 
 	    	if(value == extent){
 	    		controller.backwards();

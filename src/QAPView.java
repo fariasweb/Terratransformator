@@ -20,7 +20,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 
-public class QAPView extends View2Row {
+public class QAPView extends View3Row {
 	private JButton inputButton;
 	private QAPInputForm fInput;
 	

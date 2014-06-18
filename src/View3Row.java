@@ -9,15 +9,15 @@ import javax.swing.JPanel;
  * @author farias
  * 
  */
-public abstract class View2Row extends ViewLayout {
+public abstract class View3Row extends ViewLayout {
 
-	private JPanel pTop, pBottom;
+	private JPanel pTop,pMiddle, pBottom;
 
 	/**
 	 * 
 	 * @param c
 	 */
-	View2Row(AbstractControllerView c) {
+	View3Row(AbstractControllerView c) {
 		super(c);
 	}
 
@@ -27,7 +27,7 @@ public abstract class View2Row extends ViewLayout {
 	protected void create_layout() {
 		pTop = new JPanel();
 		pBottom = new JPanel();
-
+		pMiddle = new JPanel();
 		// Layout
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
@@ -41,6 +41,7 @@ public abstract class View2Row extends ViewLayout {
 								layout.createParallelGroup(
 										GroupLayout.Alignment.LEADING)
 										.addComponent(pTop)
+										.addComponent(pMiddle)
 										.addComponent(pBottom))
 						));
 
@@ -49,6 +50,9 @@ public abstract class View2Row extends ViewLayout {
 				.addGroup(
 						layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 							.addComponent(pTop))
+				.addGroup(
+						layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+							.addComponent(pMiddle))			
 				.addGroup(
 						layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 							.addComponent(pBottom))
@@ -86,6 +90,9 @@ public abstract class View2Row extends ViewLayout {
 		_add(pTop, c);
 	}
 
+	public void add_middle(Component c){
+		_add(pMiddle, c);
+	}
 	/**
 	 * 
 	 * @param c

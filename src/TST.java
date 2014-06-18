@@ -491,16 +491,13 @@ public class TST<Value> {
 
 	private void dump(Node x, String prefix) {		
 		if (x == null){ Console.print("null "); return; }
-		Console.print(""+x.c);
-		Console.print("left--->");
+		
 		dump(x.left, prefix);
 		if (x.getClass().getSimpleName().equals("FinalNode"))
 			Console.print("value: "+((FinalNode)x).val.toString());
-		Console.print("..."+x.c);
-		Console.print("mid--->");
+		
 		dump(x.mid, prefix + x.c);
-		Console.print("..."+x.c);
-		Console.print("right--->");
+		
 		dump(x.right, prefix);
 	}
 	
