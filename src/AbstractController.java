@@ -201,7 +201,6 @@ public abstract class AbstractController {
 
 	public String refreshFirstCache(){
 		//Chivato
-		Console.print("Refreshing firstCache");
 
 		String ret = new String();
 		int count = 0;
@@ -220,7 +219,6 @@ public abstract class AbstractController {
 
 	public String refreshSecondCache(){
 		//Chivato
-		Console.print("Refreshing secondCache");
 
 		String ret = new String();
 		int count = 0;
