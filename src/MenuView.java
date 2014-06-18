@@ -16,7 +16,6 @@ public class MenuView extends AbstractViewer {
 	@Override
 	protected void create_view() {
 		menuBar = new JMenuBar();
-		Console.log("Creamos");
 		// HELP
 		help = new JMenu("Help");
 		help.setMnemonic(KeyEvent.VK_X);
